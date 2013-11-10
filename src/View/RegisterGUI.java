@@ -1,10 +1,12 @@
 package View;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
 
-public class Register extends JFrame {
+public class RegisterGUI extends JPanel {
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -23,33 +25,34 @@ public class Register extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	
+	private Controller controller;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Register frame = new Register();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					Register frame = new Register();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public Register() {
-		setTitle("Register");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public RegisterGUI(final Controller the_controller) {
+		super();
+		controller = the_controller;
 		setBounds(100, 100, 643, 470);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("UserName");
@@ -137,6 +140,11 @@ public class Register extends JFrame {
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.setBounds(255, 313, 115, 29);
 		contentPane.add(btnSubmit);
-		
+		contentPane.setPreferredSize(new Dimension(650, 400));
 	}
+
+	public JComponent getGUI() {
+		return contentPane;
+	}
+	
 }
