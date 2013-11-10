@@ -1,3 +1,14 @@
+/*
+ * TCES360 Conference Management System
+ * Warrick Holfeld
+ * Jacob Hall
+ * Aarron Merril
+ * Tyler Powers
+ * Seth Kramer
+ * David Swanson
+ * 11/10/13
+ */
+
 package View;
 
 import java.awt.Dimension;
@@ -27,22 +38,6 @@ public class RegisterGUI extends JPanel {
 	private JTextField textField_5;
 	
 	private Controller controller;
-
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					Register frame = new Register();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.

@@ -1,10 +1,11 @@
-/**
- * Run this.
- * 
- * Note: this is very early in development.  I'm working on integrating the switching
- * of JPanels in this frame.  This is the main class to run at startup.
- * 
+/*
+ * TCES360 Conference Management System
+ * Warrick Holfeld
  * Jacob Hall
+ * Aarron Merril
+ * Tyler Powers
+ * Seth Kramer
+ * David Swanson
  * 11/10/13
  */
 
@@ -20,37 +21,51 @@ import javax.swing.JFrame;
 import View.GUIEnum.StateOfGUI;
 import View.LoginGUI;
 
+/**
+ * The Main Frame to run the CMS sofware in.
+ * 
+ * @author Jacob Hall
+ * @version 11/10/13
+ */
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame implements Observer {
 
+	/**
+	 * The LoginGUI
+	 */
 	private static LoginGUI loginWindow;
 	
+	/**
+	 * The RegisterGUI
+	 */
 	private static RegisterGUI registerWindow;
 	
+	/**
+	 * The current JPanal Component being used by the MainFrame JFrame
+	 */
 	private Component currentPanel;
-
-//	private static StateOfGUI state = StateOfGUI.REGISTER;
 	
+	/**
+	 * The Controller object that handles the business logic and acts as an interface
+	 * between the GUI and the database.
+	 */
 	private static Controller controller;
 
 	/**
-	 * Launch the application.
+	 * Creates and makes visible the MainFrame for the CMS software.
+	 * 
+	 * @param args Command line arguments, ignored.
+	 * @throws CloneNotSupportedException
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+		throws CloneNotSupportedException
+		{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					final MainFrame frame = new MainFrame();
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					frame.setVisible(true);
-//					controller = new Controller();
-//					controller.setStateOfGUI(StateOfGUI.LOGIN);
-//					loginWindow = new LoginGUI(controller);
-//					registerWindow = new RegisterGUI(controller);
-//					frame = new MainFrame();
-//					controller.addObserver(this);
-//					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//					frame.setLayout(new BorderLayout());
-//					setFrame();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

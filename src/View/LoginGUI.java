@@ -1,3 +1,14 @@
+/*
+ * TCES360 Conference Management System
+ * Warrick Holfeld
+ * Jacob Hall
+ * Aarron Merril
+ * Tyler Powers
+ * Seth Kramer
+ * David Swanson
+ * 11/10/13
+ */
+
 package View;
 
 import javax.swing.JPanel;
@@ -15,19 +26,52 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JTextField;
 
-
+/**
+ * The Login user interface JPanel
+ * 
+ * @author Warrick Holfeld
+ * @author Jacob Hall (revised on 11/10/13 to add into project and began adding
+ * 			Action associations with the buttons.)
+ * @see setupActions for example on how I began linking buttons with the Controller
+ * 			and the state machine that will control which GUI is currently displayed.
+ * @version 11/10/13
+ */
 @SuppressWarnings("serial")
 public class LoginGUI extends JPanel {
 
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
 	private static final String REGISTER_STRING = "Register as new user (ALT+R)";
 	
+	/*
+	 * The text to display on the Register button.
+	 */
 	private static final String REGISTER_TITLE_STRING = "Register";
 	
+	/*
+	 * The JPanel that will contain the LoginGui
+	 */
 	private JPanel contentPane;
+	
+	/*
+	 * 
+	 */
 	private JTextField textField;
+	
+	/*
+	 * 
+	 */
 	private JTextField textField_1;
 	
+	/*
+	 * The CMS controller
+	 */
 	private Controller controller;
+	
+	/*
+	 * the Action associated with the register button
+	 */
 	private Action my_register_action;
 
 	/**
@@ -79,10 +123,18 @@ public class LoginGUI extends JPanel {
 		contentPane.setPreferredSize(new Dimension(700, 400));
 	}
 	
+	/**
+	 * Getter for the LoginGUI JPanel.
+	 * 
+	 * @return contentPane JPanel containing the LoginGUI
+	 */
 	public JComponent getGUI() {
 		return contentPane;
 	}
 	
+	/**
+	 * Set up the actions to associate events with outside logic
+	 */
 	private void setupActions(){
 		my_register_action = new AbstractAction(REGISTER_TITLE_STRING, null)
 		{
