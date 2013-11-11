@@ -54,6 +54,16 @@ public class LoginGUI extends JPanel {
 	private static final String REGISTER_TITLE_STRING = "Register";
 	
 	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String LOGIN_STRING = "Login to the system (ALT+L)";
+	
+	/*
+	 * The text to display on the login button.
+	 */
+	private static final String LOGIN_TITLE_STRING = "Login";
+	
+	/*
 	 * The JPanel that will contain the LoginGui
 	 */
 	private JPanel contentPane;
@@ -77,6 +87,11 @@ public class LoginGUI extends JPanel {
 	 * the Action associated with the register button
 	 */
 	private Action my_register_action;
+	
+	/*
+	 * the Action associated with the login button
+	 */
+	private Action my_login_action;
 
 	/**
 	 * Create the frame.
@@ -117,7 +132,7 @@ public class LoginGUI extends JPanel {
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
-		JButton btnLogin = new JButton("Login");
+		JButton btnLogin = new JButton(my_login_action);
 		btnLogin.setBounds(258, 257, 159, 29);
 		contentPane.add(btnLogin);
 		
@@ -149,6 +164,16 @@ public class LoginGUI extends JPanel {
 		};
 		my_register_action.putValue(Action.SHORT_DESCRIPTION, REGISTER_STRING);
 		my_register_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_R);
+		
+		my_login_action = new AbstractAction(LOGIN_TITLE_STRING, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				controller.setStateOfGUI(StateOfGUI.HOME);
+			}
+		};
+		my_login_action.putValue(Action.SHORT_DESCRIPTION, LOGIN_STRING);
+		my_login_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_L);
 	}
 }
 

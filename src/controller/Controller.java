@@ -39,6 +39,12 @@ public class Controller extends Observable{
 	 * @param the_state
 	 */
 	public void setStateOfGUI(StateOfGUI the_state){
+		
+		//TODO: add some logic:   if (!the_state.equals(state){
+		//		if you're already in the GUI, you shouldn't be able to go back to the 
+		//		same GUI.  The next state should not equal the current one.
+		//		However, maybe a GUI should be able to "refresh" if new data is supposed
+		//		to be populated to a table or something like that?
 		state = the_state;	
 		setChanged();
 		notifyObservers();

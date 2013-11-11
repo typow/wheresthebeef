@@ -32,9 +32,9 @@ public class GUIEnum {
 		 */
 		REGISTER,
 		/**
-		 * 
+		 * Make the main user interface visible.
 		 */
-		MAIN_USER_INTERFACE;
+		HOME;
 	}
 
 }

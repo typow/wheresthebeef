@@ -45,6 +45,11 @@ public class MainFrame extends JFrame implements Observer {
 	private static RegisterGUI registerWindow;
 	
 	/**
+	 * The HomeGUI main user interface
+	 */
+	private static HomeGUI homeWindow;
+	
+	/**
 	 * The current JPanal Component being used by the MainFrame JFrame
 	 */
 	private Component currentPanel;
@@ -98,8 +103,13 @@ public class MainFrame extends JFrame implements Observer {
 			pack();
 			setVisible(true);
 			break;
-		case MAIN_USER_INTERFACE:
-
+		case HOME:
+			setTitle("Main User Interface");
+			this.remove(currentPanel);
+			currentPanel = homeWindow.getGUI();
+			add(currentPanel);
+			pack();
+			setVisible(true);
 			break;
 		}
 	}
@@ -115,7 +125,11 @@ public class MainFrame extends JFrame implements Observer {
 	 */
 	@Override
 	public void update(final Observable the_object, final Object the_arg) {
-		System.out.println("reached....");
+		//TODO: Add logic according to the_arg passed in.  If it's a state change in the GUI
+		//		then the setFrame() needs to be called.  If not, some other update should
+		//		take place and the GUI shouldn't change states.  However, maybe the GUI
+		//		will need to be refreshed if new data should be populated in a table
+		//		and the GUI should now reflect this.
 		setFrame();
 	}
 
@@ -126,7 +140,9 @@ public class MainFrame extends JFrame implements Observer {
 		controller = new Controller();
 		controller.setStateOfGUI(StateOfGUI.LOGIN);
 		loginWindow = new LoginGUI(controller);
+		//TODO: move these to the setFrame() method?
 		registerWindow = new RegisterGUI(controller);
+		homeWindow = new HomeGUI(controller);
 		controller.addObserver(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
