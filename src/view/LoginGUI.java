@@ -9,7 +9,7 @@
  * 11/10/13
  */
 
-package View;
+package view;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -18,13 +18,17 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import View.GUIEnum.StateOfGUI;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JTextField;
+
+import view.GUIEnum.StateOfGUI;
+
+import controller.Controller;
 
 /**
  * The Login user interface JPanel

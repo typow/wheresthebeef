@@ -9,10 +9,13 @@
  * 11/10/13
  */
 
-package View;
+package controller;
 
 import java.util.Observable;
-import View.GUIEnum.StateOfGUI;
+
+import view.GUIEnum;
+import view.GUIEnum.StateOfGUI;
+
 
 /**
  * The Controller handle all business logic and act as an interface between the GUI

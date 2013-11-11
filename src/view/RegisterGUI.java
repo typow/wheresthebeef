@@ -9,7 +9,7 @@
  * 11/10/13
  */
 
-package View;
+package view;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -25,6 +25,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
+
+import controller.Controller;
+
 
 
 public class RegisterGUI extends JPanel {

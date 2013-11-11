@@ -9,7 +9,7 @@
  * 11/10/13
  */
 
-package View;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -18,8 +18,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
-import View.GUIEnum.StateOfGUI;
-import View.LoginGUI;
+
+import view.LoginGUI;
+import view.GUIEnum.StateOfGUI;
+
+import controller.Controller;
+
 
 /**
  * The Main Frame to run the CMS sofware in.

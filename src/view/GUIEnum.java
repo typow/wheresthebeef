@@ -9,7 +9,7 @@
  * 11/10/13
  */
 
-package View;
+package view;
 
 public class GUIEnum {
 
