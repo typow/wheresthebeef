@@ -12,8 +12,6 @@
 package controller;
 
 import java.util.Observable;
-
-import view.GUIEnum;
 import view.GUIEnum.StateOfGUI;
 
 
@@ -26,11 +24,16 @@ import view.GUIEnum.StateOfGUI;
  */
 public class Controller extends Observable{
 
-	/**
+	/*
 	 * The current state (mode of operation) the GUI is currently in.
 	 * @see StateOfGUI
 	 */
 	private StateOfGUI state = StateOfGUI.LOGIN;
+	
+	/*
+	 * The current user logged in.
+	 */
+	private String current_user;
 	
 	/**
 	 * Set the next state the GUI should transition to.  Note: setting this to a new state
@@ -74,12 +77,37 @@ public class Controller extends Observable{
 		return valid;
 	}
 	
+	/**
+	 * Checks the username and password combination against the database.
+	 * 
+	 * @param the_username The username entered
+	 * @param the_password The password entered
+	 * @return valid Returns True is the username/password combo are verified
+	 * 			Returns False if the combination is not recognized by the database
+	 */
+	public Boolean checkValidUsernamePassword(final String the_username, 
+												final String the_password){
+		Boolean valid = true;
+		//TODO: check the username/password combo against the database to see if this 
+		//		username and password combo are valid.
+		return valid;
+	}
+	
 	public void addNewUser(final String the_username, final String the_password, 
 							final String the_first_name, final String the_middle_name, 
 							final String the_last_name, final String the_specialty)
 	{
 		//TODO: add this as a new user to the database.  GUI already verified that the
 		//		username doesn't already exist and that the fields are not empty.
+	}
+	
+	/**
+	 * Sets the current user to the username of the person currently logged in.
+	 * 
+	 * @param the_username
+	 */
+	public void setCurrentUsername(final String the_username){
+		current_user = the_username;
 	}
 
 }

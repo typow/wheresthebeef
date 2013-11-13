@@ -30,7 +30,13 @@ import javax.swing.JButton;
 import view.GUIEnum.StateOfGUI;
 import controller.Controller;
 
-
+/**
+ * The RegisterGUI JPanel.
+ * 
+ * @author Warrick Holfeld Jacob Hall
+ * 		edited to add the event listeners to the class and interface with the Controller
+ * @version 11/13/13
+ */
 
 public class RegisterGUI extends JPanel {
 	
@@ -96,6 +102,10 @@ public class RegisterGUI extends JPanel {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @param the_controller The Controller is passed to this class at instantiation
+	 * 			to allow the JPanel to notify the controller when data is ready to be 
+	 * 			passed and a new user is to be created.
 	 */
 	public RegisterGUI(final Controller the_controller) {
 		super();
@@ -206,7 +216,6 @@ public class RegisterGUI extends JPanel {
 		my_submit_action = new AbstractAction(SUBMIT_TITLE_STRING, null)
 		{
 			@Override
-			//TODO: add logic to make sure all the text fields have been filled out
 			public void actionPerformed(ActionEvent the_event) {
 				String username = username_field.getText();
 				String password_1 = password_field.getText();

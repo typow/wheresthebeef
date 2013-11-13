@@ -26,7 +26,7 @@ import controller.Controller;
 
 
 /**
- * The Main Frame to run the CMS sofware in.
+ * The Main Frame to run the CMS software in.
  * 
  * @author Jacob Hall
  * @version 11/10/13

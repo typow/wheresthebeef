@@ -18,6 +18,7 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -72,12 +73,12 @@ public class LoginGUI extends JPanel {
 	/*
 	 * 
 	 */
-	private JTextField textField;
+	private JTextField username_field;
 	
 	/*
 	 * 
 	 */
-	private JTextField textField_1;
+	private JTextField password_field;
 	
 	/*
 	 * The CMS controller
@@ -119,28 +120,24 @@ public class LoginGUI extends JPanel {
 		lblUsername.setBounds(111, 182, 107, 20);
 		contentPane.add(lblUsername);
 		
-		textField = new JTextField();
-		textField.setBounds(233, 179, 199, 26);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		username_field = new JTextField();
+		username_field.setBounds(233, 179, 199, 26);
+		contentPane.add(username_field);
+		username_field.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblPassword.setBounds(111, 218, 107, 20);
 		contentPane.add(lblPassword);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(233, 215, 199, 26);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		password_field = new JTextField();
+		password_field.setBounds(243, 216, 199, 26);
+		contentPane.add(password_field);
+		password_field.setColumns(10);
 		
 		JButton btnLogin = new JButton(my_login_action);
 		btnLogin.setBounds(258, 257, 159, 29);
 		contentPane.add(btnLogin);
-		
-		JButton btnForgotPassword = new JButton("Forgot Password?");
-		btnForgotPassword.setBounds(258, 287, 159, 29);
-		contentPane.add(btnForgotPassword);
 		contentPane.setPreferredSize(new Dimension(581, 338));
 		
 		JLabel label = new JLabel("Conference Management System (CMS)");
@@ -167,8 +164,7 @@ public class LoginGUI extends JPanel {
 	 */
 	private void setupActions(){
 		my_register_action = new AbstractAction(REGISTER_TITLE_STRING, null)
-		{
-			@Override
+		{			
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setStateOfGUI(StateOfGUI.REGISTER);
 			}
@@ -180,7 +176,22 @@ public class LoginGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				controller.setStateOfGUI(StateOfGUI.HOME);
+				String username = username_field.getText();
+				String password = password_field.getText();
+				if (username.equals("")){
+					JOptionPane.showMessageDialog(contentPane, "Please enter a username.");
+				}
+				else if (password.equals("")){
+					JOptionPane.showMessageDialog(contentPane, "Please enter a password.");
+				}
+				else if (!controller.checkValidUsernamePassword(username, password))
+				{
+					JOptionPane.showMessageDialog(contentPane, "Invalid username and password");
+				}
+				else {
+					controller.setCurrentUsername(username);
+					controller.setStateOfGUI(StateOfGUI.HOME);
+				}
 			}
 		};
 		my_login_action.putValue(Action.SHORT_DESCRIPTION, LOGIN_STRING);
