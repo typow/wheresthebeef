@@ -1,21 +1,29 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JButton;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JSeparator;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JTable;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,8 +32,7 @@ import view.GUIEnum.StateOfGUI;
 import controller.Controller;
 
 
-@SuppressWarnings("serial")
-public class HomeGUI extends JPanel {
+public class NewConferenceGUI extends JPanel {
 
 	/*
 	 * The text to display on the logout button.
@@ -58,7 +65,6 @@ public class HomeGUI extends JPanel {
 	private static final String BACK_STRING = "Navigate to the last screen (ALT+B)";
 	
 	private JPanel contentPane;
-	private JTable table;
 	
 	/*
 	 * The CMS controller
@@ -83,7 +89,7 @@ public class HomeGUI extends JPanel {
 	/**
 	 * Create the JPanel.
 	 */
-	public HomeGUI(final Controller the_controller) {
+	public NewConferenceGUI(final Controller the_controller) {
 		super();
 		controller = the_controller;
 		setupActions();
@@ -122,31 +128,6 @@ public class HomeGUI extends JPanel {
 		button_2.setBounds(10, 146, 137, 22);
 		contentPane.add(button_2);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		scrollPane.setBounds(177, 115, 514, 125);
-		contentPane.add(scrollPane);
-		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"Conference", "   Author", "    Paper", "     Date", "   Status", "    Yada....", "    Yada...."
-			}
-		));
-		table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		scrollPane.setViewportView(table);
-		
 		//JLabel label = new JLabel(controller.getCurrentUsername().toString());
 		//Windows Builder Pro edits out the above line when you use it.  Replace the label
 		//declaration when needed because it inserts <dynamic> into the label text 
@@ -156,16 +137,6 @@ public class HomeGUI extends JPanel {
 		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		label.setBounds(10, 66, 133, 20);
 		contentPane.add(label);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		scrollPane_1.setBounds(177, 307, 514, 125);
-		contentPane.add(scrollPane_1);
-		
-		JLabel lblUpcommingConferences = new JLabel("Upcomming Conferences");
-		lblUpcommingConferences.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblUpcommingConferences.setBounds(177, 277, 213, 20);
-		contentPane.add(lblUpcommingConferences);
 		contentPane.setPreferredSize(new Dimension(800, 500));
 	}
 	
@@ -181,6 +152,7 @@ public class HomeGUI extends JPanel {
 	/**
 	 * Set up the actions to associate events with outside logic
 	 */
+	@SuppressWarnings("serial")
 	private void setupActions(){
 		/*
 		 * The action associated with clicking Logout
@@ -222,7 +194,7 @@ public class HomeGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				System.out.println("Creating new conference");
-				controller.setStateOfGUI(StateOfGUI.NEW_CONFERENCE);
+//				controller.setStateOfGUI(StateOfGUI.LOGIN);
 			}
 		};
 		my_new_conf_action.putValue(Action.SHORT_DESCRIPTION, NEW_CONF_STRING);

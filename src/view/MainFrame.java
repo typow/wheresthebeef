@@ -50,6 +50,11 @@ public class MainFrame extends JFrame implements Observer {
 	private static HomeGUI homeWindow;
 	
 	/**
+	 * The NewConferenceGUI
+	 */
+	private static NewConferenceGUI newConferenceWindow;
+	
+	/**
 	 * The current JPanal Component being used by the MainFrame JFrame
 	 */
 	private Component currentPanel;
@@ -90,6 +95,8 @@ public class MainFrame extends JFrame implements Observer {
 		switch (controller.getStateOfGUI()) {
 		case LOGIN:
 			setTitle("Login");
+			loginWindow = new LoginGUI(controller);
+			this.remove(currentPanel);
 			currentPanel = loginWindow.getGUI();
 			add(currentPanel);
 			pack();
@@ -97,6 +104,7 @@ public class MainFrame extends JFrame implements Observer {
 			break;
 		case REGISTER:
 			setTitle("Register");
+			registerWindow = new RegisterGUI(controller);
 			this.remove(currentPanel);
 			currentPanel = registerWindow.getGUI();
 			add(currentPanel);
@@ -104,9 +112,19 @@ public class MainFrame extends JFrame implements Observer {
 			setVisible(true);
 			break;
 		case HOME:
+			homeWindow = new HomeGUI(controller);
 			setTitle("Main User Interface");
 			this.remove(currentPanel);
 			currentPanel = homeWindow.getGUI();
+			add(currentPanel);
+			pack();
+			setVisible(true);
+			break;
+		case NEW_CONFERENCE:
+			newConferenceWindow = new NewConferenceGUI(controller);
+			setTitle("Create a New Conference");
+			this.remove(currentPanel);
+			currentPanel = newConferenceWindow.getGUI();
 			add(currentPanel);
 			pack();
 			setVisible(true);
@@ -137,15 +155,22 @@ public class MainFrame extends JFrame implements Observer {
 	 * Create the frame.
 	 */
 	public MainFrame() {
-		controller = new Controller();
-		controller.setStateOfGUI(StateOfGUI.LOGIN);
-		loginWindow = new LoginGUI(controller);
-		//TODO: move these to the setFrame() method?
-		registerWindow = new RegisterGUI(controller);
-		homeWindow = new HomeGUI(controller);
+		setUpFrame();
 		controller.addObserver(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
-		setFrame();
+	}
+	
+	private void setUpFrame(){
+		controller = new Controller();
+		loginWindow = new LoginGUI(controller);
+		//TODO: move these to the setFrame() method?
+//		registerWindow = new RegisterGUI(controller);
+//		homeWindow = new HomeGUI(controller);
+		setTitle("Login");
+		currentPanel = loginWindow.getGUI();
+		add(currentPanel);
+		pack();
+		setVisible(true);
 	}
 }

@@ -265,7 +265,8 @@ public class RegisterGUI extends JPanel {
 					}
 					else {
 						specialty = (String) cb.getSelectedItem();
-					}						
+					}
+					controller.setCurrentUsername(username);
 					controller.addNewUser(username, password_1, first, middle, last, specialty);
 					controller.setStateOfGUI(StateOfGUI.HOME);
 				}

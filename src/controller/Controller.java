@@ -28,13 +28,19 @@ public class Controller extends Observable{
 	 * The current state (mode of operation) the GUI is currently in.
 	 * @see StateOfGUI
 	 */
-	private StateOfGUI state = StateOfGUI.LOGIN;
+	private StateOfGUI state;
 	
 	/*
 	 * The current user logged in.
 	 */
-	private String current_user;
+	private String current_user = "";
 	
+	/**
+	 * Constructor for the Controller.  State initially set to LOGIN
+	 */
+	public Controller(){
+		state = StateOfGUI.LOGIN;
+	}
 	/**
 	 * Set the next state the GUI should transition to.  Note: setting this to a new state
 	 * causes the Observable Object Controller to change states and notify Observers.
@@ -108,6 +114,14 @@ public class Controller extends Observable{
 	 */
 	public void setCurrentUsername(final String the_username){
 		current_user = the_username;
+	}
+	
+	/**
+	 * Returns the username of the current person logged in.
+	 * @return current_user The current user
+	 */
+	public String getCurrentUsername(){
+		return current_user;
 	}
 
 }

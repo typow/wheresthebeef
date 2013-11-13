@@ -34,7 +34,11 @@ public class GUIEnum {
 		/**
 		 * Make the main user interface visible.
 		 */
-		HOME;
+		HOME,
+		/**
+		 * Make the new conference user interface visible.
+		 */
+		NEW_CONFERENCE;
 	}
 
 }
