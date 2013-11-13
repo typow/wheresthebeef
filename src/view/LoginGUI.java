@@ -131,7 +131,7 @@ public class LoginGUI extends JPanel {
 		contentPane.add(lblPassword);
 		
 		password_field = new JTextField();
-		password_field.setBounds(243, 216, 199, 26);
+		password_field.setBounds(233, 217, 199, 26);
 		contentPane.add(password_field);
 		password_field.setColumns(10);
 		

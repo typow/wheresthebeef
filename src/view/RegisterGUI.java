@@ -38,6 +38,7 @@ import controller.Controller;
  * @version 11/13/13
  */
 
+@SuppressWarnings("serial")
 public class RegisterGUI extends JPanel {
 	
 	/*

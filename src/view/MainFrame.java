@@ -16,12 +16,8 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.JFrame;
-
 import view.LoginGUI;
-import view.GUIEnum.StateOfGUI;
-
 import controller.Controller;
 
 

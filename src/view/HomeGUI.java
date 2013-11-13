@@ -1,3 +1,14 @@
+/*
+ * TCES360 Conference Management System
+ * Warrick Holfeld
+ * Jacob Hall
+ * Aarron Merril
+ * Tyler Powers
+ * Seth Kramer
+ * David Swanson
+ * 11/10/13
+ */
+
 package view;
 
 import java.awt.Dimension;
@@ -23,7 +34,14 @@ import view.GUIEnum.StateOfGUI;
 
 import controller.Controller;
 
-
+/**
+ * The Main User Interface JPanel
+ * 
+ * Allows the user to create new conferences, see conferences they're associated with,
+ * and see all other upcoming conferences.
+ * @author Jacob Hall
+ * @version 11/13/13
+ */
 @SuppressWarnings("serial")
 public class HomeGUI extends JPanel {
 
