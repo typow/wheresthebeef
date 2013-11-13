@@ -59,7 +59,7 @@ public class HomeGUI extends JFrame {
 		controller = the_controller;
 		setTitle("Home");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 755, 520);
+		setBounds(100, 100, 722, 520);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -75,13 +75,13 @@ public class HomeGUI extends JFrame {
 		lblUsername.setBounds(177, 90, 143, 20);
 		contentPane.add(lblUsername);
 		
-		JLabel lblNewLabel = new JLabel("Conference Management System");
+		JLabel lblNewLabel = new JLabel("Conference Management System (CMS)");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblNewLabel.setBounds(170, 11, 330, 26);
+		lblNewLabel.setBounds(177, 11, 399, 26);
 		contentPane.add(lblNewLabel);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(20, 48, 631, 2);
+		separator.setBounds(20, 48, 682, 2);
 		contentPane.add(separator);
 		
 		Button button = new Button("Logout");

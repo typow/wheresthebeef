@@ -59,5 +59,27 @@ public class Controller extends Observable{
 		return state;
 	}
 
+	/**
+	 * Check the username in the database and return true if it is the valid 
+	 * username of someone already in the system
+	 * 
+	 * @param the_username The username entered in some GUI field
+	 * @return valid  Returns true if the username exists in the database.
+	 */
+	public Boolean checkValidUsername(final String the_username)
+	{
+		Boolean valid = false;
+		//TODO: check the username against database to see if this username
+		//		already exists in the database.
+		return valid;
+	}
+	
+	public void addNewUser(final String the_username, final String the_password, 
+							final String the_first_name, final String the_middle_name, 
+							final String the_last_name, final String the_specialty)
+	{
+		//TODO: add this as a new user to the database.  GUI already verified that the
+		//		username doesn't already exist and that the fields are not empty.
+	}
 
 }

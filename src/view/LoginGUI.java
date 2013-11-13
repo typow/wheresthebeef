@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import view.GUIEnum.StateOfGUI;
 
 import controller.Controller;
+import javax.swing.JSeparator;
 
 /**
  * The Login user interface JPanel
@@ -105,11 +106,12 @@ public class LoginGUI extends JPanel {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewUser = new JLabel("New User?");
-		lblNewUser.setBounds(393, 54, 107, 20);
+		lblNewUser.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewUser.setBounds(111, 142, 107, 20);
 		contentPane.add(lblNewUser);
 		
 		JButton btnRegister = new JButton(my_register_action);
-		btnRegister.setBounds(475, 50, 115, 29);
+		btnRegister.setBounds(258, 138, 159, 29);
 		contentPane.add(btnRegister);
 		
 		JLabel lblUsername = new JLabel("UserName");
@@ -128,7 +130,7 @@ public class LoginGUI extends JPanel {
 		contentPane.add(lblPassword);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(231, 215, 199, 26);
+		textField_1.setBounds(233, 215, 199, 26);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
@@ -139,7 +141,16 @@ public class LoginGUI extends JPanel {
 		JButton btnForgotPassword = new JButton("Forgot Password?");
 		btnForgotPassword.setBounds(258, 287, 159, 29);
 		contentPane.add(btnForgotPassword);
-		contentPane.setPreferredSize(new Dimension(700, 400));
+		contentPane.setPreferredSize(new Dimension(581, 338));
+		
+		JLabel label = new JLabel("Conference Management System (CMS)");
+		label.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		label.setBounds(84, 11, 399, 26);
+		contentPane.add(label);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(25, 48, 534, 2);
+		contentPane.add(separator);
 	}
 	
 	/**
