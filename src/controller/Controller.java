@@ -53,7 +53,7 @@ public class Controller extends Observable{
 		//		if you're already in the GUI, you shouldn't be able to go back to the 
 		//		same GUI.  The next state should not equal the current one.
 		//		However, maybe a GUI should be able to "refresh" if new data is supposed
-		//		to be populated to a table or something like that?
+		//		to be populated to a table or something like that?   Jacob
 		state = the_state;	
 		setChanged();
 		notifyObservers();
@@ -79,7 +79,7 @@ public class Controller extends Observable{
 	{
 		Boolean valid = false;
 		//TODO: check the username against database to see if this username
-		//		already exists in the database.
+		//		already exists in the database.  Jacob
 		return valid;
 	}
 	
@@ -95,7 +95,7 @@ public class Controller extends Observable{
 												final String the_password){
 		Boolean valid = true;
 		//TODO: check the username/password combo against the database to see if this 
-		//		username and password combo are valid.
+		//		username and password combo are valid.  Jacob
 		return valid;
 	}
 	
@@ -104,7 +104,7 @@ public class Controller extends Observable{
 							final String the_last_name, final String the_specialty)
 	{
 		//TODO: add this as a new user to the database.  GUI already verified that the
-		//		username doesn't already exist and that the fields are not empty.
+		//		username doesn't already exist and that the fields are not empty.  Jacob
 	}
 	
 	/**
@@ -132,10 +132,30 @@ public class Controller extends Observable{
 	public String getFullName(final String the_username){
 		//TODO: implement this so that it returns the full name of the individual
 		
-		//return the_username.first + the_username.middle + the_username.last
+		//return: the_username.first + " " + the_username.middle + " " + the_username.last
 		
-		//temporary
+		//temporary    Jacob
 		return the_username;
+	}
+	
+	public Boolean checkConferenceExists(final String the_conference_title){
+		Boolean does_exist = false;
+		//TODO: GUI will pass in the name of the proposed new conference to be created.
+		//		GUI needs a boolean value back validating that the conference doesn't already
+		//		exist in the database, we don't want to allow the user to create multiple
+		//		conferences with the same title. Jacob
+		
+		return does_exist;
+	}
+	
+	public void setNewConference(final String conf_title, final String the_program_chair, final String conf_date, final String conf_address, 
+			final String conf_city, final String conf_state, final String con_zip, 
+			final String submission_deadline, final String review_deadline, final String sub_pc_recommend_deadline, 
+			final String author_notification_deadline, final String conference_summary){
+		//TODO: add these fields as parameters to a new conference. All of the fields except the conference
+		//		summary are required, so the GUI is checking to make sure they're non-null.  The conference
+		//		summary is just "" if nothing is filled in.  Note: we can use Date objects if you want for
+		//		the dates.  Just let me know.  Jacob
 	}
 
 }
