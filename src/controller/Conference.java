@@ -1,5 +1,23 @@
+/*
+ * TCES360 Conference Management System
+ * Warrick Holfeld
+ * Jacob Hall
+ * Aarron Merril
+ * Tyler Powers
+ * Seth Kramer
+ * David Swanson
+ * 11/10/13
+ */
+
 package controller;
 
+/**
+ * The Conference object will hold information relevant to a single conference so that the object can be 
+ * passed around as a container holding the relevant data.
+ * 
+ * @author Jacob Hall
+ * @version 11/15/13
+ */
 public class Conference {
 
 	private String conf_title;
@@ -34,4 +52,42 @@ public class Conference {
 	}
 	
 	//TODO: add getters for this so that the conference object can be passed around and dat retrieved from it.
+	
+	public String getConfTitle(){
+		return conf_title;
+	}
+	
+	public String getProgramChair(){
+		return program_chair;
+	}
+	public String getConfDate(){
+		return conf_date;
+	}
+	public String getConfAddress(){
+		return conf_address;
+	}
+	public String getConCity(){
+		return conf_city;
+	}
+	public String getConfState(){
+		return conf_state;
+	}
+	public String getConfZip(){
+		return con_zip;
+	}
+	public String getSubmissionDead(){
+		return submission_deadline;
+	}
+	public String getReviewDead(){
+		return review_deadline;
+	}
+	public String getSubPCReccomendDead(){
+		return sub_pc_recommend_deadline;
+	}
+	public String getAuthorNotificationDead(){
+		return author_notification_deadline;
+	}
+	public String getConfSummary(){
+		return conference_summary;
+	}
 }
