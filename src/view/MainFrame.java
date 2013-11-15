@@ -9,9 +9,15 @@
  * 11/10/13
  */
 
+
+//TODO: make default size: 1280 x 720
+
+//TODO: create global variables for color and theme.
+
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.Observable;
@@ -29,7 +35,7 @@ import controller.Controller;
  */
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements Observer {
-
+	
 	/**
 	 * The LoginGUI
 	 */
@@ -161,8 +167,7 @@ public class MainFrame extends JFrame implements Observer {
 		controller = new Controller();
 		loginWindow = new LoginGUI(controller);
 		//TODO: move these to the setFrame() method?
-//		registerWindow = new RegisterGUI(controller);
-//		homeWindow = new HomeGUI(controller);
+		this.setResizable(false);
 		setTitle("Login");
 		currentPanel = loginWindow.getGUI();
 		add(currentPanel);

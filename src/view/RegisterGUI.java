@@ -11,6 +11,7 @@
 
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -29,6 +30,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import view.GUIEnum.StateOfGUI;
 import controller.Controller;
+import javax.swing.JSeparator;
+import javax.swing.border.BevelBorder;
 
 /**
  * The RegisterGUI JPanel.
@@ -100,6 +103,8 @@ public class RegisterGUI extends JPanel {
 	 * The controller object that the entire program will access.
 	 */
 	private Controller controller;
+	
+	
 
 	/**
 	 * Create the frame.
@@ -117,92 +122,108 @@ public class RegisterGUI extends JPanel {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("UserName");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblNewLabel.setBounds(77, 48, 113, 20);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Password");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblNewLabel_1.setBounds(77, 93, 113, 20);
-		contentPane.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("Confirm Password");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblNewLabel_2.setBounds(77, 139, 172, 33);
-		contentPane.add(lblNewLabel_2);
-		
-		JLabel lblName = new JLabel("Name");
-		lblName.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblName.setBounds(77, 209, 69, 20);
-		contentPane.add(lblName);
-		
-		username_field = new JTextField();
-		username_field.setBounds(254, 45, 208, 26);
-		contentPane.add(username_field);
-		username_field.setColumns(10);
-		
-		password_field = new JTextField();
-		password_field.setBounds(254, 90, 208, 26);
-		contentPane.add(password_field);
-		password_field.setColumns(10);
-		
-		JLabel lblNewLabel_3 = new JLabel("First");
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_3.setBounds(189, 188, 69, 20);
-		contentPane.add(lblNewLabel_3);
-		
-		f_name_field = new JTextField();
-		f_name_field.setBounds(161, 207, 127, 26);
-		contentPane.add(f_name_field);
-		f_name_field.setColumns(10);
-		
-		JLabel lblMi = new JLabel("MI");
-		lblMi.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblMi.setBounds(324, 187, 69, 20);
-		contentPane.add(lblMi);
-		
-		mi_name_field = new JTextField();
-		mi_name_field.setBounds(301, 207, 69, 26);
-		contentPane.add(mi_name_field);
-		mi_name_field.setColumns(10);
-		
-		JLabel lblLast = new JLabel("Last");
-		lblLast.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLast.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblLast.setBounds(427, 188, 69, 20);
-		contentPane.add(lblLast);
-		
-		l_name_field = new JTextField();
-		l_name_field.setBounds(385, 207, 146, 26);
-		contentPane.add(l_name_field);
-		l_name_field.setColumns(10);
-		
-		confirm_password_field = new JTextField();
-		confirm_password_field.setBounds(254, 143, 208, 26);
-		contentPane.add(confirm_password_field);
-		confirm_password_field.setColumns(10);
-		
-		JLabel lblSpecialization = new JLabel("Specialization");
-		lblSpecialization.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblSpecialization.setBounds(49, 273, 141, 20);
-		contentPane.add(lblSpecialization);
-		
 		DefaultComboBoxModel<String> choice = new  DefaultComboBoxModel<String>();
 		choice.addElement("--Other--");
 		choice.addElement("Engineering Bio");
 		choice.addElement("Engineering Chemical");
 		choice.addElement("Engineering Computer");
 		choice.addElement("Engineering Electronic");
+		contentPane.setPreferredSize(new Dimension(1280, 720));
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 48, 1260, 2);
+		contentPane.add(separator);
+		
+		JLabel label = new JLabel("Conference Management System (CMS)");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		label.setBounds(10, 11, 1260, 26);
+		contentPane.add(label);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel.setBounds(348, 129, 587, 389);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("UserName");
+		lblNewLabel.setBounds(76, 50, 113, 20);
+		panel.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JLabel lblNewLabel_1 = new JLabel("Password");
+		lblNewLabel_1.setBounds(76, 95, 113, 20);
+		panel.add(lblNewLabel_1);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JLabel lblNewLabel_2 = new JLabel("Confirm Password");
+		lblNewLabel_2.setBounds(76, 142, 172, 33);
+		panel.add(lblNewLabel_2);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JLabel lblName = new JLabel("Name");
+		lblName.setBounds(76, 211, 69, 20);
+		panel.add(lblName);
+		lblName.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JLabel lblNewLabel_3 = new JLabel("First");
+		lblNewLabel_3.setBounds(187, 186, 69, 20);
+		panel.add(lblNewLabel_3);
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+		JLabel lblMi = new JLabel("MI");
+		lblMi.setBounds(321, 186, 69, 20);
+		panel.add(lblMi);
+		lblMi.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+		JLabel lblLast = new JLabel("Last");
+		lblLast.setBounds(426, 186, 69, 20);
+		panel.add(lblLast);
+		lblLast.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLast.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+		l_name_field = new JTextField();
+		l_name_field.setBounds(384, 211, 146, 26);
+		panel.add(l_name_field);
+		l_name_field.setColumns(10);
+		
+		mi_name_field = new JTextField();
+		mi_name_field.setBounds(300, 211, 69, 26);
+		panel.add(mi_name_field);
+		mi_name_field.setColumns(10);
+		
+		f_name_field = new JTextField();
+		f_name_field.setBounds(155, 211, 127, 26);
+		panel.add(f_name_field);
+		f_name_field.setColumns(10);
 		cb = new JComboBox<String>(choice);
-		cb.setBounds(221, 272, 160, 25);
-		contentPane.add(cb);
+		cb.setBounds(259, 274, 198, 25);
+		panel.add(cb);
+		
+		JLabel lblSpecialization = new JLabel("Specialization");
+		lblSpecialization.setBounds(76, 273, 141, 20);
+		panel.add(lblSpecialization);
+		lblSpecialization.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
 		JButton btnSubmit = new JButton(my_submit_action);
-		btnSubmit.setBounds(255, 313, 115, 29);
-		contentPane.add(btnSubmit);
-		contentPane.setPreferredSize(new Dimension(650, 400));
+		btnSubmit.setBounds(254, 315, 115, 29);
+		panel.add(btnSubmit);
+		
+		confirm_password_field = new JTextField();
+		confirm_password_field.setBounds(254, 148, 208, 26);
+		panel.add(confirm_password_field);
+		confirm_password_field.setColumns(10);
+		
+		password_field = new JTextField();
+		password_field.setBounds(254, 95, 208, 26);
+		panel.add(password_field);
+		password_field.setColumns(10);
+		
+		username_field = new JTextField();
+		username_field.setBounds(254, 50, 208, 26);
+		panel.add(username_field);
+		username_field.setColumns(10);
 	}
 
 	public JComponent getGUI() {
@@ -276,5 +297,4 @@ public class RegisterGUI extends JPanel {
 		my_submit_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_STRING);
 		my_submit_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_S);
 	}
-	
 }

@@ -123,5 +123,19 @@ public class Controller extends Observable{
 	public String getCurrentUsername(){
 		return current_user;
 	}
+	
+	/**
+	 * Returns the full name of the individual when the username is passed in
+	 * @param the_username The username of the individual being queried
+	 * @return The full name of the person.
+	 */
+	public String getFullName(final String the_username){
+		//TODO: implement this so that it returns the full name of the individual
+		
+		//return the_username.first + the_username.middle + the_username.last
+		
+		//temporary
+		return the_username;
+	}
 
 }

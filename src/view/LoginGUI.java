@@ -31,6 +31,10 @@ import view.GUIEnum.StateOfGUI;
 
 import controller.Controller;
 import javax.swing.JSeparator;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 
 /**
  * The Login user interface JPanel
@@ -102,52 +106,66 @@ public class LoginGUI extends JPanel {
 		super();
 		controller = the_controller;
 		setupActions();
+		
 		contentPane = new JPanel();
+		
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		
-		JLabel lblNewUser = new JLabel("New User?");
-		lblNewUser.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewUser.setBounds(111, 142, 107, 20);
-		contentPane.add(lblNewUser);
-		
-		JButton btnRegister = new JButton(my_register_action);
-		btnRegister.setBounds(258, 138, 159, 29);
-		contentPane.add(btnRegister);
-		
-		JLabel lblUsername = new JLabel("UserName");
-		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblUsername.setBounds(111, 182, 107, 20);
-		contentPane.add(lblUsername);
-		
-		username_field = new JTextField();
-		username_field.setBounds(233, 179, 199, 26);
-		contentPane.add(username_field);
-		username_field.setColumns(10);
-		
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblPassword.setBounds(111, 218, 107, 20);
-		contentPane.add(lblPassword);
-		
-		password_field = new JTextField();
-		password_field.setBounds(233, 217, 199, 26);
-		contentPane.add(password_field);
-		password_field.setColumns(10);
-		
-		JButton btnLogin = new JButton(my_login_action);
-		btnLogin.setBounds(258, 257, 159, 29);
-		contentPane.add(btnLogin);
-		contentPane.setPreferredSize(new Dimension(581, 338));
-		
 		JLabel label = new JLabel("Conference Management System (CMS)");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		label.setBounds(84, 11, 399, 26);
+		label.setBounds(10, 11, 1260, 26);
 		contentPane.add(label);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(25, 48, 534, 2);
+		separator.setBounds(20, 48, 1250, 2);
 		contentPane.add(separator);
+		
+		contentPane.setPreferredSize(new Dimension(1280, 720));
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel.setBounds(413, 138, 469, 310);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewUser = new JLabel("New User?");
+		lblNewUser.setBounds(63, 81, 107, 20);
+		panel.add(lblNewUser);
+		lblNewUser.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		JLabel lblUsername = new JLabel("UserName");
+		lblUsername.setBounds(63, 121, 107, 20);
+		panel.add(lblUsername);
+		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(63, 157, 107, 20);
+		panel.add(lblPassword);
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		password_field = new JTextField();
+		password_field.setBounds(187, 156, 199, 26);
+		panel.add(password_field);
+		password_field.setColumns(10);
+		
+		username_field = new JTextField();
+		username_field.setBounds(187, 120, 199, 26);
+		panel.add(username_field);
+		username_field.setColumns(10);
+		
+		JButton btnRegister = new JButton(my_register_action);
+		btnRegister.setBounds(209, 79, 159, 29);
+		panel.add(btnRegister);
+		
+		JButton btnLogin = new JButton(my_login_action);
+		btnLogin.setBounds(209, 193, 159, 29);
+		panel.add(btnLogin);
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 	}
 	
 	/**

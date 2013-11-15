@@ -11,6 +11,7 @@
 
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -110,40 +111,58 @@ public class HomeGUI extends JPanel {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setBounds(153, 66, 14, 366);
-		contentPane.add(separator_1);
-		
-		JLabel lblUsername = new JLabel("My Conferences");
-		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblUsername.setBounds(177, 90, 143, 20);
-		contentPane.add(lblUsername);
-		
 		JLabel lblNewLabel = new JLabel("Conference Management System (CMS)");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblNewLabel.setBounds(177, 11, 399, 26);
+		lblNewLabel.setBounds(10, 11, 1260, 26);
 		contentPane.add(lblNewLabel);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(20, 48, 682, 2);
+		separator.setBounds(10, 48, 1260, 2);
 		contentPane.add(separator);
+		contentPane.setPreferredSize(new Dimension(1280, 720));
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel.setBounds(279, 116, 755, 442);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		//JLabel label = new JLabel(controller.getCurrentUsername().toString());
+		//Windows Builder Pro edits out the above line when you use it.  Replace the label
+		//declaration when needed because it inserts <dynamic> into the label text 
+		JLabel label = new JLabel(controller.getCurrentUsername().toString());
+		label.setBounds(10, 39, 150, 20);
+		panel.add(label);
+		
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JButton button = new JButton(my_logout_action);
-		button.setBounds(10, 90, 137, 22);
-		contentPane.add(button);
+		button.setBounds(37, 70, 107, 22);
+		panel.add(button);
 		
 		JButton button_1 = new JButton(my_back_action);
-		button_1.setBounds(10, 118, 137, 22);
-		contentPane.add(button_1);
+		button_1.setBounds(37, 103, 107, 22);
+		panel.add(button_1);
 		JButton button_2 = new JButton(my_new_conf_action);
-		button_2.setBounds(10, 146, 137, 22);
-		contentPane.add(button_2);
+		button_2.setBounds(37, 136, 107, 22);
+		panel.add(button_2);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(170, 43, 14, 352);
+		panel.add(separator_1);
+		separator_1.setOrientation(SwingConstants.VERTICAL);
+		
+		JLabel lblUsername = new JLabel("My Conferences");
+		lblUsername.setBounds(194, 43, 143, 20);
+		panel.add(lblUsername);
+		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(194, 74, 514, 125);
+		panel.add(scrollPane);
 		scrollPane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		scrollPane.setBounds(177, 115, 514, 125);
-		contentPane.add(scrollPane);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
@@ -165,26 +184,15 @@ public class HomeGUI extends JPanel {
 		table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		scrollPane.setViewportView(table);
 		
-		//JLabel label = new JLabel(controller.getCurrentUsername().toString());
-		//Windows Builder Pro edits out the above line when you use it.  Replace the label
-		//declaration when needed because it inserts <dynamic> into the label text 
-		JLabel label = new JLabel(controller.getCurrentUsername().toString());
-		
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Tahoma", Font.BOLD, 16));
-		label.setBounds(10, 66, 133, 20);
-		contentPane.add(label);
+		JLabel lblUpcommingConferences = new JLabel("Upcomming Conferences");
+		lblUpcommingConferences.setBounds(194, 239, 213, 20);
+		panel.add(lblUpcommingConferences);
+		lblUpcommingConferences.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(194, 270, 514, 125);
+		panel.add(scrollPane_1);
 		scrollPane_1.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		scrollPane_1.setBounds(177, 307, 514, 125);
-		contentPane.add(scrollPane_1);
-		
-		JLabel lblUpcommingConferences = new JLabel("Upcomming Conferences");
-		lblUpcommingConferences.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblUpcommingConferences.setBounds(177, 277, 213, 20);
-		contentPane.add(lblUpcommingConferences);
-		contentPane.setPreferredSize(new Dimension(800, 500));
 	}
 	
 	/**
