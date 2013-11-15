@@ -45,6 +45,21 @@ import javax.swing.border.BevelBorder;
 public class RegisterGUI extends JPanel {
 	
 	/*
+	 * The background of the main JPanel
+	 */
+	private static final Color BACKGROUND_COLOR = new Color(153, 204, 204);
+	
+	/*
+	 * The background of the inner user JPanel.
+	 */
+	private static final Color INNER_BACKGROUND_COLOR = (new Color(204, 204, 153));
+	
+	/*
+	 * The size of the JPanel.
+	 */
+	private static final Dimension WIN_DIMENSION = new Dimension(1280, 720);
+	
+	/*
 	 * The JPanel that the RegisterGUI will be contained in .
 	 */
 	private JPanel contentPane;
@@ -95,9 +110,24 @@ public class RegisterGUI extends JPanel {
 	private static final String SUBMIT_STRING = "Login to the system (ALT+S)";
 	
 	/*
+	 * The text to display on the logout button.
+	 */
+	private static final String BACK_TITLE_STRING = "<-- Back";
+	
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String BACK_STRING = "Navigate to the last screen (ALT+B)";
+	
+	/*
 	 * the Action associated with the register button.
 	 */
 	private Action my_submit_action;
+	
+	/*
+	 * the Action associated with the back button
+	 */
+	private Action my_back_action;
 	
 	/*
 	 * The controller object that the entire program will access.
@@ -128,7 +158,8 @@ public class RegisterGUI extends JPanel {
 		choice.addElement("Engineering Chemical");
 		choice.addElement("Engineering Computer");
 		choice.addElement("Engineering Electronic");
-		contentPane.setPreferredSize(new Dimension(1280, 720));
+		contentPane.setBackground(BACKGROUND_COLOR);
+		contentPane.setPreferredSize(WIN_DIMENSION);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 48, 1260, 2);
@@ -141,6 +172,7 @@ public class RegisterGUI extends JPanel {
 		contentPane.add(label);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(INNER_BACKGROUND_COLOR);
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel.setBounds(348, 129, 587, 389);
 		contentPane.add(panel);
@@ -207,7 +239,7 @@ public class RegisterGUI extends JPanel {
 		lblSpecialization.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
 		JButton btnSubmit = new JButton(my_submit_action);
-		btnSubmit.setBounds(254, 315, 115, 29);
+		btnSubmit.setBounds(380, 320, 115, 29);
 		panel.add(btnSubmit);
 		
 		confirm_password_field = new JTextField();
@@ -224,6 +256,10 @@ public class RegisterGUI extends JPanel {
 		username_field.setBounds(254, 50, 208, 26);
 		panel.add(username_field);
 		username_field.setColumns(10);
+		
+		JButton btnBack = new JButton(my_back_action);
+		btnBack.setBounds(102, 320, 115, 29);
+		panel.add(btnBack);
 	}
 
 	public JComponent getGUI() {
@@ -296,5 +332,20 @@ public class RegisterGUI extends JPanel {
 		};
 		my_submit_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_STRING);
 		my_submit_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_S);
+		
+		/*
+		 * The action associated with clicking back.
+		 */
+		my_back_action = new AbstractAction(BACK_TITLE_STRING, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				controller.setCurrentUsername("");  //blank because in this case, 
+					//the user is logging out by going back one screen.
+				controller.setStateOfGUI(StateOfGUI.LOGIN);
+			}
+		};
+		my_back_action.putValue(Action.SHORT_DESCRIPTION, BACK_STRING);
+		my_back_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_B);
 	}
 }

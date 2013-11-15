@@ -48,6 +48,21 @@ import javax.swing.border.BevelBorder;
  */
 @SuppressWarnings("serial")
 public class LoginGUI extends JPanel {
+	
+	/*
+	 * The background of the main JPanel
+	 */
+	private static final Color BACKGROUND_COLOR = new Color(153, 204, 204);
+	
+	/*
+	 * The background of the inner user JPanel.
+	 */
+	private static final Color INNER_BACKGROUND_COLOR = (new Color(204, 204, 153));
+	
+	/*
+	 * The size of the JPanel.
+	 */
+	private static final Dimension WIN_DIMENSION = new Dimension(1280, 720);
 
 	/*
 	 * The message the will pop up when the user floats above the button.
@@ -108,7 +123,8 @@ public class LoginGUI extends JPanel {
 		setupActions();
 		
 		contentPane = new JPanel();
-		
+		contentPane.setBackground(BACKGROUND_COLOR);
+		contentPane.setPreferredSize(WIN_DIMENSION);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		
@@ -121,10 +137,9 @@ public class LoginGUI extends JPanel {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(20, 48, 1250, 2);
 		contentPane.add(separator);
-		
-		contentPane.setPreferredSize(new Dimension(1280, 720));
-		
+				
 		JPanel panel = new JPanel();
+		panel.setBackground(INNER_BACKGROUND_COLOR);
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel.setBounds(413, 138, 469, 310);
 		contentPane.add(panel);

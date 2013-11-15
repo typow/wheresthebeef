@@ -45,6 +45,21 @@ import javax.swing.border.BevelBorder;
 public class NewConferenceGUI extends JPanel {
 
 	/*
+	 * The background of the main JPanel
+	 */
+	private static final Color BACKGROUND_COLOR = new Color(153, 204, 204);
+	
+	/*
+	 * The background of the inner user JPanel.
+	 */
+	private static final Color INNER_BACKGROUND_COLOR = (new Color(204, 204, 153));
+	
+	/*
+	 * The size of the JPanel.
+	 */
+	private static final Dimension WIN_DIMENSION = new Dimension(1280, 720);
+	
+	/*
 	 * The text to display on the logout button.
 	 */
 	private static final String LOGOUT_TITLE_STRING = "Logout";
@@ -159,9 +174,10 @@ public class NewConferenceGUI extends JPanel {
 		setupActions();
 		setBounds(100, 100, 722, 520);
 		contentPane = new JPanel();
+		contentPane.setBackground(BACKGROUND_COLOR);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
-		contentPane.setPreferredSize(new Dimension(1280, 720));
+		contentPane.setPreferredSize(WIN_DIMENSION);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 48, 1260, 2);
@@ -174,6 +190,7 @@ public class NewConferenceGUI extends JPanel {
 		contentPane.add(label_1);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(INNER_BACKGROUND_COLOR);
 		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel_1.setBounds(218, 87, 840, 585);
 		contentPane.add(panel_1);
@@ -190,20 +207,20 @@ public class NewConferenceGUI extends JPanel {
 		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JButton btnLogout = new JButton(my_logout_action);
-		btnLogout.setBounds(40, 77, 103, 23);
+		btnLogout.setBounds(20, 77, 150, 23);
 		panel_1.add(btnLogout);
 		
 		JButton btnMain = new JButton(my_main_action);
-		btnMain.setBounds(40, 111, 103, 23);
+		btnMain.setBounds(20, 111, 150, 23);
 		panel_1.add(btnMain);
 		btnMain.setText("Main");
 		
 		JButton btnBack = new JButton(my_back_action);
-		btnBack.setBounds(40, 145, 103, 23);
+		btnBack.setBounds(20, 145, 150, 23);
 		panel_1.add(btnBack);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(177, 46, 14, 499);
+		separator_1.setBounds(182, 46, 14, 499);
 		panel_1.add(separator_1);
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		

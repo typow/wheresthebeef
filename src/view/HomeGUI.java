@@ -34,6 +34,8 @@ import javax.swing.table.DefaultTableModel;
 import view.GUIEnum.StateOfGUI;
 
 import controller.Controller;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
 
 /**
  * The Main User Interface JPanel
@@ -45,6 +47,21 @@ import controller.Controller;
  */
 @SuppressWarnings("serial")
 public class HomeGUI extends JPanel {
+	
+	/*
+	 * The background of the main JPanel
+	 */
+	private static final Color BACKGROUND_COLOR = new Color(153, 204, 204);
+	
+	/*
+	 * The background of the inner user JPanel.
+	 */
+	private static final Color INNER_BACKGROUND_COLOR = (new Color(204, 204, 153));
+	
+	/*
+	 * The size of the JPanel.
+	 */
+	private static final Dimension WIN_DIMENSION = new Dimension(1280, 720);
 
 	/*
 	 * The text to display on the logout button.
@@ -64,17 +81,17 @@ public class HomeGUI extends JPanel {
 	/*
 	 * The message the will pop up when the user floats above the button.
 	 */
+	private static final String BACK_STRING = "Navigate to the last screen (ALT+B)";
+
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
 	private static final String NEW_CONF_STRING = "Create new conference in the CMS (ALT+N)";
 	
 	/*
 	 * The text to display on the create new conference button.
 	 */
 	private static final String NEW_CONF_TITLE_STRING = "Create New Conference";
-	
-	/*
-	 * The message the will pop up when the user floats above the button.
-	 */
-	private static final String BACK_STRING = "Navigate to the last screen (ALT+B)";
 	
 	private JPanel contentPane;
 	private JTable table;
@@ -108,6 +125,8 @@ public class HomeGUI extends JPanel {
 		setupActions();
 		setBounds(100, 100, 722, 520);
 		contentPane = new JPanel();
+		contentPane.setBackground(BACKGROUND_COLOR);
+		contentPane.setPreferredSize(WIN_DIMENSION);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		
@@ -120,11 +139,11 @@ public class HomeGUI extends JPanel {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 48, 1260, 2);
 		contentPane.add(separator);
-		contentPane.setPreferredSize(new Dimension(1280, 720));
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(INNER_BACKGROUND_COLOR);
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBounds(279, 116, 755, 442);
+		panel.setBounds(283, 109, 755, 442);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -139,28 +158,28 @@ public class HomeGUI extends JPanel {
 		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JButton button = new JButton(my_logout_action);
-		button.setBounds(37, 70, 107, 22);
+		button.setBounds(20, 70, 150, 22);
 		panel.add(button);
 		
 		JButton button_1 = new JButton(my_back_action);
-		button_1.setBounds(37, 103, 107, 22);
+		button_1.setBounds(20, 103, 152, 20);
 		panel.add(button_1);
 		JButton button_2 = new JButton(my_new_conf_action);
-		button_2.setBounds(37, 136, 107, 22);
+		button_2.setBounds(22, 136, 150, 22);
 		panel.add(button_2);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(170, 43, 14, 352);
+		separator_1.setBounds(182, 43, 2, 352);
 		panel.add(separator_1);
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		
 		JLabel lblUsername = new JLabel("My Conferences");
-		lblUsername.setBounds(194, 43, 143, 20);
+		lblUsername.setBounds(204, 40, 143, 20);
 		panel.add(lblUsername);
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(194, 74, 514, 125);
+		scrollPane.setBounds(204, 71, 514, 125);
 		panel.add(scrollPane);
 		scrollPane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
@@ -185,12 +204,12 @@ public class HomeGUI extends JPanel {
 		scrollPane.setViewportView(table);
 		
 		JLabel lblUpcommingConferences = new JLabel("Upcomming Conferences");
-		lblUpcommingConferences.setBounds(194, 239, 213, 20);
+		lblUpcommingConferences.setBounds(204, 239, 213, 20);
 		panel.add(lblUpcommingConferences);
 		lblUpcommingConferences.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(194, 270, 514, 125);
+		scrollPane_1.setBounds(204, 270, 514, 125);
 		panel.add(scrollPane_1);
 		scrollPane_1.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 	}
