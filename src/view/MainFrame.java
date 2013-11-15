@@ -17,7 +17,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.Observable;
@@ -55,6 +54,11 @@ public class MainFrame extends JFrame implements Observer {
 	 * The NewConferenceGUI
 	 */
 	private static NewConferenceGUI newConferenceWindow;
+	
+	/**
+	 * The ManagePaperGUI main user interface
+	 */
+	private static ManagePaperGUI managePaperWindow;
 	
 	/**
 	 * The current JPanal Component being used by the MainFrame JFrame
@@ -127,6 +131,15 @@ public class MainFrame extends JFrame implements Observer {
 			setTitle("Create a New Conference");
 			this.remove(currentPanel);
 			currentPanel = newConferenceWindow.getGUI();
+			add(currentPanel);
+			pack();
+			setVisible(true);
+			break;
+		case MANAGE_PAPER:
+			managePaperWindow = new ManagePaperGUI(controller);
+			setTitle("Manage Paper");
+			this.remove(currentPanel);
+			currentPanel = managePaperWindow.getGUI();
 			add(currentPanel);
 			pack();
 			setVisible(true);

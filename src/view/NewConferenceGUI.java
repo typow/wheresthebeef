@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import view.GUIEnum.StateOfGUI;
+import controller.Conference;
 import controller.Controller;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
@@ -516,11 +517,12 @@ public class NewConferenceGUI extends JPanel {
 							"the status of their paper.");
 				}
 				else{
-					controller.setNewConference(conf_title, username, conf_date, conf_address, conf_city, conf_state, con_zip, 
+					Conference new_conference = new Conference(conf_title, username, conf_date, conf_address, conf_city, conf_state, con_zip, 
 							submission_deadline, review_deadline, sub_pc_recommend_deadline, author_notification_deadline, 
 							conference_summary);
 					//TODO: maybe once the conference is created, a new screen should be populated with the fields entered
 					//		with a "success your conference was created" message?
+					controller.createNewConference(new_conference);
 					controller.setStateOfGUI(StateOfGUI.HOME);
 				}
 				

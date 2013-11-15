@@ -269,7 +269,6 @@ public class RegisterGUI extends JPanel {
 	/**
 	 * Set up the actions to associate events with outside logic
 	 */
-	@SuppressWarnings("serial")
 	private void setupActions(){
 		my_submit_action = new AbstractAction(SUBMIT_TITLE_STRING, null)
 		{

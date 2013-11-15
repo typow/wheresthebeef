@@ -34,16 +34,17 @@ import view.GUIEnum.StateOfGUI;
 import controller.Controller;
 
 /**
- * The Main User Interface JPanel
- * 
- * Allows the user to create new conferences, see conferences they're associated with,
- * and see all other upcoming conferences.
- * @author Jacob Hall
- * @version 11/13/13
- */
+* The Manage Paper User Interface JPanel
+* 
+* Allows the user to create access all the information relevant to a paper
+* in relation to their permissions associated with that paper
+* @author Jacob Hall
+* @version 11/15/13
+*/
+
 @SuppressWarnings("serial")
-public class HomeGUI extends JPanel {
-	
+public class ManagePaperGUI extends JPanel{
+
 	/*
 	 * The background of the main JPanel
 	 */
@@ -97,7 +98,6 @@ public class HomeGUI extends JPanel {
 			"once those buttons are implemented.";
 	
 	private JPanel contentPane;
-	private JTable table;
 	
 	/*
 	 * The CMS controller
@@ -124,7 +124,7 @@ public class HomeGUI extends JPanel {
 	/**
 	 * Create the JPanel.
 	 */
-	public HomeGUI(final Controller the_controller) {
+	public ManagePaperGUI(final Controller the_controller) {
 		super();
 		controller = the_controller;
 		setupActions();
@@ -182,31 +182,6 @@ public class HomeGUI extends JPanel {
 		lblUsername.setBounds(204, 40, 143, 20);
 		panel.add(lblUsername);
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 16));
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(204, 71, 514, 125);
-		panel.add(scrollPane);
-		scrollPane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"Conference", "   Author", "    Paper", "     Date", "   Status", "    Yada....", "    Yada...."
-			}
-		));
-		table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		scrollPane.setViewportView(table);
 		
 		JLabel lblUpcommingConferences = new JLabel("Upcomming Conferences");
 		lblUpcommingConferences.setBounds(204, 239, 213, 20);
@@ -289,7 +264,6 @@ public class HomeGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				
 				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 			}
 		};

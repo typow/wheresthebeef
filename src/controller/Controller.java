@@ -35,6 +35,11 @@ public class Controller extends Observable{
 	 */
 	private String current_user = "";
 	
+	/*
+	 * The current conference (if any) that is being evaluated by the user
+	 */
+	private Conference current_conference;
+	
 	/**
 	 * Constructor for the Controller.  State initially set to LOGIN
 	 */
@@ -148,14 +153,14 @@ public class Controller extends Observable{
 		return does_exist;
 	}
 	
-	public void setNewConference(final String conf_title, final String the_program_chair, final String conf_date, final String conf_address, 
-			final String conf_city, final String conf_state, final String con_zip, 
-			final String submission_deadline, final String review_deadline, final String sub_pc_recommend_deadline, 
-			final String author_notification_deadline, final String conference_summary){
-		//TODO: add these fields as parameters to a new conference. All of the fields except the conference
-		//		summary are required, so the GUI is checking to make sure they're non-null.  The conference
-		//		summary is just "" if nothing is filled in.  Note: we can use Date objects if you want for
-		//		the dates.  Just let me know.  Jacob
+	public void createNewConference(final Conference the_conference){
+		//TODO: add the fields in the Conference Object to a new conference in the database. All of the fields 
+		//		except the conference summary are required, so the GUI is checking to make sure they're non-null.  
+		//		The conference summary is just "" if nothing is filled in.  Note: we can use Date objects if you 
+		//		want for the dates.  Just let me know.  Jacob
 	}
 
+	public void setCurrentConference(final Conference the_conference){
+		current_conference = the_conference;
+	}
 }

@@ -38,7 +38,12 @@ public class GUIEnum {
 		/**
 		 * Make the new conference user interface visible.
 		 */
-		NEW_CONFERENCE;
+		NEW_CONFERENCE,
+		/**
+		 * Make the manage paper user interface visible.
+		 */
+		MANAGE_PAPER;
+		
 	}
 
 }
