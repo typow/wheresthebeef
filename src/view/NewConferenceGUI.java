@@ -430,6 +430,7 @@ public class NewConferenceGUI extends JPanel {
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setCurrentUsername(""); //blank because they're logging out
 					//we need to reset the current user to "null".
+				controller.setCurrentConference(null);
 				controller.setStateOfGUI(StateOfGUI.LOGIN);
 			}
 		};

@@ -157,10 +157,17 @@ public class Controller extends Observable{
 		//TODO: add the fields in the Conference Object to a new conference in the database. All of the fields 
 		//		except the conference summary are required, so the GUI is checking to make sure they're non-null.  
 		//		The conference summary is just "" if nothing is filled in.  Note: we can use Date objects if you 
-		//		want for the dates.  Just let me know.  Jacob
+		//		want for the dates.  Just let me know.  We might also have to add more fields to for more data. Jacob
+		current_conference = the_conference;
 	}
 
-	public void setCurrentConference(final Conference the_conference){
-		current_conference = the_conference;
+	public void setCurrentConference(final String the_conference_name){
+		//TODO: The GUI will need to be able to update the current conference being looked at by the user
+		//		The controller will need to update the current_conference in this class to reflect that so
+		//		that the GUI can call and retrieve the conference information for display.  Jacob
+	}
+	
+	public Conference getCurrentConference(){
+		return current_conference;
 	}
 }

@@ -31,6 +31,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 import view.GUIEnum.StateOfGUI;
+import controller.Conference;
 import controller.Controller;
 import java.awt.GridLayout;
 import javax.swing.JTabbedPane;
@@ -81,24 +82,80 @@ public class ManagePaperGUI extends JPanel{
 	 * The message the will pop up when the user floats above the button.
 	 */
 	private static final String BACK_STRING = "Navigate to the last screen (ALT+B)";
-
+	
 	/*
-	 * The text to display on the create new conference button.
+	 * The text to display on the main button.
 	 */
-	private static final String NEW_CONF_TITLE_STRING = "Create New Conference";
+	private static final String MAIN_TITLE_STRING = "Main";
 
 	/*
 	 * The message the will pop up when the user floats above the button.
 	 */
-	private static final String NEW_CONF_STRING = "Create new conference in the CMS (ALT+N)";
+	private static final String MAIN_STRING = "Return to Main user interface (ALT+M)";
 	
-	private static final String TEMP_TITLE_STRING = "temp button";
+	/*
+	 * The text to display on the submit paper button.
+	 */
+	private static final String SUBMIT_PAPER_TITLE_STRING = "Submit Paper";
 
-	private static final String TEMP_STRING = "This button is temporary.  " +
-			"Eventually, it will be one of many buttons listed in the table above, " +
-			"each linking the user to the paper management GUI.  Remove this later " +
-			"once those buttons are implemented.";
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String SUBMIT_PAPER_STRING = "Submit a new paper to the conference (ALT+S)";
 	
+	/*
+	 * The text to display on the edit submission button.
+	 */
+	private static final String EDIT_SUBMISSION_TITLE_STRING = "Edit Submission";
+
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String EDIT_SUBMISSION_STRING = "Edit a submitted paper (ALT+E)";
+	
+	/*
+	 * The text to display on the submit review button.
+	 */
+	private static final String SUBMIT_REVIEW_TITLE_STRING = "Submit Review";
+
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String SUBMIT_REVIEW_STRING = "Submit a new review (ALT+R)";
+	
+	/*
+	 * The text to display on the make recommendation button.
+	 */
+	private static final String MAKE_RECOMMENDATION_TITLE_STRING = "Make Recommendation";
+
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String MAKE_RECOMMENDATION_STRING = "Make a recommendation on this paper (ALT+K)";
+	
+	/*
+	 * The text to display on the assign reviewer button.
+	 */
+	private static final String ASSIGN_REVIEWER_TITLE_STRING = "Assign Reviewer";
+
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String ASSIGN_REVIEWER_STRING = "Assign a reviewer to this paper (ALT+A)";
+	
+	/*
+	 * The text to display on the assign sub-pc button.
+	 */
+	private static final String ASSIGN_SUBPC_TITLE_STRING = "Assign Sub-PC";
+
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String ASSIGN_SUBPC_STRING = "Assign a reviewer to this paper (ALT+P)";
+	
+	/*
+	 * the JPanel containing the entire ManagePaperGUI
+	 */
 	private JPanel contentPane;
 	
 	/*
@@ -112,23 +169,53 @@ public class ManagePaperGUI extends JPanel{
 	private Action my_logout_action;
 	
 	/*
+	 * the Action associated with the Main button
+	 */
+	private Action my_main_action;
+
+	/*
 	 * the Action associated with the back button
 	 */
 	private Action my_back_action;
 	
 	/*
-	 * the Action associated with the new conference button
+	 * the Action associated with the submit paper button
 	 */
-	private Action my_new_conf_action;
+	private Action my_submit_paper_action;
 	
-	private Action my_temp_action;
-
+	/*
+	 * the Action associated with the edit submission button
+	 */
+	private Action my_edit_submission_action;
+	
+	/*
+	 * the Action associated with the submit review button
+	 */
+	private Action my_submit_review_action;
+	
+	/*
+	 * the Action associated with the make recommendation button
+	 */
+	private Action my_make_recommendation_action;
+	
+	/*
+	 * the Action associated with the assign reviewer button
+	 */
+	private Action my_assign_reviewer_action;
+	
+	
+	/*
+	 * the Action associated with the assign sub-pc button
+	 */
+	private Action my_assign_subpc_action;
+	
 	/**
 	 * Create the JPanel.
 	 */
 	public ManagePaperGUI(final Controller the_controller) {
 		super();
 		controller = the_controller;
+		Conference current_conf = controller.getCurrentConference();
 		setupActions();
 		setBounds(100, 100, 722, 520);
 		contentPane = new JPanel();
@@ -164,13 +251,13 @@ public class ManagePaperGUI extends JPanel{
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		JButton button = new JButton(my_logout_action);
-		button.setBounds(20, 100, 176, 22);
-		panel.add(button);
+		JButton btnLogout = new JButton(my_logout_action);
+		btnLogout.setBounds(20, 100, 176, 22);
+		panel.add(btnLogout);
 		
-		JButton button_1 = new JButton(my_back_action);
-		button_1.setBounds(20, 170, 176, 22);
-		panel.add(button_1);
+		JButton btnBack = new JButton(my_back_action);
+		btnBack.setBounds(20, 170, 176, 22);
+		panel.add(btnBack);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(206, 69, 2, 424);
@@ -187,23 +274,23 @@ public class ManagePaperGUI extends JPanel{
 		panel.add(lblPaperTitle);
 		lblPaperTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
-		JButton btnMain = new JButton("Main");
+		JButton btnMain = new JButton(my_main_action);
 		btnMain.setBounds(20, 135, 176, 22);
 		panel.add(btnMain);
 		
-		JButton btnSubmitPaper = new JButton("Submit Paper");
+		JButton btnSubmitPaper = new JButton(my_submit_paper_action);
 		btnSubmitPaper.setBounds(20, 235, 176, 22);
 		panel.add(btnSubmitPaper);
 		
-		JButton btnEditSubmission = new JButton("Edit Submission");
+		JButton btnEditSubmission = new JButton(my_edit_submission_action);
 		btnEditSubmission.setBounds(20, 270, 176, 22);
 		panel.add(btnEditSubmission);
 		
-		JButton btnReview = new JButton("Submit Review");
+		JButton btnReview = new JButton(my_submit_review_action);
 		btnReview.setBounds(20, 305, 176, 22);
 		panel.add(btnReview);
 		
-		JButton Recommendation = new JButton("Make Recommendation");
+		JButton Recommendation = new JButton(my_make_recommendation_action);
 		Recommendation.setBounds(20, 340, 176, 22);
 		panel.add(Recommendation);
 		
@@ -213,11 +300,11 @@ public class ManagePaperGUI extends JPanel{
 		lblUserTools.setBounds(20, 204, 176, 20);
 		panel.add(lblUserTools);
 		
-		JButton btnAssignReviewer = new JButton("Assign Reviewer");
+		JButton btnAssignReviewer = new JButton(my_assign_reviewer_action);
 		btnAssignReviewer.setBounds(20, 375, 176, 22);
 		panel.add(btnAssignReviewer);
 		
-		JButton btnAssignSubpc = new JButton("Assign Sub-PC");
+		JButton btnAssignSubpc = new JButton(my_assign_subpc_action);
 		btnAssignSubpc.setBounds(20, 410, 176, 22);
 		panel.add(btnAssignSubpc);
 		
@@ -227,11 +314,15 @@ public class ManagePaperGUI extends JPanel{
 		
 		JPanel tabConferenceInfo = new JPanel();
 		tabbedPane.addTab("Conference Info", null, tabConferenceInfo, null);
-		tabbedPane.setEnabledAt(0, true);
 		tabConferenceInfo.setLayout(null);
 		
+		JPanel tabReviews = new JPanel();
+		tabbedPane.addTab("Reviews", null, tabReviews, null);
+		tabbedPane.setEnabledAt(1, true);
+		tabReviews.setLayout(null);
+		
 		JLabel lblConferenceTitle = new JLabel("Conference Title:");
-		lblConferenceTitle.setBounds(10, 21, 166, 20);
+		lblConferenceTitle.setBounds(10, 20, 166, 20);
 		lblConferenceTitle.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblConferenceTitle.setFont(new Font("Tahoma", Font.BOLD, 16));
 		tabConferenceInfo.add(lblConferenceTitle);
@@ -245,7 +336,7 @@ public class ManagePaperGUI extends JPanel{
 		JLabel lblPaperStatus = new JLabel("Paper Status:");
 		lblPaperStatus.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPaperStatus.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblPaperStatus.setBounds(10, 88, 166, 20);
+		lblPaperStatus.setBounds(10, 90, 166, 20);
 		tabConferenceInfo.add(lblPaperStatus);
 		
 		JSeparator separator_3 = new JSeparator();
@@ -282,16 +373,57 @@ public class ManagePaperGUI extends JPanel{
 		lblAuthorNotificationDeadline.setBounds(23, 250, 300, 20);
 		tabConferenceInfo.add(lblAuthorNotificationDeadline);
 		
-		JPanel tabReviews = new JPanel();
-		tabbedPane.addTab("Reviews", null, tabReviews, null);
-		tabbedPane.setEnabledAt(1, true);
-		tabReviews.setLayout(null);
+		JLabel fieldConfTitle = new JLabel(current_conf.getConfTitle());
+		fieldConfTitle.setHorizontalAlignment(SwingConstants.LEFT);
+		fieldConfTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fieldConfTitle.setBounds(186, 20, 379, 20);
+		tabConferenceInfo.add(fieldConfTitle);
+		
+		JLabel fieldConfDate = new JLabel(current_conf.getConfDate());
+		fieldConfDate.setHorizontalAlignment(SwingConstants.LEFT);
+		fieldConfDate.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fieldConfDate.setBounds(186, 55, 379, 20);
+		tabConferenceInfo.add(fieldConfDate);
+		
+		JLabel fieldPaperStatus = new JLabel("<dynamic>");
+		fieldPaperStatus.setHorizontalAlignment(SwingConstants.LEFT);
+		fieldPaperStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fieldPaperStatus.setBounds(186, 90, 379, 20);
+		tabConferenceInfo.add(fieldPaperStatus);
+		
+		JLabel fieldSubmissionDead = new JLabel(current_conf.getSubmissionDead());
+		fieldSubmissionDead.setHorizontalAlignment(SwingConstants.LEFT);
+		fieldSubmissionDead.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fieldSubmissionDead.setBounds(335, 160, 231, 20);
+		tabConferenceInfo.add(fieldSubmissionDead);
+		
+		JLabel fieldReviewDead = new JLabel(current_conf.getReviewDead());
+		fieldReviewDead.setHorizontalAlignment(SwingConstants.LEFT);
+		fieldReviewDead.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fieldReviewDead.setBounds(335, 190, 231, 20);
+		tabConferenceInfo.add(fieldReviewDead);
+		
+		JLabel fieldSubPCDead = new JLabel(current_conf.getSubPCReccomendDead());
+		fieldSubPCDead.setHorizontalAlignment(SwingConstants.LEFT);
+		fieldSubPCDead.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fieldSubPCDead.setBounds(335, 220, 231, 20);
+		tabConferenceInfo.add(fieldSubPCDead);
+		
+		JLabel fieldAuthorNotificationDead = new JLabel(current_conf.getAuthorNotificationDead());
+		fieldAuthorNotificationDead.setHorizontalAlignment(SwingConstants.LEFT);
+		fieldAuthorNotificationDead.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fieldAuthorNotificationDead.setBounds(335, 250, 231, 20);
+		tabConferenceInfo.add(fieldAuthorNotificationDead);
 		
 		JPanel tabRecommendation = new JPanel();
 		tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
 		
 		JPanel tabManagement = new JPanel();
 		tabbedPane.addTab("Management", null, tabManagement, null);
+		
+		//TODO: The following logic can remove tabs from the tabbedPane if they aren't supposed to be visible
+		
+		//tabbedPane.remove(tabConferenceInfo);
 	}
 	
 	/**
@@ -316,6 +448,7 @@ public class ManagePaperGUI extends JPanel{
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setCurrentUsername(""); //blank because they're logging out
 					//we need to reset the current user to "null".
+				controller.setCurrentConference(null);
 				controller.setStateOfGUI(StateOfGUI.LOGIN);
 			}
 		};
@@ -339,19 +472,108 @@ public class ManagePaperGUI extends JPanel{
 		my_back_action.putValue(Action.SHORT_DESCRIPTION, BACK_STRING);
 		my_back_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_B);
 		
-		
 		/*
-		 * The action associated with clicking the Create New Conference button.
+		 * The action associated with clicking the Main button.
 		 */
-		my_temp_action = new AbstractAction(TEMP_TITLE_STRING, null)
+		my_main_action = new AbstractAction(MAIN_TITLE_STRING, null)
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				controller.setStateOfGUI(StateOfGUI.HOME);
 			}
 		};
-		my_temp_action.putValue(Action.SHORT_DESCRIPTION, TEMP_STRING);
-		my_temp_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
+		my_main_action.putValue(Action.SHORT_DESCRIPTION, MAIN_STRING);
+		my_main_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_M);
+			
+		/*
+		 * The action associated with clicking the submit paper button.
+		 */
+		my_submit_paper_action = new AbstractAction(SUBMIT_PAPER_TITLE_STRING, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				//TODO: add the switching state reference.
+//				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				System.out.println("submit paper....");
+			}
+		};
+		my_submit_paper_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_PAPER_STRING);
+		my_submit_paper_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_S);
+		
+		/*
+		 * The action associated with clicking the edit submission button.
+		 */
+		my_edit_submission_action = new AbstractAction(EDIT_SUBMISSION_TITLE_STRING, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				//TODO: add the switching state reference.
+//				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				System.out.println("edit submission....");
+			}
+		};
+		my_edit_submission_action.putValue(Action.SHORT_DESCRIPTION, EDIT_SUBMISSION_STRING);
+		my_edit_submission_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_E);
+		
+		/*
+		 * The action associated with clicking the submit review button.
+		 */
+		my_submit_review_action = new AbstractAction(SUBMIT_REVIEW_TITLE_STRING, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				//TODO: add the switching state reference.
+//				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				System.out.println("submit review....");
+			}
+		};
+		my_submit_review_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_REVIEW_STRING);
+		my_submit_review_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_R);
+		
+		/*
+		 * The action associated with clicking the make recommendation button.
+		 */
+		my_make_recommendation_action = new AbstractAction(MAKE_RECOMMENDATION_TITLE_STRING, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				//TODO: add the switching state reference.
+//				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				System.out.println("make a recommendation....");
+			}
+		};
+		my_make_recommendation_action.putValue(Action.SHORT_DESCRIPTION, MAKE_RECOMMENDATION_STRING);
+		my_make_recommendation_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_K);
+		
+		/*
+		 * The action associated with clicking the assign reviewer button.
+		 */
+		my_assign_reviewer_action = new AbstractAction(ASSIGN_REVIEWER_TITLE_STRING, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				//TODO: add the switching state reference.
+//				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				System.out.println("assign a reviewer....");
+			}
+		};
+		my_assign_reviewer_action.putValue(Action.SHORT_DESCRIPTION, ASSIGN_REVIEWER_STRING);
+		my_assign_reviewer_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_A);
+		
+		/*
+		 * The action associated with clicking the assign sub-pc button.
+		 */
+		my_assign_subpc_action = new AbstractAction(ASSIGN_SUBPC_TITLE_STRING, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				//TODO: add the switching state reference.
+//				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				System.out.println("assign a subprogram chair....");
+			}
+		};
+		my_assign_subpc_action.putValue(Action.SHORT_DESCRIPTION, ASSIGN_SUBPC_STRING);
+		my_assign_subpc_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_P);
 	}
 }
 
