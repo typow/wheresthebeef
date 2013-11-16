@@ -167,7 +167,7 @@ public class HomeGUI extends JPanel {
 		panel.add(button);
 		
 		JButton button_1 = new JButton(my_back_action);
-		button_1.setBounds(20, 103, 152, 20);
+		button_1.setBounds(20, 103, 152, 22);
 		panel.add(button_1);
 		JButton button_2 = new JButton(my_new_conf_action);
 		button_2.setBounds(22, 136, 150, 22);

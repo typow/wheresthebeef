@@ -229,16 +229,16 @@ public class NewConferenceGUI extends JPanel {
 		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JButton btnLogout = new JButton(my_logout_action);
-		btnLogout.setBounds(20, 77, 150, 23);
+		btnLogout.setBounds(20, 77, 150, 22);
 		panel_1.add(btnLogout);
 		
 		JButton btnMain = new JButton(my_main_action);
-		btnMain.setBounds(20, 111, 150, 23);
+		btnMain.setBounds(20, 111, 150, 22);
 		panel_1.add(btnMain);
 		btnMain.setText("Main");
 		
 		JButton btnBack = new JButton(my_back_action);
-		btnBack.setBounds(20, 145, 150, 23);
+		btnBack.setBounds(20, 145, 150, 22);
 		panel_1.add(btnBack);
 		
 		JSeparator separator_1 = new JSeparator();

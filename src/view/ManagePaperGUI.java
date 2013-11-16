@@ -32,6 +32,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 import view.GUIEnum.StateOfGUI;
 import controller.Controller;
+import java.awt.GridLayout;
+import javax.swing.JTabbedPane;
 
 /**
 * The Manage Paper User Interface JPanel
@@ -148,7 +150,7 @@ public class ManagePaperGUI extends JPanel{
 		JPanel panel = new JPanel();
 		panel.setBackground(INNER_BACKGROUND_COLOR);
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBounds(283, 109, 755, 442);
+		panel.setBounds(235, 109, 831, 519);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -156,46 +158,140 @@ public class ManagePaperGUI extends JPanel{
 		//Windows Builder Pro edits out the above line when you use it.  Replace the label
 		//declaration when needed because it inserts <dynamic> into the label text 
 		JLabel label = new JLabel(controller.getCurrentUsername().toString());
-		label.setBounds(10, 39, 150, 20);
+		label.setBounds(20, 69, 176, 20);
 		panel.add(label);
 		
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JButton button = new JButton(my_logout_action);
-		button.setBounds(20, 70, 150, 22);
+		button.setBounds(20, 100, 176, 22);
 		panel.add(button);
 		
 		JButton button_1 = new JButton(my_back_action);
-		button_1.setBounds(20, 103, 152, 20);
+		button_1.setBounds(20, 170, 176, 22);
 		panel.add(button_1);
-		JButton button_2 = new JButton(my_new_conf_action);
-		button_2.setBounds(22, 136, 150, 22);
-		panel.add(button_2);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(182, 43, 2, 352);
+		separator_1.setBounds(206, 69, 2, 424);
 		panel.add(separator_1);
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		
-		JLabel lblUsername = new JLabel("My Conferences");
-		lblUsername.setBounds(204, 40, 143, 20);
-		panel.add(lblUsername);
-		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 16));
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(20, 50, 789, 13);
+		panel.add(separator_2);
 		
-		JLabel lblUpcommingConferences = new JLabel("Upcomming Conferences");
-		lblUpcommingConferences.setBounds(204, 239, 213, 20);
-		panel.add(lblUpcommingConferences);
-		lblUpcommingConferences.setFont(new Font("Tahoma", Font.BOLD, 16));
+		JLabel lblPaperTitle = new JLabel("<dynamic>");
+		lblPaperTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPaperTitle.setBounds(20, 11, 789, 29);
+		panel.add(lblPaperTitle);
+		lblPaperTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(204, 270, 514, 125);
-		panel.add(scrollPane_1);
-		scrollPane_1.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		JButton btnMain = new JButton("Main");
+		btnMain.setBounds(20, 135, 176, 22);
+		panel.add(btnMain);
 		
-		JButton btnNewButton = new JButton(my_temp_action);
-		btnNewButton.setBounds(491, 207, 213, 23);
-		panel.add(btnNewButton);
+		JButton btnSubmitPaper = new JButton("Submit Paper");
+		btnSubmitPaper.setBounds(20, 235, 176, 22);
+		panel.add(btnSubmitPaper);
+		
+		JButton btnEditSubmission = new JButton("Edit Submission");
+		btnEditSubmission.setBounds(20, 270, 176, 22);
+		panel.add(btnEditSubmission);
+		
+		JButton btnReview = new JButton("Submit Review");
+		btnReview.setBounds(20, 305, 176, 22);
+		panel.add(btnReview);
+		
+		JButton Recommendation = new JButton("Make Recommendation");
+		Recommendation.setBounds(20, 340, 176, 22);
+		panel.add(Recommendation);
+		
+		JLabel lblUserTools = new JLabel("User Tools");
+		lblUserTools.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserTools.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblUserTools.setBounds(20, 204, 176, 20);
+		panel.add(lblUserTools);
+		
+		JButton btnAssignReviewer = new JButton("Assign Reviewer");
+		btnAssignReviewer.setBounds(20, 375, 176, 22);
+		panel.add(btnAssignReviewer);
+		
+		JButton btnAssignSubpc = new JButton("Assign Sub-PC");
+		btnAssignSubpc.setBounds(20, 410, 176, 22);
+		panel.add(btnAssignSubpc);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(228, 66, 581, 424);
+		panel.add(tabbedPane);
+		
+		JPanel tabConferenceInfo = new JPanel();
+		tabbedPane.addTab("Conference Info", null, tabConferenceInfo, null);
+		tabbedPane.setEnabledAt(0, true);
+		tabConferenceInfo.setLayout(null);
+		
+		JLabel lblConferenceTitle = new JLabel("Conference Title:");
+		lblConferenceTitle.setBounds(10, 21, 166, 20);
+		lblConferenceTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblConferenceTitle.setFont(new Font("Tahoma", Font.BOLD, 16));
+		tabConferenceInfo.add(lblConferenceTitle);
+		
+		JLabel lblConferenceDate = new JLabel("Conference Date:");
+		lblConferenceDate.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblConferenceDate.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblConferenceDate.setBounds(10, 55, 166, 20);
+		tabConferenceInfo.add(lblConferenceDate);
+		
+		JLabel lblPaperStatus = new JLabel("Paper Status:");
+		lblPaperStatus.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPaperStatus.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblPaperStatus.setBounds(10, 88, 166, 20);
+		tabConferenceInfo.add(lblPaperStatus);
+		
+		JSeparator separator_3 = new JSeparator();
+		separator_3.setBounds(10, 119, 555, 13);
+		tabConferenceInfo.add(separator_3);
+		
+		JLabel lblImportantDates = new JLabel("Important Dates:");
+		lblImportantDates.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImportantDates.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblImportantDates.setBounds(10, 128, 555, 20);
+		tabConferenceInfo.add(lblImportantDates);
+		
+		JLabel lblSubpcRecommendationDeadline = new JLabel("Sub-PC Recommendation Deadline:");
+		lblSubpcRecommendationDeadline.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblSubpcRecommendationDeadline.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblSubpcRecommendationDeadline.setBounds(23, 220, 300, 20);
+		tabConferenceInfo.add(lblSubpcRecommendationDeadline);
+		
+		JLabel lblSubmissionDeadline = new JLabel("Submission Deadline:");
+		lblSubmissionDeadline.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblSubmissionDeadline.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblSubmissionDeadline.setBounds(20, 160, 300, 20);
+		tabConferenceInfo.add(lblSubmissionDeadline);
+		
+		JLabel lblReviewDeadline = new JLabel("Review Deadline:");
+		lblReviewDeadline.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblReviewDeadline.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblReviewDeadline.setBounds(20, 190, 300, 20);
+		tabConferenceInfo.add(lblReviewDeadline);
+		
+		JLabel lblAuthorNotificationDeadline = new JLabel("Author Notification Deadline:");
+		lblAuthorNotificationDeadline.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblAuthorNotificationDeadline.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblAuthorNotificationDeadline.setBounds(23, 250, 300, 20);
+		tabConferenceInfo.add(lblAuthorNotificationDeadline);
+		
+		JPanel tabReviews = new JPanel();
+		tabbedPane.addTab("Reviews", null, tabReviews, null);
+		tabbedPane.setEnabledAt(1, true);
+		tabReviews.setLayout(null);
+		
+		JPanel tabRecommendation = new JPanel();
+		tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
+		
+		JPanel tabManagement = new JPanel();
+		tabbedPane.addTab("Management", null, tabManagement, null);
 	}
 	
 	/**
@@ -237,25 +333,12 @@ public class ManagePaperGUI extends JPanel{
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setCurrentUsername("");  //blank because in this case, 
 					//the user is logging out by going back one screen.
-				controller.setStateOfGUI(StateOfGUI.LOGIN);
+				controller.setStateOfGUI(StateOfGUI.HOME);
 			}
 		};
 		my_back_action.putValue(Action.SHORT_DESCRIPTION, BACK_STRING);
 		my_back_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_B);
 		
-		/*
-		 * The action associated with clicking the Create New Conference button.
-		 */
-		my_new_conf_action = new AbstractAction(NEW_CONF_TITLE_STRING, null)
-		{
-			@Override
-			public void actionPerformed(ActionEvent the_event) {
-				System.out.println("Creating new conference");
-				controller.setStateOfGUI(StateOfGUI.NEW_CONFERENCE);
-			}
-		};
-		my_new_conf_action.putValue(Action.SHORT_DESCRIPTION, NEW_CONF_STRING);
-		my_new_conf_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
 		
 		/*
 		 * The action associated with clicking the Create New Conference button.
