@@ -21,7 +21,6 @@ import java.awt.Font;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionEvent;
@@ -29,21 +28,18 @@ import java.awt.event.KeyEvent;
 import view.GUIEnum.StateOfGUI;
 import controller.Conference;
 import controller.Controller;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 
 /**
-* The Submit Paper Interface JPanel
+* The Edit Submission Interface JPanel
 * 
-* Allows the user to submit a paper in the CMS.
+* Allows the user to edit a submitted paper in the CMS.
 * @author Jacob Hall
-* @version 11/13/13
+* @version 11/17/13
 */
 
 @SuppressWarnings("serial")
-public class SubmitPaperGUI extends JPanel {
+public class EditSubmissionGUI extends JPanel {
 	/*
 	 * The background of the main JPanel
 	 */
@@ -70,34 +66,44 @@ public class SubmitPaperGUI extends JPanel {
 	private static final String LOGOUT_STRING = "Logout of the system (ALT+L)";
 	
 	/*
-	 * The text to display on the logout button.
+	 * The text to display on the back button.
 	 */
 	private static final String BACK_TITLE_STRING = "<-- Back";
 	
 	/*
 	 * The message the will pop up when the user floats above the button.
 	 */
-	private static final String MAIN_STRING = "Return to Main user interface (ALT+M)";
-	
+	private static final String BACK_STRING = "Navigate to the last screen (ALT+B)";
+
 	/*
 	 * The text to display on the main button.
 	 */
 	private static final String MAIN_TITLE_STRING = "Main";
-	
+
 	/*
 	 * The message the will pop up when the user floats above the button.
 	 */
-	private static final String SUBMIT_STRING = "Submit the new conference (ALT+S)";
+	private static final String MAIN_STRING = "Return to Main user interface (ALT+M)";
 	
 	/*
-	 * The text to display on the create new conference button.
+	 * The text to display on the Edit Submission button.
 	 */
-	private static final String SUBMIT_TITLE_STRING = "Submit";
-	
+	private static final String EDIT_SUBMISSION_TITLE_STRING = "Edit Submission";
+
 	/*
 	 * The message the will pop up when the user floats above the button.
 	 */
-	private static final String BACK_STRING = "Navigate to the last screen (ALT+B)";
+	private static final String EDIT_SUBMISSION_STRING = "Edit the submitted paper (ALT+E)";
+	
+	/*
+	 * The text to display on the Delete Submission button.
+	 */
+	private static final String DELETE_SUBMISSION_TITLE_STRING = "Delete Submission";
+
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String DELETE_SUMISSION_STRING = "Delete the submitted paper (ALT+D)";
 	
 	/*
 	 * the JPanel containing the entire SubmitPaperGUI
@@ -120,6 +126,11 @@ public class SubmitPaperGUI extends JPanel {
 	private String username;
 	
 	/*
+	 * the Action associated with the Main button
+	 */
+	private Action my_main_action;
+
+	/*
 	 * the Action associated with the logout button
 	 */
 	private Action my_logout_action;
@@ -130,28 +141,19 @@ public class SubmitPaperGUI extends JPanel {
 	private Action my_back_action;
 	
 	/*
-	 * the Action associated with the Main button
+	 * the Action associated with the Edit Submission button
 	 */
-	private Action my_main_action;
+	private Action my_edit_submission_action;
 	
 	/*
-	 * the Action associated with the Submit button
+	 * the Action associated with the Delete Submission button
 	 */
-	private Action my_submit_action;
-	
-	/*
-	 * The JTextField containing the conference title entry.
-	 */
-	private JTextField fieldPaperTitle;
-	
-	/*
-	 * The JTextField containing the conference date entry.
-	 */
-	private JTextField fieldFileToSubmit;
+	private Action my_delete_submission_action;
+
 	/**
 	 * Create the JPanel.
 	 */
-	public SubmitPaperGUI(final Controller the_controller) {
+	public EditSubmissionGUI(final Controller the_controller) {
 		super();
 		controller = the_controller;
 		current_conf = controller.getCurrentConference();
@@ -227,37 +229,16 @@ public class SubmitPaperGUI extends JPanel {
 		lblUserFullName.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblUserFullName.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		fieldPaperTitle = new JTextField();
-		fieldPaperTitle.setBounds(401, 175, 418, 20);
-		panel_1.add(fieldPaperTitle);
-		fieldPaperTitle.setColumns(10);
+		JButton btnEditSubmission = new JButton(my_edit_submission_action);
+		btnEditSubmission.setText(EDIT_SUBMISSION_TITLE_STRING);
+		btnEditSubmission.setBounds(244, 269, 159, 29);
+		panel_1.add(btnEditSubmission);
 		
-		fieldFileToSubmit = new JTextField();
-		fieldFileToSubmit.setBounds(401, 210, 418, 20);
-		panel_1.add(fieldFileToSubmit);
-		fieldFileToSubmit.setColumns(10);
-		
-		JButton btnSubmit = new JButton(my_submit_action);
-		btnSubmit.setBounds(409, 255, 159, 29);
-		panel_1.add(btnSubmit);
-		
-		JLabel lblDenotesRequired = new JLabel("* Required Field");
-		lblDenotesRequired.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDenotesRequired.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblDenotesRequired.setBounds(663, 255, 120, 20);
-		panel_1.add(lblDenotesRequired);
-		
-		JLabel lblPaperTitle = new JLabel("* Paper Title:");
+		JLabel lblPaperTitle = new JLabel("Paper Title:");
 		lblPaperTitle.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPaperTitle.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblPaperTitle.setBounds(74, 175, 297, 20);
 		panel_1.add(lblPaperTitle);
-		
-		JLabel lblFileTo = new JLabel("* File to Submit:");
-		lblFileTo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblFileTo.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblFileTo.setBounds(74, 210, 297, 20);
-		panel_1.add(lblFileTo);
 		
 		JLabel fieldConfTitle = new JLabel(current_conf.getConfTitle());
 		fieldConfTitle.setHorizontalAlignment(SwingConstants.LEFT);
@@ -281,11 +262,22 @@ public class SubmitPaperGUI extends JPanel {
 		separator_2.setBounds(20, 46, 799, 20);
 		panel_1.add(separator_2);
 		
-		JLabel lblSubmitANew = new JLabel("Submit a New Paper to the Conference");
+		JLabel lblSubmitANew = new JLabel("Edit a Paper Submission to the Conference");
 		lblSubmitANew.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSubmitANew.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblSubmitANew.setBounds(20, 15, 791, 20);
 		panel_1.add(lblSubmitANew);
+		
+		JLabel fieldPaperTitle = new JLabel("<dynamic>");
+		fieldPaperTitle.setHorizontalAlignment(SwingConstants.LEFT);
+		fieldPaperTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fieldPaperTitle.setBounds(401, 175, 397, 20);
+		panel_1.add(fieldPaperTitle);
+		
+		JButton btnDeleteSubmission = new JButton(my_delete_submission_action);
+		btnDeleteSubmission.setText(DELETE_SUBMISSION_TITLE_STRING);
+		btnDeleteSubmission.setBounds(621, 269, 159, 29);
+		panel_1.add(btnDeleteSubmission);
 	}
 	
 	/**
@@ -344,50 +336,34 @@ public class SubmitPaperGUI extends JPanel {
 		my_main_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_M);
 		
 		/*
-		 * The action associated with clicking the Submit button.
+		 * The action associated with clicking the Edit Submission button.
 		 */
-		my_submit_action = new AbstractAction(SUBMIT_TITLE_STRING, null)
+		my_edit_submission_action = new AbstractAction(EDIT_SUBMISSION_TITLE_STRING, null)
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				String conf_title = fieldPaperTitle.getText();
-				String conf_date = fieldFileToSubmit.getText();
-				if (conf_title.equals("")){
-					JOptionPane.showMessageDialog(contentPane, "Please enter a conference title.");
-				}
-				else if (conf_date.equals("")){
-					JOptionPane.showMessageDialog(contentPane, "Please enter a conference date.");
-				}
-				else{
-					//TODO: maybe once the conference is created, a new screen should be populated with the fields entered
-					//		with a "success your paper was submitted" message?
-					
-					//TODO: change this from a text field to a file navigation option to actually identify the file.
-					//		right now, for speed of development, it's just a text field.
-
-					String paper_title = fieldPaperTitle.getText();
-					String fileSubmited = fieldFileToSubmit.getText();
-					if (paper_title.equals("")){
-						JOptionPane.showMessageDialog(contentPane, "Please enter a paper title.");
-					}
-					else if (fileSubmited.equals("")){
-						JOptionPane.showMessageDialog(contentPane, "Please enter a file name.");
-					}
-					else {
-						try{
-							controller.createNewPaper(current_conf, username, paper_title, fileSubmited);
-						}
-						catch (Exception e){
-							JOptionPane.showMessageDialog(contentPane, e);
-						}
-						controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
-					}
-				}
-				
+				controller.deletePaper(current_conf, username, controller.getCurrentPaper());
+				controller.setCurrentPaper("");
+				controller.setStateOfGUI(StateOfGUI.SUBMIT_PAPER);
 			}
 		};
-		my_submit_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_STRING);
-		my_submit_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_S);
+		my_edit_submission_action.putValue(Action.SHORT_DESCRIPTION, EDIT_SUBMISSION_STRING);
+		my_edit_submission_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_E);
+		
+		/*
+		 * The action associated with clicking the Submit button.
+		 */
+		my_delete_submission_action = new AbstractAction(DELETE_SUBMISSION_TITLE_STRING, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				controller.deletePaper(current_conf, username, controller.getCurrentPaper());
+				controller.setCurrentPaper("");
+				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+			}
+		};
+		my_delete_submission_action.putValue(Action.SHORT_DESCRIPTION, DELETE_SUMISSION_STRING);
+		my_delete_submission_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_D);
 	}
 }
 

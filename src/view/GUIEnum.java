@@ -46,8 +46,11 @@ public class GUIEnum {
 		/**
 		 * Make the submit paper user interface visible.
 		 */
-		SUBMIT_PAPER
-		
+		SUBMIT_PAPER,
+		/**
+		 * Make the edit submission user interface visible.
+		 */
+		EDIT_SUBMISSION;
 	}
 
 }

@@ -189,6 +189,7 @@ public class Controller extends Observable{
 //		else{
 //			add the paper to the database.
 //		}
+		setCurrentPaper(the_paper_title);
 	}
 	
 	public void setCurrentPaper(final String the_paper){
@@ -197,5 +198,9 @@ public class Controller extends Observable{
 	
 	public String getCurrentPaper(){
 		return current_paper;
+	}
+	
+	public void deletePaper(final Conference the_conference, final String the_username, final String the_paper_title){
+		//TODO: Remove this paper from the database
 	}
 }

@@ -310,7 +310,7 @@ public class HomeGUI extends JPanel {
 				//TODO: the button needs to be associated with a paper and conference title.  When
 				//		the user selects the button, need to set the paper title in the controller
 				//		so that it knows what paper is in focus if any.
-				controller.setCurrentPaper("paper title");
+				controller.setCurrentPaper("");
 				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 			}
 		};

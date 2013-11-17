@@ -21,6 +21,7 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -277,9 +278,16 @@ public class ManagePaperGUI extends JPanel{
 		panel.add(separator_2);
 		
 		
-		//TODO: add logic here.  If the paper hasn't been created yet, the Jlabel should be blank.  Otherwise, retrieve the 
+		//If the paper hasn't been created yet, the Jlabel should be blank.  Otherwise, retrieve the 
 		//		paper title and add it to the label.
-		JLabel lblPaperTitle = new JLabel(controller.getCurrentPaper());
+		JLabel lblPaperTitle;
+		if (controller.getCurrentPaper() == ""){
+			lblPaperTitle = new JLabel("No Paper Selected");
+		}
+		else {
+			lblPaperTitle = new JLabel("Paper: " + controller.getCurrentPaper());
+		}
+
 		lblPaperTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPaperTitle.setBounds(20, 11, 789, 29);
 		panel.add(lblPaperTitle);
@@ -511,13 +519,31 @@ public class ManagePaperGUI extends JPanel{
 		/*
 		 * The action associated with clicking the edit submission button.
 		 */
+		
+		//TODO: this button should not be populated if there is no paper in focus.  Eventually,
+		//		the JOptionPane should be removed, because that condition should never be met
+		//		where the user is trying to edit a paper that hasn't been submitted.
+		
+		//TODO: furthermore, if the user isn't the author of the paper in focus, the button 
+		//		should not be populated.  They should be able to see the relevant data according
+		//		to their permissions, but they shouldn't be able to delete a paper.
+		
+		//TODO: The only other thing to consider is if the PC should have the ability to delete
+		//		a paper because they have "ultimate" authority.  If someone submits an
+		//		inflamatory or irrelevant paper, they should be able to delete it as trash.
 		my_edit_submission_action = new AbstractAction(EDIT_SUBMISSION_TITLE_STRING, null)
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				//TODO: add the switching state reference.
-//				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
-				System.out.println("edit submission....");
+				if (controller.getCurrentPaper() == "")  //if there is no paper in focus, don't try to edit it.
+				{
+					JOptionPane.showMessageDialog(contentPane, "There is no paper to edit.");
+				}
+				else {
+					controller.setStateOfGUI(StateOfGUI.EDIT_SUBMISSION);
+					System.out.println("edit submission....");
+				}
 			}
 		};
 		my_edit_submission_action.putValue(Action.SHORT_DESCRIPTION, EDIT_SUBMISSION_STRING);
