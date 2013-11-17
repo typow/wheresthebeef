@@ -468,6 +468,7 @@ public class ManagePaperGUI extends JPanel{
 				controller.setCurrentUsername(""); //blank because they're logging out
 					//we need to reset the current user to "null".
 				controller.setCurrentConference(null);
+				controller.setCurrentPaper("");
 				controller.setStateOfGUI(StateOfGUI.LOGIN);
 			}
 		};
@@ -557,7 +558,7 @@ public class ManagePaperGUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				//TODO: add the switching state reference.
-//				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				controller.setStateOfGUI(StateOfGUI.SUBMIT_REVIEW);
 				System.out.println("submit review....");
 			}
 		};

@@ -71,6 +71,11 @@ public class MainFrame extends JFrame implements Observer {
 	private static EditSubmissionGUI editSubmissionWindow;
 	
 	/**
+	 * The SubmitReviewGUI user interface
+	 */
+	private static SubmitReviewGUI submitReviewWindow;
+	
+	/**
 	 * The current JPanal Component being used by the MainFrame JFrame
 	 */
 	private Component currentPanel;
@@ -168,6 +173,15 @@ public class MainFrame extends JFrame implements Observer {
 			setTitle("Edit a Submitted Paper");
 			this.remove(currentPanel);
 			currentPanel = editSubmissionWindow.getGUI();
+			add(currentPanel);
+			pack();
+			setVisible(true);
+			break;
+		case SUBMIT_REVIEW:
+			submitReviewWindow = new SubmitReviewGUI(controller);
+			setTitle("Submit a Review");
+			this.remove(currentPanel);
+			currentPanel = submitReviewWindow.getGUI();
 			add(currentPanel);
 			pack();
 			setVisible(true);

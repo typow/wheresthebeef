@@ -303,6 +303,7 @@ public class EditSubmissionGUI extends JPanel {
 				controller.setCurrentUsername(""); //blank because they're logging out
 					//we need to reset the current user to "null".
 				controller.setCurrentConference(null);
+				controller.setCurrentPaper("");
 				controller.setStateOfGUI(StateOfGUI.LOGIN);
 			}
 		};

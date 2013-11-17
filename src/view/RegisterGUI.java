@@ -341,6 +341,7 @@ public class RegisterGUI extends JPanel {
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setCurrentUsername("");  //blank because in this case, 
 					//the user is logging out by going back one screen.
+				controller.setCurrentPaper("");
 				controller.setStateOfGUI(StateOfGUI.LOGIN);
 			}
 		};

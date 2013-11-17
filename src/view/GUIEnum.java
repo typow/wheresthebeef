@@ -50,7 +50,11 @@ public class GUIEnum {
 		/**
 		 * Make the edit submission user interface visible.
 		 */
-		EDIT_SUBMISSION;
+		EDIT_SUBMISSION,
+		/**
+		 * Make the submit review user interface visible.
+		 */
+		SUBMIT_REVIEW;
 	}
 
 }

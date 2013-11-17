@@ -261,6 +261,7 @@ public class HomeGUI extends JPanel {
 				controller.setCurrentUsername(""); //blank because they're logging out
 					//we need to reset the current user to "null".
 				controller.setCurrentConference(null);
+				controller.setCurrentPaper("");
 				controller.setStateOfGUI(StateOfGUI.LOGIN);
 			}
 		};
@@ -279,6 +280,7 @@ public class HomeGUI extends JPanel {
 				controller.setCurrentUsername("");  //blank because in this case, 
 					//the user is logging out by going back one screen.
 				controller.setCurrentConference(null);
+				controller.setCurrentPaper("");
 				controller.setStateOfGUI(StateOfGUI.LOGIN);
 			}
 		};
