@@ -39,8 +39,10 @@ import javax.swing.JTabbedPane;
 /**
 * The Manage Paper User Interface JPanel
 * 
-* Allows the user to create access all the information relevant to a paper
-* in relation to their permissions associated with that paper
+* Allows the user to create access all the information relevant to a conference
+* and a paper in relation to their permissions associated with that paper.  If 
+* the user doens't have a relationship with a paper in that conference, only
+* the relevant conference data will be populated.
 * @author Jacob Hall
 * @version 11/15/13
 */
@@ -163,6 +165,12 @@ public class ManagePaperGUI extends JPanel{
 	 */
 	private Controller controller;
 	
+	
+	/*
+	 * the current conference in focus.
+	 */
+	private Conference current_conf;
+	
 	/*
 	 * the Action associated with the logout button
 	 */
@@ -215,7 +223,7 @@ public class ManagePaperGUI extends JPanel{
 	public ManagePaperGUI(final Controller the_controller) {
 		super();
 		controller = the_controller;
-		Conference current_conf = controller.getCurrentConference();
+		current_conf = controller.getCurrentConference();
 		setupActions();
 		setBounds(100, 100, 722, 520);
 		contentPane = new JPanel();
@@ -268,7 +276,10 @@ public class ManagePaperGUI extends JPanel{
 		separator_2.setBounds(20, 50, 789, 13);
 		panel.add(separator_2);
 		
-		JLabel lblPaperTitle = new JLabel("<dynamic>");
+		
+		//TODO: add logic here.  If the paper hasn't been created yet, the Jlabel should be blank.  Otherwise, retrieve the 
+		//		paper title and add it to the label.
+		JLabel lblPaperTitle = new JLabel(controller.getCurrentPaper());
 		lblPaperTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPaperTitle.setBounds(20, 11, 789, 29);
 		panel.add(lblPaperTitle);
@@ -385,7 +396,7 @@ public class ManagePaperGUI extends JPanel{
 		fieldConfDate.setBounds(186, 55, 379, 20);
 		tabConferenceInfo.add(fieldConfDate);
 		
-		JLabel fieldPaperStatus = new JLabel("<dynamic>");
+		JLabel fieldPaperStatus = new JLabel("<dynamic: status>");
 		fieldPaperStatus.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldPaperStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldPaperStatus.setBounds(186, 90, 379, 20);
@@ -456,16 +467,13 @@ public class ManagePaperGUI extends JPanel{
 		my_logout_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_L);
 		
 		/*
-		 * The action associated with clicking back, in this case, the same as logging out.
-		 * In the future, the back button will just take you back to the previous screen,
-		 * but for the sake of continuity and flow, I included the back button here as well
+		 * The action associated with clicking back.
 		 */
 		my_back_action = new AbstractAction(BACK_TITLE_STRING, null)
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				controller.setCurrentUsername("");  //blank because in this case, 
-					//the user is logging out by going back one screen.
+				controller.setCurrentPaper("");
 				controller.setStateOfGUI(StateOfGUI.HOME);
 			}
 		};
@@ -493,7 +501,7 @@ public class ManagePaperGUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				//TODO: add the switching state reference.
-//				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				controller.setStateOfGUI(StateOfGUI.SUBMIT_PAPER);
 				System.out.println("submit paper....");
 			}
 		};

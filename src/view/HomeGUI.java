@@ -89,9 +89,16 @@ public class HomeGUI extends JPanel {
 	 */
 	private static final String NEW_CONF_STRING = "Create new conference in the CMS (ALT+N)";
 	
-	private static final String TEMP_TITLE_STRING = "temp button";
+	private static final String TEMP_TITLE_STRING = "temp: one of many btns in the table above linked to a specific paper and conf, user has a relation";
 
 	private static final String TEMP_STRING = "This button is temporary.  " +
+			"Eventually, it will be one of many buttons listed in the table above, " +
+			"each linking the user to the paper management GUI.  Remove this later " +
+			"once those buttons are implemented.";
+	
+	private static final String TEMP_TITLE_STRING_TWO = "temp: on of many btns in table above, no paper in focus, user has no realtion to the conf yet";
+
+	private static final String TEMP_STRING_TWO = "This button is temporary.  " +
 			"Eventually, it will be one of many buttons listed in the table above, " +
 			"each linking the user to the paper management GUI.  Remove this later " +
 			"once those buttons are implemented.";
@@ -119,7 +126,9 @@ public class HomeGUI extends JPanel {
 	 */
 	private Action my_new_conf_action;
 	
-	private Action my_temp_action;
+	private Action my_temp_paper_selected_action;
+	
+	private Action my_temp_conf_selected_action;
 
 	/**
 	 * Create the JPanel.
@@ -218,9 +227,15 @@ public class HomeGUI extends JPanel {
 		panel.add(scrollPane_1);
 		scrollPane_1.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
-		JButton btnNewButton = new JButton(my_temp_action);
-		btnNewButton.setBounds(491, 207, 213, 23);
-		panel.add(btnNewButton);
+		JButton btnTempPaperRelation = new JButton(my_temp_paper_selected_action);
+		btnTempPaperRelation.setText(TEMP_TITLE_STRING);
+		btnTempPaperRelation.setBounds(204, 207, 514, 23);
+		panel.add(btnTempPaperRelation);
+		
+		JButton btnTempGeneralConf = new JButton(my_temp_conf_selected_action);
+		btnTempGeneralConf.setText(TEMP_TITLE_STRING_TWO);
+		btnTempGeneralConf.setBounds(204, 408, 514, 23);
+		panel.add(btnTempGeneralConf);
 	}
 	
 	/**
@@ -285,17 +300,51 @@ public class HomeGUI extends JPanel {
 		my_new_conf_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
 		
 		/*
-		 * The action associated with clicking the Create New Conference button.
+		 * The action associated with clicking the button that is associated with a paper and
+		 * conference.  This will eventually be a table of buttons each linked to a paper and conference.
 		 */
-		my_temp_action = new AbstractAction(TEMP_TITLE_STRING, null)
+		my_temp_paper_selected_action = new AbstractAction(TEMP_TITLE_STRING, null)
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
+				//TODO: the button needs to be associated with a paper and conference title.  When
+				//		the user selects the button, need to set the paper title in the controller
+				//		so that it knows what paper is in focus if any.
+				controller.setCurrentPaper("paper title");
 				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 			}
 		};
-		my_temp_action.putValue(Action.SHORT_DESCRIPTION, TEMP_STRING);
-		my_temp_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
+		my_temp_paper_selected_action.putValue(Action.SHORT_DESCRIPTION, TEMP_STRING);
+		my_temp_paper_selected_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
+		
+		/*
+		 * The action associated with clicking the button that is just a link to a conference.
+		 * There is no paper in focus yet.  This is one of many buttons in the table each linking
+		 * to a conference, but the user has no relation to the conference yet.
+		 */
+		my_temp_conf_selected_action = new AbstractAction(TEMP_TITLE_STRING_TWO, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				//TODO: the button needs to be associated with a paper and conference title.  When
+				//		the user selects the button, need to set the paper title in the controller
+				//		so that it knows what paper is in focus if any.
+				
+				//TODO: this button also needs to set the current_conf in the controller so that
+				//		it knows what conference is in focus.  The next GUI can then retrieve
+				//		the relevant data about that conference.  As of right now, because the table
+				//		isn't set up, we don't know what conference to set as the one in focus
+				//		However, since the user won't have a relation to any of these conferences,
+				//		meaning they aren't an Author, PC, Subpc,....., there is no paper in focus,
+				//		so set it to "". Blank.
+				
+//				controller.setCurrentConference(the_conference_name);
+				controller.setCurrentPaper("");
+				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+			}
+		};
+		my_temp_conf_selected_action.putValue(Action.SHORT_DESCRIPTION, TEMP_STRING_TWO);
+		my_temp_conf_selected_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_T);
 	}
 }
 

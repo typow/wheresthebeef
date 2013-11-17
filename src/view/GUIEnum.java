@@ -42,7 +42,11 @@ public class GUIEnum {
 		/**
 		 * Make the manage paper user interface visible.
 		 */
-		MANAGE_PAPER;
+		MANAGE_PAPER,
+		/**
+		 * Make the submit paper user interface visible.
+		 */
+		SUBMIT_PAPER
 		
 	}
 

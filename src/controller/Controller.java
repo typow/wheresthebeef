@@ -40,6 +40,11 @@ public class Controller extends Observable{
 	 */
 	private Conference current_conference;
 	
+	/*
+	 * The current paper (if any) that is being evaluated by the user
+	 */
+	private String current_paper = "";
+	
 	/**
 	 * Constructor for the Controller.  State initially set to LOGIN
 	 */
@@ -169,5 +174,28 @@ public class Controller extends Observable{
 	
 	public Conference getCurrentConference(){
 		return current_conference;
+	}
+	
+	public void createNewPaper(final Conference the_conference, final String the_username, final String the_paper_title, 
+			final String the_file_submitted) throws Exception{
+		//TODO: add the paper and info related to it to the database.  Note:  this is called in the GUI in a try-catch statement
+		//		Return Exception "Author cannot submit more than 4 papers to a single conference." 
+		//		implement the Logic to prevent that here.  The GUI will print out the Exception string in a JDialog box.
+		
+		
+//		if (number of papers in the conference == 4){
+//			throw new Exception("Author cannot submit more than 4 papers to a single conference.");
+//		}
+//		else{
+//			add the paper to the database.
+//		}
+	}
+	
+	public void setCurrentPaper(final String the_paper){
+		current_paper = the_paper;
+	}
+	
+	public String getCurrentPaper(){
+		return current_paper;
 	}
 }
