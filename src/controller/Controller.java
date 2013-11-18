@@ -136,7 +136,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM Users WHERE Username=" + the_username);
+					"SELECT * FROM users WHERE username=" + the_username);
 			resultSet = statement.executeQuery();
 			
 			while (resultSet.next()) {
@@ -199,9 +199,29 @@ public class Controller extends Observable{
 		//TODO: implement this so that it returns the full name of the individual
 		
 		//return: the_username.first + " " + the_username.middle + " " + the_username.last
-		
+				
 		//temporary    Jacob
-		return the_username;
+		//UNTESTED!!!
+		
+		String result = "";
+		
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM users WHERE username=" + the_username);
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				result += resultSet.getString(2) + " ";
+				result += resultSet.getString(3) + " ";
+				result += resultSet.getString(4);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Get full name failed!");
+		}
+		
+		return result;
 	}
 	
 	public Boolean checkConferenceExists(final String the_conference_title){
