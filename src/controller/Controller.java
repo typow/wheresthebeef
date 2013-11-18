@@ -61,7 +61,7 @@ public class Controller extends Observable{
 	private String current_user = "";
 	
 	/*
-	 * The current conference (if any) that is being evaluated by the user
+	 * The current conference (if any) that is being evaluated by the user 
 	 */
 	private Conference current_conference;
 	
