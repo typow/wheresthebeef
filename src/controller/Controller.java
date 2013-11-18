@@ -170,8 +170,17 @@ public class Controller extends Observable{
 							final String the_first_name, final String the_middle_name, 
 							final String the_last_name, final String the_specialty)
 	{
-		//TODO: add this as a new user to the database.  GUI already verified that the
-		//		username doesn't already exist and that the fields are not empty.  Jacob
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"INSERT INTO users VALUES ('" + the_username + "', '" + the_first_name + "', '" +
+					the_middle_name + "', '" + the_last_name + "', '" + the_specialty + "')");
+			statement.execute();
+			System.out.println(the_username + " Successfully added user");
+		} catch (SQLException e) {
+			System.out.println("Check for valid Username failed");
+			e.printStackTrace();
+		}
 	}
 	
 	/**
