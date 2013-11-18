@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Observable;
 
@@ -73,18 +74,36 @@ public class Controller extends Observable{
 	 * Constructor for the Controller.  State initially set to LOGIN
 	 * @throws Exception 
 	 */
-	public Controller() throws Exception{
+	public Controller() {
 		state = StateOfGUI.LOGIN;
-		
-		try {
-
+		Connection conn = null;
+		try {		      
 		      Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
-		      
-		      
+		      } catch (InstantiationException e) {
+		          e.printStackTrace();
+		      } catch (IllegalAccessException e) {
+		          e.printStackTrace();
+		      } catch (ClassNotFoundException e) {
+		          e.printStackTrace();
+		      }
+		try {
+		      conn = DriverManager.getConnection("jdbc:derby://localhost:1527/CMSDB;");
+		      System.out.println("Success!! Lets eat Cake!!");
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch(SQLException e) {	
+				}
+				conn = null;
+			}
+		}
 		      /*
 		       * Junk code for the time being
 		      connect = DriverManager
-		          .getConnection("jdbc:derby://localhost:1527/c:/Users/Seth/workspace/CMS/src/database");
+		          .getConnection("jdbc:derby://localhost:1527/CMSDB");
 		      
 		      PreparedStatement statement = connect
 		          .prepareStatement("SELECT * from USERS");
@@ -96,11 +115,11 @@ public class Controller extends Observable{
 		        System.out.println("User: " + user);
 		        System.out.println("ID: " + number);
 		      }*/
-		    } catch (Exception e) {
-		      throw e;
-		    } finally {
+		      /*
+		    finally {
 		      close();
 		    }
+		    */
 	}
 	
 	
