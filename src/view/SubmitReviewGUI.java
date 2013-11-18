@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ButtonModel;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
@@ -37,6 +38,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextPane;
 import java.awt.TextArea;
+import java.sql.Array;
+
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 
@@ -126,6 +129,11 @@ public class SubmitReviewGUI extends JPanel {
 	private String username;
 	
 	/*
+	 * the current paper being reviewed.
+	 */
+	private String paper;
+	
+	/*
 	 * the Action associated with the Main button
 	 */
 	private Action my_main_action;
@@ -159,6 +167,69 @@ public class SubmitReviewGUI extends JPanel {
 	private final ButtonGroup Q8_Group = new ButtonGroup();
 	private final ButtonGroup Q9_Group = new ButtonGroup();
 	private final ButtonGroup Q10_Group = new ButtonGroup();
+	
+	private final JRadioButton Q1_1;
+	private final JRadioButton Q1_2;
+	private final JRadioButton Q1_3;
+	private final JRadioButton Q1_4;
+	private final JRadioButton Q1_5;
+	
+	private final JRadioButton Q2_1;
+	private final JRadioButton Q2_2;
+	private final JRadioButton Q2_3;
+	private final JRadioButton Q2_4;
+	private final JRadioButton Q2_5;
+	
+	private final JRadioButton Q3_1;
+	private final JRadioButton Q3_2;
+	private final JRadioButton Q3_3;
+	private final JRadioButton Q3_4;
+	private final JRadioButton Q3_5;
+	
+	private final JRadioButton Q4_1;
+	private final JRadioButton Q4_2;
+	private final JRadioButton Q4_3;
+	private final JRadioButton Q4_4;
+	private final JRadioButton Q4_5;
+	
+	private final JRadioButton Q5_1;
+	private final JRadioButton Q5_2;
+	private final JRadioButton Q5_3;
+	private final JRadioButton Q5_4;
+	private final JRadioButton Q5_5;
+	
+	private final JRadioButton Q6_1;
+	private final JRadioButton Q6_2;
+	private final JRadioButton Q6_3;
+	private final JRadioButton Q6_4;
+	private final JRadioButton Q6_5;
+	
+	private final JRadioButton Q7_1;
+	private final JRadioButton Q7_2;
+	private final JRadioButton Q7_3;
+	private final JRadioButton Q7_4;
+	private final JRadioButton Q7_5;
+	
+	private final JRadioButton Q8_1;
+	private final JRadioButton Q8_2;
+	private final JRadioButton Q8_3;
+	private final JRadioButton Q8_4;
+	private final JRadioButton Q8_5;
+	
+	private final JRadioButton Q9_1;
+	private final JRadioButton Q9_2;
+	private final JRadioButton Q9_3;
+	private final JRadioButton Q9_4;
+	private final JRadioButton Q9_5;
+	
+	
+	private final JRadioButton Q10_1;
+	private final JRadioButton Q10_2;
+	private final JRadioButton Q10_3;
+	private final JRadioButton Q10_4;
+	private final JRadioButton Q10_5;
+	
+	
 
 	/**
 	 * Create the JPanel.
@@ -174,7 +245,7 @@ public class SubmitReviewGUI extends JPanel {
 		contentPane.setBackground(BACKGROUND_COLOR);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
-		contentPane.setPreferredSize(new Dimension(1280, 720));
+		contentPane.setPreferredSize(WIN_DIMENSION);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 48, 1260, 2);
@@ -219,7 +290,9 @@ public class SubmitReviewGUI extends JPanel {
 		
 		JTextArea txtrPleaseProvideA = new JTextArea();
 		txtrPleaseProvideA.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtrPleaseProvideA.setText("Please provide a numeric rating on a 5-point scale for each question, along with a brief           rationale for each numeric rating.  In doing so, please discuss both the strengths and the       weaknesses of each paper so that the editors and authors can understand your reasoning.                                                                                                                                                  Please phrase your reviews politely; even 'bad' papers represent a lot of work on the part of   the authors. The review may be the basis for further revisions of the paper or the work that   the paper reports. We all know how hurtful a needlessly negative review can be, and how      helpful a positive one can be; please try to bear that in mind when you are writing yours.");
+		txtrPleaseProvideA.setText("Please provide a numeric rating on a 5-point scale for each question, along with a " +
+				"brief           rationale for each numeric rating.  In doing so, please discuss both the strengths and " +
+				"the       weaknesses of each paper so that the editors and authors can understand your reasoning.                                                                                                                                                  Please phrase your reviews politely; even 'bad' papers represent a lot of work on the part of   the authors. The review may be the basis for further revisions of the paper or the work that   the paper reports. We all know how hurtful a needlessly negative review can be, and how      helpful a positive one can be; please try to bear that in mind when you are writing yours.");
 		txtrPleaseProvideA.setEditable(false);
 		txtrPleaseProvideA.setLineWrap(true);
 		GridBagConstraints gbc_txtrPleaseProvideA = new GridBagConstraints();
@@ -388,7 +461,8 @@ public class SubmitReviewGUI extends JPanel {
 		panel_7.add(lblCommentsToThe);
 		
 		JTextArea txtrQ1 = new JTextArea();
-		txtrQ1.setText("     1.  Can the content be directly applied by classroom instructors or curriculum designers?");
+		txtrQ1.setText("     1.  Can the content be directly applied by classroom " +
+				"instructors or curriculum designers?");
 		txtrQ1.setLineWrap(true);
 		txtrQ1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtrQ1.setEditable(false);
@@ -409,38 +483,41 @@ public class SubmitReviewGUI extends JPanel {
 		gbc_panel_8.gridy = 13;
 		panel.add(panel_8, gbc_panel_8);
 		
-		JRadioButton Q1_1 = new JRadioButton("[5] Directly and obviously applicable");
+		Q1_1 = new JRadioButton("[5] Directly and obviously applicable");
+		Q1_1.setSelected(true);
 		Q1_Group.add(Q1_1);
 		Q1_1.setBackground(Color.WHITE);
 		Q1_1.setBounds(64, 7, 470, 23);
 		panel_8.add(Q1_1);
 		
-		JRadioButton Q1_2 = new JRadioButton("[4]");
+		Q1_2 = new JRadioButton("[4]");
 		Q1_Group.add(Q1_2);
 		Q1_2.setBackground(Color.WHITE);
 		Q1_2.setBounds(64, 33, 470, 23);
 		panel_8.add(Q1_2);
 		
-		JRadioButton Q1_3 = new JRadioButton("[3]");
+		Q1_3 = new JRadioButton("[3]");
 		Q1_Group.add(Q1_3);
 		Q1_3.setBackground(Color.WHITE);
 		Q1_3.setBounds(64, 59, 470, 23);
 		panel_8.add(Q1_3);
 		
-		JRadioButton Q1_4 = new JRadioButton("[2]");
+		Q1_4 = new JRadioButton("[2]");
 		Q1_Group.add(Q1_4);
 		Q1_4.setBackground(Color.WHITE);
 		Q1_4.setBounds(64, 85, 470, 23);
 		panel_8.add(Q1_4);
 		
-		JRadioButton Q1_5 = new JRadioButton("[1] Not applicable to classroom instruction or design");
+		Q1_5 = new JRadioButton("[1] Not applicable to classroom instruction " +
+				"or design");
 		Q1_Group.add(Q1_5);
 		Q1_5.setBackground(Color.WHITE);
 		Q1_5.setBounds(64, 111, 470, 23);
 		panel_8.add(Q1_5);
 		
 		JTextArea txtrQ2 = new JTextArea();
-		txtrQ2.setText("    2.  Does the work appeal to a broad readership interested in engineering education or is it                  narrowly specialized? ");
+		txtrQ2.setText("    2.  Does the work appeal to a broad readership interested in " +
+				"engineering education or is it                  narrowly specialized? ");
 		txtrQ2.setLineWrap(true);
 		txtrQ2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtrQ2.setEditable(false);
@@ -461,31 +538,32 @@ public class SubmitReviewGUI extends JPanel {
 		gbc_panel_9.gridy = 15;
 		panel.add(panel_9, gbc_panel_9);
 		
-		JRadioButton Q2_1 = new JRadioButton("[5] Broad");
+		Q2_1 = new JRadioButton("[5] Broad");
 		Q2_Group.add(Q2_1);
+		Q2_1.setSelected(true);
 		Q2_1.setBackground(Color.WHITE);
 		Q2_1.setBounds(64, 7, 470, 23);
 		panel_9.add(Q2_1);
 		
-		JRadioButton Q2_2 = new JRadioButton("[4]");
+		Q2_2 = new JRadioButton("[4]");
 		Q2_Group.add(Q2_2);
 		Q2_2.setBackground(Color.WHITE);
 		Q2_2.setBounds(64, 33, 470, 23);
 		panel_9.add(Q2_2);
 		
-		JRadioButton Q2_3 = new JRadioButton("[3]");
+		Q2_3 = new JRadioButton("[3]");
 		Q2_Group.add(Q2_3);
 		Q2_3.setBackground(Color.WHITE);
 		Q2_3.setBounds(64, 59, 470, 23);
 		panel_9.add(Q2_3);
 		
-		JRadioButton Q2_4 = new JRadioButton("[2]");
+		Q2_4 = new JRadioButton("[2]");
 		Q2_Group.add(Q2_4);
 		Q2_4.setBackground(Color.WHITE);
 		Q2_4.setBounds(64, 85, 470, 23);
 		panel_9.add(Q2_4);
 		
-		JRadioButton Q2_5 = new JRadioButton("[1] Narrow");
+		Q2_5 = new JRadioButton("[1] Narrow");
 		Q2_Group.add(Q2_5);
 		Q2_5.setBackground(Color.WHITE);
 		Q2_5.setBounds(64, 111, 470, 23);
@@ -513,38 +591,40 @@ public class SubmitReviewGUI extends JPanel {
 		gbc_panel_10.gridy = 17;
 		panel.add(panel_10, gbc_panel_10);
 		
-		JRadioButton Q3_1 = new JRadioButton("[5] Significant");
+		Q3_1 = new JRadioButton("[5] Significant");
 		Q3_Group.add(Q3_1);
+		Q3_1.setSelected(true);
 		Q3_1.setBackground(Color.WHITE);
 		Q3_1.setBounds(64, 7, 470, 23);
 		panel_10.add(Q3_1);
 		
-		JRadioButton Q3_2 = new JRadioButton("[4]");
+		Q3_2 = new JRadioButton("[4]");
 		Q3_Group.add(Q3_2);
 		Q3_2.setBackground(Color.WHITE);
 		Q3_2.setBounds(64, 33, 470, 23);
 		panel_10.add(Q3_2);
 		
-		JRadioButton Q3_3 = new JRadioButton("[3]");
+		Q3_3 = new JRadioButton("[3]");
 		Q3_Group.add(Q3_3);
 		Q3_3.setBackground(Color.WHITE);
 		Q3_3.setBounds(64, 59, 470, 23);
 		panel_10.add(Q3_3);
 		
-		JRadioButton Q3_4 = new JRadioButton("[2]");
+		Q3_4 = new JRadioButton("[2]");
 		Q3_Group.add(Q3_4);
 		Q3_4.setBackground(Color.WHITE);
 		Q3_4.setBounds(64, 85, 470, 23);
 		panel_10.add(Q3_4);
 		
-		JRadioButton Q3_5 = new JRadioButton("[1] Insignificant");
+		Q3_5 = new JRadioButton("[1] Insignificant");
 		Q3_Group.add(Q3_5);
 		Q3_5.setBackground(Color.WHITE);
 		Q3_5.setBounds(64, 111, 470, 23);
 		panel_10.add(Q3_5);
 		
 		JTextArea txtrQ4 = new JTextArea();
-		txtrQ4.setText("    4.  Does the author build upon relevant references and bodies of knowledge?");
+		txtrQ4.setText("    4.  Does the author build upon relevant references " +
+				"and bodies of knowledge?");
 		txtrQ4.setLineWrap(true);
 		txtrQ4.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtrQ4.setEditable(false);
@@ -565,31 +645,33 @@ public class SubmitReviewGUI extends JPanel {
 		gbc_panel_11.gridy = 19;
 		panel.add(panel_11, gbc_panel_11);
 		
-		JRadioButton Q4_1 = new JRadioButton("[5] Relevant and sufficient references to existing bodies of knowledge");
+		Q4_1 = new JRadioButton("[5] Relevant and sufficient references " +
+				"to existing bodies of knowledge");
 		Q4_Group.add(Q4_1);
+		Q4_1.setSelected(true);
 		Q4_1.setBackground(Color.WHITE);
 		Q4_1.setBounds(66, 7, 470, 23);
 		panel_11.add(Q4_1);
 		
-		JRadioButton Q4_2 = new JRadioButton("[4]");
+		Q4_2 = new JRadioButton("[4]");
 		Q4_Group.add(Q4_2);
 		Q4_2.setBackground(Color.WHITE);
 		Q4_2.setBounds(66, 33, 470, 23);
 		panel_11.add(Q4_2);
 		
-		JRadioButton Q4_3 = new JRadioButton("[3]");
+		Q4_3 = new JRadioButton("[3]");
 		Q4_Group.add(Q4_3);
 		Q4_3.setBackground(Color.WHITE);
 		Q4_3.setBounds(66, 59, 470, 23);
 		panel_11.add(Q4_3);
 		
-		JRadioButton Q4_4 = new JRadioButton("[2]");
+		Q4_4 = new JRadioButton("[2]");
 		Q4_Group.add(Q4_4);
 		Q4_4.setBackground(Color.WHITE);
 		Q4_4.setBounds(66, 85, 470, 23);
 		panel_11.add(Q4_4);
 		
-		JRadioButton Q4_5 = new JRadioButton("[1] Few if any relevant references");
+		Q4_5 = new JRadioButton("[1] Few if any relevant references");
 		Q4_Group.add(Q4_5);
 		Q4_5.setBackground(Color.WHITE);
 		Q4_5.setBounds(66, 111, 470, 23);
@@ -597,7 +679,9 @@ public class SubmitReviewGUI extends JPanel {
 		
 		JTextArea txtrQ5 = new JTextArea();
 		txtrQ5.setWrapStyleWord(true);
-		txtrQ5.setText("    5.  If a teaching intervention is reported, is it adequately evaluated in terms of its impact on                learning in actual use?");
+		txtrQ5.setText("    5.  If a teaching intervention is reported, is it " +
+				"adequately evaluated in terms of its impact on                learning " +
+				"in actual use?");
 		txtrQ5.setLineWrap(true);
 		txtrQ5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtrQ5.setEditable(false);
@@ -618,31 +702,32 @@ public class SubmitReviewGUI extends JPanel {
 		gbc_panel_12.gridy = 21;
 		panel.add(panel_12, gbc_panel_12);
 		
-		JRadioButton Q5_1 = new JRadioButton("[5] Excellent evaluation ");
+		Q5_1 = new JRadioButton("[5] Excellent evaluation ");
 		Q5_Group.add(Q5_1);
+		Q5_1.setSelected(true);
 		Q5_1.setBackground(Color.WHITE);
 		Q5_1.setBounds(66, 7, 470, 23);
 		panel_12.add(Q5_1);
 		
-		JRadioButton Q5_2 = new JRadioButton("[4]");
+		Q5_2 = new JRadioButton("[4]");
 		Q5_Group.add(Q5_2);
 		Q5_2.setBackground(Color.WHITE);
 		Q5_2.setBounds(66, 33, 470, 23);
 		panel_12.add(Q5_2);
 		
-		JRadioButton Q5_3 = new JRadioButton("[3]");
+		Q5_3 = new JRadioButton("[3]");
 		Q5_Group.add(Q5_3);
 		Q5_3.setBackground(Color.WHITE);
 		Q5_3.setBounds(66, 59, 470, 23);
 		panel_12.add(Q5_3);
 		
-		JRadioButton Q5_4 = new JRadioButton("[2]");
+		Q5_4 = new JRadioButton("[2]");
 		Q5_Group.add(Q5_4);
 		Q5_4.setBackground(Color.WHITE);
 		Q5_4.setBounds(66, 85, 470, 23);
 		panel_12.add(Q5_4);
 		
-		JRadioButton Q5_5 = new JRadioButton("[1] Inadequate evaluation");
+		Q5_5 = new JRadioButton("[1] Inadequate evaluation");
 		Q5_Group.add(Q5_5);
 		Q5_5.setBackground(Color.WHITE);
 		Q5_5.setBounds(66, 111, 470, 23);
@@ -650,7 +735,9 @@ public class SubmitReviewGUI extends JPanel {
 		
 		JTextArea txtrQ6 = new JTextArea();
 		txtrQ6.setWrapStyleWord(true);
-		txtrQ6.setText("    6.  Does the author use methods appropriate to the goals, both for the instructional                           intervention and the evaluation of impact on learning?");
+		txtrQ6.setText("    6.  Does the author use methods appropriate to the goals, " +
+				"both for the instructional                           intervention and " +
+				"the evaluation of impact on learning?");
 		txtrQ6.setLineWrap(true);
 		txtrQ6.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtrQ6.setEditable(false);
@@ -671,38 +758,40 @@ public class SubmitReviewGUI extends JPanel {
 		gbc_panel_13.gridy = 23;
 		panel.add(panel_13, gbc_panel_13);
 		
-		JRadioButton Q6_1 = new JRadioButton("[5] Appropriate methods");
+		Q6_1 = new JRadioButton("[5] Appropriate methods");
 		Q6_Group.add(Q6_1);
+		Q6_1.setSelected(true);
 		Q6_1.setBackground(Color.WHITE);
 		Q6_1.setBounds(66, 7, 470, 23);
 		panel_13.add(Q6_1);
 		
-		JRadioButton Q6_2 = new JRadioButton("[4]");
+		Q6_2 = new JRadioButton("[4]");
 		Q6_Group.add(Q6_2);
 		Q6_2.setBackground(Color.WHITE);
 		Q6_2.setBounds(66, 33, 470, 23);
 		panel_13.add(Q6_2);
 		
-		JRadioButton Q6_3 = new JRadioButton("[3]");
+		Q6_3 = new JRadioButton("[3]");
 		Q6_Group.add(Q6_3);
 		Q6_3.setBackground(Color.WHITE);
 		Q6_3.setBounds(66, 59, 470, 23);
 		panel_13.add(Q6_3);
 		
-		JRadioButton Q6_4 = new JRadioButton("[2]");
+		Q6_4 = new JRadioButton("[2]");
 		Q6_Group.add(Q6_4);
 		Q6_4.setBackground(Color.WHITE);
 		Q6_4.setBounds(66, 85, 470, 23);
 		panel_13.add(Q6_4);
 		
-		JRadioButton Q6_5 = new JRadioButton("[1] Inappropriate or unclear methods");
+		Q6_5 = new JRadioButton("[1] Inappropriate or unclear methods");
 		Q6_Group.add(Q6_5);
 		Q6_5.setBackground(Color.WHITE);
 		Q6_5.setBounds(66, 111, 470, 23);
 		panel_13.add(Q6_5);
 		
 		JTextArea txtrQ7 = new JTextArea();
-		txtrQ7.setText("    7.  Did the author provide sufficient detail to replicate and evaluate?");
+		txtrQ7.setText("    7.  Did the author provide sufficient detail to replicate " +
+				"and evaluate?");
 		txtrQ7.setLineWrap(true);
 		txtrQ7.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtrQ7.setEditable(false);
@@ -723,31 +812,32 @@ public class SubmitReviewGUI extends JPanel {
 		gbc_panel_14.gridy = 25;
 		panel.add(panel_14, gbc_panel_14);
 		
-		JRadioButton Q7_1 = new JRadioButton("[5] Sufficient detail");
+		Q7_1 = new JRadioButton("[5] Sufficient detail");
 		Q7_Group.add(Q7_1);
+		Q7_1.setSelected(true);
 		Q7_1.setBackground(Color.WHITE);
 		Q7_1.setBounds(66, 7, 470, 23);
 		panel_14.add(Q7_1);
 		
-		JRadioButton Q7_2 = new JRadioButton("[4]");
+		Q7_2 = new JRadioButton("[4]");
 		Q7_Group.add(Q7_2);
 		Q7_2.setBackground(Color.WHITE);
 		Q7_2.setBounds(66, 33, 470, 23);
 		panel_14.add(Q7_2);
 		
-		JRadioButton Q7_3 = new JRadioButton("[3]");
+		Q7_3 = new JRadioButton("[3]");
 		Q7_Group.add(Q7_3);
 		Q7_3.setBackground(Color.WHITE);
 		Q7_3.setBounds(66, 59, 470, 23);
 		panel_14.add(Q7_3);
 		
-		JRadioButton Q7_4 = new JRadioButton("[2]");
+		Q7_4 = new JRadioButton("[2]");
 		Q7_Group.add(Q7_4);
 		Q7_4.setBackground(Color.WHITE);
 		Q7_4.setBounds(66, 85, 470, 23);
 		panel_14.add(Q7_4);
 		
-		JRadioButton Q7_5 = new JRadioButton("[1] Insufficient detail");
+		Q7_5 = new JRadioButton("[1] Insufficient detail");
 		Q7_Group.add(Q7_5);
 		Q7_5.setBackground(Color.WHITE);
 		Q7_5.setBounds(66, 111, 470, 23);
@@ -775,38 +865,40 @@ public class SubmitReviewGUI extends JPanel {
 		gbc_panel_15.gridy = 27;
 		panel.add(panel_15, gbc_panel_15);
 		
-		JRadioButton Q8_1 = new JRadioButton("[5] excellent ");
+		Q8_1 = new JRadioButton("[5] excellent ");
 		Q8_Group.add(Q8_1);
+		Q8_1.setSelected(true);
 		Q8_1.setBackground(Color.WHITE);
 		Q8_1.setBounds(66, 7, 470, 23);
 		panel_15.add(Q8_1);
 		
-		JRadioButton Q8_2 = new JRadioButton("[4] very good ");
+		Q8_2 = new JRadioButton("[4] very good ");
 		Q8_Group.add(Q8_2);
 		Q8_2.setBackground(Color.WHITE);
 		Q8_2.setBounds(66, 33, 470, 23);
 		panel_15.add(Q8_2);
 		
-		JRadioButton Q8_3 = new JRadioButton("[3] acceptable ");
+		Q8_3 = new JRadioButton("[3] acceptable ");
 		Q8_Group.add(Q8_3);
 		Q8_3.setBackground(Color.WHITE);
 		Q8_3.setBounds(66, 59, 470, 23);
 		panel_15.add(Q8_3);
 		
-		JRadioButton Q8_4 = new JRadioButton("[2] weak ");
+		Q8_4 = new JRadioButton("[2] weak ");
 		Q8_Group.add(Q8_4);
 		Q8_4.setBackground(Color.WHITE);
 		Q8_4.setBounds(66, 85, 470, 23);
 		panel_15.add(Q8_4);
 		
-		JRadioButton Q8_5 = new JRadioButton("[1] unacceptable");
+		Q8_5 = new JRadioButton("[1] unacceptable");
 		Q8_Group.add(Q8_5);
 		Q8_5.setBackground(Color.WHITE);
 		Q8_5.setBounds(66, 111, 470, 23);
 		panel_15.add(Q8_5);
 		
 		JTextArea txtrQ9 = new JTextArea();
-		txtrQ9.setText("    9.  Does the paper adhere to accepted standards of style, usage, and composition?");
+		txtrQ9.setText("    9.  Does the paper adhere to accepted standards of style, " +
+				"usage, and composition?");
 		txtrQ9.setLineWrap(true);
 		txtrQ9.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtrQ9.setEditable(false);
@@ -827,35 +919,36 @@ public class SubmitReviewGUI extends JPanel {
 		gbc_panel_16.gridy = 29;
 		panel.add(panel_16, gbc_panel_16);
 		
-		JRadioButton Q9_1 = new JRadioButton("[5] excellent ");
+		Q9_1 = new JRadioButton("[5] excellent ");
 		Q9_Group.add(Q9_1);
+		Q9_1.setSelected(true);
 		Q9_1.setBackground(Color.WHITE);
 		Q9_1.setBounds(66, 7, 470, 23);
 		panel_16.add(Q9_1);
 		
-		JRadioButton Q9_2 = new JRadioButton("[4] very good ");
+		Q9_2 = new JRadioButton("[4] very good ");
 		Q9_Group.add(Q9_2);
 		Q9_2.setBackground(Color.WHITE);
 		Q9_2.setBounds(66, 33, 470, 23);
 		panel_16.add(Q9_2);
 		
-		JRadioButton Q9_4 = new JRadioButton("[2] weak ");
+		Q9_3 = new JRadioButton("[3] acceptable ");
+		Q9_Group.add(Q9_3);
+		Q9_3.setBackground(Color.WHITE);
+		Q9_3.setBounds(66, 59, 470, 23);
+		panel_16.add(Q9_3);
+		
+		Q9_4 = new JRadioButton("[2] weak ");
 		Q9_Group.add(Q9_4);
 		Q9_4.setBackground(Color.WHITE);
 		Q9_4.setBounds(66, 85, 470, 23);
 		panel_16.add(Q9_4);
 		
-		JRadioButton Q9_5 = new JRadioButton("[1] unacceptable");
+		Q9_5 = new JRadioButton("[1] unacceptable");
 		Q9_Group.add(Q9_5);
 		Q9_5.setBackground(Color.WHITE);
 		Q9_5.setBounds(66, 111, 470, 23);
 		panel_16.add(Q9_5);
-		
-		JRadioButton Q9_3 = new JRadioButton("[3] acceptable ");
-		Q9_Group.add(Q9_3);
-		Q9_3.setBackground(Color.WHITE);
-		Q9_3.setBounds(66, 59, 470, 23);
-		panel_16.add(Q9_3);
 		
 		JTextArea txtrQ10 = new JTextArea();
 		txtrQ10.setText("  Summary Rating:");
@@ -879,34 +972,35 @@ public class SubmitReviewGUI extends JPanel {
 		gbc_panel_17.gridy = 31;
 		panel.add(panel_17, gbc_panel_17);
 		
-		JRadioButton Q10_1 = new JRadioButton("[5] strong accept ");
+		Q10_1 = new JRadioButton("[5] strong accept ");
 		Q10_Group.add(Q10_1);
+		Q10_1.setSelected(true);
 		Q10_1.setBackground(Color.WHITE);
 		Q10_1.setBounds(66, 7, 470, 23);
 		panel_17.add(Q10_1);
 		
-		JRadioButton Q10_2 = new JRadioButton("[4] accept ");
+		Q10_2 = new JRadioButton("[4] accept ");
 		Q10_Group.add(Q10_2);
 		Q10_2.setBackground(Color.WHITE);
 		Q10_2.setBounds(66, 33, 470, 23);
 		panel_17.add(Q10_2);
 		
-		JRadioButton Q10_3 = new JRadioButton("[2] neutral ");
+		Q10_3 = new JRadioButton("[3] neutral ");
 		Q10_Group.add(Q10_3);
 		Q10_3.setBackground(Color.WHITE);
-		Q10_3.setBounds(66, 85, 470, 23);
+		Q10_3.setBounds(66, 59, 470, 23);
 		panel_17.add(Q10_3);
 		
-		JRadioButton Q10_4 = new JRadioButton("[1] reject ");
+		Q10_4 = new JRadioButton("[2] reject ");
 		Q10_Group.add(Q10_4);
 		Q10_4.setBackground(Color.WHITE);
-		Q10_4.setBounds(66, 111, 470, 23);
+		Q10_4.setBounds(66, 85, 470, 23);
 		panel_17.add(Q10_4);
 		
-		JRadioButton Q10_5 = new JRadioButton("[3] strong reject");
+		Q10_5 = new JRadioButton("[1] strong reject");
 		Q10_Group.add(Q10_5);
 		Q10_5.setBackground(Color.WHITE);
-		Q10_5.setBounds(66, 59, 470, 23);
+		Q10_5.setBounds(66, 111, 470, 23);
 		panel_17.add(Q10_5);
 		
 		JTextArea txtrSummaryComments = new JTextArea();
@@ -986,6 +1080,42 @@ public class SubmitReviewGUI extends JPanel {
 		return contentPane;
 	}
 	
+	private int[] getRadioBtnAnswers(){
+		int[] temp_array = new int[10];
+		temp_array[0] = getSingleRtnAnswer(Q1_1,  Q1_2,  Q1_3,  Q1_4,  Q1_5);
+		temp_array[1] = getSingleRtnAnswer(Q2_1,  Q2_2,  Q2_3,  Q2_4,  Q2_5);	
+		temp_array[2] = getSingleRtnAnswer(Q3_1,  Q3_2,  Q3_3,  Q3_4,  Q3_5);
+		temp_array[3] = getSingleRtnAnswer(Q4_1,  Q4_2,  Q4_3,  Q4_4,  Q4_5);
+		temp_array[4] = getSingleRtnAnswer(Q5_1,  Q5_2,  Q5_3,  Q5_4,  Q5_5);
+		temp_array[5] = getSingleRtnAnswer(Q6_1,  Q6_2,  Q6_3,  Q6_4,  Q6_5);
+		temp_array[6] = getSingleRtnAnswer(Q7_1,  Q7_2,  Q7_3,  Q7_4,  Q7_5);
+		temp_array[7] = getSingleRtnAnswer(Q8_1,  Q8_2,  Q8_3,  Q8_4,  Q8_5);
+		temp_array[8] = getSingleRtnAnswer(Q9_1,  Q9_2,  Q9_3,  Q9_4,  Q9_5);
+		temp_array[9] = getSingleRtnAnswer(Q10_1, Q10_2, Q10_3, Q10_4, Q10_5);
+		return temp_array;
+	}
+	
+	private int getSingleRtnAnswer(final JRadioButton btn1, final JRadioButton btn2,
+			final JRadioButton btn3, final JRadioButton btn4, final JRadioButton btn5){
+		int index_of_selected = 0;
+		if (btn1.isSelected()){
+			index_of_selected = 5;
+		}
+		else if (btn2.isSelected()){
+			index_of_selected = 4;
+		}
+		else if (btn3.isSelected()){
+			index_of_selected = 3;
+		}
+		else if (btn4.isSelected()){
+			index_of_selected = 2;
+		}
+		else if (btn5.isSelected()){
+			index_of_selected = 1;
+		}
+		return index_of_selected;
+	}
+	
 	/**
 	 * Set up the actions to associate events with outside logic
 	 */
@@ -1041,6 +1171,20 @@ public class SubmitReviewGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				//TODO: add more to the submit action
+				int[] answers = getRadioBtnAnswers();
+					System.out.println("button selected for Q1: " + answers[0] + 
+							"\nbutton selected for Q2: " + answers[1] + 
+							"\nbutton selected for Q3: " + answers[2] + 
+							"\nbutton selected for Q4: " + answers[3] + 
+							"\nbutton selected for Q5: " + answers[4] + 
+							"\nbutton selected for Q6: " + answers[5] + 
+							"\nbutton selected for Q7: " + answers[6] + 
+							"\nbutton selected for Q8: " + answers[7] + 
+							"\nbutton selected for Q9: " + answers[8] + 
+							"\nbutton selected for Q10: " + answers[9]);
+//					controller.createNewReview(reviewer_name, current_conf, username, paper, 
+//							paper_author, comments_to_subpc, answersRadioBtn, summary_comments);
+
 				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 			}
 		};

@@ -166,6 +166,10 @@ public class ManagePaperGUI extends JPanel{
 	 */
 	private Controller controller;
 	
+	/*
+	 * The CMS paper in focus (if there is one)
+	 */
+	private String current_paper;
 	
 	/*
 	 * the current conference in focus.
@@ -557,9 +561,12 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add the switching state reference.
-				controller.setStateOfGUI(StateOfGUI.SUBMIT_REVIEW);
-				System.out.println("submit review....");
+				//TODO: make sure that the user can't submit a second review, and that there aren't already 
+				//		4 reviews in the system for a paper.
+				if (controller.canAddReview(current_conf, current_paper, controller.getCurrentUsername())){
+					controller.setStateOfGUI(StateOfGUI.SUBMIT_REVIEW);
+					System.out.println("submit review....");
+				}
 			}
 		};
 		my_submit_review_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_REVIEW_STRING);

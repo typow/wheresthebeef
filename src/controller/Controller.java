@@ -203,4 +203,18 @@ public class Controller extends Observable{
 	public void deletePaper(final Conference the_conference, final String the_username, final String the_paper_title){
 		//TODO: Remove this paper from the database
 	}
+	
+	public void createNewReview(final String the_reviewer_name, final Conference the_conf, 
+			final String the_username, final String the_paper, final String the_paper_author, final String the_comments_to_subpc, 
+			final int[] the_answersRadioBtn, final String the_summary_comments){
+		//TODO: add these elements to the database as one single review item
+	}
+	
+	public boolean canAddReview(final Conference the_conf, final String the_paper, final String the_username){
+		boolean permission_to_add = true;
+		//TODO: the GUI will call this method to verify that there aren't already 4 reviews and that the user
+		//		attempting to submit the review hasn't already submitted one.  If there are already 4 reviews,
+		//		or the user has already submitted one, return false.
+		return permission_to_add;
+	}
 }
