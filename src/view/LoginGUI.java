@@ -195,6 +195,7 @@ public class LoginGUI extends JPanel {
 	/**
 	 * Set up the actions to associate events with outside logic
 	 */
+	//Tyler changed commented section
 	private void setupActions(){
 		my_register_action = new AbstractAction(REGISTER_TITLE_STRING, null)
 		{			
@@ -217,7 +218,7 @@ public class LoginGUI extends JPanel {
 				else if (password.equals("")){
 					JOptionPane.showMessageDialog(contentPane, "Please enter a password.");
 				}
-				else if (!controller.checkValidUsernamePassword(username, password))
+				else if (!controller.checkValidUsername(username))//Changed from username and password to just password
 				{
 					JOptionPane.showMessageDialog(contentPane, "Invalid username and password");
 				}

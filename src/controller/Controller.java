@@ -131,20 +131,21 @@ public class Controller extends Observable{
 		Boolean valid = false;
 		//TODO: check the username against database to see if this username
 		//		already exists in the database.  Jacob
-		//TODO: UNTESTED!!!
+		//TODO: partially tested
 		
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM users WHERE username=" + the_username);
+					"SELECT * FROM users WHERE username='" + the_username + "'");
 			resultSet = statement.executeQuery();
 			
-			while (resultSet.next()) {
+			if (resultSet.next()) {
 				valid = true;
 			}
 			
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println("Check for valid Username failed");
+			e.printStackTrace();
 		}
 		return valid;
 	}
