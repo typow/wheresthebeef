@@ -11,7 +11,13 @@
 
 package controller;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Observable;
+
 import view.GUIEnum.StateOfGUI;
 
 
@@ -23,6 +29,10 @@ import view.GUIEnum.StateOfGUI;
  * @version 11/10/13
  */
 public class Controller extends Observable{
+	
+	private Connection connect = null;
+	private Statement statement = null;
+	private ResultSet resultSet = null;
 
 	/*
 	 * The current state (mode of operation) the GUI is currently in.
@@ -47,9 +57,35 @@ public class Controller extends Observable{
 	
 	/**
 	 * Constructor for the Controller.  State initially set to LOGIN
+	 * @throws Exception 
 	 */
-	public Controller(){
+	public Controller() throws Exception{
 		state = StateOfGUI.LOGIN;
+		
+		try {
+
+		      Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+		      
+		      
+		      /*
+		      connect = DriverManager
+		          .getConnection("jdbc:derby://localhost:1527/c:/Users/Seth/workspace/CMS/src/database");
+		      
+		      PreparedStatement statement = connect
+		          .prepareStatement("SELECT * from USERS");
+
+		      resultSet = statement.executeQuery();
+		      while (resultSet.next()) {
+		        String user = resultSet.getString("name");
+		        String number = resultSet.getString("number");
+		        System.out.println("User: " + user);
+		        System.out.println("ID: " + number);
+		      }*/
+		    } catch (Exception e) {
+		      throw e;
+		    } finally {
+		      close();
+		    }
 	}
 	/**
 	 * Set the next state the GUI should transition to.  Note: setting this to a new state
@@ -217,4 +253,30 @@ public class Controller extends Observable{
 		//		or the user has already submitted one, return false.
 		return permission_to_add;
 	}
+
+	private void close() {
+		try {
+			if (resultSet != null) {
+				resultSet.close();
+			}
+			if (statement != null) {
+				statement.close();
+			}
+			if (connect != null) {
+				connect.close();
+			}
+	    	} catch (Exception e) {
+
+	    }
+	}
+
+	/*
+	public static void main(String args[]) {
+		try {
+			Controller controller = new Controller();
+			System.out.println("Controller Constructed");
+		} catch (Exception e) {
+			System.out.println("Exception thrown in Controller!");
+		}
+	}*/
 }
