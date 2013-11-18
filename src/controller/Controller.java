@@ -76,50 +76,15 @@ public class Controller extends Observable{
 	 */
 	public Controller() {
 		state = StateOfGUI.LOGIN;
-		Connection conn = null;
-		try {		      
-		      Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
-		      } catch (InstantiationException e) {
-		          e.printStackTrace();
-		      } catch (IllegalAccessException e) {
-		          e.printStackTrace();
-		      } catch (ClassNotFoundException e) {
-		          e.printStackTrace();
-		      }
-		try {
-		      conn = DriverManager.getConnection("jdbc:derby://localhost:1527/CMSDB;");
-		      System.out.println("Success!! Lets eat Cake!!");
-		} catch(SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch(SQLException e) {	
-				}
-				conn = null;
-			}
-		}
-		      /*
-		       * Junk code for the time being
-		      connect = DriverManager
-		          .getConnection("jdbc:derby://localhost:1527/CMSDB");
-		      
-		      PreparedStatement statement = connect
-		          .prepareStatement("SELECT * from USERS");
 
-		      resultSet = statement.executeQuery();
-		      while (resultSet.next()) {
-		        String user = resultSet.getString("name");
-		        String number = resultSet.getString("number");
-		        System.out.println("User: " + user);
-		        System.out.println("ID: " + number);
-		      }*/
-		      /*
-		    finally {
-		      close();
-		    }
-		    */
+		try {		      
+		      Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();	      	
+		      connect = DriverManager.getConnection("jdbc:derby://localhost:1527/CMSDB;");
+		      System.out.println("Success!! Lets eat Cake!!");
+		      
+		} catch(Exception e) {
+			System.out.println("Failed to connect!");
+		} 
 	}
 	
 	
@@ -174,7 +139,7 @@ public class Controller extends Observable{
 					"SELECT * FROM Users WHERE Username=" + the_username);
 			resultSet = statement.executeQuery();
 			
-			if (resultSet == null) {
+			while (resultSet.next()) {
 				valid = true;
 			}
 			
@@ -325,13 +290,8 @@ public class Controller extends Observable{
 	    }
 	}
 
-	/*
+	
 	public static void main(String args[]) {
-		try {
-			Controller controller = new Controller();
-			System.out.println("Controller Constructed");
-		} catch (Exception e) {
-			System.out.println("Exception thrown in Controller!");
-		}
-	}*/
+		Controller controller = new Controller();
+	}
 }
