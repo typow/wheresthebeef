@@ -30,8 +30,22 @@ import view.GUIEnum.StateOfGUI;
  */
 public class Controller extends Observable{
 	
+	/*
+	 * The connection the controller has to the Database.
+	 * This connection is set up during construction.
+	 */
 	private Connection connect = null;
+	
+	/*
+	 * The statement is the String that is fed to the database 
+	 * to issue SQL commands.
+	 */
 	private Statement statement = null;
+	
+	/*
+	 * The resultSet is what is returned from the database
+	 * after the statement has been sent.
+	 */
 	private ResultSet resultSet = null;
 
 	/*
@@ -68,6 +82,7 @@ public class Controller extends Observable{
 		      
 		      
 		      /*
+		       * Junk code for the time being
 		      connect = DriverManager
 		          .getConnection("jdbc:derby://localhost:1527/c:/Users/Seth/workspace/CMS/src/database");
 		      
@@ -87,6 +102,8 @@ public class Controller extends Observable{
 		      close();
 		    }
 	}
+	
+	
 	/**
 	 * Set the next state the GUI should transition to.  Note: setting this to a new state
 	 * causes the Observable Object Controller to change states and notify Observers.
@@ -100,9 +117,13 @@ public class Controller extends Observable{
 		//		same GUI.  The next state should not equal the current one.
 		//		However, maybe a GUI should be able to "refresh" if new data is supposed
 		//		to be populated to a table or something like that?   Jacob
-		state = the_state;	
-		setChanged();
-		notifyObservers();
+		// UNTESTED!!!
+		
+		if (the_state != state) {
+			state = the_state;	
+			setChanged();
+			notifyObservers();
+		}	
 	}
 	
 	/**
@@ -126,6 +147,21 @@ public class Controller extends Observable{
 		Boolean valid = false;
 		//TODO: check the username against database to see if this username
 		//		already exists in the database.  Jacob
+		//TODO: UNTESTED!!!
+		
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM Users WHERE Username=" + the_username);
+			resultSet = statement.executeQuery();
+			
+			if (resultSet == null) {
+				valid = true;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Check for valid Username failed");
+		}
 		return valid;
 	}
 	
