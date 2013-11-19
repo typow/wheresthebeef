@@ -166,7 +166,17 @@ public class Controller extends Observable{
 		//		username and password combo are valid.  Jacob
 		return valid;
 	}
-	
+	/**
+	 * Adds a new user to the database. GUI first uses checkValidUsername(final String the_username, 
+	 * final String the_password) to ensure no duplicates.
+	 * 
+	 * @param the_username the login name for user
+	 * @param the_password password that is used to login
+	 * @param the_first_name user's first name
+	 * @param the_middle_name user's middle initial
+	 * @param the_last_name user's last name
+	 * @param the_specialty the field that the user specializes in or focusses on
+	 */
 	public void addNewUser(final String the_username, final String the_password, 
 							final String the_first_name, final String the_middle_name, 
 							final String the_last_name, final String the_specialty)
@@ -234,7 +244,13 @@ public class Controller extends Observable{
 		
 		return result;
 	}
-	
+	/**
+	 * checks to see if the conference currently exists 
+	 * in the database
+	 * @param the_conference_title the title of conference
+	 * @return Returns True if the conference title exists in database
+	 * 			Returns False if the title is not in the database
+	 */
 	public Boolean checkConferenceExists(final String the_conference_title){
 		Boolean valid = false;
 		//TODO: check the conference title against database to see if this conference title
@@ -256,7 +272,11 @@ public class Controller extends Observable{
 		}
 		return valid;
 	}
-	
+	/**
+	 * creates a new conference. GUI code first sees if checkConferenceExists(final String the_conference_title)
+	 * returns false
+	 * @param the_conference the current conference object that is being created
+	 */
 	public void createNewConference(final Conference the_conference){
 		try {			
 			PreparedStatement statement = connect.prepareStatement(
@@ -271,14 +291,21 @@ public class Controller extends Observable{
 		}
 		current_conference = the_conference;
 	}
-
+	/**
+	 * Sets the current conference to the conference of the person currently being looked at by the user
+	 * 
+	 * @param the_conference_name
+	 */
 	public void setCurrentConference(final Conference the_conference_name){
 		//TODO: The GUI will need to be able to update the current conference being looked at by the user
 		//		The controller will need to update the current_conference in this class to reflect that so
 		//		that the GUI can call and retrieve the conference information for display.  Jacob
 		current_conference = the_conference_name;
 	}
-	
+	/**
+	 * Returns the conference that is being looked at by the user
+	 * @return the current conference
+	 */
 	public Conference getCurrentConference(){
 		return current_conference;
 	}
