@@ -17,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Observable;
 
 import view.GUIEnum.StateOfGUI;
@@ -218,7 +219,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM users WHERE username=" + the_username);
+					"SELECT * FROM users WHERE username=" +"'" + the_username +"'");
 			resultSet = statement.executeQuery();
 			
 			while (resultSet.next()) {
@@ -235,27 +236,47 @@ public class Controller extends Observable{
 	}
 	
 	public Boolean checkConferenceExists(final String the_conference_title){
-		Boolean does_exist = false;
-		//TODO: GUI will pass in the name of the proposed new conference to be created.
-		//		GUI needs a boolean value back validating that the conference doesn't already
-		//		exist in the database, we don't want to allow the user to create multiple
-		//		conferences with the same title. Jacob
+		Boolean valid = false;
+		//TODO: check the conference title against database to see if this conference title
+		//		already exists in the database.  Jacob
 		
-		return does_exist;
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM conference WHERE name='" + the_conference_title + "'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				valid = true;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Check for valid conference name failed");
+			e.printStackTrace();
+		}
+		return valid;
 	}
 	
 	public void createNewConference(final Conference the_conference){
-		//TODO: add the fields in the Conference Object to a new conference in the database. All of the fields 
-		//		except the conference summary are required, so the GUI is checking to make sure they're non-null.  
-		//		The conference summary is just "" if nothing is filled in.  Note: we can use Date objects if you 
-		//		want for the dates.  Just let me know.  We might also have to add more fields to for more data. Jacob
+		try {			
+			PreparedStatement statement = connect.prepareStatement(
+					"INSERT INTO conference VALUES ('" + the_conference.getConfTitle() + "', '" + the_conference.getProgramChair() + "', '" +
+							the_conference.getConfDate() + "', '" + the_conference.getSubmissionDead() + "', '" + the_conference.getReviewDead() + "', '" + 
+							the_conference.getSubPCReccomendDead() + "', '" + the_conference.getAuthorNotificationDead()+ "', '" + the_conference.getConfSummary() + "')");
+			statement.execute();
+			System.out.println(the_conference.getConfTitle() + " Successfully added conference");
+		} catch (SQLException e) {
+			System.out.println("Check for valid Username failed");
+			e.printStackTrace();
+		}
 		current_conference = the_conference;
 	}
 
-	public void setCurrentConference(final String the_conference_name){
+	public void setCurrentConference(final Conference the_conference_name){
 		//TODO: The GUI will need to be able to update the current conference being looked at by the user
 		//		The controller will need to update the current_conference in this class to reflect that so
 		//		that the GUI can call and retrieve the conference information for display.  Jacob
+		current_conference = the_conference_name;
 	}
 	
 	public Conference getCurrentConference(){
@@ -267,7 +288,16 @@ public class Controller extends Observable{
 		//TODO: add the paper and info related to it to the database.  Note:  this is called in the GUI in a try-catch statement
 		//		Return Exception "Author cannot submit more than 4 papers to a single conference." 
 		//		implement the Logic to prevent that here.  The GUI will print out the Exception string in a JDialog box.
-		
+//		try {			
+//			PreparedStatement statement = connect.prepareStatement(
+//					"INSERT INTO paper VALUES ('" + 1 + "', '" + the_username + "', '" +
+//							the_paper_title + "', '" + the_file_submitted + "')");
+//			statement.execute();
+//			System.out.println(the_paper_title + " Successfully added paper");
+//		} catch (SQLException e) {
+//			System.out.println("Check for valid Username failed");
+//			e.printStackTrace();
+//		}
 		
 //		if (number of papers in the conference == 4){
 //			throw new Exception("Author cannot submit more than 4 papers to a single conference.");

@@ -402,7 +402,7 @@ public class ManagePaperGUI extends JPanel{
 		fieldConfTitle.setBounds(186, 20, 379, 20);
 		tabConferenceInfo.add(fieldConfTitle);
 		
-		JLabel fieldConfDate = new JLabel(current_conf.getConfDate());
+		JLabel fieldConfDate = new JLabel(""+current_conf.getConfDate());
 		fieldConfDate.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldConfDate.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldConfDate.setBounds(186, 55, 379, 20);
@@ -414,25 +414,25 @@ public class ManagePaperGUI extends JPanel{
 		fieldPaperStatus.setBounds(186, 90, 379, 20);
 		tabConferenceInfo.add(fieldPaperStatus);
 		
-		JLabel fieldSubmissionDead = new JLabel(current_conf.getSubmissionDead());
+		JLabel fieldSubmissionDead = new JLabel(""+current_conf.getSubmissionDead());
 		fieldSubmissionDead.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldSubmissionDead.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldSubmissionDead.setBounds(335, 160, 231, 20);
 		tabConferenceInfo.add(fieldSubmissionDead);
 		
-		JLabel fieldReviewDead = new JLabel(current_conf.getReviewDead());
+		JLabel fieldReviewDead = new JLabel(""+current_conf.getReviewDead());
 		fieldReviewDead.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldReviewDead.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReviewDead.setBounds(335, 190, 231, 20);
 		tabConferenceInfo.add(fieldReviewDead);
 		
-		JLabel fieldSubPCDead = new JLabel(current_conf.getSubPCReccomendDead());
+		JLabel fieldSubPCDead = new JLabel(""+current_conf.getSubPCReccomendDead());
 		fieldSubPCDead.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldSubPCDead.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldSubPCDead.setBounds(335, 220, 231, 20);
 		tabConferenceInfo.add(fieldSubPCDead);
 		
-		JLabel fieldAuthorNotificationDead = new JLabel(current_conf.getAuthorNotificationDead());
+		JLabel fieldAuthorNotificationDead = new JLabel(""+current_conf.getAuthorNotificationDead());
 		fieldAuthorNotificationDead.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldAuthorNotificationDead.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldAuthorNotificationDead.setBounds(335, 250, 231, 20);
