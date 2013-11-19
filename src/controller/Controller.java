@@ -18,6 +18,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import view.GUIEnum.StateOfGUI;
@@ -70,6 +72,11 @@ public class Controller extends Observable{
 	 * The current paper (if any) that is being evaluated by the user
 	 */
 	private String current_paper = "";
+	
+	/*
+	 * A list of all conferences
+	 */
+	List<Conference> listOfAllConferences;
 	
 	/**
 	 * Constructor for the Controller.  State initially set to LOGIN
@@ -251,21 +258,19 @@ public class Controller extends Observable{
 	 * @return Returns True if the conference title exists in database
 	 * 			Returns False if the title is not in the database
 	 */
-	public Boolean checkConferenceExists(final String the_conference_title){
+	public Boolean checkConferenceExists(final String the_conference_title) {
 		Boolean valid = false;
 		//TODO: check the conference title against database to see if this conference title
 		//		already exists in the database.  Jacob
 		
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM conference WHERE name='" + the_conference_title + "'");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conference WHERE name='" + the_conference_title + "'");
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
 				valid = true;
 			}
-			
 		} catch (SQLException e) {
 			System.out.println("Check for valid conference name failed");
 			e.printStackTrace();
@@ -278,13 +283,15 @@ public class Controller extends Observable{
 	 * @param the_conference the current conference object that is being created
 	 */
 	public void createNewConference(final Conference the_conference){
-		try {			
+		listOfAllConferences = new ArrayList<Conference>();
+		try {
 			PreparedStatement statement = connect.prepareStatement(
 					"INSERT INTO conference VALUES ('" + the_conference.getConfTitle() + "', '" + the_conference.getProgramChair() + "', '" +
 							the_conference.getConfDate() + "', '" + the_conference.getSubmissionDead() + "', '" + the_conference.getReviewDead() + "', '" + 
 							the_conference.getSubPCReccomendDead() + "', '" + the_conference.getAuthorNotificationDead()+ "', '" + the_conference.getConfSummary() + "')");
 			statement.execute();
 			System.out.println(the_conference.getConfTitle() + " Successfully added conference");
+			listOfAllConferences.add(the_conference);
 		} catch (SQLException e) {
 			System.out.println("Check for valid Username failed");
 			e.printStackTrace();
@@ -309,23 +316,22 @@ public class Controller extends Observable{
 	public Conference getCurrentConference(){
 		return current_conference;
 	}
-	
+		
 	public void createNewPaper(final Conference the_conference, final String the_username, final String the_paper_title, 
 			final String the_file_submitted) throws Exception{
 		//TODO: add the paper and info related to it to the database.  Note:  this is called in the GUI in a try-catch statement
 		//		Return Exception "Author cannot submit more than 4 papers to a single conference." 
 		//		implement the Logic to prevent that here.  The GUI will print out the Exception string in a JDialog box.
-//		try {			
-//			PreparedStatement statement = connect.prepareStatement(
-//					"INSERT INTO paper VALUES ('" + 1 + "', '" + the_username + "', '" +
-//							the_paper_title + "', '" + the_file_submitted + "')");
-//			statement.execute();
-//			System.out.println(the_paper_title + " Successfully added paper");
-//		} catch (SQLException e) {
-//			System.out.println("Check for valid Username failed");
-//			e.printStackTrace();
-//		}
-		
+		try {			
+			PreparedStatement statement = connect.prepareStatement(
+					"INSERT INTO paper VALUES ('" + 1 + "', '" + the_username + "', '" +
+							the_paper_title + "', '" + the_file_submitted + "')");
+			statement.execute();
+			System.out.println(the_paper_title + " Successfully added paper");
+		} catch (SQLException e) {
+			System.out.println("Check for valid paper failed");
+			e.printStackTrace();
+		}
 //		if (number of papers in the conference == 4){
 //			throw new Exception("Author cannot submit more than 4 papers to a single conference.");
 //		}

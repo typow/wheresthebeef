@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Soluna
+ * @author Where's the Beef
  *
  */
 public class ControllerTest  {
@@ -191,9 +191,11 @@ public class ControllerTest  {
 					"INSERT INTO conference VALUES ('" + "zz" + "', '" + "David" + "', '" +
 							"11/19/2013" + "', '" + "11/19/2013" + "', '" + "11/19/2013" + "', '" + 
 							"11/19/2013" + "', '" + "11/19/2013"+ "', '" + "JUnit Testing" + "')");
-			statement.execute();
+			
 			valid = true;
 			assertTrue(valid);
+			statement = connect.prepareStatement("DELETE FROM conference WHERE name ='zz'");
+			statement.execute();
 		} catch (SQLException e) {
 			valid = false;
 			assertTrue(valid);
