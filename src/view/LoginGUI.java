@@ -11,6 +11,7 @@
 
 package view;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.AbstractAction;
@@ -33,8 +34,12 @@ import controller.Controller;
 import javax.swing.JSeparator;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.ImageIcon;
 
 /**
  * The Login user interface JPanel
@@ -49,6 +54,7 @@ import javax.swing.border.BevelBorder;
 @SuppressWarnings("serial")
 public class LoginGUI extends JPanel {
 	
+	private static final ImageIcon ICON = new ImageIcon("src/view/images2.jpg");
 	/*
 	 * The background of the main JPanel
 	 */
@@ -127,21 +133,11 @@ public class LoginGUI extends JPanel {
 		contentPane.setPreferredSize(WIN_DIMENSION);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
-		
-		JLabel label = new JLabel("Conference Management System (CMS)");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		label.setBounds(10, 11, 1260, 26);
-		contentPane.add(label);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(20, 48, 1250, 2);
-		contentPane.add(separator);
 				
 		JPanel panel = new JPanel();
 		panel.setBackground(INNER_BACKGROUND_COLOR);
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBounds(413, 138, 469, 310);
+		panel.setBounds(413, 205, 469, 310);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -177,6 +173,18 @@ public class LoginGUI extends JPanel {
 		JButton btnLogin = new JButton(my_login_action);
 		btnLogin.setBounds(209, 193, 159, 29);
 		panel.add(btnLogin);
+		
+		JButton btnIcon = new JButton("");
+		btnIcon.setForeground(BACKGROUND_COLOR);
+		btnIcon.setBorder(null);
+		btnIcon.setIcon(ICON);
+		btnIcon.setBounds(430, 11, 404, 116);
+		contentPane.add(btnIcon);
+		JSeparator separator = new JSeparator();
+		separator.setBounds(20, 127, 1250, 12);
+		contentPane.add(separator);
+		
+		
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -195,7 +203,7 @@ public class LoginGUI extends JPanel {
 	/**
 	 * Set up the actions to associate events with outside logic
 	 */
-	//Tyler changed commented section
+	 //Tyler changed commented section
 	private void setupActions(){
 		my_register_action = new AbstractAction(REGISTER_TITLE_STRING, null)
 		{			
