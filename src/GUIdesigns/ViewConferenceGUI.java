@@ -24,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.BevelBorder;
 
 /**
  * The View Conference Panel
@@ -125,6 +126,7 @@ public class ViewConferenceGUI extends JFrame {
 	 */
 	private void buildUserDataPanel() {
 		JPanel user_info_panel = new JPanel();
+		user_info_panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		user_info_panel.setBackground(new Color(204, 204, 153));
 		user_info_panel.setBounds(23, 28, 160, 71);
 		user_info_panel.setLayout(new GridLayout(3, 2));

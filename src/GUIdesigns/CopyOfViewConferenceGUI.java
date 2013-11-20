@@ -22,11 +22,13 @@ import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.BevelBorder;
 
 /**
  * The View Conference Panel
@@ -91,6 +93,7 @@ public class CopyOfViewConferenceGUI extends JFrame {
 		
 		
 		JPanel conference_dates_panel = new JPanel();
+		conference_dates_panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		conference_dates_panel.setBounds(25, 110, 399, 100);
 		conference_dates_panel.setLayout(new GridLayout(5, 3));
 		JLabel deadline_label = new JLabel(" Deadline Dates:");
@@ -127,6 +130,7 @@ public class CopyOfViewConferenceGUI extends JFrame {
 	 */
 	private void buildUserDataPanel() {
 		JPanel user_info_panel = new JPanel();
+		user_info_panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		user_info_panel.setBackground(new Color(204, 204, 153));
 		user_info_panel.setBounds(23, 28, 160, 71);
 		user_info_panel.setLayout(new GridLayout(3, 2));
@@ -157,8 +161,10 @@ public class CopyOfViewConferenceGUI extends JFrame {
 	 */
 	private void buildScrollPanel() {
 		JPanel panel_for_scrollpane = new JPanel(new GridLayout(7, 7));
+		panel_for_scrollpane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		for(int i = 0; i<7; i++){
-			JLabel jl = new JLabel(COLUMN_NAMES[i]);
+			JLabel jl = new JLabel(COLUMN_NAMES[i], JLabel.CENTER);
+			jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			jl.setFont(new Font("Tahoma", Font.BOLD, 14));
 			Font font = jl.getFont();
 			Map attributes = font.getAttributes();
@@ -173,9 +179,10 @@ public class CopyOfViewConferenceGUI extends JFrame {
 				panel_for_scrollpane.add(temp_jb);
 			} else {
 				
-				JLabel label = new JLabel("Box" + i);
-				label.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-			    label.addMouseListener(new MouseListener()
+				JLabel jl = new JLabel("Box" + i, JLabel.CENTER);
+				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				jl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+			    jl.addMouseListener(new MouseListener()
 			    {
 			    	public void mouseClicked(MouseEvent arg0) {
 			    	System.out.println("clicked");
@@ -190,8 +197,8 @@ public class CopyOfViewConferenceGUI extends JFrame {
 			    	public void mouseReleased(MouseEvent arg0) {
 			    	}
 			    	});
-			    jlabel_array.add(label);
-				panel_for_scrollpane.add(label);
+			    jlabel_array.add(jl);
+				panel_for_scrollpane.add(jl);
 
 			}
 		}
