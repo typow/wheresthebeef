@@ -16,7 +16,10 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.font.TextAttribute;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -32,7 +35,7 @@ import javax.swing.JScrollPane;
  * @author Warrick Holfeld
  * @version 11/19/13
  */
-public class ViewConferenceGUI extends JFrame {
+public class CopyOfViewConferenceGUI extends JFrame {
 	
 
 	private JPanel contentPane;
@@ -42,6 +45,8 @@ public class ViewConferenceGUI extends JFrame {
 	private static final String[] DEADLINES_PANEL = {"Submit", "Review", "Recommend", "Decision", "Conference Date"};
 	
 	private JPanel main_panel;
+	
+	private ArrayList<JLabel> jlabel_array = new ArrayList<JLabel>();
 
 	/**
 	 * Launch the application.
@@ -50,7 +55,7 @@ public class ViewConferenceGUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ViewConferenceGUI frame = new ViewConferenceGUI();
+					CopyOfViewConferenceGUI frame = new CopyOfViewConferenceGUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,7 +67,7 @@ public class ViewConferenceGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ViewConferenceGUI() {
+	public CopyOfViewConferenceGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();
@@ -94,15 +99,12 @@ public class ViewConferenceGUI extends JFrame {
 		for(int i = 2; i<=15; i++){
 			if((i-2)%3==0) {
 				conference_dates_panel.add(new JLabel(DEADLINES_PANEL[(i-2)/3]));
-				System.out.println((i-2)/3);
 			}
 			if(i%3 == 1) {
 				conference_dates_panel.add(new JLabel(""));
-				System.out.println((i-2)/3);
 			}
 			if(i%3 == 0) {
 				conference_dates_panel.add(new JLabel("1/1/11"));
-				System.out.println((i-2)/3);
 			}
 				
 		}
@@ -166,18 +168,42 @@ public class ViewConferenceGUI extends JFrame {
 		}
 		for(int i = 8; i<=49; i++){
 			if((i-2)%7==0 && i != 2) {
-				panel_for_scrollpane.add(new JButton("Manage Button " + i));
+				JButton temp_jb = new JButton("Manage Button " + i);
+				temp_jb.setBorder(null);
+				panel_for_scrollpane.add(temp_jb);
 			} else {
-				panel_for_scrollpane.add(new JLabel("Box" + i));
+				
+				JLabel label = new JLabel("Box" + i);
+				label.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+			    label.addMouseListener(new MouseListener()
+			    {
+			    	public void mouseClicked(MouseEvent arg0) {
+			    	System.out.println("clicked");
+			    	}
+			    	public void mouseEntered(MouseEvent arg0) {
+			    		
+			    	}
+			    	public void mouseExited(MouseEvent arg0) {
+			    	}
+			    	public void mousePressed(MouseEvent arg0) {
+			    	}
+			    	public void mouseReleased(MouseEvent arg0) {
+			    	}
+			    	});
+			    jlabel_array.add(label);
+				panel_for_scrollpane.add(label);
+
 			}
 		}
+		
 		panel_for_scrollpane.setBackground(new Color(204, 204, 153));
 		panel_for_scrollpane.setSize(10000, 10000);
 		JScrollPane scrollPane = new JScrollPane(panel_for_scrollpane, 22, 32);
 		scrollPane.setBounds(10, 221, 1183, 397);
 		main_panel.add(scrollPane);
+		
+			
 	}
-	
-	
+
 	
 }
