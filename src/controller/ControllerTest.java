@@ -3,7 +3,9 @@
  */
 package controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,6 +17,7 @@ import java.sql.Statement;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 
 /**
  * @author Where's the Beef
@@ -126,12 +129,25 @@ public class ControllerTest  {
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#getFullName(java.lang.String)}.
+	 * Test method for retrieving a user's full name from the 
+	 * database given a valid username.
 	 */
 	@Test
 	public void testGetFullName() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		String user = "sethk2";
+		String result;
+		
+		if (!controller.checkValidUsername(user)) {
+			controller.addNewUser
+			(user, "pumpkins", "Seth", "D", "Kramer", "Testing");
+		} 
+		
+		result = controller.getFullName(user);
+		System.out.println(result);
+		assertEquals("Seth D Kramer", result);
 	}
+	
 
 	/**
 	 * Tests to see if the conference already exists, database has conference a but not b. 

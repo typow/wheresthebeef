@@ -224,12 +224,6 @@ public class Controller extends Observable{
 	 * @return The full name of the person.
 	 */
 	public String getFullName(final String the_username){
-		//TODO: implement this so that it returns the full name of the individual
-		
-		//return: the_username.first + " " + the_username.middle + " " + the_username.last
-				
-		//temporary    Jacob
-		//UNTESTED!!!
 		
 		String result = "";
 		
@@ -239,7 +233,7 @@ public class Controller extends Observable{
 					"SELECT * FROM users WHERE username=" +"'" + the_username +"'");
 			resultSet = statement.executeQuery();
 			
-			while (resultSet.next()) {
+			if (resultSet.next()) {
 				result += resultSet.getString(2) + " ";
 				result += resultSet.getString(3) + " ";
 				result += resultSet.getString(4);
