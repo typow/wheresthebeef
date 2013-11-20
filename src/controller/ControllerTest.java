@@ -91,9 +91,17 @@ public class ControllerTest  {
 	/**
 	 * Test method for {@link controller.Controller#checkValidUsername(java.lang.String)}.
 	 */
+	//Tyler Powers was here
 	@Test
 	public void testCheckValidUsername() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		String username = "typow";  //Already in the DB we know its true
+		boolean result = false;
+		result = controller.checkValidUsername(username);
+		assertEquals(true, result);
+		username = "hairyguy";  //Not in the DB we know it's false
+		result = controller.checkValidUsername(username);
+		assertEquals(false, result);
 	}
 
 	/**
@@ -144,7 +152,6 @@ public class ControllerTest  {
 		} 
 		
 		result = controller.getFullName(user);
-		System.out.println(result);
 		assertEquals("Seth D Kramer", result);
 	}
 	

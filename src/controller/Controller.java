@@ -134,6 +134,7 @@ public class Controller extends Observable{
 	 * @param the_username The username entered in some GUI field
 	 * @return valid  Returns true if the username exists in the database.
 	 */
+	//Tyler Powers was here
 	public Boolean checkValidUsername(final String the_username)
 	{
 		Boolean valid = false;
@@ -182,8 +183,9 @@ public class Controller extends Observable{
 	 * @param the_first_name user's first name
 	 * @param the_middle_name user's middle initial
 	 * @param the_last_name user's last name
-	 * @param the_specialty the field that the user specializes in or focusses on
+	 * @param the_specialty the field that the user specializes in or focuses on
 	 */
+	//Tyler Powers was here
 	public void addNewUser(final String the_username, final String the_password, 
 							final String the_first_name, final String the_middle_name, 
 							final String the_last_name, final String the_specialty)
