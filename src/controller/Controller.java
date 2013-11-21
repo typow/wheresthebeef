@@ -17,7 +17,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -399,9 +398,10 @@ public class Controller extends Observable{
 	
 	public String[] getAvailableReviewers(final String the_paper, final String the_person_assigning){
 		//TODO: theAssignReviewerGUI needs an array of usernames of people that are capable of being a reviewer
-		//		Note: the reviewer can't be the author of the paper.
-		//			  the reviewer can't be the person assigning the review, unless they're the PC.
-		//			  insert any other business rules here I'm missing
+		//		Note: - the reviewer can't be the author of the paper.
+		//			  - the reviewer can't be the person assigning the review, unless they're the PC.
+		//			  - the reviewer in this list can't be one of the reviewers already assigned to this paper (they can't be assigned twice)
+		//			  - insert any other business rules here I'm missing
 		//		return a string array and they'll be listed in the GUI to be picked from.
 		
 					//temporary:

@@ -16,8 +16,9 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.JFrame;
-import view.LoginGUI;
+
 import controller.Controller;
 
 
@@ -40,7 +41,6 @@ public class MainFrame extends JFrame implements Observer {
 	 * between the GUI and the database.
 	 */
 	private static Controller controller;
-
 	/**
 	 * Creates and makes visible the MainFrame for the CMS software.
 	 * 

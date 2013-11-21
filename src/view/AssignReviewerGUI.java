@@ -13,33 +13,31 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JButton;
 import java.awt.Font;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JSeparator;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.AbstractListModel;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
+
 import view.GUIEnum.StateOfGUI;
 import controller.Conference;
 import controller.Controller;
-import javax.swing.border.BevelBorder;
-import javax.swing.JScrollPane;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.ListSelectionModel;
 
 /**
 * The Submit Review Interface JPanel
@@ -160,11 +158,6 @@ public class AssignReviewerGUI extends JPanel {
 	 * the Action associated with the Edit Submission button
 	 */
 	private Action my_submit_action;
-	
-	private final ButtonGroup buttonGroup = new ButtonGroup();
-
-	
-	
 
 	/**
 	 * Create the JPanel.
