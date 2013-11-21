@@ -323,9 +323,10 @@ public class ManagePaperGUI extends JPanel{
 		lblUserTools.setBounds(20, 204, 176, 20);
 		panel.add(lblUserTools);
 		
-		JButton btnAssignReviewer = new JButton(my_assign_reviewer_action);
-		btnAssignReviewer.setBounds(20, 375, 176, 22);
-		panel.add(btnAssignReviewer);
+		JButton btnAssignReviewers = new JButton(my_assign_reviewer_action);
+		btnAssignReviewers.setText("Assign Reviewers");
+		btnAssignReviewers.setBounds(20, 375, 176, 22);
+		panel.add(btnAssignReviewers);
 		
 		JButton btnAssignSubpc = new JButton(my_assign_subpc_action);
 		btnAssignSubpc.setBounds(20, 410, 176, 22);

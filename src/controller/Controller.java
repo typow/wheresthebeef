@@ -378,9 +378,7 @@ public class Controller extends Observable{
 		//		to submit a recommendation again, they will just be re-writing over a previous recommendation.  If you want to
 		//		handle this differently, let me know because I'll have to insert a try/catch and print out the exception message
 		//		to let them know they can only make a recommendation once. Add this info to the database linked to the paper
-		//		it's associated with. (Jacob)
-		
-				
+		//		it's associated with. (Jacob)			
 	}
 	
 	public String[] getUsersAssignedAsReviewers(final Conference the_conference, final String current_paper){
@@ -408,7 +406,16 @@ public class Controller extends Observable{
 					String[] reviewers = new String[]{"hank", "biff", "sally", "Mr Who Flung Dung", "I.P. Freely"};
 		return reviewers;
 	}
-
+	
+	public void addReviewers(final Conference the_conference, final String the_paper, final String[] the_reviewers){
+		//TODO: add these reviewers to the database as assigned to the_paper in the_conference.
+		//		The AssignReviewerGUI is checking to make sure how many reviewers are already assigned to the paper
+		//		it is also checking (along with your help in the getAvailableReviewers method) to make sure that the
+		//		reviewers assigned here are valid; not violating business rules.  Therefore, you should be able to just
+		//		add these names in without checking, unless I'm missing something.  Let me know if I need to change how
+		//		this is being handled.  (Jacob)
+	}
+	
 	private void close() {
 		try {
 			if (resultSet != null) {
