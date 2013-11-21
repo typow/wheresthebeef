@@ -20,7 +20,6 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.ButtonModel;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
@@ -32,14 +31,9 @@ import controller.Conference;
 import controller.Controller;
 import javax.swing.border.BevelBorder;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.JTextPane;
-import java.awt.TextArea;
-import java.sql.Array;
-
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 
@@ -129,11 +123,6 @@ public class SubmitReviewGUI extends JPanel {
 	private String username;
 	
 	/*
-	 * the current paper being reviewed.
-	 */
-	private String paper;
-	
-	/*
 	 * the Action associated with the Main button
 	 */
 	private Action my_main_action;
@@ -153,10 +142,6 @@ public class SubmitReviewGUI extends JPanel {
 	 */
 	private Action my_submit_action;
 	
-	/*
-	 * the Action associated with the Delete Submission button
-	 */
-	private Action my_delete_submission_action;
 	private final ButtonGroup Q1_Group = new ButtonGroup();
 	private final ButtonGroup Q2_Group = new ButtonGroup();
 	private final ButtonGroup Q3_Group = new ButtonGroup();
@@ -168,68 +153,21 @@ public class SubmitReviewGUI extends JPanel {
 	private final ButtonGroup Q9_Group = new ButtonGroup();
 	private final ButtonGroup Q10_Group = new ButtonGroup();
 	
-	private final JRadioButton Q1_1;
-	private final JRadioButton Q1_2;
-	private final JRadioButton Q1_3;
-	private final JRadioButton Q1_4;
-	private final JRadioButton Q1_5;
 	
-	private final JRadioButton Q2_1;
-	private final JRadioButton Q2_2;
-	private final JRadioButton Q2_3;
-	private final JRadioButton Q2_4;
-	private final JRadioButton Q2_5;
-	
-	private final JRadioButton Q3_1;
-	private final JRadioButton Q3_2;
-	private final JRadioButton Q3_3;
-	private final JRadioButton Q3_4;
-	private final JRadioButton Q3_5;
-	
-	private final JRadioButton Q4_1;
-	private final JRadioButton Q4_2;
-	private final JRadioButton Q4_3;
-	private final JRadioButton Q4_4;
-	private final JRadioButton Q4_5;
-	
-	private final JRadioButton Q5_1;
-	private final JRadioButton Q5_2;
-	private final JRadioButton Q5_3;
-	private final JRadioButton Q5_4;
-	private final JRadioButton Q5_5;
-	
-	private final JRadioButton Q6_1;
-	private final JRadioButton Q6_2;
-	private final JRadioButton Q6_3;
-	private final JRadioButton Q6_4;
-	private final JRadioButton Q6_5;
-	
-	private final JRadioButton Q7_1;
-	private final JRadioButton Q7_2;
-	private final JRadioButton Q7_3;
-	private final JRadioButton Q7_4;
-	private final JRadioButton Q7_5;
-	
-	private final JRadioButton Q8_1;
-	private final JRadioButton Q8_2;
-	private final JRadioButton Q8_3;
-	private final JRadioButton Q8_4;
-	private final JRadioButton Q8_5;
-	
-	private final JRadioButton Q9_1;
-	private final JRadioButton Q9_2;
-	private final JRadioButton Q9_3;
-	private final JRadioButton Q9_4;
-	private final JRadioButton Q9_5;
-	
-	
-	private final JRadioButton Q10_1;
-	private final JRadioButton Q10_2;
-	private final JRadioButton Q10_3;
-	private final JRadioButton Q10_4;
-	private final JRadioButton Q10_5;
-	
-	
+	/*
+	 * the radio buttons associated with the 10 questions needed to complete
+	 * the review.
+	 */
+	private final JRadioButton Q1_1, Q1_2, Q1_3, Q1_4, Q1_5,
+							   Q2_1, Q2_2, Q2_3, Q2_4, Q2_5,
+							   Q3_1, Q3_2, Q3_3, Q3_4, Q3_5,
+							   Q4_1, Q4_2, Q4_3, Q4_4, Q4_5,
+							   Q5_1, Q5_2, Q5_3, Q5_4, Q5_5,
+							   Q6_1, Q6_2, Q6_3, Q6_4, Q6_5,
+							   Q7_1, Q7_2,  Q7_3, Q7_4, Q7_5, 
+							   Q8_1, Q8_2, Q8_3, Q8_4, Q8_5,
+							   Q9_1, Q9_2, Q9_3, Q9_4, Q9_5,
+							   Q10_1, Q10_2, Q10_3, Q10_4, Q10_5;
 
 	/**
 	 * Create the JPanel.
@@ -327,7 +265,7 @@ public class SubmitReviewGUI extends JPanel {
 		lblReviewerName.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_2.add(lblReviewerName);
 		
-		JLabel fieldReviewerName = new JLabel("<dynamic>");
+		JLabel fieldReviewerName = new JLabel(controller.getFullName(username));
 		fieldReviewerName.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldReviewerName.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReviewerName.setBounds(179, 0, 391, 20);
@@ -349,7 +287,7 @@ public class SubmitReviewGUI extends JPanel {
 		lblConferenceName.setBounds(28, 0, 141, 20);
 		panel_3.add(lblConferenceName);
 		
-		JLabel fieldConfName = new JLabel("<dynamic>");
+		JLabel fieldConfName = new JLabel(current_conf.getConfTitle());
 		fieldConfName.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldConfName.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldConfName.setBounds(179, 0, 391, 20);
@@ -371,7 +309,7 @@ public class SubmitReviewGUI extends JPanel {
 		lblPaperName.setBounds(28, 0, 141, 20);
 		panel_4.add(lblPaperName);
 		
-		JLabel fieldPaperName = new JLabel("<dynamic>");
+		JLabel fieldPaperName = new JLabel(controller.getCurrentPaper());
 		fieldPaperName.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldPaperName.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldPaperName.setBounds(179, 0, 391, 20);
@@ -393,7 +331,7 @@ public class SubmitReviewGUI extends JPanel {
 		lblPaperAuthor.setBounds(28, 0, 141, 20);
 		panel_5.add(lblPaperAuthor);
 		
-		JLabel fieldPaperAuthor = new JLabel("<dynamic>");
+		JLabel fieldPaperAuthor = new JLabel(controller.getPaperAuthor(current_conf, controller.getCurrentPaper()));
 		fieldPaperAuthor.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldPaperAuthor.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldPaperAuthor.setBounds(179, 0, 391, 20);
@@ -1025,6 +963,8 @@ public class SubmitReviewGUI extends JPanel {
 		gbc_fieldSummaryComments.gridx = 0;
 		gbc_fieldSummaryComments.gridy = 33;
 		panel.add(fieldSummaryComments, gbc_fieldSummaryComments);
+		
+		scrollPane.getVerticalScrollBar().setValue(0);
 		
 		//JLabel label = new JLabel(controller.getCurrentUsername().toString());
 		//Windows Builder Pro edits out the above line when you use it.  Replace the label

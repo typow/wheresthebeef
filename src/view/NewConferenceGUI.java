@@ -517,10 +517,6 @@ public class NewConferenceGUI extends JPanel {
 				else if (author_notification_deadline.equals("")){
 					JOptionPane.showMessageDialog(contentPane, "Please enter the date which Authors will be notified of " +
 							"the status of their paper.");
-				} 
-				else if (controller.checkConferenceExists(conf_title))
-				{
-							JOptionPane.showMessageDialog(contentPane, "Conference already exists");
 				}
 				else{
 					Conference new_conference = new Conference(conf_title, username, conf_date, conf_address, conf_city, conf_state, con_zip, 

@@ -54,7 +54,16 @@ public class GUIEnum {
 		/**
 		 * Make the submit review user interface visible.
 		 */
-		SUBMIT_REVIEW;
+		SUBMIT_REVIEW,
+		/**
+		 * Make the submit recommendation user interface visible.
+		 */
+		SUBMIT_RECOMMENDATION,
+		/**
+		 * Make the assign reviewer user interface visible.
+		 */
+		ASSIGN_REVIEWER;
+		
 	}
 
 }

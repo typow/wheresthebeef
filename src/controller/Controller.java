@@ -362,6 +362,52 @@ public class Controller extends Observable{
 		//		or the user has already submitted one, return false.
 		return permission_to_add;
 	}
+	
+	public String getPaperAuthor(final Conference the_conf, final String the_paper){
+		String temp = "";
+		//TODO: the GUI will call this method when another user (administrator of some sort) needs to review
+		//		or recommend a paper.  They will be the current user and will need to retrieve the username
+		//		of the person who Authored the paper.  (Jacob)
+		return temp;
+	}
+	
+	public void addPaperRecommendation(final String the_sub_pc_username, final Conference current_conf, 
+			final String current_paper_being_recommended, final String the_paper_author, final int the_recommend_value,
+			final String the_rational_for_recommendation){
+		//TODO: the MakeRecommendationGUI will call this when it needs to add a single recommendation to a paper.  There should
+		//		only be one recommendation per paper.  Right now, I'm going on the assumption that if a Sub-PC goes back in
+		//		to submit a recommendation again, they will just be re-writing over a previous recommendation.  If you want to
+		//		handle this differently, let me know because I'll have to insert a try/catch and print out the exception message
+		//		to let them know they can only make a recommendation once. Add this info to the database linked to the paper
+		//		it's associated with. (Jacob)
+		
+				
+	}
+	
+	public String[] getUsersAssignedAsReviewers(final Conference the_conference, final String current_paper){
+		//TODO: the AssignReviewerGUI (and propably the ManagePaperGUI) will use this method to retrieve an
+		//		array of usernames of the Reviewers assigned to a paper.  If there are none, return an empty array.
+		//		the GUI will use that datastruct to make sure that no more than 4 reviewers are assigned to a paper
+		//		already.  i.e. if 3 reviewers are returned here, 1 more can be added, no more.
+		
+				//temporary:
+				String[] reviewers = new String[]{"chippy", "hippy", "bippy", "sippy"};
+			
+		
+		return reviewers;
+	}
+	
+	public String[] getAvailableReviewers(final String the_paper, final String the_person_assigning){
+		//TODO: theAssignReviewerGUI needs an array of usernames of people that are capable of being a reviewer
+		//		Note: the reviewer can't be the author of the paper.
+		//			  the reviewer can't be the person assigning the review, unless they're the PC.
+		//			  insert any other business rules here I'm missing
+		//		return a string array and they'll be listed in the GUI to be picked from.
+		
+					//temporary:
+					String[] reviewers = new String[]{"hank", "biff", "sally", "Mr Who Flung Dung", "I.P. Freely"};
+		return reviewers;
+	}
 
 	private void close() {
 		try {

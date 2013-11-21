@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -51,6 +52,7 @@ import javax.swing.JTabbedPane;
 @SuppressWarnings("serial")
 public class ManagePaperGUI extends JPanel{
 
+	private static final ImageIcon ICON = new ImageIcon("src/view/images2.jpg");
 	/*
 	 * The background of the main JPanel
 	 */
@@ -237,20 +239,21 @@ public class ManagePaperGUI extends JPanel{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Conference Management System (CMS)");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblNewLabel.setBounds(10, 11, 1260, 26);
-		contentPane.add(lblNewLabel);
-		
+		//creates the title icon at the top of the panel
+		JButton btnIcon = new JButton("");
+		btnIcon.setForeground(BACKGROUND_COLOR);
+		btnIcon.setBorder(null);
+		btnIcon.setIcon(ICON);
+		btnIcon.setBounds(430, 11, 404, 116);
+		contentPane.add(btnIcon);		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 48, 1260, 2);
+		separator.setBounds(20, 127, 1250, 12);
 		contentPane.add(separator);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(INNER_BACKGROUND_COLOR);
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBounds(235, 109, 831, 519);
+		panel.setBounds(232, 161, 831, 519);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -289,7 +292,7 @@ public class ManagePaperGUI extends JPanel{
 			lblPaperTitle = new JLabel("No Paper Selected");
 		}
 		else {
-			lblPaperTitle = new JLabel("Paper: " + controller.getCurrentPaper());
+			lblPaperTitle = new JLabel("Manage Paper: " + controller.getCurrentPaper());
 		}
 
 		lblPaperTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -402,7 +405,7 @@ public class ManagePaperGUI extends JPanel{
 		fieldConfTitle.setBounds(186, 20, 379, 20);
 		tabConferenceInfo.add(fieldConfTitle);
 		
-		JLabel fieldConfDate = new JLabel(""+current_conf.getConfDate());
+		JLabel fieldConfDate = new JLabel(current_conf.getConfDate());
 		fieldConfDate.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldConfDate.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldConfDate.setBounds(186, 55, 379, 20);
@@ -414,25 +417,25 @@ public class ManagePaperGUI extends JPanel{
 		fieldPaperStatus.setBounds(186, 90, 379, 20);
 		tabConferenceInfo.add(fieldPaperStatus);
 		
-		JLabel fieldSubmissionDead = new JLabel(""+current_conf.getSubmissionDead());
+		JLabel fieldSubmissionDead = new JLabel(current_conf.getSubmissionDead());
 		fieldSubmissionDead.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldSubmissionDead.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldSubmissionDead.setBounds(335, 160, 231, 20);
 		tabConferenceInfo.add(fieldSubmissionDead);
 		
-		JLabel fieldReviewDead = new JLabel(""+current_conf.getReviewDead());
+		JLabel fieldReviewDead = new JLabel(current_conf.getReviewDead());
 		fieldReviewDead.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldReviewDead.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReviewDead.setBounds(335, 190, 231, 20);
 		tabConferenceInfo.add(fieldReviewDead);
 		
-		JLabel fieldSubPCDead = new JLabel(""+current_conf.getSubPCReccomendDead());
+		JLabel fieldSubPCDead = new JLabel(current_conf.getSubPCReccomendDead());
 		fieldSubPCDead.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldSubPCDead.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldSubPCDead.setBounds(335, 220, 231, 20);
 		tabConferenceInfo.add(fieldSubPCDead);
 		
-		JLabel fieldAuthorNotificationDead = new JLabel(""+current_conf.getAuthorNotificationDead());
+		JLabel fieldAuthorNotificationDead = new JLabel(current_conf.getAuthorNotificationDead());
 		fieldAuthorNotificationDead.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldAuthorNotificationDead.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldAuthorNotificationDead.setBounds(335, 250, 231, 20);
@@ -579,8 +582,8 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add the switching state reference.
-//				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				//TODO: add the switching state reference
+				controller.setStateOfGUI(StateOfGUI.SUBMIT_RECOMMENDATION);
 				System.out.println("make a recommendation....");
 			}
 		};
@@ -595,7 +598,7 @@ public class ManagePaperGUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				//TODO: add the switching state reference.
-//				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				controller.setStateOfGUI(StateOfGUI.ASSIGN_REVIEWER);
 				System.out.println("assign a reviewer....");
 			}
 		};

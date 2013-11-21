@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -44,6 +45,7 @@ import controller.Controller;
 @SuppressWarnings("serial")
 public class HomeGUI extends JPanel {
 	
+	private static final ImageIcon ICON = new ImageIcon("src/view/images2.jpg");
 	/*
 	 * The background of the main JPanel
 	 */
@@ -144,20 +146,21 @@ public class HomeGUI extends JPanel {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Conference Management System (CMS)");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblNewLabel.setBounds(10, 11, 1260, 26);
-		contentPane.add(lblNewLabel);
-		
+		//creates the title icon at the top of the panel
+		JButton btnIcon = new JButton("");
+		btnIcon.setForeground(BACKGROUND_COLOR);
+		btnIcon.setBorder(null);
+		btnIcon.setIcon(ICON);
+		btnIcon.setBounds(430, 11, 404, 116);
+		contentPane.add(btnIcon);		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 48, 1260, 2);
+		separator.setBounds(20, 127, 1250, 12);
 		contentPane.add(separator);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(INNER_BACKGROUND_COLOR);
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBounds(283, 109, 755, 442);
+		panel.setBounds(281, 182, 756, 469);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -165,35 +168,35 @@ public class HomeGUI extends JPanel {
 		//Windows Builder Pro edits out the above line when you use it.  Replace the label
 		//declaration when needed because it inserts <dynamic> into the label text 
 		JLabel label = new JLabel(controller.getCurrentUsername().toString());
-		label.setBounds(10, 39, 150, 20);
+		label.setBounds(20, 66, 150, 20);
 		panel.add(label);
 		
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JButton button = new JButton(my_logout_action);
-		button.setBounds(20, 70, 150, 22);
+		button.setBounds(20, 97, 150, 22);
 		panel.add(button);
 		
 		JButton button_1 = new JButton(my_back_action);
-		button_1.setBounds(20, 103, 152, 22);
+		button_1.setBounds(20, 130, 152, 22);
 		panel.add(button_1);
 		JButton button_2 = new JButton(my_new_conf_action);
-		button_2.setBounds(22, 136, 150, 22);
+		button_2.setBounds(22, 163, 150, 22);
 		panel.add(button_2);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(182, 43, 2, 352);
+		separator_1.setBounds(182, 70, 2, 352);
 		panel.add(separator_1);
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		
 		JLabel lblUsername = new JLabel("My Conferences");
-		lblUsername.setBounds(204, 40, 143, 20);
+		lblUsername.setBounds(204, 67, 143, 20);
 		panel.add(lblUsername);
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(204, 71, 514, 125);
+		scrollPane.setBounds(204, 98, 514, 125);
 		panel.add(scrollPane);
 		scrollPane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
@@ -211,31 +214,41 @@ public class HomeGUI extends JPanel {
 				{null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"Conference", "   Author", "    Paper", "     Date", "   Status", "    Yada....", "    Yada...."
+				"Conference", "   Author", "    Paper", "   Status", "    Role   ", "    Yada...."
 			}
 		));
 		table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		scrollPane.setViewportView(table);
 		
 		JLabel lblUpcommingConferences = new JLabel("Upcomming Conferences");
-		lblUpcommingConferences.setBounds(204, 239, 213, 20);
+		lblUpcommingConferences.setBounds(204, 266, 213, 20);
 		panel.add(lblUpcommingConferences);
 		lblUpcommingConferences.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(204, 270, 514, 125);
+		scrollPane_1.setBounds(204, 297, 514, 125);
 		panel.add(scrollPane_1);
 		scrollPane_1.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
 		JButton btnTempPaperRelation = new JButton(my_temp_paper_selected_action);
 		btnTempPaperRelation.setText(TEMP_TITLE_STRING);
-		btnTempPaperRelation.setBounds(204, 207, 514, 23);
+		btnTempPaperRelation.setBounds(204, 234, 514, 23);
 		panel.add(btnTempPaperRelation);
 		
 		JButton btnTempGeneralConf = new JButton(my_temp_conf_selected_action);
 		btnTempGeneralConf.setText(TEMP_TITLE_STRING_TWO);
-		btnTempGeneralConf.setBounds(204, 408, 514, 23);
+		btnTempGeneralConf.setBounds(204, 435, 514, 23);
 		panel.add(btnTempGeneralConf);
+		
+		JLabel lblUserHomePage = new JLabel("User Home Page");
+		lblUserHomePage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserHomePage.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblUserHomePage.setBounds(21, 21, 711, 20);
+		panel.add(lblUserHomePage);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(20, 52, 712, 20);
+		panel.add(separator_2);
 	}
 	
 	/**

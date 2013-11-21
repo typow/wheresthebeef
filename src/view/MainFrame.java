@@ -9,11 +9,6 @@
  * 11/10/13
  */
 
-
-//TODO: make default size: 1280 x 720
-
-//TODO: create global variables for color and theme.
-
 package view;
 
 import java.awt.BorderLayout;
@@ -34,46 +29,6 @@ import controller.Controller;
  */
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements Observer {
-	
-	/**
-	 * The LoginGUI
-	 */
-	private static LoginGUI loginWindow;
-	
-	/**
-	 * The RegisterGUI
-	 */
-	private static RegisterGUI registerWindow;
-	
-	/**
-	 * The HomeGUI main user interface
-	 */
-	private static HomeGUI homeWindow;
-	
-	/**
-	 * The NewConferenceGUI
-	 */
-	private static NewConferenceGUI newConferenceWindow;
-	
-	/**
-	 * The ManagePaperGUI main user interface
-	 */
-	private static ManagePaperGUI managePaperWindow;
-	
-	/**
-	 * The SubmitPaperGUI user interface
-	 */
-	private static SubmitPaperGUI submitPaperWindow;
-	
-	/**
-	 * The EditSubmissionGUI user interface
-	 */
-	private static EditSubmissionGUI editSubmissionWindow;
-	
-	/**
-	 * The SubmitReviewGUI user interface
-	 */
-	private static SubmitReviewGUI submitReviewWindow;
 	
 	/**
 	 * The current JPanal Component being used by the MainFrame JFrame
@@ -115,8 +70,7 @@ public class MainFrame extends JFrame implements Observer {
 	public void setFrame() {
 		switch (controller.getStateOfGUI()) {
 		case LOGIN:
-			setTitle("Login");
-			loginWindow = new LoginGUI(controller);
+			LoginGUI loginWindow = new LoginGUI(controller);
 			this.remove(currentPanel);
 			currentPanel = loginWindow.getGUI();
 			add(currentPanel);
@@ -124,8 +78,7 @@ public class MainFrame extends JFrame implements Observer {
 			setVisible(true);
 			break;
 		case REGISTER:
-			setTitle("Register");
-			registerWindow = new RegisterGUI(controller);
+			RegisterGUI registerWindow = new RegisterGUI(controller);
 			this.remove(currentPanel);
 			currentPanel = registerWindow.getGUI();
 			add(currentPanel);
@@ -133,8 +86,7 @@ public class MainFrame extends JFrame implements Observer {
 			setVisible(true);
 			break;
 		case HOME:
-			homeWindow = new HomeGUI(controller);
-			setTitle("Main User Interface");
+			HomeGUI homeWindow = new HomeGUI(controller);
 			this.remove(currentPanel);
 			currentPanel = homeWindow.getGUI();
 			add(currentPanel);
@@ -142,7 +94,7 @@ public class MainFrame extends JFrame implements Observer {
 			setVisible(true);
 			break;
 		case NEW_CONFERENCE:
-			newConferenceWindow = new NewConferenceGUI(controller);
+			NewConferenceGUI newConferenceWindow = new NewConferenceGUI(controller);
 			setTitle("Create a New Conference");
 			this.remove(currentPanel);
 			currentPanel = newConferenceWindow.getGUI();
@@ -151,8 +103,7 @@ public class MainFrame extends JFrame implements Observer {
 			setVisible(true);
 			break;
 		case MANAGE_PAPER:
-			managePaperWindow = new ManagePaperGUI(controller);
-			setTitle("Manage Paper");
+			ManagePaperGUI managePaperWindow = new ManagePaperGUI(controller);
 			this.remove(currentPanel);
 			currentPanel = managePaperWindow.getGUI();
 			add(currentPanel);
@@ -160,8 +111,7 @@ public class MainFrame extends JFrame implements Observer {
 			setVisible(true);
 			break;
 		case SUBMIT_PAPER:
-			submitPaperWindow = new SubmitPaperGUI(controller);
-			setTitle("Submit a New Paper");
+			SubmitPaperGUI submitPaperWindow = new SubmitPaperGUI(controller);
 			this.remove(currentPanel);
 			currentPanel = submitPaperWindow.getGUI();
 			add(currentPanel);
@@ -169,8 +119,7 @@ public class MainFrame extends JFrame implements Observer {
 			setVisible(true);
 			break;
 		case EDIT_SUBMISSION:
-			editSubmissionWindow = new EditSubmissionGUI(controller);
-			setTitle("Edit a Submitted Paper");
+			EditSubmissionGUI editSubmissionWindow = new EditSubmissionGUI(controller);
 			this.remove(currentPanel);
 			currentPanel = editSubmissionWindow.getGUI();
 			add(currentPanel);
@@ -178,10 +127,25 @@ public class MainFrame extends JFrame implements Observer {
 			setVisible(true);
 			break;
 		case SUBMIT_REVIEW:
-			submitReviewWindow = new SubmitReviewGUI(controller);
-			setTitle("Submit a Review");
+			SubmitReviewGUI submitReviewWindow = new SubmitReviewGUI(controller);
 			this.remove(currentPanel);
 			currentPanel = submitReviewWindow.getGUI();
+			add(currentPanel);
+			pack();
+			setVisible(true);
+			break;
+		case SUBMIT_RECOMMENDATION:
+			MakeRecommendationGUI submitRecommendationWindow = new MakeRecommendationGUI(controller);
+			this.remove(currentPanel);
+			currentPanel = submitRecommendationWindow.getGUI();
+			add(currentPanel);
+			pack();
+			setVisible(true);
+			break;
+		case ASSIGN_REVIEWER:
+			AssignReviewerGUI assignReviewerWindow = new AssignReviewerGUI(controller);
+			this.remove(currentPanel);
+			currentPanel = assignReviewerWindow.getGUI();
 			add(currentPanel);
 			pack();
 			setVisible(true);
@@ -220,8 +184,7 @@ public class MainFrame extends JFrame implements Observer {
 	
 	private void setUpFrame(){
 		controller = new Controller();
-		loginWindow = new LoginGUI(controller);
-		//TODO: move these to the setFrame() method?
+		LoginGUI loginWindow = new LoginGUI(controller);
 		this.setResizable(false);
 		setTitle("Login");
 		currentPanel = loginWindow.getGUI();
