@@ -19,6 +19,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.AbstractListModel;
@@ -28,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -50,6 +52,9 @@ import controller.Controller;
 @SuppressWarnings("serial")
 public class AssignReviewerGUI extends JPanel {
 	
+	/*
+	 * the icon to display the CMS logo
+	 */
 	private static final ImageIcon ICON = new ImageIcon("src/view/images2.jpg");
 	
 	/*
@@ -108,6 +113,11 @@ public class AssignReviewerGUI extends JPanel {
 	private static final String SUBMIT_REVIEW_STRING = "Submit this review form (ALT+S)";
 	
 	/*
+	 * the maximum allowable number of reviewers for a single paper
+	 */
+	private static int MAX_NUM_REVIWERS = 4;
+	
+	/*
 	 * the JPanel containing the entire SubmitPaperGUI
 	 */
 	private JPanel contentPane;
@@ -137,7 +147,18 @@ public class AssignReviewerGUI extends JPanel {
 	 */
 	private String paper_author = "";
 	
+	/*
+	 * integer value used to represent the number of reviewers currently
+	 * assigned to a paper.  This can't be more than 4.  It is used to 
+	 * validate that business rule.
+	 */
 	private int num_of_reviewers = 0;
+	
+	/*
+	 * The list of users that can be selected from to be considered
+	 * for reviewers of the paper.
+	 */
+	private JList<String> list;
 	
 	/*
 	 * the Action associated with the Main button
@@ -196,7 +217,7 @@ public class AssignReviewerGUI extends JPanel {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(INNER_BACKGROUND_COLOR);
 		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel_1.setBounds(217, 150, 840, 518);
+		panel_1.setBounds(217, 160, 840, 518);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -368,12 +389,12 @@ public class AssignReviewerGUI extends JPanel {
 		lblReviewersAlreadyAssigned.setBounds(28, 0, 211, 20);
 		panel_6.add(lblReviewersAlreadyAssigned);
 		
-		//TODO: get the array of users already assinged as reviewers to this paper (if any)
+		//TODO: get the array of users already assigned as reviewers to this paper (if any)
 		String[] users_already_assigned = controller.getUsersAssignedAsReviewers(current_conf, current_paper);
 		num_of_reviewers = users_already_assigned.length;
 		
 		int temp_num_reviewers = num_of_reviewers;
-		if (temp_num_reviewers != 0){
+		if (temp_num_reviewers > 0){
 			JLabel user_already_assigned_1 = new JLabel(controller.getFullName(users_already_assigned[0]));
 			user_already_assigned_1.setHorizontalAlignment(SwingConstants.LEFT);
 			user_already_assigned_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -389,7 +410,7 @@ public class AssignReviewerGUI extends JPanel {
 			temp_num_reviewers--;
 		}
 		
-		if (temp_num_reviewers != 0){
+		if (temp_num_reviewers > 0){
 			JLabel user_already_assigned_2 = new JLabel(controller.getFullName(users_already_assigned[1]));
 			user_already_assigned_2.setHorizontalAlignment(SwingConstants.LEFT);
 			user_already_assigned_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -405,7 +426,7 @@ public class AssignReviewerGUI extends JPanel {
 			temp_num_reviewers--;
 		}
 		
-		if (temp_num_reviewers != 0){
+		if (temp_num_reviewers > 0){
 			JLabel user_already_assigned_3 = new JLabel(controller.getFullName(users_already_assigned[2]));
 			user_already_assigned_3.setHorizontalAlignment(SwingConstants.LEFT);
 			user_already_assigned_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -421,7 +442,7 @@ public class AssignReviewerGUI extends JPanel {
 			temp_num_reviewers--;
 		}
 		
-		if (temp_num_reviewers != 0){
+		if (temp_num_reviewers > 0){
 			JLabel user_already_assigned_4 = new JLabel(controller.getFullName(users_already_assigned[3]));
 			user_already_assigned_4.setHorizontalAlignment(SwingConstants.LEFT);
 			user_already_assigned_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -457,7 +478,7 @@ public class AssignReviewerGUI extends JPanel {
 		lblSummaryRecommendation.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		
-		JList list = new JList();
+		list = new JList();
 		list.setModel(new AbstractListModel() {
 			String[] values = controller.getAvailableReviewers(current_paper, username);
 			public int getSize() {
@@ -474,8 +495,6 @@ public class AssignReviewerGUI extends JPanel {
 		gbc_list.gridx = 0;
 		gbc_list.gridy = 8;
 		panel.add(list, gbc_list);
-		
-		scrollPane.getVerticalScrollBar().setValue(0);
 	}
 	
 	/**
@@ -542,8 +561,41 @@ public class AssignReviewerGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				//TODO: add more to the submit action?
-
-				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				List<String> results = list.getSelectedValuesList();		//the unchecked results of what the user selected
+				String[] the_reviewers = new String[4];						//array to hold the results (max possible is 4)
+				int num_open_review_slots = MAX_NUM_REVIWERS - num_of_reviewers; //the number of slots remaining after
+																		//considering the number already assigned (if any)
+				int num_reviewers_selected = results.size();			//the number of reviewers selected by the user			
+				if (num_reviewers_selected > 4){
+					JOptionPane.showMessageDialog(contentPane, "Maximum number of reviewers for a paper is 4.");
+				}
+				else if (num_open_review_slots == 0){
+					JOptionPane.showMessageDialog(contentPane, "Maximum number of reviewers for a paper is 4.");
+				}
+				else if ((num_open_review_slots == 3) && (num_reviewers_selected > 3)){
+					JOptionPane.showMessageDialog(contentPane, "One reviewer already assinged.  You selected greater than 3." +
+							" Maximum number of reviewers for a paper is 4.");
+				}
+				else if ((num_open_review_slots == 2) && (num_reviewers_selected > 2)){
+					JOptionPane.showMessageDialog(contentPane, "Two reviewers already assinged. You selected greater than 2." +
+							" Maximum number of reviewers for a paper is 4.");
+				}
+				else if ((num_open_review_slots == 1) && (num_reviewers_selected > 1)){
+					JOptionPane.showMessageDialog(contentPane, "Three reviewers already assinged. You selected greater than 1." +
+							" Maximum number of reviewers for a paper is 4.");
+				}
+				else if (num_reviewers_selected == 0){
+					JOptionPane.showMessageDialog(contentPane, "No reviewer selected.  Select a reviewer or return to " +
+							"previous screen");
+				}
+				else {
+					controller.addReviewers(current_conf, current_paper, the_reviewers);
+					controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				}
+				System.out.println("number of reviewers already assigned: " + num_of_reviewers);
+				System.out.println("number of open slots: " + num_open_review_slots);
+				System.out.println("number of reviewers selected: " + num_reviewers_selected);
+				System.out.println("selected: " + results);
 			}
 		};
 		my_submit_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_REVIEW_STRING);

@@ -19,6 +19,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -46,6 +47,11 @@ import controller.Controller;
 
 @SuppressWarnings("serial")
 public class NewConferenceGUI extends JPanel {
+	
+	/*
+	 * the icon to display the CMS logo
+	 */
+	private static final ImageIcon ICON = new ImageIcon("src/view/images2.jpg");
 
 	/*
 	 * The background of the main JPanel
@@ -203,20 +209,20 @@ public class NewConferenceGUI extends JPanel {
 		contentPane.setLayout(null);
 		contentPane.setPreferredSize(WIN_DIMENSION);
 		
+		JButton btnIcon = new JButton("");
+		btnIcon.setForeground(BACKGROUND_COLOR);
+		btnIcon.setBorder(null);
+		btnIcon.setIcon(ICON);
+		btnIcon.setBounds(430, 11, 404, 116);
+		contentPane.add(btnIcon);		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 48, 1260, 2);
+		separator.setBounds(20, 127, 1250, 12);
 		contentPane.add(separator);
-		
-		JLabel label_1 = new JLabel("Conference Management System (CMS)");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		label_1.setBounds(10, 11, 1260, 26);
-		contentPane.add(label_1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(INNER_BACKGROUND_COLOR);
 		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel_1.setBounds(218, 87, 840, 585);
+		panel_1.setBounds(217, 153, 840, 541);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -224,189 +230,189 @@ public class NewConferenceGUI extends JPanel {
 		//Windows Builder Pro edits out the above line when you use it.  Replace the label
 		//declaration when needed because it inserts <dynamic> into the label text 
 		JLabel label = new JLabel(username);
-		label.setBounds(10, 46, 157, 20);
+		label.setBounds(10, 22, 157, 20);
 		panel_1.add(label);
 		
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JButton btnLogout = new JButton(my_logout_action);
-		btnLogout.setBounds(20, 77, 150, 22);
+		btnLogout.setBounds(20, 53, 150, 22);
 		panel_1.add(btnLogout);
 		
 		JButton btnMain = new JButton(my_main_action);
-		btnMain.setBounds(20, 111, 150, 22);
+		btnMain.setBounds(20, 87, 150, 22);
 		panel_1.add(btnMain);
 		btnMain.setText("Main");
 		
 		JButton btnBack = new JButton(my_back_action);
-		btnBack.setBounds(20, 145, 150, 22);
+		btnBack.setBounds(20, 121, 150, 22);
 		panel_1.add(btnBack);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(182, 46, 14, 499);
+		separator_1.setBounds(182, 22, 14, 499);
 		panel_1.add(separator_1);
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		
 		JSeparator separator_2 = new JSeparator();
-		separator_2.setBounds(204, 242, 597, 18);
+		separator_2.setBounds(204, 218, 597, 18);
 		panel_1.add(separator_2);
 		
 		JLabel lblSubmissionDeadline = new JLabel("* Submission Deadline:");
-		lblSubmissionDeadline.setBounds(203, 260, 317, 20);
+		lblSubmissionDeadline.setBounds(203, 236, 317, 20);
 		panel_1.add(lblSubmissionDeadline);
 		lblSubmissionDeadline.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSubmissionDeadline.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JLabel lblReviewDeadline = new JLabel("* Review Deadline:");
-		lblReviewDeadline.setBounds(201, 291, 319, 20);
+		lblReviewDeadline.setBounds(201, 267, 319, 20);
 		panel_1.add(lblReviewDeadline);
 		lblReviewDeadline.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblReviewDeadline.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JLabel lblSubPcRecommendation = new JLabel("* Sub-PC Recommendation Deadline:");
-		lblSubPcRecommendation.setBounds(203, 322, 317, 20);
+		lblSubPcRecommendation.setBounds(203, 298, 317, 20);
 		panel_1.add(lblSubPcRecommendation);
 		lblSubPcRecommendation.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSubPcRecommendation.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JLabel lblAuthorNotificationDeadline = new JLabel("* Author Notification Deadline:");
-		lblAuthorNotificationDeadline.setBounds(203, 353, 317, 20);
+		lblAuthorNotificationDeadline.setBounds(203, 329, 317, 20);
 		panel_1.add(lblAuthorNotificationDeadline);
 		lblAuthorNotificationDeadline.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAuthorNotificationDeadline.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JLabel lblAssignedPC = new JLabel
 				(controller.getFullName(username));
-		lblAssignedPC.setBounds(518, 205, 157, 20);
+		lblAssignedPC.setBounds(518, 181, 157, 20);
 		panel_1.add(lblAssignedPC);
 		lblAssignedPC.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAssignedPC.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel lblProgramChair = new JLabel("Program Chair:");
-		lblProgramChair.setBounds(201, 205, 297, 26);
+		lblProgramChair.setBounds(201, 181, 297, 26);
 		panel_1.add(lblProgramChair);
 		lblProgramChair.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblProgramChair.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		submission_deadline_field = new JTextField();
-		submission_deadline_field.setBounds(539, 262, 262, 20);
+		submission_deadline_field.setBounds(539, 238, 262, 20);
 		panel_1.add(submission_deadline_field);
 		submission_deadline_field.setColumns(10);
 		
 		review_deadline_field = new JTextField();
-		review_deadline_field.setBounds(539, 293, 262, 20);
+		review_deadline_field.setBounds(539, 269, 262, 20);
 		panel_1.add(review_deadline_field);
 		review_deadline_field.setColumns(10);
 		
 		sub_pc_recommend_deadline_field = new JTextField();
-		sub_pc_recommend_deadline_field.setBounds(539, 324, 262, 20);
+		sub_pc_recommend_deadline_field.setBounds(539, 300, 262, 20);
 		panel_1.add(sub_pc_recommend_deadline_field);
 		sub_pc_recommend_deadline_field.setColumns(10);
 		
 		author_notification_deadline_field = new JTextField();
-		author_notification_deadline_field.setBounds(539, 355, 262, 20);
+		author_notification_deadline_field.setBounds(539, 331, 262, 20);
 		panel_1.add(author_notification_deadline_field);
 		author_notification_deadline_field.setColumns(10);
 		
 		JSeparator separator_3 = new JSeparator();
-		separator_3.setBounds(201, 384, 597, 18);
+		separator_3.setBounds(201, 360, 597, 18);
 		panel_1.add(separator_3);
 		
 		JLabel lblConferenceSummary = new JLabel("Conference Summary:");
-		lblConferenceSummary.setBounds(180, 394, 621, 20);
+		lblConferenceSummary.setBounds(180, 370, 621, 20);
 		panel_1.add(lblConferenceSummary);
 		lblConferenceSummary.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConferenceSummary.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		conference_summary_field = new JTextArea();
-		conference_summary_field.setBounds(216, 425, 581, 66);
+		conference_summary_field.setBounds(216, 401, 581, 66);
 		panel_1.add(conference_summary_field);
 		
 		JLabel lblConferenceTitle = new JLabel("* Conference Title:");
-		lblConferenceTitle.setBounds(203, 46, 297, 20);
+		lblConferenceTitle.setBounds(203, 22, 297, 20);
 		panel_1.add(lblConferenceTitle);
 		lblConferenceTitle.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblConferenceTitle.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JLabel lblConfDate = new JLabel("* Conference Date:");
-		lblConfDate.setBounds(203, 76, 297, 20);
+		lblConfDate.setBounds(203, 52, 297, 20);
 		panel_1.add(lblConfDate);
 		lblConfDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblConfDate.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JLabel lblConferenceLocationDeadline = new JLabel("* Conference Location:");
-		lblConferenceLocationDeadline.setBounds(203, 114, 297, 20);
+		lblConferenceLocationDeadline.setBounds(203, 90, 297, 20);
 		panel_1.add(lblConferenceLocationDeadline);
 		lblConferenceLocationDeadline.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblConferenceLocationDeadline.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		conf_title_field = new JTextField();
-		conf_title_field.setBounds(517, 48, 284, 20);
+		conf_title_field.setBounds(517, 24, 284, 20);
 		panel_1.add(conf_title_field);
 		conf_title_field.setColumns(10);
 		
 		conf_date_field = new JTextField();
-		conf_date_field.setBounds(517, 78, 284, 20);
+		conf_date_field.setBounds(517, 54, 284, 20);
 		panel_1.add(conf_date_field);
 		conf_date_field.setColumns(10);
 		
 		JButton btnSubmit = new JButton(my_submit_action);
-		btnSubmit.setBounds(417, 513, 159, 29);
+		btnSubmit.setBounds(417, 489, 159, 29);
 		panel_1.add(btnSubmit);
 		
 		conf_address_field = new JTextField();
-		conf_address_field.setBounds(583, 114, 218, 20);
+		conf_address_field.setBounds(583, 90, 218, 20);
 		panel_1.add(conf_address_field);
 		conf_address_field.setColumns(10);
 		
 		JLabel lblAddress = new JLabel("Address:");
-		lblAddress.setBounds(518, 114, 58, 20);
+		lblAddress.setBounds(518, 90, 58, 20);
 		panel_1.add(lblAddress);
 		lblAddress.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAddress.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel lblCity = new JLabel("City:");
-		lblCity.setBounds(516, 145, 37, 20);
+		lblCity.setBounds(516, 121, 37, 20);
 		panel_1.add(lblCity);
 		lblCity.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCity.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel lblZip = new JLabel("Zip:");
-		lblZip.setBounds(518, 174, 31, 20);
+		lblZip.setBounds(518, 150, 31, 20);
 		panel_1.add(lblZip);
 		lblZip.setHorizontalAlignment(SwingConstants.LEFT);
 		lblZip.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		con_zip_field = new JTextField();
-		con_zip_field.setBounds(557, 175, 85, 20);
+		con_zip_field.setBounds(557, 151, 85, 20);
 		panel_1.add(con_zip_field);
 		con_zip_field.setColumns(10);
 		
 		conf_state_field = new JTextField();
-		conf_state_field.setBounds(708, 146, 93, 20);
+		conf_state_field.setBounds(708, 122, 93, 20);
 		panel_1.add(conf_state_field);
 		conf_state_field.setColumns(10);
 		
 		JLabel lblState = new JLabel("State:");
-		lblState.setBounds(652, 145, 47, 20);
+		lblState.setBounds(652, 121, 47, 20);
 		panel_1.add(lblState);
 		lblState.setHorizontalAlignment(SwingConstants.CENTER);
 		lblState.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(218, 425, 583, 68);
+		scrollPane.setBounds(218, 401, 583, 68);
 		panel_1.add(scrollPane);
 		
 		conf_city_field = new JTextField();
-		conf_city_field.setBounds(557, 146, 85, 20);
+		conf_city_field.setBounds(557, 122, 85, 20);
 		panel_1.add(conf_city_field);
 		conf_city_field.setColumns(10);
 		
 		JLabel lblDenotesRequired = new JLabel("* Required Field");
 		lblDenotesRequired.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDenotesRequired.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblDenotesRequired.setBounds(690, 525, 120, 20);
+		lblDenotesRequired.setBounds(690, 501, 120, 20);
 		panel_1.add(lblDenotesRequired);
 	}
 	

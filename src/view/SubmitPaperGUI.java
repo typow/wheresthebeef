@@ -19,6 +19,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -44,6 +45,12 @@ import controller.Controller;
 
 @SuppressWarnings("serial")
 public class SubmitPaperGUI extends JPanel {
+	
+	/*
+	 * the icon to display the CMS logo
+	 */
+	private static final ImageIcon ICON = new ImageIcon("src/view/images2.jpg");
+	
 	/*
 	 * The background of the main JPanel
 	 */
@@ -164,15 +171,15 @@ public class SubmitPaperGUI extends JPanel {
 		contentPane.setLayout(null);
 		contentPane.setPreferredSize(WIN_DIMENSION);
 		
+		JButton btnIcon = new JButton("");
+		btnIcon.setForeground(BACKGROUND_COLOR);
+		btnIcon.setBorder(null);
+		btnIcon.setIcon(ICON);
+		btnIcon.setBounds(430, 11, 404, 116);
+		contentPane.add(btnIcon);		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 48, 1260, 2);
+		separator.setBounds(20, 127, 1250, 12);
 		contentPane.add(separator);
-		
-		JLabel label_1 = new JLabel("Conference Management System (CMS)");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		label_1.setBounds(10, 11, 1260, 26);
-		contentPane.add(label_1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(INNER_BACKGROUND_COLOR);

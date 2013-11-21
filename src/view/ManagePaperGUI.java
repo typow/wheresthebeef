@@ -49,7 +49,11 @@ import controller.Controller;
 @SuppressWarnings("serial")
 public class ManagePaperGUI extends JPanel{
 
+	/*
+	 * the icon to display the CMS logo
+	 */
 	private static final ImageIcon ICON = new ImageIcon("src/view/images2.jpg");
+	
 	/*
 	 * The background of the main JPanel
 	 */

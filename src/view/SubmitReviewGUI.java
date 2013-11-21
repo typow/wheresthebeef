@@ -23,6 +23,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -49,6 +50,12 @@ import controller.Controller;
 
 @SuppressWarnings("serial")
 public class SubmitReviewGUI extends JPanel {
+	
+	/*
+	 * the icon to display the CMS logo
+	 */
+	private static final ImageIcon ICON = new ImageIcon("src/view/images2.jpg");
+	
 	/*
 	 * The background of the main JPanel
 	 */
@@ -187,25 +194,25 @@ public class SubmitReviewGUI extends JPanel {
 		contentPane.setLayout(null);
 		contentPane.setPreferredSize(WIN_DIMENSION);
 		
+		JButton btnIcon = new JButton("");
+		btnIcon.setForeground(BACKGROUND_COLOR);
+		btnIcon.setBorder(null);
+		btnIcon.setIcon(ICON);
+		btnIcon.setBounds(430, 11, 404, 116);
+		contentPane.add(btnIcon);		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 48, 1260, 2);
+		separator.setBounds(20, 127, 1250, 12);
 		contentPane.add(separator);
-		
-		JLabel label_1 = new JLabel("Conference Management System (CMS)");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		label_1.setBounds(10, 11, 1260, 26);
-		contentPane.add(label_1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(INNER_BACKGROUND_COLOR);
 		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel_1.setBounds(217, 82, 840, 586);
+		panel_1.setBounds(218, 160, 840, 520);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(222, 70, 582, 444);
+		scrollPane.setBounds(222, 70, 582, 400);
 		panel_1.add(scrollPane);
 		
 		JPanel panel = new JPanel();
@@ -992,14 +999,14 @@ public class SubmitReviewGUI extends JPanel {
 		panel_1.add(btnBack);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(182, 69, 14, 492);
+		separator_1.setBounds(182, 69, 14, 441);
 		panel_1.add(separator_1);
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		
 		JButton btnEditSubmission = new JButton(my_submit_action);
 		btnEditSubmission.setToolTipText(SUBMIT_REVIEW_STRING);
 		btnEditSubmission.setText(SUBMIT_REVIEW_TITLE_STRING);
-		btnEditSubmission.setBounds(421, 532, 159, 29);
+		btnEditSubmission.setBounds(422, 481, 159, 29);
 		panel_1.add(btnEditSubmission);
 		
 		JSeparator separator_2 = new JSeparator();

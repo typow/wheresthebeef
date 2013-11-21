@@ -388,7 +388,7 @@ public class Controller extends Observable{
 		//		already.  i.e. if 3 reviewers are returned here, 1 more can be added, no more.
 		
 				//temporary:
-				String[] reviewers = new String[]{"chippy", "hippy", "bippy", "sippy"};
+				String[] reviewers = new String[]{"chippy"};
 			
 		
 		return reviewers;

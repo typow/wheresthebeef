@@ -20,6 +20,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -45,6 +46,11 @@ import controller.Controller;
 
 @SuppressWarnings("serial")
 public class RegisterGUI extends JPanel {
+	
+	/*
+	 * the icon to display the CMS logo
+	 */
+	private static final ImageIcon ICON = new ImageIcon("src/view/images2.jpg");
 	
 	/*
 	 * The background of the main JPanel
@@ -163,20 +169,20 @@ public class RegisterGUI extends JPanel {
 		contentPane.setBackground(BACKGROUND_COLOR);
 		contentPane.setPreferredSize(WIN_DIMENSION);
 		
+		JButton btnIcon = new JButton("");
+		btnIcon.setForeground(BACKGROUND_COLOR);
+		btnIcon.setBorder(null);
+		btnIcon.setIcon(ICON);
+		btnIcon.setBounds(430, 11, 404, 116);
+		contentPane.add(btnIcon);		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 48, 1260, 2);
+		separator.setBounds(20, 127, 1250, 12);
 		contentPane.add(separator);
-		
-		JLabel label = new JLabel("Conference Management System (CMS)");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		label.setBounds(10, 11, 1260, 26);
-		contentPane.add(label);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(INNER_BACKGROUND_COLOR);
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBounds(348, 129, 587, 389);
+		panel.setBounds(345, 219, 587, 389);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
