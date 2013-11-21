@@ -150,6 +150,14 @@ public class MainFrame extends JFrame implements Observer {
 			pack();
 			setVisible(true);
 			break;
+		case ASSIGN_SUB_PC:
+			AssignSubPCGUI assignSubPCWindow = new AssignSubPCGUI(controller);
+			this.remove(currentPanel);
+			currentPanel = assignSubPCWindow.getGUI();
+			add(currentPanel);
+			pack();
+			setVisible(true);
+			break;
 		}
 	}
 

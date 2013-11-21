@@ -62,7 +62,11 @@ public class GUIEnum {
 		/**
 		 * Make the assign reviewer user interface visible.
 		 */
-		ASSIGN_REVIEWER;
+		ASSIGN_REVIEWER,
+		/**
+		 * Make the assign SubPC user interface visible.
+		 */
+		ASSIGN_SUB_PC;
 		
 	}
 

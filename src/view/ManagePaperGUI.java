@@ -615,7 +615,7 @@ public class ManagePaperGUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				//TODO: add the switching state reference.
-//				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				controller.setStateOfGUI(StateOfGUI.ASSIGN_SUB_PC);
 				System.out.println("assign a subprogram chair....");
 			}
 		};

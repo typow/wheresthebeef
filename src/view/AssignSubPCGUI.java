@@ -40,6 +40,7 @@ import javax.swing.border.EmptyBorder;
 import view.GUIEnum.StateOfGUI;
 import controller.Conference;
 import controller.Controller;
+import javax.swing.ListSelectionModel;
 
 /**
 * The Submit Review Interface JPanel
@@ -50,7 +51,7 @@ import controller.Controller;
 */
 
 @SuppressWarnings("serial")
-public class AssignReviewerGUI extends JPanel {
+public class AssignSubPCGUI extends JPanel {
 	
 	/*
 	 * the icon to display the CMS logo
@@ -158,7 +159,7 @@ public class AssignReviewerGUI extends JPanel {
 	 * The list of users that can be selected from to be considered
 	 * for reviewers of the paper.
 	 */
-	private JList<String> list;
+	private JList<String> listOfAvailableForSubPC;
 	
 	/*
 	 * the Action associated with the Main button
@@ -184,7 +185,7 @@ public class AssignReviewerGUI extends JPanel {
 	 * Create the JPanel.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public AssignReviewerGUI(final Controller the_controller) {
+	public AssignSubPCGUI(final Controller the_controller) {
 		super();
 		controller = the_controller;
 		current_conf = controller.getCurrentConference();
@@ -249,21 +250,21 @@ public class AssignReviewerGUI extends JPanel {
 		panel_1.add(separator_1);
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		
-		JButton btnEditSubmission = new JButton(my_submit_action);
-		btnEditSubmission.setToolTipText(SUBMIT_REVIEW_STRING);
-		btnEditSubmission.setText(SUBMIT_REVIEW_TITLE_STRING);
-		btnEditSubmission.setBounds(417, 467, 159, 29);
-		panel_1.add(btnEditSubmission);
+		JButton btnSubmitSubPCChoice = new JButton(my_submit_action);
+		btnSubmitSubPCChoice.setToolTipText(SUBMIT_REVIEW_STRING);
+		btnSubmitSubPCChoice.setText(SUBMIT_REVIEW_TITLE_STRING);
+		btnSubmitSubPCChoice.setBounds(417, 467, 159, 29);
+		panel_1.add(btnSubmitSubPCChoice);
 		
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(20, 46, 799, 20);
 		panel_1.add(separator_2);
 		
-		JLabel lblMakeRecommend = new JLabel("Assign A Reviewer to the Paper:");
-		lblMakeRecommend.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMakeRecommend.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblMakeRecommend.setBounds(20, 15, 791, 20);
-		panel_1.add(lblMakeRecommend);
+		JLabel lblAssignSubPC = new JLabel("Assign A Sub-Program Chair to the Paper:");
+		lblAssignSubPC.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAssignSubPC.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblAssignSubPC.setBounds(20, 15, 791, 20);
+		panel_1.add(lblAssignSubPC);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(217, 70, 582, 374);
@@ -274,9 +275,9 @@ public class AssignReviewerGUI extends JPanel {
 		panel.setBackground(Color.WHITE);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[] {580};
-		gbl_panel.rowHeights = new int[] {30, 30, 30, 30, 30, 120, 10, 30, 0, 150};
+		gbl_panel.rowHeights = new int[] {30, 30, 30, 30, 30, 20, 30, 150};
 		gbl_panel.columnWeights = new double[]{1.0};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
 		panel.setLayout(gbl_panel);
 		
 		JPanel panel_2 = new JPanel();
@@ -295,11 +296,11 @@ public class AssignReviewerGUI extends JPanel {
 		lblYourName.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_2.add(lblYourName);
 		
-		JLabel fieldReviewerName = new JLabel(controller.getFullName(username));
-		fieldReviewerName.setHorizontalAlignment(SwingConstants.LEFT);
-		fieldReviewerName.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		fieldReviewerName.setBounds(179, 0, 391, 20);
-		panel_2.add(fieldReviewerName);
+		JLabel fieldPCName = new JLabel(controller.getFullName(username));
+		fieldPCName.setHorizontalAlignment(SwingConstants.LEFT);
+		fieldPCName.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fieldPCName.setBounds(179, 0, 391, 20);
+		panel_2.add(fieldPCName);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setLayout(null);
@@ -367,120 +368,29 @@ public class AssignReviewerGUI extends JPanel {
 		fieldPaperAuthor.setBounds(179, 0, 391, 20);
 		panel_5.add(fieldPaperAuthor);
 		
-		JPanel panel_7 = new JPanel();
-		panel_7.setLayout(null);
-		panel_7.setBackground(Color.WHITE);
-		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
-		gbc_panel_7.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_7.fill = GridBagConstraints.BOTH;
-		gbc_panel_7.gridx = 0;
-		gbc_panel_7.gridy = 5;
-		panel.add(panel_7, gbc_panel_7);
-		
-		JPanel panel_6 = new JPanel();
-		panel_6.setLayout(null);
-		panel_6.setBackground(Color.WHITE);
-		panel_6.setBounds(0, 0, 580, 123);
-		panel_7.add(panel_6);
-		
-		JLabel lblReviewersAlreadyAssigned = new JLabel("Reviewers Already Assigned:");
-		lblReviewersAlreadyAssigned.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblReviewersAlreadyAssigned.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblReviewersAlreadyAssigned.setBounds(28, 0, 211, 20);
-		panel_6.add(lblReviewersAlreadyAssigned);
-		
-		//TODO: get the array of users already assigned as reviewers to this paper (if any)
-		String[] users_already_assigned = controller.getUsersAssignedAsReviewers(current_conf, current_paper);
-		num_of_reviewers = users_already_assigned.length;
-		
-		int temp_num_reviewers = num_of_reviewers;
-		if (temp_num_reviewers > 0){
-			JLabel user_already_assigned_1 = new JLabel(controller.getFullName(users_already_assigned[0]));
-			user_already_assigned_1.setHorizontalAlignment(SwingConstants.LEFT);
-			user_already_assigned_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			user_already_assigned_1.setBounds(290, 1, 367, 20);
-			panel_6.add(user_already_assigned_1);
-			temp_num_reviewers--;
-		} else {
-			JLabel user_already_assigned_1 = new JLabel("UNASSIGNED");
-			user_already_assigned_1.setHorizontalAlignment(SwingConstants.LEFT);
-			user_already_assigned_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			user_already_assigned_1.setBounds(290, 1, 367, 20);
-			panel_6.add(user_already_assigned_1);
-			temp_num_reviewers--;
-		}
-		
-		if (temp_num_reviewers > 0){
-			JLabel user_already_assigned_2 = new JLabel(controller.getFullName(users_already_assigned[1]));
-			user_already_assigned_2.setHorizontalAlignment(SwingConstants.LEFT);
-			user_already_assigned_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			user_already_assigned_2.setBounds(290, 32, 367, 20);
-			panel_6.add(user_already_assigned_2);
-			temp_num_reviewers--;
-		} else {
-			JLabel user_already_assigned_2 = new JLabel("UNASSIGNED");
-			user_already_assigned_2.setHorizontalAlignment(SwingConstants.LEFT);
-			user_already_assigned_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			user_already_assigned_2.setBounds(290, 32, 367, 20);
-			panel_6.add(user_already_assigned_2);
-			temp_num_reviewers--;
-		}
-		
-		if (temp_num_reviewers > 0){
-			JLabel user_already_assigned_3 = new JLabel(controller.getFullName(users_already_assigned[2]));
-			user_already_assigned_3.setHorizontalAlignment(SwingConstants.LEFT);
-			user_already_assigned_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			user_already_assigned_3.setBounds(290, 63, 367, 20);
-			panel_6.add(user_already_assigned_3);
-			temp_num_reviewers--;
-		} else {
-			JLabel user_already_assigned_3 = new JLabel("UNASSIGNED");
-			user_already_assigned_3.setHorizontalAlignment(SwingConstants.LEFT);
-			user_already_assigned_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			user_already_assigned_3.setBounds(290, 63, 367, 20);
-			panel_6.add(user_already_assigned_3);
-			temp_num_reviewers--;
-		}
-		
-		if (temp_num_reviewers > 0){
-			JLabel user_already_assigned_4 = new JLabel(controller.getFullName(users_already_assigned[3]));
-			user_already_assigned_4.setHorizontalAlignment(SwingConstants.LEFT);
-			user_already_assigned_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			user_already_assigned_4.setBounds(290, 94, 367, 20);
-			panel_6.add(user_already_assigned_4);
-			temp_num_reviewers--;
-		} else {
-			JLabel user_already_assigned_4 = new JLabel("UNASSIGNED");
-			user_already_assigned_4.setHorizontalAlignment(SwingConstants.LEFT);
-			user_already_assigned_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			user_already_assigned_4.setBounds(290, 94, 367, 20);
-			panel_6.add(user_already_assigned_4);
-			temp_num_reviewers--;
-		}
-		
 		JSeparator separator_3 = new JSeparator();
-		separator_3.setForeground(Color.BLACK);
-		separator_3.setBackground(Color.BLACK);
 		GridBagConstraints gbc_separator_3 = new GridBagConstraints();
-		gbc_separator_3.fill = GridBagConstraints.BOTH;
+		gbc_separator_3.fill = GridBagConstraints.HORIZONTAL;
 		gbc_separator_3.insets = new Insets(0, 0, 5, 0);
 		gbc_separator_3.gridx = 0;
-		gbc_separator_3.gridy = 6;
+		gbc_separator_3.gridy = 5;
 		panel.add(separator_3, gbc_separator_3);
+		separator_3.setForeground(Color.BLACK);
+		separator_3.setBackground(Color.BLACK);
 		
-		JLabel lblSummaryRecommendation = new JLabel("Available Reviewers:");
-		GridBagConstraints gbc_lblSummaryRecommendation = new GridBagConstraints();
-		gbc_lblSummaryRecommendation.insets = new Insets(0, 0, 5, 0);
-		gbc_lblSummaryRecommendation.gridx = 0;
-		gbc_lblSummaryRecommendation.gridy = 7;
-		panel.add(lblSummaryRecommendation, gbc_lblSummaryRecommendation);
-		lblSummaryRecommendation.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSummaryRecommendation.setFont(new Font("Tahoma", Font.BOLD, 15));
+		JLabel lblSubPC = new JLabel("Select Sub-Program Chair:");
+		GridBagConstraints gbc_lblSubPC = new GridBagConstraints();
+		gbc_lblSubPC.insets = new Insets(0, 0, 5, 0);
+		gbc_lblSubPC.gridx = 0;
+		gbc_lblSubPC.gridy = 6;
+		panel.add(lblSubPC, gbc_lblSubPC);
+		lblSubPC.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSubPC.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
-		
-		list = new JList();
-		list.setModel(new AbstractListModel() {
-			String[] values = controller.getAvailableReviewers(current_conf, current_paper, username);
+		listOfAvailableForSubPC = new JList();
+		listOfAvailableForSubPC.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listOfAvailableForSubPC.setModel(new AbstractListModel() {
+			String[] values = controller.getAvailableForSubPC(current_conf, current_paper, username);
 			public int getSize() {
 				return values.length;
 			}
@@ -489,12 +399,12 @@ public class AssignReviewerGUI extends JPanel {
 			}
 		});
 		
-		GridBagConstraints gbc_list = new GridBagConstraints();
-		gbc_list.insets = new Insets(0, 0, 5, 0);
-		gbc_list.fill = GridBagConstraints.VERTICAL;
-		gbc_list.gridx = 0;
-		gbc_list.gridy = 8;
-		panel.add(list, gbc_list);
+		GridBagConstraints gbc_listOfAvailableForSubPC = new GridBagConstraints();
+		gbc_listOfAvailableForSubPC.gridheight = 4;
+		gbc_listOfAvailableForSubPC.fill = GridBagConstraints.VERTICAL;
+		gbc_listOfAvailableForSubPC.gridx = 0;
+		gbc_listOfAvailableForSubPC.gridy = 7;
+		panel.add(listOfAvailableForSubPC, gbc_listOfAvailableForSubPC);
 	}
 	
 	/**
@@ -561,41 +471,15 @@ public class AssignReviewerGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				//TODO: add more to the submit action?
-				List<String> results = list.getSelectedValuesList();		//the unchecked results of what the user selected
-				String[] the_reviewers = new String[4];						//array to hold the results (max possible is 4)
-				int num_open_review_slots = MAX_NUM_REVIWERS - num_of_reviewers; //the number of slots remaining after
-																		//considering the number already assigned (if any)
-				int num_reviewers_selected = results.size();			//the number of reviewers selected by the user			
-				if (num_reviewers_selected > 4){
-					JOptionPane.showMessageDialog(contentPane, "Maximum number of reviewers for a paper is 4.");
-				}
-				else if (num_open_review_slots == 0){
-					JOptionPane.showMessageDialog(contentPane, "Maximum number of reviewers for a paper is 4.");
-				}
-				else if ((num_open_review_slots == 3) && (num_reviewers_selected > 3)){
-					JOptionPane.showMessageDialog(contentPane, "One reviewer already assinged.  You selected greater than 3." +
-							" Maximum number of reviewers for a paper is 4.");
-				}
-				else if ((num_open_review_slots == 2) && (num_reviewers_selected > 2)){
-					JOptionPane.showMessageDialog(contentPane, "Two reviewers already assinged. You selected greater than 2." +
-							" Maximum number of reviewers for a paper is 4.");
-				}
-				else if ((num_open_review_slots == 1) && (num_reviewers_selected > 1)){
-					JOptionPane.showMessageDialog(contentPane, "Three reviewers already assinged. You selected greater than 1." +
-							" Maximum number of reviewers for a paper is 4.");
-				}
-				else if (num_reviewers_selected == 0){
-					JOptionPane.showMessageDialog(contentPane, "No reviewer selected.  Select a reviewer or return to " +
+				List<String> result = listOfAvailableForSubPC.getSelectedValuesList();		//the single result of what the user selected
+				if (result.isEmpty()){
+					JOptionPane.showMessageDialog(contentPane, "No Sub-Program Chair selected.  Make a selection or return to " +
 							"previous screen");
-				}
-				else {
-					controller.addReviewers(current_conf, current_paper, the_reviewers);
+				} else {
+					String temp = result.get(0);
+					controller.addSubPC(current_conf, current_paper, temp);
 					controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
-				}
-				System.out.println("number of reviewers already assigned: " + num_of_reviewers);
-				System.out.println("number of open slots: " + num_open_review_slots);
-				System.out.println("number of reviewers selected: " + num_reviewers_selected);
-				System.out.println("selected: " + results);
+				}			
 			}
 		};
 		my_submit_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_REVIEW_STRING);

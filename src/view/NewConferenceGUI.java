@@ -479,6 +479,11 @@ public class NewConferenceGUI extends JPanel {
 		 */
 		my_submit_action = new AbstractAction(SUBMIT_TITLE_STRING, null)
 		{
+			
+			
+			//TODO: Need to check to verify that the conference doesn't already exist in the system.
+			
+			
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				String conf_title = conf_title_field.getText();

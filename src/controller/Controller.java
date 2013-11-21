@@ -394,7 +394,7 @@ public class Controller extends Observable{
 		return reviewers;
 	}
 	
-	public String[] getAvailableReviewers(final String the_paper, final String the_person_assigning){
+	public String[] getAvailableReviewers(final Conference the_conference, final String the_paper, final String the_person_assigning){
 		//TODO: theAssignReviewerGUI needs an array of usernames of people that are capable of being a reviewer
 		//		Note: - the reviewer can't be the author of the paper.
 		//			  - the reviewer can't be the person assigning the review, unless they're the PC.
@@ -414,6 +414,26 @@ public class Controller extends Observable{
 		//		reviewers assigned here are valid; not violating business rules.  Therefore, you should be able to just
 		//		add these names in without checking, unless I'm missing something.  Let me know if I need to change how
 		//		this is being handled.  (Jacob)
+	}
+	
+	public String[] getAvailableForSubPC(final Conference current_conf, final String current_paper, final String username){
+		//TODO: the AssignSubPCGUI needs an array of usernames of the people capable of being a SubPC.
+		//		Note: - the PC can't be the SubPC.
+		//			  - the Author of the paper can't be the SubPC of their own paper.
+		//			  - the reviewer can't be the SubPC, although we shouldn't have to check this.  The SubPC is the person
+		//				who assigns the reviewer, so it's the chicken and egg thing.
+		//			  - any other business rules I'm forgetting?  (Jacob)
+		
+		
+					//temporary:
+					String[] reviewers = new String[]{"Hank Williams", "Johnny Cash", "Willy Nelson", "Walyne Jennings", "Elvis Presley"};
+		return reviewers;
+	}
+	
+	public void addSubPC(final Conference the_conference, final String the_paper, final String the_sub_pc){
+		//TODO: add this person as the SubPC.  We've already populated the list of potential with the correct people
+		//		so we shouldn't have to do any checking here.  The AssignSubPCGUI will ensure a non-null result is sent.
+		//		(Jacob)
 	}
 	
 	private void close() {
