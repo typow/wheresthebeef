@@ -131,5 +131,24 @@ public class GUIEnum {
 		 */
 		REJECTED,
 	}
+	
+	public enum paperRelation{
+		/**
+		 * the user is the Author of the paper
+		 */
+		AUTHOR,
+		/**
+		 * the user is a Reviewer of the paper
+		 */
+		REVIEWER,
+		/**
+		 * the user is the SUB PC for the paper
+		 */
+		SUBPC,
+		/**
+		 * the user is the PC for the paper
+		 */
+		PC,
+	}
 
 }

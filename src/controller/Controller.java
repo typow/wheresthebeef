@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Observable;
 
 import view.GUIEnum.StateOfGUI;
+import view.GUIEnum.paperRelation;
 import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
 
@@ -350,6 +351,26 @@ public class Controller extends Observable{
 		setCurrentPaper(the_paper_title);
 	}
 	
+	public paperRelation getRelationToPaper(final Conference the_conference, final String the_paper_title, 
+			final String the_username){
+		//TODO: I'm not sure how the database is tracking this, but the GUI's need to be able to retrieve
+		//		the user's relationship to a paper.  If they are the AUTHOR, REVIEWER, .....  (Jacob)
+		
+		
+		
+			//temporary:
+			paperRelation relation = paperRelation.AUTHOR;
+		return relation;
+	}
+	
+	
+	public void setPaperRelation(final Conference the_conference, final String the_paper_title, 
+			final String the_username, final paperRelation the_relation){
+		//TODO: The GUI needs to be able to set a person's relation to a paper to be later queried.  (Jacob)
+	}
+	
+	
+	
 	public void setPaperStatus(final Conference the_conference, final String the_paper_title, 
 			paperStatusAuthorViewable the_author_viewable_status, paperStatusAdminViewable the_admin_viewable_status){
 		
@@ -366,7 +387,7 @@ public class Controller extends Observable{
 		return adminStatus;
 	}
 	
-	public paperStatusAuthorViewable getAuthorViewPaperStatus(final Conference the_conference, final String the_paper_title){
+	public paperStatusAuthorViewable getStatusAuthorView(final Conference the_conference, final String the_paper_title){
 		//TODO: return the author viewable status of the paper.
 		
 		

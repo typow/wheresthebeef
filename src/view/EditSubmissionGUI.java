@@ -277,7 +277,7 @@ public class EditSubmissionGUI extends JPanel {
 		lblSubmitANew.setBounds(20, 15, 791, 20);
 		panel_1.add(lblSubmitANew);
 		
-		JLabel fieldPaperTitle = new JLabel("<dynamic>");
+		JLabel fieldPaperTitle = new JLabel(controller.getCurrentPaper());
 		fieldPaperTitle.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldPaperTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldPaperTitle.setBounds(401, 175, 397, 20);
