@@ -69,5 +69,59 @@ public class GUIEnum {
 		ASSIGN_SUB_PC;
 		
 	}
+	
+	public enum paperStatusAdminViewable{
+		/**
+		 * the paper has been submitted.
+		 */
+		SUBMITTED,
+		/**
+		 * the paper has been reviewed.
+		 */
+		REVIEWED,
+		/**
+		 * the paper is overdue for review.
+		 */
+		OVERDUE_FOR_REVIEW,
+		/**
+		 * the recommendation for the paper has been submitted and it is recommended for acceptance.
+		 */
+		RECOMMENDED,
+		/**
+		 * the paper is overdue for a recommendation.
+		 */
+		OVERDUE_FOR_RECOMMEND,
+		/**
+		 * the recommendation for the paper has been submitted and it is not recommended for acceptance.
+		 */
+		NOT_RECOMMENDED,
+		/**
+		 * the paper has been accepted for the conference
+		 */
+		ACCEPTED,
+		/**
+		 * the paper has not been accepted for the conference
+		 */
+		REJECTED,
+	}
+	
+	public enum paperStatusAuthorViewable{
+		/**
+		 * the paper has been submitted.
+		 */
+		SUBMITTED,
+		/**
+		 * the paper is in the review process
+		 */
+		UNDER_REVIEW,
+		/**
+		 * the paper has been accepted for the conference
+		 */
+		ACCEPTED,
+		/**
+		 * the paper has not been accepted for the conference
+		 */
+		REJECTED,
+	}
 
 }

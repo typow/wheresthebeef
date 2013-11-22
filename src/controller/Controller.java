@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Observable;
 
 import view.GUIEnum.StateOfGUI;
+import view.GUIEnum.paperStatusAdminViewable;
+import view.GUIEnum.paperStatusAuthorViewable;
 
 
 /**
@@ -318,10 +320,17 @@ public class Controller extends Observable{
 	}
 		
 	public void createNewPaper(final Conference the_conference, final String the_username, final String the_paper_title, 
-			final String the_file_submitted) throws Exception{
+			final String the_file_submitted, paperStatusAuthorViewable the_user_viewable_status, 
+			paperStatusAdminViewable the_admin_viewable_status) throws Exception{
 		//TODO: add the paper and info related to it to the database.  Note:  this is called in the GUI in a try-catch statement
 		//		Return Exception "Author cannot submit more than 4 papers to a single conference." 
 		//		implement the Logic to prevent that here.  The GUI will print out the Exception string in a JDialog box.
+		
+		
+		//TODO: add the user viewable status and the admin viewable status.  These are already set up in the GUIEnum class.
+		//		We need two because the user should only see a general indication of the progress and the admin needs to see
+		//		a detailed status update according to deadlines and where it's at in the whole review process. (Jacob)
+		
 		try {			
 			PreparedStatement statement = connect.prepareStatement(
 					"INSERT INTO paper VALUES ('" + 1 + "', '" + the_username + "', '" +
@@ -339,6 +348,31 @@ public class Controller extends Observable{
 //			add the paper to the database.
 //		}
 		setCurrentPaper(the_paper_title);
+	}
+	
+	public void updatePaperStatus(final Conference the_conference, final String the_paper_title, 
+			paperStatusAuthorViewable the_author_viewable_status, paperStatusAdminViewable the_admin_viewable_status){
+		
+		//TODO: this is a generic update of the Paper status for both author viewable and admin viewable called at different
+		//		points in the program when reviews are submitted and so on.
+	}
+	
+	public paperStatusAdminViewable getAdminPaperStatus(final Conference the_conference, final String the_paper_title){
+		//TODO: return the adminstrative viewable status of the paper.
+		
+		
+		//temporary:
+		paperStatusAdminViewable adminStatus = paperStatusAdminViewable.SUBMITTED;
+		return adminStatus;
+	}
+	
+	public paperStatusAuthorViewable getAuthorViewPaperStatus(final Conference the_conference, final String the_paper_title){
+		//TODO: return the author viewable status of the paper.
+		
+		
+		//temporary:
+		paperStatusAuthorViewable authorStatus = paperStatusAuthorViewable.SUBMITTED;
+		return authorStatus;
 	}
 	
 	public void setCurrentPaper(final String the_paper){

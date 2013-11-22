@@ -32,6 +32,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import view.GUIEnum.StateOfGUI;
+import view.GUIEnum.paperStatusAdminViewable;
+import view.GUIEnum.paperStatusAuthorViewable;
 import controller.Conference;
 import controller.Controller;
 
@@ -383,7 +385,8 @@ public class SubmitPaperGUI extends JPanel {
 					}
 					else {
 						try{
-							controller.createNewPaper(current_conf, username, paper_title, fileSubmited);
+							controller.createNewPaper(current_conf, username, paper_title, fileSubmited, 
+									paperStatusAuthorViewable.SUBMITTED, paperStatusAdminViewable.SUBMITTED);
 						}
 						catch (Exception e){
 							JOptionPane.showMessageDialog(contentPane, e);

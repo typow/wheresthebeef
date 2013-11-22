@@ -16,6 +16,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -27,8 +28,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
@@ -36,10 +39,6 @@ import javax.swing.border.EmptyBorder;
 import view.GUIEnum.StateOfGUI;
 import controller.Conference;
 import controller.Controller;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
-import java.util.Date;
-import java.util.Calendar;
 
 /**
  * The New Conference Interface JPanel
@@ -149,7 +148,9 @@ public class NewConferenceGUI extends JPanel {
 	 */
 	private JTextField conf_title_field;
 	
-//TODO:
+	/*
+	 * the field that will hold the Date object for the conference date
+	 */
 	private JSpinner date_conf_field;
 	
 	/*
@@ -172,14 +173,24 @@ public class NewConferenceGUI extends JPanel {
 	 */
 	private JTextField con_zip_field;
 	
-	
-	//TODO:
+	/*
+	 * the field that will hold the Date object for the submission deadline date
+	 */
 	private JSpinner submission_deadline_field;
 	
+	/*
+	 * the field that will hold the Date object for the review deadline date
+	 */
 	private JSpinner review_deadline_field;
-	
+
+	/*
+	 * the field that will hold the Date object for the sub pc recommendation deadline date
+	 */
 	private JSpinner sub_pc_recommend_deadline_field;
 
+	/*
+	 * the field that will hold the Date object for the author notification deadline date
+	 */
 	private JSpinner author_notification_deadline_field;
 	/*
 	 * The JTextArea containing the summary description of the conference.
@@ -473,8 +484,6 @@ public class NewConferenceGUI extends JPanel {
 			
 			
 			//TODO: Need to check to verify that the conference doesn't already exist in the system.
-			
-			
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				String conf_title = conf_title_field.getText();
