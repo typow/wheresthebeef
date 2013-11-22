@@ -36,6 +36,10 @@ import javax.swing.border.EmptyBorder;
 import view.GUIEnum.StateOfGUI;
 import controller.Conference;
 import controller.Controller;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+import java.util.Date;
+import java.util.Calendar;
 
 /**
  * The New Conference Interface JPanel
@@ -145,10 +149,8 @@ public class NewConferenceGUI extends JPanel {
 	 */
 	private JTextField conf_title_field;
 	
-	/*
-	 * The JTextField containing the conference date entry.
-	 */
-	private JTextField conf_date_field;
+//TODO:
+	private JSpinner date_conf_field;
 	
 	/*
 	 * The JTextField containing the conference address entry.
@@ -170,26 +172,15 @@ public class NewConferenceGUI extends JPanel {
 	 */
 	private JTextField con_zip_field;
 	
-	/*
-	 * The JTextField containing the submission deadline date entry.
-	 */
-	private JTextField submission_deadline_field;
 	
-	/*
-	 * The JTextField containing the review deadline date entry.
-	 */
-	private JTextField review_deadline_field;
+	//TODO:
+	private JSpinner submission_deadline_field;
 	
-	/*
-	 * The JTextField containing the subprogram chair recommendation deadline date entry.
-	 */
-	private JTextField sub_pc_recommend_deadline_field;
+	private JSpinner review_deadline_field;
 	
-	/*
-	 * The JTextField containing the author notification deadline date entry.
-	 */
-	private JTextField author_notification_deadline_field;
+	private JSpinner sub_pc_recommend_deadline_field;
 
+	private JSpinner author_notification_deadline_field;
 	/*
 	 * The JTextArea containing the summary description of the conference.
 	 */
@@ -295,26 +286,6 @@ public class NewConferenceGUI extends JPanel {
 		lblProgramChair.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblProgramChair.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		submission_deadline_field = new JTextField();
-		submission_deadline_field.setBounds(539, 238, 262, 20);
-		panel_1.add(submission_deadline_field);
-		submission_deadline_field.setColumns(10);
-		
-		review_deadline_field = new JTextField();
-		review_deadline_field.setBounds(539, 269, 262, 20);
-		panel_1.add(review_deadline_field);
-		review_deadline_field.setColumns(10);
-		
-		sub_pc_recommend_deadline_field = new JTextField();
-		sub_pc_recommend_deadline_field.setBounds(539, 300, 262, 20);
-		panel_1.add(sub_pc_recommend_deadline_field);
-		sub_pc_recommend_deadline_field.setColumns(10);
-		
-		author_notification_deadline_field = new JTextField();
-		author_notification_deadline_field.setBounds(539, 331, 262, 20);
-		panel_1.add(author_notification_deadline_field);
-		author_notification_deadline_field.setColumns(10);
-		
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setBounds(201, 360, 597, 18);
 		panel_1.add(separator_3);
@@ -351,11 +322,6 @@ public class NewConferenceGUI extends JPanel {
 		conf_title_field.setBounds(517, 24, 284, 20);
 		panel_1.add(conf_title_field);
 		conf_title_field.setColumns(10);
-		
-		conf_date_field = new JTextField();
-		conf_date_field.setBounds(517, 54, 284, 20);
-		panel_1.add(conf_date_field);
-		conf_date_field.setColumns(10);
 		
 		JButton btnSubmit = new JButton(my_submit_action);
 		btnSubmit.setBounds(417, 489, 159, 29);
@@ -414,6 +380,31 @@ public class NewConferenceGUI extends JPanel {
 		lblDenotesRequired.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblDenotesRequired.setBounds(690, 501, 120, 20);
 		panel_1.add(lblDenotesRequired);
+		
+		date_conf_field = new JSpinner();
+		date_conf_field.setModel(new SpinnerDateModel());
+		date_conf_field.setBounds(518, 54, 157, 20);
+		panel_1.add(date_conf_field);
+		
+		submission_deadline_field = new JSpinner();
+		submission_deadline_field.setModel(new SpinnerDateModel());
+		submission_deadline_field.setBounds(539, 236, 136, 20);
+		panel_1.add(submission_deadline_field);
+		
+		review_deadline_field = new JSpinner();
+		review_deadline_field.setModel(new SpinnerDateModel());
+		review_deadline_field.setBounds(539, 267, 136, 20);
+		panel_1.add(review_deadline_field);
+		
+		sub_pc_recommend_deadline_field = new JSpinner();
+		sub_pc_recommend_deadline_field.setModel(new SpinnerDateModel());
+		sub_pc_recommend_deadline_field.setBounds(539, 298, 136, 20);
+		panel_1.add(sub_pc_recommend_deadline_field);
+		
+		author_notification_deadline_field = new JSpinner();
+		author_notification_deadline_field.setModel(new SpinnerDateModel());
+		author_notification_deadline_field.setBounds(539, 329, 136, 20);
+		panel_1.add(author_notification_deadline_field);
 	}
 	
 	/**
@@ -487,15 +478,15 @@ public class NewConferenceGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				String conf_title = conf_title_field.getText();
-				String conf_date = conf_date_field.getText();
+				Date conf_date = (Date)date_conf_field.getValue();
 				String conf_address = conf_address_field.getText();
 				String conf_city = conf_city_field.getText();
 				String conf_state = conf_state_field.getText();
 				String con_zip = con_zip_field.getText();
-				String submission_deadline = submission_deadline_field.getText();
-				String review_deadline = review_deadline_field.getText();
-				String sub_pc_recommend_deadline = sub_pc_recommend_deadline_field.getText();
-				String author_notification_deadline = author_notification_deadline_field.getText();
+				Date submission_deadline = (Date)submission_deadline_field.getValue();
+				Date review_deadline = (Date)review_deadline_field.getValue();
+				Date sub_pc_recommend_deadline = (Date)sub_pc_recommend_deadline_field.getValue();
+				Date author_notification_deadline = (Date)author_notification_deadline_field.getValue();
 				String conference_summary = conference_summary_field.getText();
 				if (conf_title.equals("")){
 					JOptionPane.showMessageDialog(contentPane, "Please enter a conference title.");
@@ -539,8 +530,7 @@ public class NewConferenceGUI extends JPanel {
 					//		with a "success your conference was created" message?
 					controller.createNewConference(new_conference);
 					controller.setStateOfGUI(StateOfGUI.HOME);
-				}
-				
+				}				
 			}
 		};
 		my_submit_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_STRING);

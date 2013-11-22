@@ -11,6 +11,8 @@
 
 package controller;
 
+import java.util.Date;
+
 /**
  * The Conference object will hold information relevant to a single conference so that the object can be 
  * passed around as a container holding the relevant data.
@@ -22,21 +24,21 @@ public class Conference {
 
 	private String conf_title;
 	private String program_chair;
-	private String conf_date;
+	private Date conf_date;
 	private String conf_address;
 	private String conf_city;
 	private String conf_state;
 	private String con_zip;
-	private String submission_deadline;
-	private String review_deadline;
-	private String sub_pc_recommend_deadline;
-	private String author_notification_deadline;
+	private Date submission_deadline;
+	private Date review_deadline;
+	private Date sub_pc_recommend_deadline;
+	private Date author_notification_deadline;
 	private String conference_summary;
 	
-	public Conference(final String the_conf_title, final String the_program_chair, final String the_conf_date, 
+	public Conference(final String the_conf_title, final String the_program_chair, final Date the_conf_date, 
 			final String the_conf_address, final String the_conf_city, final String the_conf_state, final String the_con_zip, 
-			final String the_submission_deadline, final String the_review_deadline, final String the_sub_pc_recommend_deadline, 
-			final String the_author_notification_deadline, final String the_conference_summary){
+			final Date the_submission_deadline, final Date the_review_deadline, final Date the_sub_pc_recommend_deadline, 
+			final Date the_author_notification_deadline, final String the_conference_summary){
 		conf_title = the_conf_title;
 		program_chair = the_program_chair;
 		conf_date = the_conf_date;
@@ -60,7 +62,7 @@ public class Conference {
 	public String getProgramChair(){
 		return program_chair;
 	}
-	public String getConfDate(){
+	public Date getConfDate(){
 		return conf_date;
 	}
 	public String getConfAddress(){
@@ -75,16 +77,16 @@ public class Conference {
 	public String getConfZip(){
 		return con_zip;
 	}
-	public String getSubmissionDead(){
+	public Date getSubmissionDead(){
 		return submission_deadline;
 	}
-	public String getReviewDead(){
+	public Date getReviewDead(){
 		return review_deadline;
 	}
-	public String getSubPCReccomendDead(){
+	public Date getSubPCReccomendDead(){
 		return sub_pc_recommend_deadline;
 	}
-	public String getAuthorNotificationDead(){
+	public Date getAuthorNotificationDead(){
 		return author_notification_deadline;
 	}
 	public String getConfSummary(){

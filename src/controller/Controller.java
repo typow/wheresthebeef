@@ -279,6 +279,10 @@ public class Controller extends Observable{
 	 */
 	public void createNewConference(final Conference the_conference){
 		listOfAllConferences = new ArrayList<Conference>();
+		
+		//TODO: I changed the fields in the NewConferenceGUI to be date objects.  I'm passing those in for dates now.  
+		//		SQLDataException is still occuring because of the format of the Date Object.  I'm not sure how you want
+		//		to handle it, but you should be able to format the date object now and pull out what you need. (Jacob)
 		try {
 			PreparedStatement statement = connect.prepareStatement(
 					"INSERT INTO conference VALUES ('" + the_conference.getConfTitle() + "', '" + the_conference.getProgramChair() + "', '" +
@@ -293,6 +297,7 @@ public class Controller extends Observable{
 		}
 		current_conference = the_conference;
 	}
+	
 	/**
 	 * Sets the current conference to the conference of the person currently being looked at by the user
 	 * 
