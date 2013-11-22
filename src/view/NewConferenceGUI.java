@@ -38,7 +38,7 @@ import controller.Conference;
 import controller.Controller;
 
 /**
- * The Main User Interface JPanel
+ * The New Conference Interface JPanel
  * 
  * Allows the user to create a new conference in the CMS.
  * @author Jacob Hall

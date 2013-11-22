@@ -43,9 +43,9 @@ import controller.Controller;
 import javax.swing.ListSelectionModel;
 
 /**
-* The Submit Review Interface JPanel
+* The Assign Sub-Program Chair Interface JPanel
 * 
-* Allows the user to submit a review relevant to a paper in the CMS.
+* Allows the user to assign a Sub-Program Chair to a paper in the CMS.
 * @author Jacob Hall
 * @version 11/17/13
 */

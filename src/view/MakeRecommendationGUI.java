@@ -41,9 +41,9 @@ import controller.Conference;
 import controller.Controller;
 
 /**
-* The Submit Review Interface JPanel
+* The Make Recommendation Interface JPanel
 * 
-* Allows the user to submit a review relevant to a paper in the CMS.
+* Allows the user to make a recommendation for a paper in the CMS.
 * @author Jacob Hall
 * @version 11/17/13
 */

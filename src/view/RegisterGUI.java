@@ -39,8 +39,8 @@ import controller.Controller;
 /**
  * The RegisterGUI JPanel.
  * 
+ * Allows the user to Register in the CMS system
  * @author Warrick Holfeld Jacob Hall
- * 		edited to add the event listeners to the class and interface with the Controller
  * @version 11/13/13
  */
 
