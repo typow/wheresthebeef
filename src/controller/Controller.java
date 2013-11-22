@@ -475,6 +475,21 @@ public class Controller extends Observable{
 		//		(Jacob)
 	}
 	
+	public Review[] getReviews(final Conference the_conference, final String the_paper){
+		//TODO: the ManagePaperGUI needs all the reviews that have been completed for a paper (if any)
+		//		I created a Review object so that the controller can pass back an array of Review objects
+		//		all at once.  No more than 4 are allowed to be created, so that shouldn't have to be a check here.
+		
+		
+						//temporary:
+						Review[] temp = new Review[4];
+						temp[0] = new Review("the_reviewer_name", current_conference, "the_username", "the_paper", "the_paper_author", "the_comments_to_subpc", new int[]{1, 2, 3, 4, 5, 1, 2, 3, 4, 5}, "the_summary_comments");
+						temp[1] = new Review("Bob", current_conference, "trees", "why?", "joe", "i ate the whole thing", new int[]{2, 3, 4, 5, 1, 2, 3, 4, 5, 1}, "no");
+						temp[2] = new Review("Hank", current_conference, "grass", "why not?", "sally", "you did not", new int[]{2, 3, 4, 5, 1, 2, 3, 4, 5, 1}, "yes");
+						temp[3] = new Review("Bob", current_conference, "leaves", "Beause?", "paula", "I did to", new int[]{2, 3, 4, 5, 1, 2, 3, 4, 5, 1}, "huh?");
+		return temp;
+	}
+	
 	private void close() {
 		try {
 			if (resultSet != null) {

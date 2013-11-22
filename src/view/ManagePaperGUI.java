@@ -428,9 +428,9 @@ public class ManagePaperGUI extends JPanel{
 		fieldConfDate.setBounds(186, 55, 379, 20);
 		tabConferenceInfo.add(fieldConfDate);
 		
-		JLabel fieldPaperStatus = new JLabel("<dynamic: status>");
+		JLabel fieldPaperStatus = new JLabel(controller.getAdminPaperStatus(current_conf, current_paper).toString());
 		fieldPaperStatus.setHorizontalAlignment(SwingConstants.LEFT);
-		fieldPaperStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fieldPaperStatus.setFont(new Font("Tahoma", Font.BOLD, 13));
 		fieldPaperStatus.setBounds(186, 90, 379, 20);
 		tabConferenceInfo.add(fieldPaperStatus);
 		
