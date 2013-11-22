@@ -35,6 +35,12 @@ import javax.swing.border.EmptyBorder;
 import view.GUIEnum.StateOfGUI;
 import controller.Conference;
 import controller.Controller;
+import javax.swing.JScrollPane;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
 
 /**
 * The Manage Paper User Interface JPanel
@@ -246,6 +252,12 @@ public class ManagePaperGUI extends JPanel{
 	public ManagePaperGUI(final Controller the_controller) {
 		super();
 		controller = the_controller;
+		if (controller.getCurrentPaper() == ""){
+			current_paper = "No Paper Submitted";
+		}
+		else {
+			current_paper = controller.getCurrentPaper();
+		}
 		JPanel mainPanel = setUpMainPanel();
 		mainPanel.add(setupTabbedPane());
 		
@@ -317,7 +329,7 @@ public class ManagePaperGUI extends JPanel{
 		//		paper title and add it to the label.
 		JLabel lblPaperTitle;
 		if (controller.getCurrentPaper() == ""){
-			lblPaperTitle = new JLabel("No Paper Selected");
+			lblPaperTitle = new JLabel("No Paper Submitted");
 		}
 		else {
 			lblPaperTitle = new JLabel("Manage Paper: " + controller.getCurrentPaper());
@@ -383,17 +395,23 @@ public class ManagePaperGUI extends JPanel{
 		JPanel tabConferenceInfo = setupConferenceTab();
 		tabbedPane.addTab("Conference Info", null, tabConferenceInfo, null);
 		
-		JPanel tabReviews = new JPanel();
+		JPanel tabReviews = setupReviewTab();
 		tabbedPane.addTab("Reviews", null, tabReviews, null);
-		tabbedPane.setEnabledAt(1, true);
-		tabReviews.setLayout(null);
+
+
 		
+
+		
+
+		
+		
+		//***************************************************************************8
 		JPanel tabRecommendation = new JPanel();
 		tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
 		
 		JPanel tabManagement = new JPanel();
 		tabbedPane.addTab("Management", null, tabManagement, null);
-
+		tabbedPane.setEnabledAt(1, true);
 		return tabbedPane;
 	}
 	
@@ -404,6 +422,7 @@ public class ManagePaperGUI extends JPanel{
 	 */
 	private JPanel setupConferenceTab(){
 		JPanel tabConferenceInfo = new JPanel();
+		tabConferenceInfo.setBackground(Color.WHITE);
 		tabConferenceInfo.setLayout(null);
 		
 		JLabel lblConferenceTitle = new JLabel("Conference Title:");
@@ -470,7 +489,13 @@ public class ManagePaperGUI extends JPanel{
 		fieldConfDate.setBounds(186, 55, 379, 20);
 		tabConferenceInfo.add(fieldConfDate);
 		
-		JLabel fieldPaperStatus = new JLabel(controller.getAdminPaperStatus(current_conf, current_paper).toString());
+		JLabel fieldPaperStatus;
+		if (current_paper == "No Paper Submitted"){
+			fieldPaperStatus = new JLabel(current_paper);
+		}
+		else {
+			fieldPaperStatus = new JLabel(controller.getAdminPaperStatus(current_conf, current_paper).toString());
+		}
 		fieldPaperStatus.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldPaperStatus.setFont(new Font("Tahoma", Font.BOLD, 13));
 		fieldPaperStatus.setBounds(186, 90, 379, 20);
@@ -504,6 +529,34 @@ public class ManagePaperGUI extends JPanel{
 	}
 	
 	
+	private JPanel setupReviewTab(){
+		JPanel tabReviews = new JPanel();
+		tabReviews.setBackground(Color.WHITE);
+		
+		tabReviews.setLayout(null);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(10, 11, 556, 374);
+		tabReviews.add(tabbedPane);
+		
+		JPanel tabReview1 = new JPanel();
+		tabReview1.setBackground(Color.WHITE);
+		tabbedPane.addTab("Review #1", null, tabReview1, null);
+		
+		JPanel tabReview2 = new JPanel();
+		tabReview2.setBackground(Color.WHITE);
+		tabbedPane.addTab("Review #2", null, tabReview2, null);
+		
+		JPanel tabReview3 = new JPanel();
+		tabReview3.setBackground(Color.WHITE);
+		tabbedPane.addTab("Review #3", null, tabReview3, null);
+		
+		JPanel tabReview4 = new JPanel();
+		tabReview4.setBackground(Color.WHITE);
+		tabbedPane.addTab("Review #4", null, tabReview4, null);
+		
+		return tabReviews;
+	}
 	
 	
 	/**

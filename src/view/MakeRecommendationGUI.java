@@ -41,6 +41,7 @@ import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
 import controller.Conference;
 import controller.Controller;
+import javax.swing.border.EtchedBorder;
 
 /**
 * The Make Recommendation Interface JPanel
@@ -272,9 +273,9 @@ public class MakeRecommendationGUI extends JPanel {
 		panel.setBackground(Color.WHITE);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[] {580};
-		gbl_panel.rowHeights = new int[] {30, 30, 30, 30, 30, 30, 150, 30, 200};
+		gbl_panel.rowHeights = new int[] {30, 30, 30, 30, 30, 150, 30, 200};
 		gbl_panel.columnWeights = new double[]{1.0};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
 		panel.setLayout(gbl_panel);
 		
 		JPanel panel_2 = new JPanel();
@@ -284,7 +285,7 @@ public class MakeRecommendationGUI extends JPanel {
 		gbc_panel_2.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_2.fill = GridBagConstraints.BOTH;
 		gbc_panel_2.gridx = 0;
-		gbc_panel_2.gridy = 1;
+		gbc_panel_2.gridy = 0;
 		panel.add(panel_2, gbc_panel_2);
 		
 		JLabel lblYourName = new JLabel("Your Name:");
@@ -306,7 +307,7 @@ public class MakeRecommendationGUI extends JPanel {
 		gbc_panel_3.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_3.fill = GridBagConstraints.BOTH;
 		gbc_panel_3.gridx = 0;
-		gbc_panel_3.gridy = 2;
+		gbc_panel_3.gridy = 1;
 		panel.add(panel_3, gbc_panel_3);
 		
 		JLabel lblConferenceName = new JLabel("Conference Name:");
@@ -328,7 +329,7 @@ public class MakeRecommendationGUI extends JPanel {
 		gbc_panel_4.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_4.fill = GridBagConstraints.BOTH;
 		gbc_panel_4.gridx = 0;
-		gbc_panel_4.gridy = 3;
+		gbc_panel_4.gridy = 2;
 		panel.add(panel_4, gbc_panel_4);
 		
 		JLabel lblPaperName = new JLabel("Paper Name:");
@@ -350,7 +351,7 @@ public class MakeRecommendationGUI extends JPanel {
 		gbc_panel_5.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_5.fill = GridBagConstraints.BOTH;
 		gbc_panel_5.gridx = 0;
-		gbc_panel_5.gridy = 4;
+		gbc_panel_5.gridy = 3;
 		panel.add(panel_5, gbc_panel_5);
 		
 		JLabel lblPaperAuthor = new JLabel("Paper Author:");
@@ -372,7 +373,7 @@ public class MakeRecommendationGUI extends JPanel {
 		gbc_panel_7.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_7.fill = GridBagConstraints.BOTH;
 		gbc_panel_7.gridx = 0;
-		gbc_panel_7.gridy = 5;
+		gbc_panel_7.gridy = 4;
 		panel.add(panel_7, gbc_panel_7);
 		
 		JLabel lblSummaryRecommendation = new JLabel("Summary Recommendation:");
@@ -388,7 +389,7 @@ public class MakeRecommendationGUI extends JPanel {
 		gbc_panel_6.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_6.fill = GridBagConstraints.BOTH;
 		gbc_panel_6.gridx = 0;
-		gbc_panel_6.gridy = 6;
+		gbc_panel_6.gridy = 5;
 		panel.add(panel_6, gbc_panel_6);
 		
 		Q_1 = new JRadioButton("[5] Strongly accept");
@@ -429,7 +430,7 @@ public class MakeRecommendationGUI extends JPanel {
 		gbc_panel_9.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_9.fill = GridBagConstraints.BOTH;
 		gbc_panel_9.gridx = 0;
-		gbc_panel_9.gridy = 7;
+		gbc_panel_9.gridy = 6;
 		panel.add(panel_9, gbc_panel_9);
 		
 		JLabel lblRationaleForRecommendation = new JLabel("Rationale for Recommendation:");
@@ -438,15 +439,29 @@ public class MakeRecommendationGUI extends JPanel {
 		lblRationaleForRecommendation.setBounds(10, 0, 483, 20);
 		panel_9.add(lblRationaleForRecommendation);
 		
+		JPanel panel_8 = new JPanel();
+		panel_8.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel_8.setBackground(Color.WHITE);
+		GridBagConstraints gbc_panel_8 = new GridBagConstraints();
+		gbc_panel_8.fill = GridBagConstraints.BOTH;
+		gbc_panel_8.gridx = 0;
+		gbc_panel_8.gridy = 7;
+		panel.add(panel_8, gbc_panel_8);
+		GridBagLayout gbl_panel_8 = new GridBagLayout();
+		gbl_panel_8.columnWidths = new int[]{580, 0};
+		gbl_panel_8.rowHeights = new int[]{200, 0};
+		gbl_panel_8.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel_8.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		panel_8.setLayout(gbl_panel_8);
+		GridBagConstraints gbc_textRationale = new GridBagConstraints();
+		gbc_textRationale.fill = GridBagConstraints.BOTH;
+		gbc_textRationale.gridx = 0;
+		gbc_textRationale.gridy = 0;
+		panel_8.add(textRationale, gbc_textRationale);
+		
 		textRationale.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textRationale.setLineWrap(true);
 		textRationale.setWrapStyleWord(true);
-		GridBagConstraints gbc_textRationale = new GridBagConstraints();
-		gbc_textRationale.insets = new Insets(0, 5, 5, 0);
-		gbc_textRationale.fill = GridBagConstraints.BOTH;
-		gbc_textRationale.gridx = 0;
-		gbc_textRationale.gridy = 8;
-		panel.add(textRationale, gbc_textRationale);
 		
 		scrollPane.getVerticalScrollBar().setValue(0);
 	}

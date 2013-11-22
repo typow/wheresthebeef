@@ -41,6 +41,7 @@ import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
 import controller.Conference;
 import controller.Controller;
+import javax.swing.border.EtchedBorder;
 
 /**
 * The Submit Review Interface JPanel
@@ -221,8 +222,8 @@ public class SubmitReviewGUI extends JPanel {
 		scrollPane.setViewportView(panel);
 		panel.setBackground(Color.WHITE);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] {580};
-		gbl_panel.rowHeights = new int[] {30, 150, 0, 30, 30, 30, 30, 0, 30, 200, 0, 30, 30, 150, 50, 150, 30, 150, 30, 150, 50, 150, 50, 150, 30, 150, 30, 150, 30, 150, 30, 150, 30, 200};
+		gbl_panel.columnWidths = new int[] {550};
+		gbl_panel.rowHeights = new int[] {30, 180, 0, 30, 30, 30, 30, 0, 30, 200, 0, 30, 30, 150, 50, 150, 30, 150, 30, 150, 50, 150, 50, 150, 30, 150, 30, 150, 30, 150, 30, 150, 30, 200};
 		gbl_panel.columnWeights = new double[]{1.0};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
 		panel.setLayout(gbl_panel);
@@ -239,9 +240,7 @@ public class SubmitReviewGUI extends JPanel {
 		
 		JTextArea txtrPleaseProvideA = new JTextArea();
 		txtrPleaseProvideA.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtrPleaseProvideA.setText("Please provide a numeric rating on a 5-point scale for each question, along with a " +
-				"brief           rationale for each numeric rating.  In doing so, please discuss both the strengths and " +
-				"the       weaknesses of each paper so that the editors and authors can understand your reasoning.                                                                                                                                                  Please phrase your reviews politely; even 'bad' papers represent a lot of work on the part of   the authors. The review may be the basis for further revisions of the paper or the work that   the paper reports. We all know how hurtful a needlessly negative review can be, and how      helpful a positive one can be; please try to bear that in mind when you are writing yours.");
+		txtrPleaseProvideA.setText("Please provide a numeric rating on a 5-point scale for each question, along with a brief        rationale for each numeric rating.  In doing so, please discuss both the strengths and the   weaknesses of each paper so that the editors and authors can understand your reasoning.                                                                                                                                            Please phrase your reviews politely; even 'bad' papers represent a lot of work on the part of the authors. The review may be the basis for further revisions of the paper or the work      that the paper reports. We all know how hurtful a needlessly negative review can be, and   how helpful a positive one can be; please try to bear that in mind when you are writing       yours.");
 		txtrPleaseProvideA.setEditable(false);
 		txtrPleaseProvideA.setLineWrap(true);
 		GridBagConstraints gbc_txtrPleaseProvideA = new GridBagConstraints();
@@ -410,8 +409,7 @@ public class SubmitReviewGUI extends JPanel {
 		panel_7.add(lblCommentsToThe);
 		
 		JTextArea txtrQ1 = new JTextArea();
-		txtrQ1.setText("     1.  Can the content be directly applied by classroom " +
-				"instructors or curriculum designers?");
+		txtrQ1.setText("     1.  Can the content be directly applied by classroom instructors or curriculum                          designers?");
 		txtrQ1.setLineWrap(true);
 		txtrQ1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtrQ1.setEditable(false);
@@ -465,8 +463,7 @@ public class SubmitReviewGUI extends JPanel {
 		panel_8.add(Q1_5);
 		
 		JTextArea txtrQ2 = new JTextArea();
-		txtrQ2.setText("    2.  Does the work appeal to a broad readership interested in " +
-				"engineering education or is it                  narrowly specialized? ");
+		txtrQ2.setText("    2.  Does the work appeal to a broad readership interested in engineering education or is it         narrowly specialized? ");
 		txtrQ2.setLineWrap(true);
 		txtrQ2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtrQ2.setEditable(false);
@@ -628,9 +625,7 @@ public class SubmitReviewGUI extends JPanel {
 		
 		JTextArea txtrQ5 = new JTextArea();
 		txtrQ5.setWrapStyleWord(true);
-		txtrQ5.setText("    5.  If a teaching intervention is reported, is it " +
-				"adequately evaluated in terms of its impact on                learning " +
-				"in actual use?");
+		txtrQ5.setText("    5.  If a teaching intervention is reported, is it adequately evaluated in terms of its impact            on learning in actual use?");
 		txtrQ5.setLineWrap(true);
 		txtrQ5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtrQ5.setEditable(false);
@@ -684,9 +679,7 @@ public class SubmitReviewGUI extends JPanel {
 		
 		JTextArea txtrQ6 = new JTextArea();
 		txtrQ6.setWrapStyleWord(true);
-		txtrQ6.setText("    6.  Does the author use methods appropriate to the goals, " +
-				"both for the instructional                           intervention and " +
-				"the evaluation of impact on learning?");
+		txtrQ6.setText("    6.  Does the author use methods appropriate to the goals, both for the instructional                  intervention and the evaluation of impact on learning?");
 		txtrQ6.setLineWrap(true);
 		txtrQ6.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtrQ6.setEditable(false);
@@ -964,16 +957,30 @@ public class SubmitReviewGUI extends JPanel {
 		gbc_txtrSummaryComments.gridy = 32;
 		panel.add(txtrSummaryComments, gbc_txtrSummaryComments);
 		
+		JPanel panel_18 = new JPanel();
+		panel_18.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel_18.setBackground(Color.WHITE);
+		GridBagConstraints gbc_panel_18 = new GridBagConstraints();
+		gbc_panel_18.fill = GridBagConstraints.BOTH;
+		gbc_panel_18.gridx = 0;
+		gbc_panel_18.gridy = 33;
+		panel.add(panel_18, gbc_panel_18);
+		GridBagLayout gbl_panel_18 = new GridBagLayout();
+		gbl_panel_18.columnWidths = new int[]{550, 0};
+		gbl_panel_18.rowHeights = new int[]{200, 0};
+		gbl_panel_18.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel_18.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		panel_18.setLayout(gbl_panel_18);
+		
 		JTextArea fieldSummaryComments = new JTextArea();
+		GridBagConstraints gbc_fieldSummaryComments = new GridBagConstraints();
+		gbc_fieldSummaryComments.fill = GridBagConstraints.BOTH;
+		gbc_fieldSummaryComments.gridx = 0;
+		gbc_fieldSummaryComments.gridy = 0;
+		panel_18.add(fieldSummaryComments, gbc_fieldSummaryComments);
 		fieldSummaryComments.setWrapStyleWord(true);
 		fieldSummaryComments.setLineWrap(true);
 		fieldSummaryComments.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		GridBagConstraints gbc_fieldSummaryComments = new GridBagConstraints();
-		gbc_fieldSummaryComments.insets = new Insets(5, 5, 5, 5);
-		gbc_fieldSummaryComments.fill = GridBagConstraints.BOTH;
-		gbc_fieldSummaryComments.gridx = 0;
-		gbc_fieldSummaryComments.gridy = 33;
-		panel.add(fieldSummaryComments, gbc_fieldSummaryComments);
 		
 		scrollPane.getVerticalScrollBar().setValue(0);
 		
