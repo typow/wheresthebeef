@@ -37,6 +37,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import view.GUIEnum.StateOfGUI;
+import view.GUIEnum.paperStatusAdminViewable;
+import view.GUIEnum.paperStatusAuthorViewable;
 import controller.Conference;
 import controller.Controller;
 
@@ -536,8 +538,17 @@ public class MakeRecommendationGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				//TODO: add more to the submit action?
+				int answer = getSingleRtnAnswer(Q_1, Q_2, Q_3, Q_4, Q_5);
+				if (answer == 1 || answer == 2) {
+					controller.setPaperStatus(current_conf, current_paper, paperStatusAuthorViewable.UNDER_REVIEW, 
+							paperStatusAdminViewable.NOT_RECOMMENDED);
+				}
+				else {
+					controller.setPaperStatus(current_conf, current_paper, paperStatusAuthorViewable.UNDER_REVIEW, 
+							paperStatusAdminViewable.RECOMMENDED);
+				}
 				controller.addPaperRecommendation(username, current_conf, current_paper, 
-							paper_author, getSingleRtnAnswer(Q_1, Q_2, Q_3, Q_4, Q_5), textRationale.getText());
+							paper_author, answer, textRationale.getText());
 				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 			}
 		};

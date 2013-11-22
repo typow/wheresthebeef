@@ -350,7 +350,7 @@ public class Controller extends Observable{
 		setCurrentPaper(the_paper_title);
 	}
 	
-	public void updatePaperStatus(final Conference the_conference, final String the_paper_title, 
+	public void setPaperStatus(final Conference the_conference, final String the_paper_title, 
 			paperStatusAuthorViewable the_author_viewable_status, paperStatusAdminViewable the_admin_viewable_status){
 		
 		//TODO: this is a generic update of the Paper status for both author viewable and admin viewable called at different

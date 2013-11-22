@@ -37,6 +37,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import view.GUIEnum.StateOfGUI;
+import view.GUIEnum.paperStatusAdminViewable;
+import view.GUIEnum.paperStatusAuthorViewable;
 import controller.Conference;
 import controller.Controller;
 
@@ -1133,7 +1135,8 @@ public class SubmitReviewGUI extends JPanel {
 							"\nbutton selected for Q10: " + answers[9]);
 //					controller.createNewReview(reviewer_name, current_conf, username, paper, 
 //							paper_author, comments_to_subpc, answersRadioBtn, summary_comments);
-
+				controller.setPaperStatus(current_conf, controller.getCurrentPaper(), paperStatusAuthorViewable.UNDER_REVIEW, 
+							paperStatusAdminViewable.REVIEWED);
 				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 			}
 		};

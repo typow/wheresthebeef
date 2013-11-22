@@ -161,6 +161,16 @@ public class ManagePaperGUI extends JPanel{
 	private static final String ASSIGN_SUBPC_STRING = "Assign a reviewer to this paper (ALT+P)";
 	
 	/*
+	 * The text to display on the assign sub-pc button.
+	 */
+	private static final String ACCEPT_REJECT_TITLE_STRING = "Accept/Reject Paper";
+
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String ACCEPT_REJECT_STRING = "Accept or reject this paper (ALT+C)";
+	
+	/*
 	 * the JPanel containing the entire ManagePaperGUI
 	 */
 	private JPanel contentPane;
@@ -220,11 +230,15 @@ public class ManagePaperGUI extends JPanel{
 	 */
 	private Action my_assign_reviewer_action;
 	
-	
 	/*
 	 * the Action associated with the assign sub-pc button
 	 */
 	private Action my_assign_subpc_action;
+	
+	/*
+	 * the Action associated with the accept/reject paper button
+	 */
+	private Action my_accept_reject_action;
 	
 	/**
 	 * Create the JPanel.
@@ -450,6 +464,10 @@ public class ManagePaperGUI extends JPanel{
 		JPanel tabManagement = new JPanel();
 		tabbedPane.addTab("Management", null, tabManagement, null);
 		
+		JButton btnAcceptReject = new JButton(my_accept_reject_action);
+		btnAcceptReject.setBounds(20, 445, 176, 22);
+		panel.add(btnAcceptReject);
+		
 		//TODO: The following logic can remove tabs from the tabbedPane if they aren't supposed to be visible
 		
 		//tabbedPane.remove(tabConferenceInfo);
@@ -622,6 +640,21 @@ public class ManagePaperGUI extends JPanel{
 		};
 		my_assign_subpc_action.putValue(Action.SHORT_DESCRIPTION, ASSIGN_SUBPC_STRING);
 		my_assign_subpc_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_P);
+		
+		/*
+		 * The action associated with clicking the accept/reject paper button.
+		 */
+		my_accept_reject_action = new AbstractAction(ACCEPT_REJECT_TITLE_STRING, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				//TODO: add the switching state reference.
+				controller.setStateOfGUI(StateOfGUI.ACCEPT_REJECT);
+				System.out.println("accept/reject a paper...");
+			}
+		};
+		my_accept_reject_action.putValue(Action.SHORT_DESCRIPTION, ACCEPT_REJECT_STRING);
+		my_accept_reject_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 	}
 }
 

@@ -158,6 +158,14 @@ public class MainFrame extends JFrame implements Observer {
 			pack();
 			setVisible(true);
 			break;
+		case ACCEPT_REJECT:
+			AcceptRejectGUI acceptRejectWindow = new AcceptRejectGUI(controller);
+			this.remove(currentPanel);
+			currentPanel = acceptRejectWindow.getGUI();
+			add(currentPanel);
+			pack();
+			setVisible(true);
+			break;
 		}
 	}
 

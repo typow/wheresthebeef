@@ -66,7 +66,11 @@ public class GUIEnum {
 		/**
 		 * Make the assign SubPC user interface visible.
 		 */
-		ASSIGN_SUB_PC;
+		ASSIGN_SUB_PC,
+		/**
+		 * Make the accept/reject paper user interface visible.
+		 */
+		ACCEPT_REJECT;
 		
 	}
 	
@@ -75,6 +79,10 @@ public class GUIEnum {
 		 * the paper has been submitted.
 		 */
 		SUBMITTED,
+		/**
+		 * the paper is waiting to be reviewed.
+		 */
+		UNDER_REVIEW,
 		/**
 		 * the paper has been reviewed.
 		 */

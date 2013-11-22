@@ -38,6 +38,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import view.GUIEnum.StateOfGUI;
+import view.GUIEnum.paperStatusAdminViewable;
+import view.GUIEnum.paperStatusAuthorViewable;
 import controller.Conference;
 import controller.Controller;
 import javax.swing.ListSelectionModel;
@@ -477,6 +479,8 @@ public class AssignSubPCGUI extends JPanel {
 							"previous screen");
 				} else {
 					String temp = result.get(0);
+					controller.setPaperStatus(current_conf, current_paper, paperStatusAuthorViewable.UNDER_REVIEW, 
+							paperStatusAdminViewable.SUBMITTED);
 					controller.addSubPC(current_conf, current_paper, temp);
 					controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 				}			
