@@ -33,21 +33,24 @@ import javax.swing.border.BevelBorder;
 /**
  * The View Conference Panel
  * 
- * Allows the user to see an overview of conference and view the attached paper objects
+ * Allows the user to see an overview of conference and view the attached paper
+ * objects
+ * 
  * @author Warrick Holfeld
  * @version 11/19/13
  */
 public class CopyOfViewConferenceGUI extends JFrame {
-	
 
 	private JPanel contentPane;
-	
-	private static final String[] COLUMN_NAMES = {"Paper", "Manage Button", "Author", "Status", "Program Chair", "SubPC", "Reviewers"};
-	
-	private static final String[] DEADLINES_PANEL = {"Submit", "Review", "Recommend", "Decision", "Conference Date"};
-	
+
+	private static final String[] COLUMN_NAMES = { "Paper", "Manage Button",
+			"Author", "Status", "Program Chair", "SubPC", "Reviewers" };
+
+	private static final String[] DEADLINES_PANEL = { "Submit", "Review",
+			"Recommend", "Decision", "Conference Date" };
+
 	private JPanel main_panel;
-	
+
 	private ArrayList<JLabel> jlabel_array = new ArrayList<JLabel>();
 
 	/**
@@ -75,62 +78,64 @@ public class CopyOfViewConferenceGUI extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		main_panel = new JPanel();
 		main_panel.setBackground(new Color(153, 204, 204));
 		contentPane.add(main_panel, BorderLayout.CENTER);
 		main_panel.setLayout(null);
-		
+
 		JLabel lblViewConferenceGui = new JLabel("View Conference GUI");
 		lblViewConferenceGui.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblViewConferenceGui.setBounds(573, 11, 142, 14);
 		main_panel.add(lblViewConferenceGui);
-		
-		
+
 		buildScrollPanel();
-		
+
 		buildUserDataPanel();
-		
-		
+
 		JPanel conference_dates_panel = new JPanel();
-		conference_dates_panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		conference_dates_panel.setBorder(new BevelBorder(BevelBorder.LOWERED,
+				null, null, null, null));
 		conference_dates_panel.setBounds(25, 110, 399, 100);
 		conference_dates_panel.setLayout(new GridLayout(5, 3));
 		JLabel deadline_label = new JLabel(" Deadline Dates:");
 		deadline_label.setFont(new Font("Tahoma", Font.BOLD, 11));
 		conference_dates_panel.add(deadline_label);
-		for(int i = 2; i<=15; i++){
-			if((i-2)%3==0) {
-				conference_dates_panel.add(new JLabel(DEADLINES_PANEL[(i-2)/3]));
+		for (int i = 2; i <= 15; i++) {
+			if ((i - 2) % 3 == 0) {
+				conference_dates_panel.add(new JLabel(
+						DEADLINES_PANEL[(i - 2) / 3]));
 			}
-			if(i%3 == 1) {
+			if (i % 3 == 1) {
 				conference_dates_panel.add(new JLabel(""));
 			}
-			if(i%3 == 0) {
+			if (i % 3 == 0) {
 				conference_dates_panel.add(new JLabel("1/1/11"));
 			}
-				
+
 		}
 		conference_dates_panel.setBackground(new Color(204, 204, 153));
 		main_panel.add(conference_dates_panel);
-		
-		JLabel lblNewLabel = new JLabel("Trees: Our Best Friends or Worst Enemies?");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel.setBounds(818, 28, 241, 74);
+
+		JLabel lblNewLabel = new JLabel(
+				"Trees: Our Best Friends or Worst Enemies?");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel.setBounds(818, 28, 400, 74);
 		main_panel.add(lblNewLabel);
-		
+
 		JButton btnNewButton = new JButton("Submit Paper");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnNewButton.setBounds(818, 127, 160, 65);
-		main_panel.add(btnNewButton);	
+		main_panel.add(btnNewButton);
 	}
-	
+
 	/**
 	 * Builds the the panel that shows the users info.
 	 */
 	private void buildUserDataPanel() {
 		JPanel user_info_panel = new JPanel();
-		user_info_panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		user_info_panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null,
+				null, null, null));
 		user_info_panel.setBackground(new Color(204, 204, 153));
 		user_info_panel.setBounds(23, 28, 160, 71);
 		user_info_panel.setLayout(new GridLayout(3, 2));
@@ -153,16 +158,18 @@ public class CopyOfViewConferenceGUI extends JFrame {
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		user_info_panel.add(label_5);
 		main_panel.add(user_info_panel);
-		
+
 	}
 
 	/**
-	 * Builds the scroll panel to view and access the papers within the selected conference.
+	 * Builds the scroll panel to view and access the papers within the selected
+	 * conference.
 	 */
 	private void buildScrollPanel() {
 		JPanel panel_for_scrollpane = new JPanel(new GridLayout(7, 7));
-		panel_for_scrollpane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		for(int i = 0; i<7; i++){
+		panel_for_scrollpane.setBorder(new BevelBorder(BevelBorder.LOWERED,
+				null, null, null, null));
+		for (int i = 0; i < 7; i++) {
 			JLabel jl = new JLabel(COLUMN_NAMES[i], JLabel.CENTER);
 			jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			jl.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -172,45 +179,55 @@ public class CopyOfViewConferenceGUI extends JFrame {
 			jl.setFont(font.deriveFont(attributes));
 			panel_for_scrollpane.add(jl);
 		}
-		for(int i = 8; i<=49; i++){
-			if((i-2)%7==0 && i != 2) {
+		for (int i = 8; i <= 49; i++) {
+			if ((i - 2) % 7 == 0 && i != 2) {
 				JButton temp_jb = new JButton("Manage Button " + i);
 				temp_jb.setBorder(null);
 				panel_for_scrollpane.add(temp_jb);
 			} else {
+				if ((i - 1) % 7 == 0) {
+					JLabel jl = new JLabel("Box" + i, JLabel.CENTER);
+					jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+					jl.setForeground(Color.BLUE);
+					jl.setCursor(new java.awt.Cursor(
+							java.awt.Cursor.HAND_CURSOR));
+					jl.addMouseListener(new MouseListener() {
+						public void mouseClicked(MouseEvent arg0) {
+							System.out.println("clicked box");
+						}
+
+						public void mouseEntered(MouseEvent arg0) {
+
+						}
+
+						public void mouseExited(MouseEvent arg0) {
+						}
+
+						public void mousePressed(MouseEvent arg0) {
+						}
+
+						public void mouseReleased(MouseEvent arg0) {
+						}
+					});
+					jlabel_array.add(jl);
+					panel_for_scrollpane.add(jl);
+				} else {
+					JLabel jl = new JLabel("Box" + i, JLabel.CENTER);
+					jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+					jlabel_array.add(jl);
+					panel_for_scrollpane.add(jl);
+				}
 				
-				JLabel jl = new JLabel("Box" + i, JLabel.CENTER);
-				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				jl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-			    jl.addMouseListener(new MouseListener()
-			    {
-			    	public void mouseClicked(MouseEvent arg0) {
-			    	System.out.println("clicked");
-			    	}
-			    	public void mouseEntered(MouseEvent arg0) {
-			    		
-			    	}
-			    	public void mouseExited(MouseEvent arg0) {
-			    	}
-			    	public void mousePressed(MouseEvent arg0) {
-			    	}
-			    	public void mouseReleased(MouseEvent arg0) {
-			    	}
-			    	});
-			    jlabel_array.add(jl);
-				panel_for_scrollpane.add(jl);
 
 			}
 		}
-		
+
 		panel_for_scrollpane.setBackground(new Color(204, 204, 153));
 		panel_for_scrollpane.setSize(10000, 10000);
 		JScrollPane scrollPane = new JScrollPane(panel_for_scrollpane, 22, 32);
 		scrollPane.setBounds(10, 221, 1183, 397);
 		main_panel.add(scrollPane);
-		
-			
+
 	}
 
-	
 }
