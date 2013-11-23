@@ -53,7 +53,7 @@ public class ViewConferenceGUI1 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CopyOfViewConferenceGUI frame = new CopyOfViewConferenceGUI();
+					ViewConferenceGUI1 frame = new ViewConferenceGUI1();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -179,24 +179,29 @@ public class ViewConferenceGUI1 extends JFrame {
 				panel_for_scrollpane.add(temp_jb);
 			} else {
 				if ((i - 1) % 7 == 0) {
-					JLabel jl = new JLabel("Box" + i, JLabel.CENTER);
+					final JLabel jl = new JLabel("Box " + i, JLabel.CENTER);
 					jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 					jl.setForeground(Color.BLUE);
 					jl.setCursor(new java.awt.Cursor(
 							java.awt.Cursor.HAND_CURSOR));
+					final String box_clicked = "clicked box " + i;
+					final Font entered = new Font("Tahoma", Font.BOLD, 17);
+					final Font exited = new Font("Tahoma", Font.BOLD, 12);
 					jl.addMouseListener(new MouseListener() {
 						public void mouseClicked(MouseEvent arg0) {
-							System.out.println("clicked box");
+							
 						}
 
 						public void mouseEntered(MouseEvent arg0) {
-
+							jl.setFont(entered);
 						}
 
 						public void mouseExited(MouseEvent arg0) {
+							jl.setFont(exited);
 						}
 
 						public void mousePressed(MouseEvent arg0) {
+							System.out.println(box_clicked);
 						}
 
 						public void mouseReleased(MouseEvent arg0) {
