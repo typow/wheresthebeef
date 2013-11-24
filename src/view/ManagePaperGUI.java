@@ -35,12 +35,16 @@ import javax.swing.border.EmptyBorder;
 import view.GUIEnum.StateOfGUI;
 import controller.Conference;
 import controller.Controller;
+import controller.Review;
+
 import javax.swing.JScrollPane;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
+import javax.swing.JPasswordField;
+import javax.swing.border.EtchedBorder;
 
 /**
 * The Manage Paper User Interface JPanel
@@ -398,14 +402,6 @@ public class ManagePaperGUI extends JPanel{
 		JPanel tabReviews = setupReviewTab();
 		tabbedPane.addTab("Reviews", null, tabReviews, null);
 
-
-		
-
-		
-
-		
-		
-		//***************************************************************************8
 		JPanel tabRecommendation = new JPanel();
 		tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
 		
@@ -539,22 +535,36 @@ public class ManagePaperGUI extends JPanel{
 		tabbedPane.setBounds(10, 11, 556, 374);
 		tabReviews.add(tabbedPane);
 		
-		JPanel tabReview1 = new JPanel();
-		tabReview1.setBackground(Color.WHITE);
-		tabbedPane.addTab("Review #1", null, tabReview1, null);
+		Review[] the_reviews = controller.getReviews(current_conf, current_paper);
+		int num_reviews = the_reviews.length;
 		
-		JPanel tabReview2 = new JPanel();
-		tabReview2.setBackground(Color.WHITE);
-		tabbedPane.addTab("Review #2", null, tabReview2, null);
 		
-		JPanel tabReview3 = new JPanel();
-		tabReview3.setBackground(Color.WHITE);
-		tabbedPane.addTab("Review #3", null, tabReview3, null);
+		//TODO: add more logic to make sure the right person sees and doesn't see appropriate things
 		
-		JPanel tabReview4 = new JPanel();
-		tabReview4.setBackground(Color.WHITE);
-		tabbedPane.addTab("Review #4", null, tabReview4, null);
-		
+		if (num_reviews > 0){
+			ReviewPanel tabReview1 = new ReviewPanel(the_reviews[0], 1);
+			JPanel review_panel_1 = (JPanel) tabReview1.getGUI();
+			tabbedPane.addTab("Review #1", null, review_panel_1, null);
+			num_reviews--;
+		}
+		if (num_reviews > 0){
+			ReviewPanel tabReview2 = new ReviewPanel(the_reviews[1], 2);
+			JPanel review_panel_2 = (JPanel) tabReview2.getGUI();
+			tabbedPane.addTab("Review #2", null, review_panel_2, null);
+			num_reviews--;
+		}
+		if (num_reviews > 0){
+			ReviewPanel tabReview3 = new ReviewPanel(the_reviews[2], 3);
+			JPanel review_panel_3 = (JPanel) tabReview3.getGUI();
+			tabbedPane.addTab("Review #3", null, review_panel_3, null);
+			num_reviews--;
+		}
+		if (num_reviews > 0){
+			ReviewPanel tabReview4 = new ReviewPanel(the_reviews[3], 4);
+			JPanel review_panel_4 = (JPanel) tabReview4.getGUI();
+			tabbedPane.addTab("Review #4", null, review_panel_4, null);
+			num_reviews--;
+		}
 		return tabReviews;
 	}
 	
