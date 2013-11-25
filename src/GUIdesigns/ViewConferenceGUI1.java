@@ -19,6 +19,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 /**
@@ -105,7 +107,7 @@ public class ViewConferenceGUI1 extends JFrame {
 		JPanel conference_dates_panel = new JPanel();
 		conference_dates_panel.setBorder(new BevelBorder(BevelBorder.LOWERED,
 				null, null, null, null));
-		conference_dates_panel.setBounds(10, 234, 404, 100);
+		conference_dates_panel.setBounds(848, 234, 397, 100);
 		conference_dates_panel.setLayout(new GridLayout(5, 3));
 		JLabel deadline_label = new JLabel(" Deadline Dates:");
 		deadline_label.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -128,11 +130,11 @@ public class ViewConferenceGUI1 extends JFrame {
 
 		JButton btnNewButton = new JButton("Submit Paper");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnNewButton.setBounds(429, 235, 404, 100);
+		btnNewButton.setBounds(429, 234, 404, 101);
 		main_panel.add(btnNewButton);
 		
 		JPanel conference_panel = new JPanel();
-		conference_panel.setBounds(848, 234, 397, 100);
+		conference_panel.setBounds(201, 137, 1044, 91);//(848, 234, 397, 100);
 		conference_panel.setBackground(INNER_BACKGROUND_COLOR);
 		conference_panel.setBorder(new BevelBorder(BevelBorder.LOWERED,
 				null, null, null, null));
@@ -143,6 +145,10 @@ public class ViewConferenceGUI1 extends JFrame {
 				"Trees: Our Best Friends or Worst Enemies?", JLabel.CENTER);
 		conference_panel.add(conference_title_string, BorderLayout.CENTER);
 		conference_title_string.setFont(new Font("Tahoma", Font.BOLD, 15));
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(20, 127, 1250, 12);
+		main_panel.add(separator_2);
 		
 				
 	}
@@ -155,7 +161,7 @@ public class ViewConferenceGUI1 extends JFrame {
 		user_info_panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null,
 				null, null, null));
 		user_info_panel.setBackground(INNER_BACKGROUND_COLOR);
-		user_info_panel.setBounds(201, 130, 213, 91);
+		user_info_panel.setBounds(201, 234, 213, 100);
 		user_info_panel.setLayout(new GridLayout(3, 2));
 		JLabel label_2 = new JLabel(" User:");
 		label_2.setFont(new Font("Tahoma", Font.BOLD, 11));
