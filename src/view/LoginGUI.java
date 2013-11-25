@@ -26,6 +26,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
@@ -100,7 +101,7 @@ public class LoginGUI extends JPanel {
 	/*
 	 * 
 	 */
-	private JTextField password_field;
+	private JPasswordField password_field;
 	
 	/*
 	 * The CMS controller
@@ -153,7 +154,7 @@ public class LoginGUI extends JPanel {
 		panel.add(lblPassword);
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		password_field = new JTextField();
+		password_field = new JPasswordField();
 		password_field.setBounds(187, 156, 199, 26);
 		panel.add(password_field);
 		password_field.setColumns(10);
