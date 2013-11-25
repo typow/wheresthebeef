@@ -14,6 +14,7 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -30,8 +31,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.table.DefaultTableModel;
 
 import view.GUIEnum.StateOfGUI;
 import controller.Controller;
@@ -51,6 +50,8 @@ public class HomeGUI extends JPanel {
 	 * the icon to display the CMS logo
 	 */
 	private static final ImageIcon ICON = new ImageIcon("src/view/images2.jpg");
+	
+	private static final String[] COLUMN_NAMES = { "Conference", "Conference Date" };
 	
 	/*
 	 * The background of the main JPanel
@@ -137,6 +138,8 @@ public class HomeGUI extends JPanel {
 	private Action my_temp_paper_selected_action;
 	
 	private Action my_temp_conf_selected_action;
+	
+	private JPanel inner_panel;
 
 	/**
 	 * Create the JPanel.
@@ -163,94 +166,103 @@ public class HomeGUI extends JPanel {
 		separator.setBounds(20, 127, 1250, 12);
 		contentPane.add(separator);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(INNER_BACKGROUND_COLOR);
-		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBounds(281, 182, 756, 469);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		inner_panel = new JPanel();
+		inner_panel.setBackground(INNER_BACKGROUND_COLOR);
+		inner_panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		inner_panel.setBounds(281, 182, 756, 469);
+		contentPane.add(inner_panel);
+		inner_panel.setLayout(null);
 		
 		//JLabel label = new JLabel(controller.getCurrentUsername().toString());
 		//Windows Builder Pro edits out the above line when you use it.  Replace the label
 		//declaration when needed because it inserts <dynamic> into the label text 
 		JLabel label = new JLabel(controller.getCurrentUsername().toString());
 		label.setBounds(20, 66, 150, 20);
-		panel.add(label);
+		inner_panel.add(label);
 		
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JButton button = new JButton(my_logout_action);
 		button.setBounds(20, 97, 150, 22);
-		panel.add(button);
+		inner_panel.add(button);
 		
 		JButton button_1 = new JButton(my_back_action);
 		button_1.setBounds(20, 130, 152, 22);
-		panel.add(button_1);
+		inner_panel.add(button_1);
 		JButton button_2 = new JButton(my_new_conf_action);
 		button_2.setBounds(22, 163, 150, 22);
-		panel.add(button_2);
+		inner_panel.add(button_2);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(182, 70, 2, 352);
-		panel.add(separator_1);
+		inner_panel.add(separator_1);
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		
 		JLabel lblUsername = new JLabel("My Conferences");
 		lblUsername.setBounds(204, 67, 143, 20);
-		panel.add(lblUsername);
+		inner_panel.add(lblUsername);
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(204, 98, 514, 125);
-		panel.add(scrollPane);
-		scrollPane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		createScrollPane();
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"Conference", "   Author", "    Paper", "   Status", "    Role   ", "    Yada...."
-			}
-		));
-		table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		scrollPane.setViewportView(table);
+		
 		
 		JLabel lblUpcommingConferences = new JLabel("Upcomming Conferences");
 		lblUpcommingConferences.setBounds(204, 266, 213, 20);
-		panel.add(lblUpcommingConferences);
+		inner_panel.add(lblUpcommingConferences);
 		lblUpcommingConferences.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(204, 297, 514, 125);
-		panel.add(scrollPane_1);
+		inner_panel.add(scrollPane_1);
 		scrollPane_1.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
 		JLabel lblUserHomePage = new JLabel("User Home Page");
 		lblUserHomePage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUserHomePage.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblUserHomePage.setBounds(21, 21, 711, 20);
-		panel.add(lblUserHomePage);
+		inner_panel.add(lblUserHomePage);
 		
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(20, 52, 712, 20);
-		panel.add(separator_2);
+		inner_panel.add(separator_2);
 		
 		JButton btnNewButton = new JButton(my_temp_paper_selected_action);
 		btnNewButton.setBounds(38, 358, 89, 23);
-		panel.add(btnNewButton);
+		inner_panel.add(btnNewButton);
 	}
 	
+	private void createScrollPane() {
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(204, 98, 514, 125);
+		inner_panel.add(scrollPane);
+		scrollPane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		
+		JPanel panel_for_scrollpane = new JPanel(new GridLayout(7, COLUMN_NAMES.length));
+//		
+//		table = new JTable();
+//		table.setModel(new DefaultTableModel(
+//			new Object[][] {
+//				{null, null, null, null, null, null, null},
+//				{null, null, null, null, null, null, null},
+//				{null, null, null, null, null, null, null},
+//				{null, null, null, null, null, null, null},
+//				{null, null, null, null, null, null, null},
+//				{null, null, null, null, null, null, null},
+//				{null, null, null, null, null, null, null},
+//				{null, null, null, null, null, null, null},
+//				{null, null, null, null, null, null, null},
+//			},
+//			new String[] {
+//				"Conference", "   Author", "    Paper", "   Status", "    Role   ", "    Yada...."
+//			}
+//		));
+//		table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		//scrollPane.setViewportView(table);
+		
+	}
+
 	/**
 	 * Getter for the HomeGUI JPanel.
 	 * 
