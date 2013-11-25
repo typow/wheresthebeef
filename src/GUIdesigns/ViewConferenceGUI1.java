@@ -227,5 +227,5 @@ public class ViewConferenceGUI1 extends JFrame {
 		main_panel.add(scrollPane);
 
 	}
-
+//
 }
