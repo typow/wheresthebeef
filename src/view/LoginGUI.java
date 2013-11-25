@@ -99,7 +99,7 @@ public class LoginGUI extends JPanel {
 	private JTextField username_field;
 	
 	/*
-	 * 
+	 * Warrick changed from JTextField
 	 */
 	private JPasswordField password_field;
 	
@@ -154,6 +154,7 @@ public class LoginGUI extends JPanel {
 		panel.add(lblPassword);
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
+		//Warrick changed from JTextField
 		password_field = new JPasswordField();
 		password_field.setBounds(187, 156, 199, 26);
 		panel.add(password_field);
