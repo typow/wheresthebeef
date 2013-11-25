@@ -29,19 +29,14 @@ public class ManageDatabase{
 	private ResultSet resultSet;
 	
 	
-	public static void main(String args[])
-	{
+	public ManageDatabase() {
 		try {		      
 		      Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();	      	
 		      connect = DriverManager.getConnection("jdbc:derby://localhost:1527/CMSDB;");
-		      System.out.println("Success!! Lets eat Cake!!");
 		      
 		} catch(Exception e) {
 			System.out.println("Failed to connect!");
 		} 
-		
-		ManageDatabase md = new ManageDatabase();
-		md.toString();
 	}
 	
 	
@@ -55,7 +50,9 @@ public class ManageDatabase{
 	public String toString(){
 		
 		printConference();
+		System.out.println();
 		printPapers();
+		System.out.println();
 		printUsers();
 		
 		return null;
@@ -146,7 +143,7 @@ public class ManageDatabase{
 	{
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("SELECT * FROM conferences");
+			statement = connect.prepareStatement("SELECT * FROM conference");
 			resultSet = statement.executeQuery();
 			
 			ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -178,7 +175,7 @@ public class ManageDatabase{
 	{
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("SELECT * FROM papers");
+			statement = connect.prepareStatement("SELECT * FROM paper");
 			resultSet = statement.executeQuery();
 			
 			ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -206,6 +203,11 @@ public class ManageDatabase{
 		}
 	}
 	
-	
+	/*
+	public static void main(String args[]) {
+		ManageDatabase md = new ManageDatabase();
+		md.toString();
+	}
+	*/
 }
 
