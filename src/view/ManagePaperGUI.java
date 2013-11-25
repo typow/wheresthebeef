@@ -415,7 +415,11 @@ public class ManagePaperGUI extends JPanel{
 		JPanel tabReviews = setupReviewTab();
 		tabbedPane.addTab("Reviews", null, tabReviews, null);
 
-		JPanel tabRecommendation = new JPanel();
+		RecommendPanel recommendationPanel = new RecommendPanel(controller.getPaperRecommendationSubPCName(current_conf, current_paper), 
+				current_conf.getConfTitle(), current_paper, controller.getPaperAuthor(current_conf, current_paper), 
+				controller.getPaperRecommendationNumericalValuefinal(current_conf, current_paper),
+				controller.getPaperRecommendationRationale(current_conf, current_paper));
+		JPanel tabRecommendation = (JPanel) recommendationPanel.getGUI();
 		tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
 		
 		JPanel tabManagement = new JPanel();

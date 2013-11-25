@@ -1,40 +1,33 @@
+/*
+ * TCES360 Conference Management System
+ * Warrick Holfeld
+ * Jacob Hall
+ * Aarron Merril
+ * Tyler Powers
+ * Seth Kramer
+ * David Swanson
+ * 11/10/13
+ */
+
 package view;
 
-import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.Date;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
-
-import view.GUIEnum.StateOfGUI;
-import controller.Conference;
-import controller.Controller;
-import controller.Review;
-
-import javax.swing.JScrollPane;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
-import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
+
+import controller.Review;
 
 public class ReviewPanel extends JPanel{
 
@@ -42,6 +35,8 @@ public class ReviewPanel extends JPanel{
 	
 	private int index;
 	private JPanel tabReview;
+	
+	private JScrollPane scrollPane;
 	
 	/**
 	 * sets up a single review panel.  Four possible per paper.
@@ -67,7 +62,7 @@ public class ReviewPanel extends JPanel{
 		tabReview.setLayout(null);
 		
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 550, 346);
 		tabReview.add(scrollPane);
 		
@@ -206,7 +201,7 @@ public class ReviewPanel extends JPanel{
 		fieldCommentsToSubPC.setEditable(false);
 		GridBagConstraints gbc_textArea_1 = new GridBagConstraints();
 		gbc_textArea_1.fill = GridBagConstraints.BOTH;
-		gbc_textArea_1.insets = new Insets(0, 5, 5, 0);
+		gbc_textArea_1.insets = new Insets(5, 10, 5, 15);
 		gbc_textArea_1.gridx = 0;
 		gbc_textArea_1.gridy = 6;
 		primary_panel.add(fieldCommentsToSubPC, gbc_textArea_1);
@@ -269,8 +264,10 @@ public class ReviewPanel extends JPanel{
 		fieldSummaryComments.setWrapStyleWord(true);
 		fieldSummaryComments.setLineWrap(true);
 		fieldSummaryComments.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		fieldSummaryComments.setEditable(false);
 		GridBagConstraints gbc_textArea_13 = new GridBagConstraints();
 		gbc_textArea_13.fill = GridBagConstraints.BOTH;
+		gbc_textArea_13.insets = new Insets(5, 10, 5, 15);
 		gbc_textArea_13.gridx = 0;
 		gbc_textArea_13.gridy = 0;
 		panel_16.add(fieldSummaryComments, gbc_textArea_13);
@@ -354,7 +351,6 @@ public class ReviewPanel extends JPanel{
 		primary_panel.add(panel_7, gbc_panel_7);
 		
 		JRadioButton q2_5 = new JRadioButton("[5] Broad");
-		q2_5.setSelected(true);
 		q2_5.setBackground(Color.WHITE);
 		q2_5.setBounds(64, 7, 470, 23);
 		q2_5 = setupButtonAnswers(review.getAnswersToRadioBtns()[1], 5, q2_5);

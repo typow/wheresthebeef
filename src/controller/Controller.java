@@ -431,7 +431,7 @@ public class Controller extends Observable{
 	}
 	
 	public void addPaperRecommendation(final String the_sub_pc_username, final Conference current_conf, 
-			final String current_paper_being_recommended, final String the_paper_author, final int the_recommend_value,
+			final String current_paper_being_recommended, final String the_paper_author, final int the_numerical_value,
 			final String the_rational_for_recommendation){
 		//TODO: the MakeRecommendationGUI will call this when it needs to add a single recommendation to a paper.  There should
 		//		only be one recommendation per paper.  Right now, I'm going on the assumption that if a Sub-PC goes back in
@@ -439,6 +439,37 @@ public class Controller extends Observable{
 		//		handle this differently, let me know because I'll have to insert a try/catch and print out the exception message
 		//		to let them know they can only make a recommendation once. Add this info to the database linked to the paper
 		//		it's associated with. (Jacob)			
+	}
+	
+	public String getPaperRecommendationRationale(final Conference the_conf, final String the_paper){
+		//TODO: the GUI needs to be able to retrieve the SubPC's recommendation for a paper
+		//		return the Recommendation Rationale String (Jacob)
+		
+		
+		//temporary:
+		String rationale = "I just didn't like the way the cheese was placed under the meat on the sandwich.  Everyone knows " +
+				"the cheese goes on top.  Unacceptable.  No soup for you.";
+		return rationale;
+	}
+	
+	public int getPaperRecommendationNumericalValuefinal(final Conference the_conf, final String the_paper){
+		
+		//TODO: the GUI needs to be able to retrieve the SubPC's recommendation for a paper
+		//		return the numerical value associated with the 5 JRadioButtons for the recommendation level. (Jacob)
+		
+		//temporary
+		int temp = 2;
+		return temp;
+	}
+	
+	public String getPaperRecommendationSubPCName(final Conference the_conf, final String the_paper){
+		//TODO: the GUI needs to be able to retrieve the SubPC's recommendation for a paper
+		//		return the username of the SubPC that made the recommendation.
+		//		maybe this "getter" already exists in some form?  if so, just let me know and I'll adjust (Jacob)
+		
+		//temporary
+		String temp = "Clayton";
+		return temp;
 	}
 	
 	public String[] getUsersAssignedAsReviewers(final Conference the_conference, final String current_paper){
