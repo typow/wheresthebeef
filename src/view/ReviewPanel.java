@@ -43,13 +43,24 @@ public class ReviewPanel extends JPanel{
 	private int index;
 	private JPanel tabReview;
 	
-	public ReviewPanel(final Review the_review, final int the_index){
+	/**
+	 * sets up a single review panel.  Four possible per paper.
+	 * 
+	 * @param the_review
+	 * @param the_index
+	 * @param reviewer_name_viewable
+	 * @param comments_to_subpc_viewable
+	 * @param authors_name_viewable
+	 */
+	public ReviewPanel(final Review the_review, final int the_index, final boolean reviewer_name_viewable, 
+			final boolean comments_to_subpc_viewable, final boolean authors_name_viewable){
 		review = the_review;
 		index = the_index;
-		setupReviewPanel(true, true);
+		setupReviewPanel(reviewer_name_viewable, comments_to_subpc_viewable, authors_name_viewable);
 	}	 
 	
-	private void setupReviewPanel(final boolean reviewer_name_viewable, final boolean comments_to_subpc_viewable){
+	private void setupReviewPanel(final boolean reviewer_name_viewable, final boolean comments_to_subpc_viewable, 
+			final boolean authors_name_viewable){
 		
 		tabReview = new JPanel();
 		tabReview.setBackground(Color.WHITE);
@@ -139,13 +150,19 @@ public class ReviewPanel extends JPanel{
 		gbc_panel_3.gridy = 3;
 		primary_panel.add(panel_3, gbc_panel_3);
 		
-		JLabel lblPaperAuthor = new JLabel("Paper Author:");
+
+		JLabel	lblPaperAuthor = new JLabel("Paper Author:");
 		lblPaperAuthor.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPaperAuthor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblPaperAuthor.setBounds(28, 0, 141, 20);
 		panel_3.add(lblPaperAuthor);
 		
-		JLabel fieldPaperAuthor = new JLabel(review.getPaperAuthor());
+		JLabel fieldPaperAuthor;
+		if (authors_name_viewable){
+			fieldPaperAuthor = new JLabel(review.getPaperAuthor());
+		} else {
+			fieldPaperAuthor = new JLabel("*********");
+		}
 		fieldPaperAuthor.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldPaperAuthor.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldPaperAuthor.setBounds(179, 0, 391, 20);

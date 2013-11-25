@@ -33,6 +33,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import view.GUIEnum.StateOfGUI;
+import view.GUIEnum.paperRelation;
 import controller.Conference;
 import controller.Controller;
 import controller.Review;
@@ -201,6 +202,16 @@ public class ManagePaperGUI extends JPanel{
 	private Conference current_conf;
 	
 	/*
+	 * the current relationship the user has with the paper
+	 */
+	private paperRelation current_paper_relation;
+	
+	/*
+	 * the current user
+	 */
+	private String current_user;
+	
+	/*
 	 * the Action associated with the logout button
 	 */
 	private Action my_logout_action;
@@ -262,6 +273,8 @@ public class ManagePaperGUI extends JPanel{
 		else {
 			current_paper = controller.getCurrentPaper();
 		}
+		current_user = controller.getCurrentUsername();
+		current_paper_relation = controller.getRelationToPaper(current_conf, current_paper, current_user);
 		JPanel mainPanel = setUpMainPanel();
 		mainPanel.add(setupTabbedPane());
 		
@@ -539,31 +552,74 @@ public class ManagePaperGUI extends JPanel{
 		int num_reviews = the_reviews.length;
 		
 		
-		//TODO: add more logic to make sure the right person sees and doesn't see appropriate things
-		
-		if (num_reviews > 0){
-			ReviewPanel tabReview1 = new ReviewPanel(the_reviews[0], 1);
-			JPanel review_panel_1 = (JPanel) tabReview1.getGUI();
-			tabbedPane.addTab("Review #1", null, review_panel_1, null);
-			num_reviews--;
+		//if the user logged in, the only review they should be able to see is their own.
+		if (current_paper_relation == paperRelation.REVIEWER){
+			System.out.println("i'm an author");
+			Review usersOnlyViewableReview;
+			for (int i = 0; i < num_reviews; i++){
+				System.out.println("checking review #" + i);
+				System.out.println(current_user);
+				System.out.println(the_reviews[i].getReviewerName().toString());
+				if (the_reviews[i].getReviewerName().equals(current_user)){
+					System.out.println("the names matched");
+					usersOnlyViewableReview = the_reviews[i];
+					ReviewPanel tabReview = new ReviewPanel(usersOnlyViewableReview, 1, true, 
+							true, false);
+					JPanel review_panel = (JPanel) tabReview.getGUI();
+					tabbedPane.addTab("Your Review", null, review_panel, null);
+				}
+			}
 		}
-		if (num_reviews > 0){
-			ReviewPanel tabReview2 = new ReviewPanel(the_reviews[1], 2);
-			JPanel review_panel_2 = (JPanel) tabReview2.getGUI();
-			tabbedPane.addTab("Review #2", null, review_panel_2, null);
-			num_reviews--;
-		}
-		if (num_reviews > 0){
-			ReviewPanel tabReview3 = new ReviewPanel(the_reviews[2], 3);
-			JPanel review_panel_3 = (JPanel) tabReview3.getGUI();
-			tabbedPane.addTab("Review #3", null, review_panel_3, null);
-			num_reviews--;
-		}
-		if (num_reviews > 0){
-			ReviewPanel tabReview4 = new ReviewPanel(the_reviews[3], 4);
-			JPanel review_panel_4 = (JPanel) tabReview4.getGUI();
-			tabbedPane.addTab("Review #4", null, review_panel_4, null);
-			num_reviews--;
+		else if (current_paper_relation == paperRelation.AUTHOR){
+			if (num_reviews > 0) {
+				ReviewPanel tabReview1 = new ReviewPanel(the_reviews[0], 1, false, false, true);
+				JPanel review_panel_1 = (JPanel) tabReview1.getGUI();
+				tabbedPane.addTab("Review #1", null, review_panel_1, null);
+				num_reviews--;
+			}
+			if (num_reviews > 0) {
+				ReviewPanel tabReview2 = new ReviewPanel(the_reviews[1], 2, false, false, true);
+				JPanel review_panel_2 = (JPanel) tabReview2.getGUI();
+				tabbedPane.addTab("Review #2", null, review_panel_2, null);
+				num_reviews--;
+			}
+			if (num_reviews > 0) {
+				ReviewPanel tabReview3 = new ReviewPanel(the_reviews[2], 3, false, false, true);
+				JPanel review_panel_3 = (JPanel) tabReview3.getGUI();
+				tabbedPane.addTab("Review #3", null, review_panel_3, null);
+				num_reviews--;
+			}
+			if (num_reviews > 0) {
+				ReviewPanel tabReview4 = new ReviewPanel(the_reviews[3], 4, false, false, true);
+				JPanel review_panel_4 = (JPanel) tabReview4.getGUI();
+				tabbedPane.addTab("Review #4", null, review_panel_4, null);
+				num_reviews--;
+			}
+		} else {
+			if (num_reviews > 0) {
+				ReviewPanel tabReview1 = new ReviewPanel(the_reviews[0], 1, true, true, true);
+				JPanel review_panel_1 = (JPanel) tabReview1.getGUI();
+				tabbedPane.addTab("Review #1", null, review_panel_1, null);
+				num_reviews--;
+			}
+			if (num_reviews > 0) {
+				ReviewPanel tabReview2 = new ReviewPanel(the_reviews[1], 2, true, true, true);
+				JPanel review_panel_2 = (JPanel) tabReview2.getGUI();
+				tabbedPane.addTab("Review #2", null, review_panel_2, null);
+				num_reviews--;
+			}
+			if (num_reviews > 0) {
+				ReviewPanel tabReview3 = new ReviewPanel(the_reviews[2], 3, true, true, true);
+				JPanel review_panel_3 = (JPanel) tabReview3.getGUI();
+				tabbedPane.addTab("Review #3", null, review_panel_3, null);
+				num_reviews--;
+			}
+			if (num_reviews > 0) {
+				ReviewPanel tabReview4 = new ReviewPanel(the_reviews[3], 4, true, true, true);
+				JPanel review_panel_4 = (JPanel) tabReview4.getGUI();
+				tabbedPane.addTab("Review #4", null, review_panel_4, null);
+				num_reviews--;
+			}
 		}
 		return tabReviews;
 	}

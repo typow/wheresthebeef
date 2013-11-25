@@ -359,7 +359,7 @@ public class Controller extends Observable{
 		
 		
 			//temporary:
-			paperRelation relation = paperRelation.AUTHOR;
+			paperRelation relation = paperRelation.SUBPC;
 		return relation;
 	}
 	
@@ -504,10 +504,10 @@ public class Controller extends Observable{
 		
 						//temporary:
 						Review[] temp = new Review[4];
-						temp[0] = new Review("the_reviewer_name", current_conference, "the_username", "the_paper", "the_paper_author", "the_comments_to_subpc", new int[]{1, 2, 3, 4, 5, 1, 2, 3, 4, 5}, "the_summary_comments");
+						temp[0] = new Review("Halmus", current_conference, "the_username", "the_paper", "the_paper_author", "the_comments_to_subpc", new int[]{1, 2, 3, 4, 5, 1, 2, 3, 4, 5}, "the_summary_comments");
 						temp[1] = new Review("Bob", current_conference, "trees", "why?", "joe", "i ate the whole thing", new int[]{2, 3, 4, 5, 1, 2, 3, 4, 5, 1}, "no");
-						temp[2] = new Review("Hank", current_conference, "grass", "why not?", "sally", "you did not", new int[]{2, 3, 4, 5, 1, 2, 3, 4, 5, 1}, "yes");
-						temp[3] = new Review("Bob", current_conference, "leaves", "Beause?", "paula", "I did to", new int[]{2, 3, 4, 5, 1, 2, 3, 4, 5, 1}, "huh?");
+						temp[2] = new Review("Hank", current_conference, "grass", "why not?", "sally", "you did not", new int[]{4, 2, 5, 1, 2, 3, 3, 2, 5, 5}, "yes");
+						temp[3] = new Review("Bob", current_conference, "leaves", "Beause?", "paula", "I did to", new int[]{3, 4, 4, 5, 4, 3, 4, 5, 5, 5}, "What General Weygand called the Battle of France is over. I expect that the Battle of Britain is about to begin. Upon this battle depends the survival of Christian civilization. Upon it depends our own British life, and the long continuity of our institutions and our Empire. The whole fury and might of the enemy must very soon be turned on us. Hitler knows that he will have to break us in this Island or lose the war. If we can stand up to him, all Europe may be free and the life of the world may move forward into broad, sunlit uplands. But if we fail, then the whole world, including the United States, including all that we have known and cared for, will sink into the abyss of a new Dark Age made more sinister, and perhaps more protracted, by the lights of perverted science. Let us therefore brace ourselves to our duties, and so bear ourselves that if the British Empire and its Commonwealth last for a thousand years, men will still say, 'This was their finest hour.'");
 		return temp;
 	}
 	
