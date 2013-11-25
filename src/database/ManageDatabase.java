@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * This class manages the database. It allows for the data to be cleared,
@@ -14,7 +13,7 @@ import java.sql.Statement;
  * database. 
  * 
  * @author Aaron
- *
+ * @version 11/24/2013
  */
 public class ManageDatabase{
 	
@@ -42,61 +41,95 @@ public class ManageDatabase{
 	
 	public void clearDatabase(){
 		
-		dropUsers();
-		dropConferences();
-		dropPapers();
+		clearUsers();
+		clearConference();
+		clearPapers();
 	}
 	
-	public String toString(){
+	/**
+	 * Separately prints out each table in the database. 
+	 * 
+	 * @author Aaron
+	 */
+	public void printDatabase(){
 		
 		printConference();
 		System.out.println();
 		printPapers();
 		System.out.println();
 		printUsers();
-		
-		return null;
 	}
 	
-	
-	private void dropUsers()
+	/**
+	 * Clears all data in the users table by dropping it 
+	 * and recreating it.
+	 * 
+	 * @author Aaron
+	 */
+	private void clearUsers()
 	{
 		PreparedStatement statement;
 		try {
 			statement = connect.prepareStatement("DROP TABLE users");
 			resultSet = statement.executeQuery();
 			
-			statement = connect.prepareStatement("CREATE TABLE users(");
+			//TODO make sure the variable types are correct
+			statement = connect.prepareStatement("CREATE TABLE users(username varchar(255), " +
+					    "firstname varchar(255), mi varchar(1), lastname varchar(255), speciality varchar(255))");
+			statement.execute();
 			
-			System.out.println("Successfully dropped.");
+			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error dropping table.");
+			System.out.println("Error clearing table.");
 		}
 	}
 	
-	private void dropConferences()
+	/**
+	 * Clears all data in the conference table by dropping it 
+	 * and recreating it.
+	 * 
+	 * @author Aaron
+	 */
+	private void clearConference()
 	{
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DROP TABLE conferences");
+			statement = connect.prepareStatement("DROP TABLE conference");
 			resultSet = statement.executeQuery();
 			
-			System.out.println("Successfully dropped.");
+			//TODO make sure the variable types are correct
+			statement = connect.prepareStatement("CREATE TABLE conference(name varchar(255), progchair varchar(255, )" +
+					    "condate varchar(6), submitdate varchar(6), reviewdate vachar(6), subprogdate varchar(6), " +
+					    "notifydate varchar(6), summary varchar(1000))");
+			statement.execute();
+			
+			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error dropping table.");
+			System.out.println("Error clearing table.");
 		}
 	}
 	
-	private void dropPapers()
+	/**
+	 * Clears all data in the paper table by dropping it 
+	 * and recreating it.
+	 * 
+	 * @author Aaron
+	 */
+	private void clearPapers()
 	{
 		PreparedStatement statement;
 		try {
 			statement = connect.prepareStatement("DROP TABLE papers");
 			resultSet = statement.executeQuery();
 			
-			System.out.println("Successfully dropped.");
+			//TODO make sure the variable types are correct
+			statement = connect.prepareStatement("CREATE TABLE paper(id int, author varchar(255), " +
+					    "name varchar(255), text varchar(100000))");
+			statement.execute();
+			
+			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error dropping table.");
+			System.out.println("Error clearing table.");
 		}
 	}
 	
@@ -139,6 +172,11 @@ public class ManageDatabase{
 		}
 	}
 	
+	/**
+	 * Prints out the contents of the entire conference table. 
+	 * 
+	 * @author Aaron
+	 */
 	private void printConference()
 	{
 		PreparedStatement statement;
@@ -171,6 +209,11 @@ public class ManageDatabase{
 		}
 	}
 	
+	/**
+	 * Prints out the contents of the entire paper table. 
+	 * 
+	 * @author Aaron
+	 */
 	private void printPapers()
 	{
 		PreparedStatement statement;
@@ -206,7 +249,7 @@ public class ManageDatabase{
 	/*
 	public static void main(String args[]) {
 		ManageDatabase md = new ManageDatabase();
-		md.toString();
+		
 	}
 	*/
 }
