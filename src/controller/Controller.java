@@ -542,6 +542,22 @@ public class Controller extends Observable{
 		return temp;
 	}
 	
+	public Conference[] getMyConferences(final String the_username){
+	//TODO: do this....	
+		//temporary
+		Conference[] the_conf_array = new Conference[1];
+		return the_conf_array;
+	}
+	
+	public Conference[] getUpcommingConferences(final String the_username){
+	//TODO: 
+		
+		
+		//temporary
+		Conference[] the_conf_array = new Conference[1];
+		return the_conf_array;
+	}
+	
 	private void close() {
 		try {
 			if (resultSet != null) {
