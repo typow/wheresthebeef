@@ -1,4 +1,4 @@
- // TCES360 Conference Management System
+// TCES360 Conference Management System
 
 package GUIdesigns;
 
@@ -10,18 +10,16 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.TextAttribute;
-import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
-
-
 
 /**
  * The View Conference Panel
@@ -35,16 +33,30 @@ import javax.swing.border.BevelBorder;
 public class ViewConferenceGUI1 extends JFrame {
 
 	private JPanel contentPane;
+	
+	/*
+	 * the icon to display the CMS logo
+	 */
+	private static final ImageIcon ICON = new ImageIcon("src/view/images2.jpg");
 
-	private static final String[] COLUMN_NAMES = { "Paper", "Manage Button",
-			"Author", "Status", "Program Chair", "SubPC", "Reviewers" };
+	private static final String[] COLUMN_NAMES = { "Paper", "Author", "Status",
+			"Program Chair", "SubPC", "Reviewers" };
 
 	private static final String[] DEADLINES_PANEL = { "Submit", "Review",
 			"Recommend", "Decision", "Conference Date" };
 
 	private JPanel main_panel;
 
-	private ArrayList<JLabel> jlabel_array = new ArrayList<JLabel>();
+	
+	/*
+	 * The background of the main JPanel
+	 */
+	private static final Color BACKGROUND_COLOR = new Color(153, 204, 204);
+	
+	/*
+	 * The background of the inner user JPanel.
+	 */
+	private static final Color INNER_BACKGROUND_COLOR = (new Color(204, 204, 153));
 
 	/**
 	 * Launch the application.
@@ -66,21 +78,25 @@ public class ViewConferenceGUI1 extends JFrame {
 	 * Create the frame.
 	 */
 	public ViewConferenceGUI1() {
+				
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+		JButton btnIcon = new JButton("");
+		btnIcon.setForeground(BACKGROUND_COLOR);
+		btnIcon.setBorder(null);
+		btnIcon.setIcon(ICON);
+		btnIcon.setBounds(430, 11, 404,116);
+		contentPane.add(btnIcon);
 
 		main_panel = new JPanel();
-		main_panel.setBackground(new Color(153, 204, 204));
+		main_panel.setBackground(BACKGROUND_COLOR);
 		contentPane.add(main_panel, BorderLayout.CENTER);
 		main_panel.setLayout(null);
-
-		JLabel lblViewConferenceGui = new JLabel("View Conference GUI");
-		lblViewConferenceGui.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblViewConferenceGui.setBounds(573, 11, 142, 14);
-		main_panel.add(lblViewConferenceGui);
 
 		buildScrollPanel();
 
@@ -89,7 +105,7 @@ public class ViewConferenceGUI1 extends JFrame {
 		JPanel conference_dates_panel = new JPanel();
 		conference_dates_panel.setBorder(new BevelBorder(BevelBorder.LOWERED,
 				null, null, null, null));
-		conference_dates_panel.setBounds(25, 110, 399, 100);
+		conference_dates_panel.setBounds(10, 234, 404, 100);
 		conference_dates_panel.setLayout(new GridLayout(5, 3));
 		JLabel deadline_label = new JLabel(" Deadline Dates:");
 		deadline_label.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -107,19 +123,28 @@ public class ViewConferenceGUI1 extends JFrame {
 			}
 
 		}
-		conference_dates_panel.setBackground(new Color(204, 204, 153));
+		conference_dates_panel.setBackground(INNER_BACKGROUND_COLOR);
 		main_panel.add(conference_dates_panel);
-
-		JLabel lblNewLabel = new JLabel(
-				"Trees: Our Best Friends or Worst Enemies?");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setBounds(818, 28, 400, 74);
-		main_panel.add(lblNewLabel);
 
 		JButton btnNewButton = new JButton("Submit Paper");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnNewButton.setBounds(818, 127, 160, 65);
+		btnNewButton.setBounds(429, 235, 404, 100);
 		main_panel.add(btnNewButton);
+		
+		JPanel conference_panel = new JPanel();
+		conference_panel.setBounds(848, 234, 397, 100);
+		conference_panel.setBackground(INNER_BACKGROUND_COLOR);
+		conference_panel.setBorder(new BevelBorder(BevelBorder.LOWERED,
+				null, null, null, null));
+		conference_panel.setLayout(new BorderLayout(0, 0));
+		
+		main_panel.add(conference_panel);
+		JLabel conference_title_string = new JLabel(
+				"Trees: Our Best Friends or Worst Enemies?", JLabel.CENTER);
+		conference_panel.add(conference_title_string, BorderLayout.CENTER);
+		conference_title_string.setFont(new Font("Tahoma", Font.BOLD, 15));
+		
+				
 	}
 
 	/**
@@ -129,8 +154,8 @@ public class ViewConferenceGUI1 extends JFrame {
 		JPanel user_info_panel = new JPanel();
 		user_info_panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null,
 				null, null, null));
-		user_info_panel.setBackground(new Color(204, 204, 153));
-		user_info_panel.setBounds(23, 28, 160, 71);
+		user_info_panel.setBackground(INNER_BACKGROUND_COLOR);
+		user_info_panel.setBounds(201, 130, 213, 91);
 		user_info_panel.setLayout(new GridLayout(3, 2));
 		JLabel label_2 = new JLabel(" User:");
 		label_2.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -159,10 +184,10 @@ public class ViewConferenceGUI1 extends JFrame {
 	 * conference.
 	 */
 	private void buildScrollPanel() {
-		JPanel panel_for_scrollpane = new JPanel(new GridLayout(7, 7));
+		JPanel panel_for_scrollpane = new JPanel(new GridLayout(7, COLUMN_NAMES.length));
 		panel_for_scrollpane.setBorder(new BevelBorder(BevelBorder.LOWERED,
 				null, null, null, null));
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < COLUMN_NAMES.length; i++) {
 			JLabel jl = new JLabel(COLUMN_NAMES[i], JLabel.CENTER);
 			jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			jl.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -172,60 +197,50 @@ public class ViewConferenceGUI1 extends JFrame {
 			jl.setFont(font.deriveFont(attributes));
 			panel_for_scrollpane.add(jl);
 		}
-		for (int i = 8; i <= 49; i++) {
-			if ((i - 2) % 7 == 0 && i != 2) {
-				JButton temp_jb = new JButton("Manage Button " + i);
-				temp_jb.setBorder(null);
-				panel_for_scrollpane.add(temp_jb);
+		for (int i = COLUMN_NAMES.length+1; i <= 42; i++) {
+
+			if ((i - 1) % COLUMN_NAMES.length == 0) {
+				final JLabel jl = new JLabel("Box " + i, JLabel.CENTER);
+				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				jl.setForeground(Color.BLUE);
+				jl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+				final String box_clicked = "clicked box " + i;
+				final Font entered = new Font("Tahoma", Font.BOLD, 17);
+				final Font exited = new Font("Tahoma", Font.BOLD, 12);
+				jl.addMouseListener(new MouseListener() {
+					public void mouseClicked(MouseEvent arg0) {
+
+					}
+
+					public void mouseEntered(MouseEvent arg0) {
+						jl.setFont(entered);
+					}
+
+					public void mouseExited(MouseEvent arg0) {
+						jl.setFont(exited);
+					}
+
+					public void mousePressed(MouseEvent arg0) {
+						System.out.println(box_clicked);
+					}
+
+					public void mouseReleased(MouseEvent arg0) {
+					}
+				});
+				panel_for_scrollpane.add(jl);
 			} else {
-				if ((i - 1) % 7 == 0) {
-					final JLabel jl = new JLabel("Box " + i, JLabel.CENTER);
-					jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-					jl.setForeground(Color.BLUE);
-					jl.setCursor(new java.awt.Cursor(
-							java.awt.Cursor.HAND_CURSOR));
-					final String box_clicked = "clicked box " + i;
-					final Font entered = new Font("Tahoma", Font.BOLD, 17);
-					final Font exited = new Font("Tahoma", Font.BOLD, 12);
-					jl.addMouseListener(new MouseListener() {
-						public void mouseClicked(MouseEvent arg0) {
-							
-						}
-
-						public void mouseEntered(MouseEvent arg0) {
-							jl.setFont(entered);
-						}
-
-						public void mouseExited(MouseEvent arg0) {
-							jl.setFont(exited);
-						}
-
-						public void mousePressed(MouseEvent arg0) {
-							System.out.println(box_clicked);
-						}
-
-						public void mouseReleased(MouseEvent arg0) {
-						}
-					});
-					jlabel_array.add(jl);
-					panel_for_scrollpane.add(jl);
-				} else {
-					JLabel jl = new JLabel("Box" + i, JLabel.CENTER);
-					jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-					jlabel_array.add(jl);
-					panel_for_scrollpane.add(jl);
-				}
-				
-
+				JLabel jl = new JLabel("Box" + i, JLabel.CENTER);
+				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				panel_for_scrollpane.add(jl);
 			}
+
 		}
 
-		panel_for_scrollpane.setBackground(new Color(204, 204, 153));
+		panel_for_scrollpane.setBackground(INNER_BACKGROUND_COLOR);
 		panel_for_scrollpane.setSize(10000, 10000);
 		JScrollPane scrollPane = new JScrollPane(panel_for_scrollpane, 22, 32);
-		scrollPane.setBounds(10, 221, 1183, 397);
+		scrollPane.setBounds(10, 350, 1235, 300);
 		main_panel.add(scrollPane);
 
 	}
-//
 }

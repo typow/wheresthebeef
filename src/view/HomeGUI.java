@@ -236,16 +236,6 @@ public class HomeGUI extends JPanel {
 		panel.add(scrollPane_1);
 		scrollPane_1.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
-		JButton btnTempPaperRelation = new JButton(my_temp_paper_selected_action);
-		btnTempPaperRelation.setText(TEMP_TITLE_STRING);
-		btnTempPaperRelation.setBounds(204, 234, 514, 23);
-		panel.add(btnTempPaperRelation);
-		
-		JButton btnTempGeneralConf = new JButton(my_temp_conf_selected_action);
-		btnTempGeneralConf.setText(TEMP_TITLE_STRING_TWO);
-		btnTempGeneralConf.setBounds(204, 435, 514, 23);
-		panel.add(btnTempGeneralConf);
-		
 		JLabel lblUserHomePage = new JLabel("User Home Page");
 		lblUserHomePage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUserHomePage.setFont(new Font("Tahoma", Font.BOLD, 16));
