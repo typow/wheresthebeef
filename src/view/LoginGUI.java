@@ -157,6 +157,7 @@ public class LoginGUI extends JPanel {
 		//Warrick changed from JTextField
 		password_field = new JPasswordField();
 		password_field.setBounds(187, 156, 199, 26);
+		
 		panel.add(password_field);
 		password_field.setColumns(10);
 		

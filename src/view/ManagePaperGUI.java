@@ -16,7 +16,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -38,15 +37,6 @@ import controller.Conference;
 import controller.Controller;
 import controller.Review;
 
-import javax.swing.JScrollPane;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JTextArea;
-import javax.swing.JRadioButton;
-import javax.swing.JPasswordField;
-import javax.swing.border.EtchedBorder;
-
 /**
 * The Manage Paper User Interface JPanel
 * 
@@ -54,8 +44,9 @@ import javax.swing.border.EtchedBorder;
 * and a paper in relation to their permissions associated with that paper.  If 
 * the user doens't have a relationship with a paper in that conference, only
 * the relevant conference data will be populated.
+* 
 * @author Jacob Hall
-* @version 11/15/13
+* @version SVN version 71.   11/25/13
 */
 
 @SuppressWarnings("serial")
@@ -262,7 +253,13 @@ public class ManagePaperGUI extends JPanel{
 	private Action my_accept_reject_action;
 	
 	/**
-	 * Create the JPanel.
+	 * The constructor for the ManagePaperGUi.  Creates the JPanel that holds the
+	 * GUI itself.  The controller is passed in so the current context can be 
+	 * retrieved according to who is viewing the GUI and what state the GUI
+	 * is in relative to their association with the given paper.
+	 * 
+	 * @param the_controller  The controller object that acts as a facilitator
+	 * 							between GUI elements and the database.
 	 */
 	public ManagePaperGUI(final Controller the_controller) {
 		super();
@@ -280,7 +277,6 @@ public class ManagePaperGUI extends JPanel{
 		
 		
 		//TODO: set up logic to only display certain tabs
-		//tabbedPane.remove(tabConferenceInfo);
 	}
 	
 	
@@ -415,12 +411,17 @@ public class ManagePaperGUI extends JPanel{
 		JPanel tabReviews = setupReviewTab();
 		tabbedPane.addTab("Reviews", null, tabReviews, null);
 
-		RecommendPanel recommendationPanel = new RecommendPanel(controller.getPaperRecommendationSubPCName(current_conf, current_paper), 
-				current_conf.getConfTitle(), current_paper, controller.getPaperAuthor(current_conf, current_paper), 
-				controller.getPaperRecommendationNumericalValuefinal(current_conf, current_paper),
-				controller.getPaperRecommendationRationale(current_conf, current_paper));
-		JPanel tabRecommendation = (JPanel) recommendationPanel.getGUI();
-		tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
+		//if the user is the Author or a Reviewer, they shouldn't see the recommendation made by the SubPC
+		//else, the SubPC and the PC both should be able to view it.
+		if ((current_paper_relation == paperRelation.PC)||(current_paper_relation == paperRelation.SUBPC)){
+			RecommendPanel recommendationPanel = new RecommendPanel(controller.getPaperRecommendationSubPCName(current_conf, current_paper), 
+					current_conf.getConfTitle(), current_paper, controller.getPaperAuthor(current_conf, current_paper), 
+					controller.getPaperRecommendationNumericalValuefinal(current_conf, current_paper),
+					controller.getPaperRecommendationRationale(current_conf, current_paper));
+			JPanel tabRecommendation = (JPanel) recommendationPanel.getGUI();
+			tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
+		}
+		
 		
 		JPanel tabManagement = new JPanel();
 		tabbedPane.addTab("Management", null, tabManagement, null);
@@ -693,7 +694,6 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add the switching state reference.
 				controller.setStateOfGUI(StateOfGUI.SUBMIT_PAPER);
 				System.out.println("submit paper....");
 			}
@@ -720,7 +720,6 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add the switching state reference.
 				if (controller.getCurrentPaper() == "")  //if there is no paper in focus, don't try to edit it.
 				{
 					JOptionPane.showMessageDialog(contentPane, "There is no paper to edit.");
@@ -759,7 +758,6 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add the switching state reference
 				controller.setStateOfGUI(StateOfGUI.SUBMIT_RECOMMENDATION);
 				System.out.println("make a recommendation....");
 			}
@@ -774,7 +772,6 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add the switching state reference.
 				controller.setStateOfGUI(StateOfGUI.ASSIGN_REVIEWER);
 				System.out.println("assign a reviewer....");
 			}
@@ -789,7 +786,6 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add the switching state reference.
 				controller.setStateOfGUI(StateOfGUI.ASSIGN_SUB_PC);
 				System.out.println("assign a subprogram chair....");
 			}
@@ -804,7 +800,6 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add the switching state reference.
 				controller.setStateOfGUI(StateOfGUI.ACCEPT_REJECT);
 				System.out.println("accept/reject a paper...");
 			}

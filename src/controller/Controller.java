@@ -359,7 +359,7 @@ public class Controller extends Observable{
 		
 		
 			//temporary:
-			paperRelation relation = paperRelation.SUBPC;
+			paperRelation relation = paperRelation.AUTHOR;
 		return relation;
 	}
 	
