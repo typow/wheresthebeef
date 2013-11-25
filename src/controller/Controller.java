@@ -558,6 +558,14 @@ public class Controller extends Observable{
 		return the_conf_array;
 	}
 	
+	public String[] getMyPapers(final Conference the_conf, final String the_username){
+	//TODO: A GUI is going to need to get a string of paper titles that they are associated
+	//		with given a specific conference;
+		
+		String[] papers = new String[1];
+		return papers;
+	}
+	
 	private void close() {
 		try {
 			if (resultSet != null) {
