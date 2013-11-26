@@ -362,7 +362,7 @@ public class Controller extends Observable{
 			paperRelation relation = paperRelation.PC;
 		return relation;
 	}
-	
+	 
 	
 	public void setPaperRelation(final Conference the_conference, final String the_paper_title, 
 			final String the_username, final paperRelation the_relation){
