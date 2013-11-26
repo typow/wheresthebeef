@@ -359,7 +359,7 @@ public class Controller extends Observable{
 		
 		
 			//temporary:
-			paperRelation relation = paperRelation.AUTHOR;
+			paperRelation relation = paperRelation.PC;
 		return relation;
 	}
 	
@@ -484,6 +484,22 @@ public class Controller extends Observable{
 		
 		return reviewers;
 	}
+	
+	public String getUserAssignedAsPC(final Conference the_conference, final String current_paper){
+		//TODO: return the username of the person assigned as PC for a particular paper
+		
+				//temporary:
+				String name = "program chair's username";
+		return name;
+	}
+	
+	public String getUserAssignedAsSubPC(final Conference the_conference, final String current_paper){
+		//TODO: return the username of the person assigned as Sub PC for a particular paper
+		
+		//temporary:
+		String name = "program chair's username";
+return name;
+}
 	
 	public String[] getAvailableReviewers(final Conference the_conference, final String the_paper, final String the_person_assigning){
 		//TODO: theAssignReviewerGUI needs an array of usernames of people that are capable of being a reviewer
