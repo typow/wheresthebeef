@@ -12,12 +12,17 @@
 package controller;
 
 import java.sql.Connection;
+//import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 
@@ -252,6 +257,7 @@ public class Controller extends Observable{
 	/**
 	 * checks to see if the conference currently exists 
 	 * in the database
+	 * @author David
 	 * @param the_conference_title the title of conference
 	 * @return Returns True if the conference title exists in database
 	 * 			Returns False if the title is not in the database
@@ -278,6 +284,7 @@ public class Controller extends Observable{
 	/**
 	 * creates a new conference. GUI code first sees if checkConferenceExists(final String the_conference_title)
 	 * returns false
+	 * @author David
 	 * @param the_conference the current conference object that is being created
 	 */
 	public void createNewConference(final Conference the_conference){
@@ -320,7 +327,17 @@ public class Controller extends Observable{
 	public Conference getCurrentConference(){
 		return current_conference;
 	}
-		
+	/**
+	 * Used to add a new paper to database and see if number of submissions is at max.
+	 * @author David
+	 * @param the_conference
+	 * @param the_username
+	 * @param the_paper_title
+	 * @param the_file_submitted
+	 * @param the_user_viewable_status
+	 * @param the_admin_viewable_status
+	 * @throws Exception
+	 */
 	public void createNewPaper(final Conference the_conference, final String the_username, final String the_paper_title, 
 			final String the_file_submitted, paperStatusAuthorViewable the_user_viewable_status, 
 			paperStatusAdminViewable the_admin_viewable_status) throws Exception{
@@ -332,7 +349,6 @@ public class Controller extends Observable{
 		//TODO: add the user viewable status and the admin viewable status.  These are already set up in the GUIEnum class.
 		//		We need two because the user should only see a general indication of the progress and the admin needs to see
 		//		a detailed status update according to deadlines and where it's at in the whole review process. (Jacob)
-		
 		try {			
 			PreparedStatement statement = connect.prepareStatement(
 					"INSERT INTO papers VALUES ('" + 1 + "', '" + the_username + "', '" +
@@ -424,7 +440,14 @@ public class Controller extends Observable{
 			final int[] the_answersRadioBtn, final String the_summary_comments){
 		//TODO: add these elements to the database as one single review item
 	}
-	
+	/**
+	 * 
+	 * @author David
+	 * @param the_conf
+	 * @param the_paper
+	 * @param the_username
+	 * @return
+	 */
 	public boolean canAddReview(final Conference the_conf, final String the_paper, final String the_username){
 		boolean permission_to_add = true;
 		//TODO: the GUI will call this method to verify that there aren't already 4 reviews and that the user
@@ -566,7 +589,13 @@ public class Controller extends Observable{
 		//		add these names in without checking, unless I'm missing something.  Let me know if I need to change how
 		//		this is being handled.  (Jacob)
 	}
-	
+	/**
+	 * @author David
+	 * @param current_conf
+	 * @param current_paper
+	 * @param username
+	 * @return
+	 */
 	public String[] getAvailableForSubPC(final Conference current_conf, final String current_paper, final String username){
 		//TODO: the AssignSubPCGUI needs an array of usernames of the people capable of being a SubPC.
 		//		Note: - the PC can't be the SubPC.
@@ -611,13 +640,62 @@ public class Controller extends Observable{
 	
 	public Conference[] getUpcommingConferences(final String the_username){
 	//TODO: 
-		
-		
+		Date curr = new Date();
+		SimpleDateFormat ft = new SimpleDateFormat("MM/DD/YYYY");
+    	ArrayList<String> al = new ArrayList<String>();
+		try {
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conference WHERE NOTIFYDATE <= '"+new Date().toLocaleString()+"'");
+			resultSet = statement.executeQuery();
+			ResultSetMetaData rsmd = resultSet.getMetaData();
+			int numberOfColumns = rsmd.getColumnCount();
+			  
+	    	for (int i = 1; i <= numberOfColumns; i++) {
+	    		if (i > 1) System.out.print(",  ");
+	    		String columnName = rsmd.getColumnName(i);
+	    		System.out.print(columnName);
+	    	}
+	    	System.out.println("");
+	        while (resultSet.next()) {
+	                ArrayList<String> record = new ArrayList<String>();
+	                for (int i = 1; i <= numberOfColumns; i++) {
+	                        String value = resultSet.getString(i);
+	                        record.add(value);
+	                }
+	                String value = methodWhichConvertsArrayListToStringTheWayYouNeedItFormatted(record);
+	                al.add(value);
+	        }    
+	    	while (resultSet.next()) {
+	            for (int i = 1; i <= numberOfColumns; i++) {
+	            	if (i > 1) System.out.print(",  ");
+	            	String columnValue = resultSet.getString(i);
+	            	System.out.print(columnValue);
+	            }
+	            System.out.println("");  
+	        }
+		} catch (SQLException e) {
+			System.out.println("Check for valid conference name failed");
+			e.printStackTrace();
+		}
 		//temporary
 		Conference[] the_conf_array = new Conference[1];
 		return the_conf_array;
 	}
 	
+	private String methodWhichConvertsArrayListToStringTheWayYouNeedItFormatted(
+			ArrayList<String> record) {
+		String conference = "";
+		for(int i = 0; i < record.size();i++) {
+			if(i+1<record.size()) {
+				conference +=record.get(i)+ ", ";
+			} else {
+				conference +=record.get(i);
+
+			}
+		}
+		return conference;
+	}
+
+
 	public String[] getMyPapers(final Conference the_conf, final String the_username){
 	//TODO: A GUI is going to need to get a string of paper titles that they are associated
 	//		with given a specific conference;
@@ -642,9 +720,10 @@ public class Controller extends Observable{
 	    }
 	}
 
-	/*
-	public static void main(String args[]) {
-		Controller controller = new Controller();
-	}
-	*/
+	
+//	public static void main(String args[]) {
+//		Controller controller = new Controller();
+//		controller.getUpcommingConferences("David");
+//	}
+	
 }
