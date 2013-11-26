@@ -78,7 +78,7 @@ public class Controller extends Observable{
 	/*
 	 * The current paper (if any) that is being evaluated by the user
 	 */
-	private String current_paper = "";
+	private static String current_paper = "";
 	
 	/*
 	 * A list of all conferences
@@ -640,8 +640,6 @@ public class Controller extends Observable{
 	
 	public Conference[] getUpcommingConferences(final String the_username){
 	//TODO: 
-		Date curr = new Date();
-		SimpleDateFormat ft = new SimpleDateFormat("MM/DD/YYYY");
     	ArrayList<String> al = new ArrayList<String>();
 		try {
 			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conference WHERE NOTIFYDATE <= '"+new Date().toLocaleString()+"'");
@@ -699,7 +697,41 @@ public class Controller extends Observable{
 	public String[] getMyPapers(final Conference the_conf, final String the_username){
 	//TODO: A GUI is going to need to get a string of paper titles that they are associated
 	//		with given a specific conference;
-		
+		ArrayList<String> al = new ArrayList<String>();
+		try {			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE confname=" +"'" + the_conf.getConfTitle() +"' AND author='" +
+							the_username + "'");
+			resultSet = statement.executeQuery();
+			ResultSetMetaData rsmd = resultSet.getMetaData();
+			int numberOfColumns = rsmd.getColumnCount();
+			  
+	    	for (int i = 1; i <= numberOfColumns; i++) {
+	    		if (i > 1) System.out.print(",  ");
+	    		String columnName = rsmd.getColumnName(i);
+	    		System.out.print(columnName);
+	    	}
+	    	System.out.println("");
+	        while (resultSet.next()) {
+	                ArrayList<String> record = new ArrayList<String>();
+	                for (int i = 1; i <= numberOfColumns; i++) {
+	                        String value = resultSet.getString(i);
+	                        record.add(value);
+	                }
+	                String value = methodWhichConvertsArrayListToStringTheWayYouNeedItFormatted(record);
+	                al.add(value);
+	        }    
+	    	while (resultSet.next()) {
+	            for (int i = 1; i <= numberOfColumns; i++) {
+	            	if (i > 1) System.out.print(",  ");
+	            	String columnValue = resultSet.getString(i);
+	            	System.out.print(columnValue);
+	            }
+	            System.out.println("");  
+	        }
+		} catch (Exception e) {
+			System.out.println("Get full name failed!");
+		}
 		String[] papers = new String[1];
 		return papers;
 	}
@@ -720,10 +752,11 @@ public class Controller extends Observable{
 	    }
 	}
 
-	
-//	public static void main(String args[]) {
-//		Controller controller = new Controller();
-//		controller.getUpcommingConferences("David");
-//	}
+	/*
+	public static void main(String args[]) {
+		Controller controller = new Controller();
+		Conference conn = new Conference(current_paper, current_paper, new Date(), current_paper, current_paper, current_paper, current_paper, new Date(), new Date(), new Date(), new Date(), current_paper);
+		controller.getMyPapers(conn,"David");
+	}*/
 	
 }
