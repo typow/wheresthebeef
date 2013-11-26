@@ -355,6 +355,9 @@ public class Controller extends Observable{
 			final String the_username){
 		//TODO: I'm not sure how the database is tracking this, but the GUI's need to be able to retrieve
 		//		the user's relationship to a paper.  If they are the AUTHOR, REVIEWER, .....  (Jacob)
+		//		Tracking this right now is clumsy but doable go through the the conf and check if username
+		//		the same as the PC if so hes the PC if not check if hes author of the paper if not check if
+		//		they are a reviewer from the review table if not check if they are subprog from rec table
 		
 		
 		
@@ -367,6 +370,7 @@ public class Controller extends Observable{
 	public void setPaperRelation(final Conference the_conference, final String the_paper_title, 
 			final String the_username, final paperRelation the_relation){
 		//TODO: The GUI needs to be able to set a person's relation to a paper to be later queried.  (Jacob)
+		//kind of the same idea as getRelationToPaper()
 	}
 	
 	
