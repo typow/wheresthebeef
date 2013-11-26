@@ -287,10 +287,11 @@ public class Controller extends Observable{
 		//		SQLDataException is still occuring because of the format of the Date Object.  I'm not sure how you want
 		//		to handle it, but you should be able to format the date object now and pull out what you need. (Jacob)
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement statement = connect.prepareStatement(
 					"INSERT INTO conference VALUES ('" + the_conference.getConfTitle() + "', '" + the_conference.getProgramChair() + "', '" +
-							the_conference.getConfDate() + "', '" + the_conference.getSubmissionDead() + "', '" + the_conference.getReviewDead() + "', '" + 
-							the_conference.getSubPCReccomendDead() + "', '" + the_conference.getAuthorNotificationDead()+ "', '" + the_conference.getConfSummary() + "')");
+							the_conference.getConfDate().toLocaleString() + "', '" + the_conference.getSubmissionDead().toLocaleString() + "', '" + the_conference.getReviewDead().toLocaleString() + "', '" + 
+							the_conference.getSubPCReccomendDead().toLocaleString() + "', '" + the_conference.getAuthorNotificationDead().toLocaleString() + "', '" + the_conference.getConfSummary() + "')");
 			statement.execute();
 			System.out.println(the_conference.getConfTitle() + " Successfully added conference");
 			listOfAllConferences.add(the_conference);
