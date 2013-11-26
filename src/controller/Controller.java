@@ -352,6 +352,13 @@ public class Controller extends Observable{
 		setCurrentPaper(the_paper_title);
 	}
 	
+	/**
+	 * 
+	 * @param the_conference The conference 
+	 * @param the_paper_title
+	 * @param the_username
+	 * @return
+	 */
 	public paperRelation getRelationToPaper(final Conference the_conference, final String the_paper_title, 
 			final String the_username){
 		//TODO: I'm not sure how the database is tracking this, but the GUI's need to be able to retrieve
@@ -359,8 +366,7 @@ public class Controller extends Observable{
 		//		Tracking this right now is clumsy but doable go through the the conf and check if username
 		//		the same as the PC if so hes the PC if not check if hes author of the paper if not check if
 		//		they are a reviewer from the review table if not check if they are subprog from rec table
-		
-		
+
 		
 			//temporary:
 			paperRelation relation = paperRelation.PC;
@@ -427,14 +433,47 @@ public class Controller extends Observable{
 		return permission_to_add;
 	}
 	
+	/**
+	 * Used by another user to see the author of the paper that they are examining.
+	 * 
+	 * @param the_conf The conference that the paper is a part of
+	 * @param the_paper The name of the paper the current user is looking at (not the author of the paper)
+	 * @return The username of the author of the paper
+	 */
 	public String getPaperAuthor(final Conference the_conf, final String the_paper){
-		String temp = "";
+		String username = "";
 		//TODO: the GUI will call this method when another user (administrator of some sort) needs to review
 		//		or recommend a paper.  They will be the current user and will need to retrieve the username
 		//		of the person who Authored the paper.  (Jacob)
-		return temp;
+		
+		
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE confname=" +"'" + the_conf.getConfTitle() +"' AND name='" +
+					the_paper + "'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				username += resultSet.getString(2);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Get full name failed!");
+		}
+		
+		return username;
 	}
 	
+	/**
+	 * 
+	 * @param the_sub_pc_username
+	 * @param current_conf
+	 * @param current_paper_being_recommended
+	 * @param the_paper_author
+	 * @param the_numerical_value
+	 * @param the_rational_for_recommendation
+	 */
 	public void addPaperRecommendation(final String the_sub_pc_username, final Conference current_conf, 
 			final String current_paper_being_recommended, final String the_paper_author, final int the_numerical_value,
 			final String the_rational_for_recommendation){
@@ -503,8 +542,8 @@ public class Controller extends Observable{
 		
 		//temporary:
 		String name = "program chair's username";
-return name;
-}
+		return name;
+	}
 	
 	public String[] getAvailableReviewers(final Conference the_conference, final String the_paper, final String the_person_assigning){
 		//TODO: theAssignReviewerGUI needs an array of usernames of people that are capable of being a reviewer
