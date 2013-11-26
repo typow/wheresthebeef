@@ -218,9 +218,9 @@ public class ManageDatabase{
 	{
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("SELECT * FROM paper");
-			resultSet = statement.executeQuery();
+			statement = connect.prepareStatement("SELECT * FROM papers");
 			
+			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 						
 			int numberOfColumns = rsmd.getColumnCount();
@@ -246,11 +246,11 @@ public class ManageDatabase{
 		}
 	}
 	
-	/*
+	
 	public static void main(String args[]) {
 		ManageDatabase md = new ManageDatabase();
-		
+		md.printDatabase();
 	}
-	*/
+	
 }
 

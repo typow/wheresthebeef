@@ -334,7 +334,7 @@ public class Controller extends Observable{
 		
 		try {			
 			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO paper VALUES ('" + 1 + "', '" + the_username + "', '" +
+					"INSERT INTO papers VALUES ('" + 1 + "', '" + the_username + "', '" +
 							the_paper_title + "', '" + the_file_submitted + "')");
 			statement.execute();
 			System.out.println(the_paper_title + " Successfully added paper");
