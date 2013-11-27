@@ -711,7 +711,7 @@ public class Controller extends Observable{
 	                        record.add(value);
 	                }
 	                Conference value = infoForAConference(record);
-	                al.add(value);
+	                al.add(value); 
 	        }    
 	    	while (resultSet.next()) {
 	            for (int i = 1; i <= numberOfColumns; i++) {
