@@ -13,10 +13,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import view.GUIEnum.paperStatusAdminViewable;
+import view.GUIEnum.paperStatusAuthorViewable;
 
 
 /**
@@ -287,6 +291,34 @@ public class ControllerTest  {
 	@Test
 	public void testCanAddReview() {
 		fail("Not yet implemented");
+	}
+
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testGetPaperRecommendationRationale() {
+		Controller controller = new Controller();
+		Conference testConference = new Conference("TestTest", "PC", new Date(2000, 1, 1), "Test Address", 
+				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
+				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		
+		
+		if (!controller.checkConferenceExists("TestTest")) {
+			controller.createNewConference(testConference);
+		} 
+		
+		try {
+			controller.createNewPaper(testConference, "Test username", "Test PaperTitle", 
+					"Test FileSubmittted", paperStatusAuthorViewable.SUBMITTED, 
+					paperStatusAdminViewable.ACCEPTED);
+		} catch (Exception e) {
+			// Paper already exists
+		}
+		
+		controller.addPaperRecommendation("Sub PC", testConference, 
+				"Test PaperTitle", "Test Author", 5, "Test Recommendation");
+		
+		assertEquals("Test Recommendation", controller.getPaperRecommendationRationale(
+				testConference, "Test PaperTitle"));
 	}
 
 }

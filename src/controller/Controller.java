@@ -646,12 +646,38 @@ public class Controller extends Observable{
 		//TODO: the GUI needs to be able to retrieve the SubPC's recommendation for a paper
 		//		return the Recommendation Rationale String (Jacob)
 		
+		int paperID = -1;		// Sentinel -1: if selected paper doesn't exist in that conference.
+		String result = "";
 		
-		//temporary:
-		String rationale = "I just didn't like the way the cheese was placed under the meat on the sandwich.  Everyone knows " +
-				"the cheese goes on top.  Unacceptable.  No soup for you.";
-		return rationale;
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE name=" +"'" + the_paper +"'");
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				if (resultSet.getString(5).equals(the_conf)) {		// Tests that the paper is associated
+																    // with the desired conference.
+					paperID = resultSet.getInt(1);
+					break;
+				}			
+			}
+			
+			if (paperID != -1) {
+				statement = connect.prepareStatement(
+						"SELECT * FROM recommendations WHERE paperid= " + paperID);
+				resultSet = statement.executeQuery();
+			} else {
+				System.out.println("Requested Paper doesn't exist in that conference");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getPaperRecommendationRationale failed!");
+		}
+		
+		return result;
 	}
+
 	
 	public int getPaperRecommendationNumericalValuefinal(final Conference the_conf, final String the_paper){
 		
