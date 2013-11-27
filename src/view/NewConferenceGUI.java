@@ -543,7 +543,6 @@ public class NewConferenceGUI extends JPanel {
 					Conference new_conference = new Conference(conf_title, username, conf_date, conf_address, conf_city, conf_state, con_zip, 
 							submission_deadline, review_deadline, sub_pc_recommend_deadline, author_notification_deadline, 
 							conference_summary);
-					
 					controller.createNewConference(new_conference);
 					controller.setStateOfGUI(StateOfGUI.HOME);
 				}				
