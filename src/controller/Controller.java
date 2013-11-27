@@ -267,6 +267,61 @@ public class Controller extends Observable{
 		//TODO: check the conference title against database to see if this conference title
 		//		already exists in the database.  Jacob
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//NOTE..........................
+		//TODO: this method prints out the stack trace no matter what.  If the title exists or doesn't.
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conferences WHERE name='" + the_conference_title + "'");
@@ -281,6 +336,60 @@ public class Controller extends Observable{
 		}
 		return valid;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * creates a new conference. GUI code first sees if checkConferenceExists(final String the_conference_title)
 	 * returns false
@@ -410,7 +519,7 @@ public class Controller extends Observable{
 
 		
 			//temporary:
-			paperRelation relation = paperRelation.PC;
+			paperRelation relation = paperRelation.REVIEWER;
 		return relation;
 	}
 	 

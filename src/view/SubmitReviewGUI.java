@@ -1170,19 +1170,6 @@ public class SubmitReviewGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				int[] answers = getRadioBtnAnswers();
-				//TODO: remove the printlines.
-				System.out.println("confidential comments: " + fieldConfidentialComments.getText());
-					System.out.println("button selected for Q1: " + answers[0] + 
-							"\nbutton selected for Q2: " + answers[1] + 
-							"\nbutton selected for Q3: " + answers[2] + 
-							"\nbutton selected for Q4: " + answers[3] + 
-							"\nbutton selected for Q5: " + answers[4] + 
-							"\nbutton selected for Q6: " + answers[5] + 
-							"\nbutton selected for Q7: " + answers[6] + 
-							"\nbutton selected for Q8: " + answers[7] + 
-							"\nbutton selected for Q9: " + answers[8] + 
-							"\nbutton selected for Q10: " + answers[9]);
-				System.out.println("summary comments: " + fieldSummaryComments.getText());
 				controller.createNewReview(username, current_conf, controller.getCurrentPaper(), 
 							controller.getPaperAuthor(current_conf, controller.getCurrentPaper()),
 							fieldConfidentialComments.getText(), answers, 
