@@ -639,6 +639,30 @@ public class Controller extends Observable{
 		//TODO: add this person as the SubPC.  We've already populated the list of potential with the correct people
 		//		so we shouldn't have to do any checking here.  The AssignSubPCGUI will ensure a non-null result is sent.
 		//		(Jacob)
+		int total = 0;
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement("SELECT ID FROM PAPERSTABLEFIXED");
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				total+=1;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Check for valid Username failed");
+			e.printStackTrace();
+		}
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement("INSERT INTO recommendationstablefixed(id, paperid, subchair, conference, papername, paperauthor, q1, rationale" +
+					" VALUE("+total+")");
+			resultSet = statement.executeQuery();
+			
+		} catch (Exception e) {
+			System.out.println("Get full name failed!");
+		}
+		
 	}
 	
 	public Review[] getReviews(final Conference the_conference, final String the_paper){
@@ -719,13 +743,13 @@ public class Controller extends Observable{
 	}
 
 
-	public String[] getMyPapers(final Conference the_conf, final String the_username){
+	public String[] getMyPapers(final String the_conf, final String the_username){
 	//TODO: A GUI is going to need to get a string of paper titles that they are associated
 	//		with given a specific conference;
 		ArrayList<String> al = new ArrayList<String>();
 		try {			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM PAPERSTABLEFIXED WHERE confname=" +"'" + the_conf.getConfTitle() +"' AND author='" +
+					"SELECT * FROM PAPERSTABLEFIXED WHERE confname=" +"'" + the_conf +"' AND author='" +
 							the_username + "'");
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -757,7 +781,10 @@ public class Controller extends Observable{
 		} catch (Exception e) {
 			System.out.println("Get full name failed!");
 		}
-		String[] papers = new String[1];
+		String[] papers = new String[al.size()];
+		for(int i=0;i<al.size();i++){
+			papers[i]=al.get(i);
+		}
 		return papers;
 	}
 	
@@ -777,11 +804,10 @@ public class Controller extends Observable{
 	    }
 	}
 
-	/*
+	
 	public static void main(String args[]) {
 		Controller controller = new Controller();
-		Conference conn = new Conference(current_paper, current_paper, new Date(), current_paper, current_paper, current_paper, current_paper, new Date(), new Date(), new Date(), new Date(), current_paper);
-		controller.getMyPapers(conn,"David");
-	}*/
+		controller.getMyPapers("Bio Conference", "Boba Fett");
+	}
 	
 }

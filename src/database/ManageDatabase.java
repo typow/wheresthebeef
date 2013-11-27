@@ -409,7 +409,7 @@ public class ManageDatabase{
 					"(1,'Boba Fett','Analysis of Horspools Algorithm','text','Conference of Algorithmic analysis','REVIEWED')," +
 					"(2,'Boba Fett','Baking Pi','text','Small Computer Conference','ACCEPTED')," +
 					"(3,'Boba Fett','A More Perfect Union Set','text','Comp-Sci Annual','SUBMITTED')," +
-					"(4,'Michael Phelps','Packing on Abs','text','Bio Conference','SUBMITTED')");
+					"(4,'Boba Fett','Packing on Abs','text','Bio Conference','SUBMITTED')");
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println("Error resetting papers." + e.getMessage());
@@ -418,9 +418,9 @@ public class ManageDatabase{
 	
 	public static void main(String args[]) {
 		ManageDatabase md = new ManageDatabase();
-//		md.clearDatabase();
-//		md.resetDatabase();
-//		md.resetPapers();
+		md.clearDatabase();
+		md.resetDatabase();
+		md.resetPapers();
 		md.printDatabase();
 	}
 	
