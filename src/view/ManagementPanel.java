@@ -25,11 +25,35 @@ import javax.swing.SwingConstants;
 
 import view.GUIEnum.paperStatusAdminViewable;
 
+/**
+* The Management JPanel used within the ManagePaperGUI to display current administrative
+* fields.
+* 
+* Allows the Program Chair and SubPC to view paper management details in the CMS.
+* @author Jacob Hall
+* @version 90 Date: 11/27/13
+*/
 @SuppressWarnings("serial")
 public class ManagementPanel extends JPanel{
 
+	/*
+	 * the JPanel component containing the management tab.
+	 */
 	private JPanel tabManagement;
 	
+	/**
+	 * 
+	 * 	 * <dt><b>Preconditions: The controller object has been instantiated.  The PC or SubPC 
+	 * 						is the user logged in  in relation to the paper being evaluated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
+	 * 						 concerning a paper</b><dd>
+	 * @param the_current_paper
+	 * @param the_paper_author
+	 * @param the_admin_status
+	 * @param the_pc_username
+	 * @param the_sub_pc_username
+	 * @param the_reviewer_usernames
+	 */
 	public ManagementPanel(final String the_current_paper, final String the_paper_author, 
 			final paperStatusAdminViewable the_admin_status, final String the_pc_username,
 			final String the_sub_pc_username, final String[] the_reviewer_usernames){
@@ -37,6 +61,17 @@ public class ManagementPanel extends JPanel{
 				the_pc_username, the_sub_pc_username, the_reviewer_usernames);
 	}	 
 	
+	/**
+	 * Method creates and returns the panel.
+	 * 
+	 * @param the_current_paper
+	 * @param the_paper_author
+	 * @param the_admin_status
+	 * @param the_pc_username
+	 * @param the_sub_pc_username
+	 * @param the_reviewer_usernames
+	 * @return localTabManagement The tab containing the management JPanel
+	 */
 	private JPanel setupManagementPanel(final String the_current_paper, final String the_paper_author, 
 			final paperStatusAdminViewable the_admin_status, final String the_pc_username,
 			final String the_sub_pc_username, final String[] the_reviewer_usernames){
@@ -45,13 +80,13 @@ public class ManagementPanel extends JPanel{
 		tabManagement.setBackground(Color.WHITE);
 		tabManagement.setLayout(null);
 		
-		JPanel tabManagement = new JPanel();
-		tabManagement.setBackground(Color.WHITE);
-		tabManagement.setLayout(null);
+		JPanel localTabManagement = new JPanel();
+		localTabManagement.setBackground(Color.WHITE);
+		localTabManagement.setLayout(null);
 		
 		JPanel managementPanel = new JPanel();
 		managementPanel.setBounds(0, 0, 576, 396);
-		tabManagement.add(managementPanel);
+		localTabManagement.add(managementPanel);
 		managementPanel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -429,13 +464,15 @@ public class ManagementPanel extends JPanel{
 		fieldReview4SubmittedStatus.setBounds(389, 0, 180, 20);
 		panel_16.add(fieldReview4SubmittedStatus);
 
-		return tabManagement;
+		return localTabManagement;
 	}
 	
 	/**
-	 * Getter for the HomeGUI JPanel.
+	 * Getter for the ManagementPanel JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The ManagementPanel has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The ManagementPanel JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the ManagementPanel.
 	 */
 	public JComponent getGUI() {
 		return tabManagement;

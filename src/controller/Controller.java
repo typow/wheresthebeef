@@ -460,8 +460,8 @@ public class Controller extends Observable{
 		//TODO: Remove this paper from the database
 	}
 	
-	public void createNewReview(final String the_reviewer_name, final Conference the_conf, 
-			final String the_username, final String the_paper, final String the_paper_author, final String the_comments_to_subpc, 
+	public void createNewReview(final String the_reviewer_username, final Conference the_conf, 
+			final String the_paper, final String the_paper_author, final String the_comments_to_subpc, 
 			final int[] the_answersRadioBtn, final String the_summary_comments){
 		//TODO: add these elements to the database as one single review item
 	}

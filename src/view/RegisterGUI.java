@@ -40,10 +40,9 @@ import controller.Controller;
  * The RegisterGUI JPanel.
  * 
  * Allows the user to Register in the CMS system
- * @author Warrick Holfeld Jacob Hall
- * @version 11/13/13
+ * @author Warrick Holfeld, Jacob Hall
+ * @version 98 Date: 11/27/13
  */
-
 @SuppressWarnings("serial")
 public class RegisterGUI extends JPanel {
 	
@@ -145,11 +144,11 @@ public class RegisterGUI extends JPanel {
 	
 
 	/**
-	 * Create the frame.
+	 * Create the JPanel that contains the RegisterGUI.
 	 * 
-	 * @param the_controller The Controller is passed to this class at instantiation
-	 * 			to allow the JPanel to notify the controller when data is ready to be 
-	 * 			passed and a new user is to be created.
+	 * <dt><b>Preconditions: The controller object has been instantiated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the registration screen./b><dd>
+	 * @param the_controller
 	 */
 	public RegisterGUI(final Controller the_controller) {
 		super();
@@ -270,12 +269,22 @@ public class RegisterGUI extends JPanel {
 		panel.add(btnBack);
 	}
 
+	/**
+	 * Getter for the RegisterGUI JPanel.
+	 * 
+	 * <dt><b>Preconditions: The RegisterGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The RegisterGUI JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the RegisterGUI.
+	 */
 	public JComponent getGUI() {
 		return contentPane;
 	}
 	
 	/**
 	 * Set up the actions to associate events with outside logic
+	 * 
+	 * <dt><b>Preconditions: The RegisterGUI is instantiated.</b><dd>
+	 * <dt><b>Postconditions: actions associated with each button will be returned.</b><dd>
 	 */
 	private void setupActions(){
 		my_submit_action = new AbstractAction(SUBMIT_TITLE_STRING, null)

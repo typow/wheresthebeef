@@ -48,9 +48,8 @@ import javax.swing.border.EtchedBorder;
 * 
 * Allows the user to submit a review relevant to a paper in the CMS.
 * @author Jacob Hall
-* @version 11/17/13
+* @version 98 Date: 11/27/13
 */
-
 @SuppressWarnings("serial")
 public class SubmitReviewGUI extends JPanel {
 	
@@ -135,6 +134,17 @@ public class SubmitReviewGUI extends JPanel {
 	private String username;
 	
 	/*
+	 * the summary comments the reviewer can make to the 
+	 * author.
+	 */
+	private JTextArea fieldSummaryComments = new JTextArea(" ");
+	
+	/*
+	 * the confidential comments that will be viewable only to the SubPC
+	 * and PC.
+	 */
+	private JTextArea fieldConfidentialComments = new JTextArea(" ");
+	/*
 	 * the Action associated with the Main button
 	 */
 	private Action my_main_action;
@@ -154,6 +164,10 @@ public class SubmitReviewGUI extends JPanel {
 	 */
 	private Action my_submit_action;
 	
+	/*
+	 * Button groups used to link buttons in groups of 5 relative
+	 * to the 10 questions asked of a person reviewing a paper.
+	 */
 	private final ButtonGroup Q1_Group = new ButtonGroup();
 	private final ButtonGroup Q2_Group = new ButtonGroup();
 	private final ButtonGroup Q3_Group = new ButtonGroup();
@@ -164,7 +178,6 @@ public class SubmitReviewGUI extends JPanel {
 	private final ButtonGroup Q8_Group = new ButtonGroup();
 	private final ButtonGroup Q9_Group = new ButtonGroup();
 	private final ButtonGroup Q10_Group = new ButtonGroup();
-	
 	
 	/*
 	 * the radio buttons associated with the 10 questions needed to complete
@@ -182,7 +195,12 @@ public class SubmitReviewGUI extends JPanel {
 							   Q10_1, Q10_2, Q10_3, Q10_4, Q10_5;
 
 	/**
-	 * Create the JPanel.
+	 * Create the JPanel that contains the SubmitReviewGUI.
+	 * 
+	 * <dt><b>Preconditions: The controller object has been instantiated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
+	 * 						 concerning a paper</b><dd>
+	 * @param the_controller
 	 */
 	public SubmitReviewGUI(final Controller the_controller) {
 		super();
@@ -372,16 +390,16 @@ public class SubmitReviewGUI extends JPanel {
 		lblConfidentialCommentsTo.setBounds(10, 0, 483, 20);
 		panel_6.add(lblConfidentialCommentsTo);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textArea.setLineWrap(true);
-		textArea.setWrapStyleWord(true);
-		GridBagConstraints gbc_textArea = new GridBagConstraints();
-		gbc_textArea.insets = new Insets(0, 5, 5, 0);
-		gbc_textArea.fill = GridBagConstraints.BOTH;
-		gbc_textArea.gridx = 0;
-		gbc_textArea.gridy = 9;
-		panel.add(textArea, gbc_textArea);
+		fieldConfidentialComments = new JTextArea();
+		fieldConfidentialComments.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		fieldConfidentialComments.setLineWrap(true);
+		fieldConfidentialComments.setWrapStyleWord(true);
+		GridBagConstraints gbc_fieldConfidentialComments = new GridBagConstraints();
+		gbc_fieldConfidentialComments.insets = new Insets(0, 5, 5, 0);
+		gbc_fieldConfidentialComments.fill = GridBagConstraints.BOTH;
+		gbc_fieldConfidentialComments.gridx = 0;
+		gbc_fieldConfidentialComments.gridy = 9;
+		panel.add(fieldConfidentialComments, gbc_fieldConfidentialComments);
 		
 		JSeparator separator_5 = new JSeparator();
 		separator_5.setBackground(Color.BLACK);
@@ -972,7 +990,7 @@ public class SubmitReviewGUI extends JPanel {
 		gbl_panel_18.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		panel_18.setLayout(gbl_panel_18);
 		
-		JTextArea fieldSummaryComments = new JTextArea();
+		fieldSummaryComments = new JTextArea();
 		GridBagConstraints gbc_fieldSummaryComments = new GridBagConstraints();
 		gbc_fieldSummaryComments.fill = GridBagConstraints.BOTH;
 		gbc_fieldSummaryComments.gridx = 0;
@@ -983,10 +1001,7 @@ public class SubmitReviewGUI extends JPanel {
 		fieldSummaryComments.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		scrollPane.getVerticalScrollBar().setValue(0);
-		
-		//JLabel label = new JLabel(controller.getCurrentUsername().toString());
-		//Windows Builder Pro edits out the above line when you use it.  Replace the label
-		//declaration when needed because it inserts <dynamic> into the label text 
+
 		JLabel fieldUsername = new JLabel(username);
 		fieldUsername.setBounds(10, 70, 157, 20);
 		panel_1.add(fieldUsername);
@@ -1030,14 +1045,25 @@ public class SubmitReviewGUI extends JPanel {
 	}
 	
 	/**
-	 * Getter for the HomeGUI JPanel.
+	 * Getter for the SubmitReviewGUI JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The SubmitReviewGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The SubmitReviewGUI JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the SubmitReviewGUI.
 	 */
 	public JComponent getGUI() {
 		return contentPane;
 	}
 	
+	/**
+	 * Method returns an array of integers that correspond to the recorded answer they
+	 * chose for the 10 radio button groups.
+	 * 
+	 * <dt><b>Preconditions: A button is selected.</b><dd>
+	 * <dt><b>Postconditions: An array of integers (10 elements long) is returned.</b><dd>
+	 * 
+	 * @return temp_array The array of integer values that represent the user's answers
+	 */
 	private int[] getRadioBtnAnswers(){
 		int[] temp_array = new int[10];
 		temp_array[0] = getSingleRtnAnswer(Q1_1,  Q1_2,  Q1_3,  Q1_4,  Q1_5);
@@ -1053,6 +1079,18 @@ public class SubmitReviewGUI extends JPanel {
 		return temp_array;
 	}
 	
+	/**
+	 * Method is used to assign a numerical value (1  - 5) to the button selected by the user.
+	 * 
+	 * <dt><b>Preconditions: A button is selected.</b><dd>
+	 * <dt><b>Postconditions: The numerical value is returned.</b><dd>
+	 * @param btn1
+	 * @param btn2
+	 * @param btn3
+	 * @param btn4
+	 * @param btn5
+	 * @return index_of_selected.  The int value associated with the button selected.
+	 */
 	private int getSingleRtnAnswer(final JRadioButton btn1, final JRadioButton btn2,
 			final JRadioButton btn3, final JRadioButton btn4, final JRadioButton btn5){
 		int index_of_selected = 0;
@@ -1076,6 +1114,9 @@ public class SubmitReviewGUI extends JPanel {
 	
 	/**
 	 * Set up the actions to associate events with outside logic
+	 * 
+	 * <dt><b>Preconditions: The SubmitReviewGUI is instantiated.</b><dd>
+	 * <dt><b>Postconditions: actions associated with each button will be returned.</b><dd>
 	 */
 	private void setupActions(){
 		/*
@@ -1128,8 +1169,9 @@ public class SubmitReviewGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add more to the submit action
 				int[] answers = getRadioBtnAnswers();
+				//TODO: remove the printlines.
+				System.out.println("confidential comments: " + fieldConfidentialComments.getText());
 					System.out.println("button selected for Q1: " + answers[0] + 
 							"\nbutton selected for Q2: " + answers[1] + 
 							"\nbutton selected for Q3: " + answers[2] + 
@@ -1140,8 +1182,11 @@ public class SubmitReviewGUI extends JPanel {
 							"\nbutton selected for Q8: " + answers[7] + 
 							"\nbutton selected for Q9: " + answers[8] + 
 							"\nbutton selected for Q10: " + answers[9]);
-//					controller.createNewReview(reviewer_name, current_conf, username, paper, 
-//							paper_author, comments_to_subpc, answersRadioBtn, summary_comments);
+				System.out.println("summary comments: " + fieldSummaryComments.getText());
+				controller.createNewReview(username, current_conf, controller.getCurrentPaper(), 
+							controller.getPaperAuthor(current_conf, controller.getCurrentPaper()),
+							fieldConfidentialComments.getText(), answers, 
+							fieldSummaryComments.getText());
 				controller.setPaperStatus(current_conf, controller.getCurrentPaper(), paperStatusAuthorViewable.UNDER_REVIEW, 
 							paperStatusAdminViewable.REVIEWED);
 				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);

@@ -29,18 +29,35 @@ import javax.swing.border.EtchedBorder;
 
 import controller.Review;
 
+@SuppressWarnings("serial")
 public class ReviewPanel extends JPanel{
 
+	/*
+	 * the panel containing the review data.
+	 */
 	private Review review;
 	
+	/*
+	 * the index of the question currently in focus
+	 */
 	private int index;
+	
+	/*
+	 * the JPanel containing the review tab.
+	 */
 	private JPanel tabReview;
 	
+	/*
+	 * the JScrollPane containing all of the review panels.
+	 */
 	private JScrollPane scrollPane;
 	
 	/**
-	 * sets up a single review panel.  Four possible per paper.
+	 * Constructor sets up a single review panel.  Four possible per paper.
 	 * 
+	 * <dt><b>Preconditions: The controller object has been instantiated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
+	 * 						 concerning a paper</b><dd>
 	 * @param the_review
 	 * @param the_index
 	 * @param reviewer_name_viewable
@@ -273,6 +290,17 @@ public class ReviewPanel extends JPanel{
 		panel_16.add(fieldSummaryComments, gbc_textArea_13);
 	}
 	
+	/**
+	 * Method sets up the viewable only panel that will display the results of the
+	 * reviews submitted relative to the paper.
+	 * 
+	 * <dt><b>Preconditions: A JPanel is made available to place the data in.</b><dd>
+	 * <dt><b>Postconditions: The JPanel contains all of the questions and recorded
+	 * 						answers relevant to the given review in the database.</b><dd>
+	 * 
+	 * @param primary_panel The JPanel to be packed with the questions and results recorded.
+	 * @return primary_panel The JPanel now containing all of the questions and results recorded.
+	 */
 	private JPanel setupQuestionFields(final JPanel primary_panel){	
 		JTextArea txtrQ1 = new JTextArea();
 		txtrQ1.setWrapStyleWord(true);
@@ -811,6 +839,17 @@ public class ReviewPanel extends JPanel{
 		return primary_panel;
 	}
 	
+	/**
+	 * Method is used to determine which button is selected based on an index recorded.
+	 * 
+	 * <dt><b>Preconditions: A button is selected.</b><dd>
+	 * <dt><b>Postconditions: The button is returned.</b><dd>
+	 * 
+	 * @param answer  The answer recorded in the database as selected for the given question
+	 * @param the_index
+	 * @param the_button
+	 * @return the_button.  The button that is selected based on the Index passed in.
+	 */
 	private JRadioButton setupButtonAnswers(final int answer, final int the_index, final JRadioButton the_button){
 		if (the_index == answer){
 			the_button.setSelected(true);
@@ -822,9 +861,11 @@ public class ReviewPanel extends JPanel{
 	}
 
 	/**
-	 * Getter for the HomeGUI JPanel.
+	 * Getter for the ReviewPanel JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The ReviewPanel has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The ReviewPanel JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the ReviewPanel.
 	 */
 	public JComponent getGUI() {
 		return tabReview;

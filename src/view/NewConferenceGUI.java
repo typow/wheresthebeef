@@ -45,7 +45,7 @@ import controller.Controller;
  * 
  * Allows the user to create a new conference in the CMS.
  * @author Jacob Hall
- * @version 11/13/13
+* @version 98 Date: 11/27/13
  */
 
 @SuppressWarnings("serial")
@@ -196,8 +196,14 @@ public class NewConferenceGUI extends JPanel {
 	 * The JTextArea containing the summary description of the conference.
 	 */
 	private JTextArea conference_summary_field;
+	
 	/**
-	 * Create the JPanel.
+	 * Create the JPanel that contains the NewConferenceGUI.
+	 * 
+	 * <dt><b>Preconditions: The controller object has been instantiated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
+	 * 						 concerning a paper</b><dd>
+	 * @param the_controller
 	 */
 	public NewConferenceGUI(final Controller the_controller) {
 		super();
@@ -228,9 +234,6 @@ public class NewConferenceGUI extends JPanel {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		//JLabel label = new JLabel(controller.getCurrentUsername().toString());
-		//Windows Builder Pro edits out the above line when you use it.  Replace the label
-		//declaration when needed because it inserts <dynamic> into the label text 
 		JLabel label = new JLabel(username);
 		label.setBounds(10, 22, 157, 20);
 		panel_1.add(label);
@@ -419,9 +422,11 @@ public class NewConferenceGUI extends JPanel {
 	}
 	
 	/**
-	 * Getter for the HomeGUI JPanel.
+	 * Getter for the NewConferenceGUI JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The NewConferenceGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The NewConferenceGUI JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the NewConferenceGUI.
 	 */
 	public JComponent getGUI() {
 		return contentPane;
@@ -429,6 +434,9 @@ public class NewConferenceGUI extends JPanel {
 	
 	/**
 	 * Set up the actions to associate events with outside logic
+	 * 
+	 * <dt><b>Preconditions: The NewConferenceGUI is instantiated.</b><dd>
+	 * <dt><b>Postconditions: actions associated with each button will be returned.</b><dd>
 	 */
 	private void setupActions(){
 		/*
@@ -481,8 +489,6 @@ public class NewConferenceGUI extends JPanel {
 		 */
 		my_submit_action = new AbstractAction(SUBMIT_TITLE_STRING, null)
 		{
-			
-			
 			//TODO: Need to check to verify that the conference doesn't already exist in the system.
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
@@ -535,8 +541,6 @@ public class NewConferenceGUI extends JPanel {
 					Conference new_conference = new Conference(conf_title, username, conf_date, conf_address, conf_city, conf_state, con_zip, 
 							submission_deadline, review_deadline, sub_pc_recommend_deadline, author_notification_deadline, 
 							conference_summary);
-					//TODO: maybe once the conference is created, a new screen should be populated with the fields entered
-					//		with a "success your conference was created" message?
 					controller.createNewConference(new_conference);
 					controller.setStateOfGUI(StateOfGUI.HOME);
 				}				

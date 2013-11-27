@@ -26,6 +26,12 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
+/**
+* The RecommendPanel JPanel creates a panel containing recommendations already submitted.
+* 
+* @author Jacob Hall
+* @version 98 Date: 11/27/13
+*/
 @SuppressWarnings("serial")
 public class RecommendPanel extends JPanel{
 
@@ -270,6 +276,17 @@ public class RecommendPanel extends JPanel{
 		return tabRecommendation;
 	}
 	
+	/**
+	 * Method is used to determine which button is selected based on an index recorded.
+	 * 
+	 * <dt><b>Preconditions: A button is selected.</b><dd>
+	 * <dt><b>Postconditions: The button is returned.</b><dd>
+	 * 
+	 * @param answer  The answer recorded in the database as selected for the given question
+	 * @param the_index
+	 * @param the_button
+	 * @return the_button.  The button that is selected based on the Index passed in.
+	 */
 	private JRadioButton setupButtonAnswers(final int answer, final int the_index, final JRadioButton the_button){
 		if (the_index == answer){
 			the_button.setSelected(true);
@@ -281,9 +298,11 @@ public class RecommendPanel extends JPanel{
 	}
 	
 	/**
-	 * Getter for the HomeGUI JPanel.
+	 * Getter for the RecommendPanel JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The RecommendPanel has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The RecommendPanel JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the RecommendPanel.
 	 */
 	public JComponent getGUI() {
 		return tabRecommendation;

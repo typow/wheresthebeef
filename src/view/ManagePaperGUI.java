@@ -36,13 +36,6 @@ import view.GUIEnum.paperRelation;
 import controller.Conference;
 import controller.Controller;
 import controller.Review;
-import javax.swing.JScrollPane;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JRadioButton;
-import javax.swing.border.EtchedBorder;
-import javax.swing.JTextArea;
 
 /**
 * The Manage Paper User Interface JPanel
@@ -53,7 +46,7 @@ import javax.swing.JTextArea;
 * the relevant conference data will be populated.
 * 
 * @author Jacob Hall
-* @version SVN version 71.   11/25/13
+* @version 98 Date: 11/27/13
 */
 
 @SuppressWarnings("serial")
@@ -260,13 +253,15 @@ public class ManagePaperGUI extends JPanel{
 	private Action my_accept_reject_action;
 	
 	/**
-	 * The constructor for the ManagePaperGUi.  Creates the JPanel that holds the
+	 * The constructor for the ManagePaperGUI.  Creates the JPanel that holds the
 	 * GUI itself.  The controller is passed in so the current context can be 
 	 * retrieved according to who is viewing the GUI and what state the GUI
 	 * is in relative to their association with the given paper.
 	 * 
-	 * @param the_controller  The controller object that acts as a facilitator
-	 * 							between GUI elements and the database.
+	 * <dt><b>Preconditions: The controller object has been instantiated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
+	 * 						 concerning a paper</b><dd>
+	 * @param the_controller
 	 */
 	public ManagePaperGUI(final Controller the_controller) {
 		super();
@@ -287,7 +282,10 @@ public class ManagePaperGUI extends JPanel{
 	/**
 	 * Method sets up the initial parameters and general look and feel for the Main JPanel.
 	 * 
-	 * @return JPanel containing the MainPanel
+	 * <dt><b>Preconditions: The controller object has been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The main panel is created.</b><dd>
+	 * 
+	 * @return mainPanel JPanel containing the MainPanel
 	 */
 	private JPanel setUpMainPanel(){
 		current_conf = controller.getCurrentConference();
@@ -341,9 +339,8 @@ public class ManagePaperGUI extends JPanel{
 		separator_2.setBounds(20, 50, 789, 13);
 		mainPanel.add(separator_2);
 		
-		
 		//If the paper hasn't been created yet, the JLabel should be blank.  Otherwise, retrieve the 
-		//		paper title and add it to the label.
+		//paper title and add it to the label.
 		JLabel lblPaperTitle;
 		if (controller.getCurrentPaper() == ""){
 			lblPaperTitle = new JLabel("No Paper Submitted");
@@ -409,6 +406,11 @@ public class ManagePaperGUI extends JPanel{
 	 * Sets up the main JTabbedPane that will display the appropriate sub-tabs according to the permissions
 	 * of the user logged in.
 	 * 
+	 * <dt><b>Preconditions: The main panel exists to attach this tabbed pane to.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the tabbed panes
+	 * 						that will be viewable to various users based on their 
+	 * 						relation to the paper in focus.</b><dd>
+	 * 
 	 * @return JTabbedPane  The main JTabbedPane containing all sub-tabs.
 	 */
 	private JTabbedPane setupTabbedPane(){
@@ -448,6 +450,9 @@ public class ManagePaperGUI extends JPanel{
 	
 	/**
 	 * Method creates the tab to display the conference information
+	 * 
+	 * <dt><b>Preconditions: The tabbed pane exists to attach this particular pane to.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the conference info.</b><dd>
 	 * 
 	 * @return JPanel containing the conference info
 	 */
@@ -564,6 +569,9 @@ public class ManagePaperGUI extends JPanel{
 	 * Method creates and returns the review tab which might contain as many as four
 	 * sub-tabs, each pertaining to a particular review.
 	 * 
+	 * <dt><b>Preconditions: The tabbed pane exists to attach this particular pane to.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the review info.</b><dd>
+	 * 
 	 * @return tabReviews The JPanel containing the reviews. 
 	 */
 	private JPanel setupReviewTab(){
@@ -654,9 +662,11 @@ public class ManagePaperGUI extends JPanel{
 	
 	
 	/**
-	 * Getter for the HomeGUI JPanel.
+	 * Getter for the ManagePaperGUI JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The ManagePaperGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The ManagePaperGUI JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the ManagePaperGUI.
 	 */
 	public JComponent getGUI() {
 		return contentPane;
@@ -751,8 +761,6 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: make sure that the user can't submit a second review, and that there aren't already 
-				//		4 reviews in the system for a paper.
 				if (controller.canAddReview(current_conf, current_paper, controller.getCurrentUsername())){
 					controller.setStateOfGUI(StateOfGUI.SUBMIT_REVIEW);
 					System.out.println("submit review....");

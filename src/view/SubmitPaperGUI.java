@@ -43,9 +43,8 @@ import controller.Controller;
 * 
 * Allows the user to submit a paper in the CMS.
 * @author Jacob Hall
-* @version 11/13/13
+* @version 98 Date: 11/27/13
 */
-
 @SuppressWarnings("serial")
 public class SubmitPaperGUI extends JPanel {
 	
@@ -158,8 +157,14 @@ public class SubmitPaperGUI extends JPanel {
 	 * The JTextField containing the conference date entry.
 	 */
 	private JTextField fieldFileToSubmit;
+
 	/**
-	 * Create the JPanel.
+	 * Create the JPanel that contains the SubmitPaperGUI.
+	 * 
+	 * <dt><b>Preconditions: The controller object has been instantiated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
+	 * 						 concerning a paper</b><dd>
+	 * @param the_controller
 	 */
 	public SubmitPaperGUI(final Controller the_controller) {
 		super();
@@ -299,9 +304,11 @@ public class SubmitPaperGUI extends JPanel {
 	}
 	
 	/**
-	 * Getter for the HomeGUI JPanel.
+	 * Getter for the SubmitPaperGUI JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The SubmitPaperGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The SubmitPaperGUI JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the SubmitPaperGUI.
 	 */
 	public JComponent getGUI() {
 		return contentPane;
@@ -309,6 +316,9 @@ public class SubmitPaperGUI extends JPanel {
 	
 	/**
 	 * Set up the actions to associate events with outside logic
+	 * 
+	 * <dt><b>Preconditions: The SubmitPaperGUI is instantiated.</b><dd>
+	 * <dt><b>Postconditions: actions associated with each button will be returned.</b><dd>
 	 */
 	private void setupActions(){
 		/*
@@ -370,9 +380,6 @@ public class SubmitPaperGUI extends JPanel {
 					JOptionPane.showMessageDialog(contentPane, "Please enter a conference date.");
 				}
 				else{
-					//TODO: maybe once the conference is created, a new screen should be populated with the fields entered
-					//		with a "success your paper was submitted" message?
-					
 					//TODO: change this from a text field to a file navigation option to actually identify the file.
 					//		right now, for speed of development, it's just a text field.
 
