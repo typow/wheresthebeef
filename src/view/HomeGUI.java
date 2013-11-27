@@ -259,7 +259,7 @@ public class HomeGUI extends JPanel {
 //			}
 //		));
 //		table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		//scrollPane.setViewportView(table);
+		scrollPane.add(panel_for_scrollpane);
 		
 	}
 
