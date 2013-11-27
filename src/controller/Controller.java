@@ -917,6 +917,12 @@ public class Controller extends Observable{
 		return papers;
 	}
 	
+	public void addPC(final Conference the_conf, final String the_username){
+	//TODO: a person needs to be assigned as the PC for the entire conference.	
+
+		
+	}
+	
 	private void close() {
 		try {
 			if (resultSet != null) {
