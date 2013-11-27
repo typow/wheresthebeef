@@ -152,7 +152,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM users WHERE username='" + the_username + "'");
+					"SELECT * FROM USERSTABLEFIXED WHERE username='" + the_username + "'");
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
@@ -200,7 +200,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO users VALUES ('" + the_username + "', '" + the_first_name + "', '" +
+					"INSERT INTO USERSTABLEFIXED VALUES ('" + the_username + "', '" + the_first_name + "', '" +
 					the_middle_name + "', '" + the_last_name + "', '" + the_specialty + "')");
 			statement.execute();
 			System.out.println(the_username + " Successfully added user");
@@ -239,7 +239,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM users WHERE username=" +"'" + the_username +"'");
+					"SELECT * FROM USERSTABLEFIXED WHERE username=" +"'" + the_username +"'");
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
@@ -344,43 +344,43 @@ public class Controller extends Observable{
 		//TODO: add the paper and info related to it to the database.  Note:  this is called in the GUI in a try-catch statement
 		//		Return Exception "Author cannot submit more than 4 papers to a single conference." 
 		//		implement the Logic to prevent that here.  The GUI will print out the Exception string in a JDialog box.
-		
-		
+		int total = 0;
+		int i = 0;
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement("SELECT ID FROM PAPERSTABLEFIXED");
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				total+=1;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Check for valid Username failed");
+			e.printStackTrace();
+		}
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM PAPERSTABLEFIXED WHERE author='" + the_username + "' AND confname ='"+the_conference.getConfTitle()+"'");
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				i+=1;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Check for valid Username failed");
+			e.printStackTrace();
+		}
 		//TODO: add the user viewable status and the admin viewable status.  These are already set up in the GUIEnum class.
 		//		We need two because the user should only see a general indication of the progress and the admin needs to see
 		//		a detailed status update according to deadlines and where it's at in the whole review process. (Jacob)
-		
-		int i = 0;
-		int total = 0;
-		try {
-			
-			PreparedStatement statement = connect.prepareStatement("SELECT * FROM papers");
-			resultSet = statement.executeQuery();
-			
-			while (resultSet.next()) {
-				total++;
-			}
-		} catch (SQLException e) {
-			System.out.println("Check for valid conference name failed");
-			e.printStackTrace();
-		}
-		try {
-			
-			PreparedStatement statement = connect.prepareStatement("SELECT * FROM papers WHERE author='" + the_username + "'");
-			resultSet = statement.executeQuery();
-			
-			while (resultSet.next()) {
-				i++;
-			}
-		} catch (SQLException e) {
-			System.out.println("Check for valid conference name failed");
-			e.printStackTrace();
-		}
 		if(i<4) {
-			try {
-				PreparedStatement statement = connect.prepareStatement(
-						"INSERT INTO papers (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME) VALUES (" + total+1 + ", '" + the_username + "', '" +
-								the_paper_title + "', '" + the_file_submitted + "', '" + the_conference.getConfTitle()+"')");
+			try {			
+				PreparedStatement statement = connect.prepareStatement("INSERT INTO PAPERSTABLEFIXED (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME) VALUES (" + total + ", '" + the_username + "', '" +
+								the_paper_title + "', '" + the_file_submitted + "', '" +
+								the_conference.getConfTitle() + "')");
 				statement.execute();
 				System.out.println(the_paper_title + " Successfully added paper");
 			} catch (SQLException e) {
@@ -478,7 +478,6 @@ public class Controller extends Observable{
 		//TODO: the GUI will call this method to verify that there aren't already 4 reviews and that the user
 		//		attempting to submit the review hasn't already submitted one.  If there are already 4 reviews,
 		//		or the user has already submitted one, return false.
-		
 		return permission_to_add;
 	}
 	
@@ -499,7 +498,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM papers WHERE confname=" +"'" + the_conf.getConfTitle() +"' AND name='" +
+					"SELECT * FROM PAPERSTABLEFIXED WHERE confname=" +"'" + the_conf.getConfTitle() +"' AND name='" +
 					the_paper + "'");
 			resultSet = statement.executeQuery();
 			
@@ -726,7 +725,7 @@ public class Controller extends Observable{
 		ArrayList<String> al = new ArrayList<String>();
 		try {			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM papers WHERE confname=" +"'" + the_conf.getConfTitle() +"' AND author='" +
+					"SELECT * FROM PAPERSTABLEFIXED WHERE confname=" +"'" + the_conf.getConfTitle() +"' AND author='" +
 							the_username + "'");
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();

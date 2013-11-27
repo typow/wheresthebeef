@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-import org.apache.derby.iapi.types.Resetable;
-
 /**
  * This class manages the database. It allows for the data to be cleared,
  * as well as contains a toString method to print out the contents of the
@@ -77,7 +75,6 @@ public class ManageDatabase{
 		clearReviews();
 		clearRecommendations();
 	}
-	
 	/**
 	 * Separately prints out each table in the database. 
 	 * 
@@ -105,16 +102,12 @@ public class ManageDatabase{
 	public void clearUsers(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DROP TABLE users");
-			statement.execute();
-			
-			statement = connect.prepareStatement("CREATE TABLE users(username varchar(16), " +
-					    "firstname varchar(26), mi varchar(1), lastname varchar(26), speciality long varchar)");
+			statement = connect.prepareStatement("DELETE FROM userstablefixed");
 			statement.execute();
 			
 			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error clearing table.");
+			System.out.println("Error clearing userstablefixed table.");
 		}
 	}
 	
@@ -127,17 +120,12 @@ public class ManageDatabase{
 	private void clearConference(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DROP TABLE conference");
-			statement.execute();
-			
-			statement = connect.prepareStatement("CREATE TABLE conference(name varchar, progchair varchar(16), " +
-					    "condate date, submitdate date, reviewdate date, subprogdate date, " +
-					    "notifydate date, summary long varchar)");
+			statement = connect.prepareStatement("DELETE FROM conference");
 			statement.execute();
 			
 			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error clearing table.");
+			System.out.println("Error clearing conference table.");
 		}
 	}
 	
@@ -150,16 +138,12 @@ public class ManageDatabase{
 	private void clearPapers(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DROP TABLE papers");
-			statement.execute();
-			
-			statement = connect.prepareStatement("CREATE TABLE papers(id int, author varchar(53), " +
-					    "name varchar(100), text long varchar, confname varchar(100), status varchar(25))");
+			statement = connect.prepareStatement("DELETE FROM paperstablefixed");
 			statement.execute();
 			
 			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error clearing table." + e.getMessage());
+			System.out.println("Error clearing paperstablefixed table.");
 		}
 	}
 	
@@ -172,18 +156,12 @@ public class ManageDatabase{
 	private void clearReviews(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DROP TABLE reviews");
-			statement.execute();
-			
-			statement = connect.prepareStatement("CREATE TABLE reviews(id int, paperid int, reviewer varchar(53), " +
-                    "conference varchar(100), papername varchar(100), paperauthor varchar(53), " +
-                    "q1 int, q2 int, q3 int, q4 int, q5 int, q6 int, q7 int, q8 int, q9 int, " +
-                    "rating int, comments varchar(1000))");
+			statement = connect.prepareStatement("DELETE FROM REVIEWSTABLEFIXED");
 			statement.execute();
 			
 			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error clearing table.");
+			System.out.println("Error clearing REVIEWSTABLEFIXED table.");
 		}
 	}
 	
@@ -196,16 +174,12 @@ public class ManageDatabase{
 	private void clearRecommendations(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DROP TABLE recommendations");
-			statement.execute();
-			
-			statement = connect.prepareStatement("CREATE TABLE recommendations(id int, paperid int, subchair varchar(53), " +
-				    "conference varchar(53), papername varchar(53), paperauthor varchar(53), q1 int, rationale varchar(1000))");
+			statement = connect.prepareStatement("DELETE FROM RECOMMENDATIONSTABLEFIXED");
 			statement.execute();
 			
 			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error clearing table.");
+			System.out.println("Error clearing RECOMMENDATIONSTABLEFIXED table.");
 		}
 	}
 	
@@ -218,25 +192,23 @@ public class ManageDatabase{
 	private void printUsers(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("SELECT * FROM users");
-			resultSet = statement.executeQuery();
+			statement = connect.prepareStatement("SELECT * FROM userstablefixed");
 			
+			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 						
 			int numberOfColumns = rsmd.getColumnCount();
 			  
-		    	for (int i = 1; i <= numberOfColumns; i++) { //print column titles
-		    		if (i > 1)
-		    			System.out.print(",  ");
+		    	for (int i = 1; i <= numberOfColumns; i++) {
+		    		if (i > 1) System.out.print(",  ");
 		    		String columnName = rsmd.getColumnName(i);
 		    		System.out.print(columnName);
 		    	}
 		    	System.out.println("");
 		    	
-		    	while (resultSet.next()) { //print out contents of table. 
+		    	while (resultSet.next()) {
 		            for (int i = 1; i <= numberOfColumns; i++) {
-		            	if (i > 1) 
-		            		System.out.print(",  ");
+		            	if (i > 1) System.out.print(",  ");
 		            	String columnValue = resultSet.getString(i);
 		            	System.out.print(columnValue);
 		            }
@@ -257,8 +229,8 @@ public class ManageDatabase{
 		PreparedStatement statement;
 		try {
 			statement = connect.prepareStatement("SELECT * FROM conference");
-			resultSet = statement.executeQuery();
 			
+			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 						
 			int numberOfColumns = rsmd.getColumnCount();
@@ -292,7 +264,7 @@ public class ManageDatabase{
 	private void printPapers(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("SELECT * FROM papers");
+			statement = connect.prepareStatement("SELECT * FROM PAPERSTABLEFIXED");
 			
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -328,7 +300,7 @@ public class ManageDatabase{
 	private void printReviews(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("SELECT * FROM reviews");
+			statement = connect.prepareStatement("SELECT * FROM REVIEWSTABLEFIXED");
 			
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -364,7 +336,7 @@ public class ManageDatabase{
 	private void printRecommendations(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("SELECT * FROM recommendations");
+			statement = connect.prepareStatement("SELECT * FROM RECOMMENDATIONSTABLEFIXED");
 			
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -402,7 +374,7 @@ public class ManageDatabase{
 		
 		try {
 			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO users VALUES ('ajm1','Aaron','J','Merrill','Engineering Computer')," +
+					"INSERT INTO userstablefixed (USERNAME,  FIRSTNAME,  MI,  LASTNAME,  SPECIALITY) VALUES ('ajm1','Aaron','J','Merrill','Engineering Computer')," +
 					"('sethk1','Seth','D','Kramer','Engineering Checmial')," +
 					"('typow','Tyler','M','Powers','Engineering Bio')," +
 					"('warfeld','Warrick','M','Holfeld','Engineering Electronic')," +
@@ -418,7 +390,6 @@ public class ManageDatabase{
 					"('noise','Bob','B','Costas','Engineering Bio')," +
 					"('ripped','Michael','G','Phelps','Engineering Electronic')");
 			statement.execute();
-			
 		} catch (SQLException e) {
 			System.out.println("Error resetting users." + e.getMessage());
 		}
@@ -434,11 +405,11 @@ public class ManageDatabase{
 		
 		try {
 			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO papers VALUES (4564,'Boba Fett','Surviving the Sarlacc','text','Bio Conference','SUBMITTED')," +
-					"(8947,'Aaron Merrill','Analysis of Horspools Algorithm','text','Conference of Algorithmic analysis','REVIEWED')," +
-					"(4858,'Tyler Powers','Baking Pi','text','Small Computer Conference','ACCEPTED')," +
-					"(9872,'Barack Obama','A More Perfect Union Set','text','Comp-Sci Annual','SUBMITTED')," +
-					"(6514,'Michael Phelps','Packing on Abs','text','Bio Conference','SUBMITTED')");
+					"INSERT INTO paperstablefixed (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME,  STATUS)  VALUES (0,'Boba Fett','Surviving the Sarlacc','text','Bio Conference','SUBMITTED')," +
+					"(1,'Boba Fett','Analysis of Horspools Algorithm','text','Conference of Algorithmic analysis','REVIEWED')," +
+					"(2,'Boba Fett','Baking Pi','text','Small Computer Conference','ACCEPTED')," +
+					"(3,'Boba Fett','A More Perfect Union Set','text','Comp-Sci Annual','SUBMITTED')," +
+					"(4,'Michael Phelps','Packing on Abs','text','Bio Conference','SUBMITTED')");
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println("Error resetting papers." + e.getMessage());
@@ -447,7 +418,9 @@ public class ManageDatabase{
 	
 	public static void main(String args[]) {
 		ManageDatabase md = new ManageDatabase();
-		md.resetPapers();
+//		md.clearDatabase();
+//		md.resetDatabase();
+//		md.resetPapers();
 		md.printDatabase();
 	}
 	
