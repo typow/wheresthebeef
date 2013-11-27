@@ -44,13 +44,12 @@ import controller.Controller;
 import javax.swing.border.EtchedBorder;
 
 /**
-* The Make Recommendation Interface JPanel
+* The Accept/Reject Interface JPanel
 * 
-* Allows the user to make a recommendation for a paper in the CMS.
+* Allows the Program Chair make the accept/reject decision for a paper in the CMS.
 * @author Jacob Hall
-* @version 11/17/13
+* @version 90 Date: 11/27/13
 */
-
 @SuppressWarnings("serial")
 public class AcceptRejectGUI extends JPanel {
 	
@@ -175,13 +174,22 @@ public class AcceptRejectGUI extends JPanel {
 	 */
 	private Action my_submit_action;
 	
+	/*
+	 * the buttonGroup that contains the two buttons to accept or reject a paper.
+	 */
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	
 	
 
 	/**
-	 * Create the JPanel.
+	 * Create the JPanel that contains the AcceptRejectGUI.
+	 * 
+	 * <dt><b>Preconditions: The controller object has been instantiated.  The PC is the user logged in
+	 * 						 in relation to the paper being evaluated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
+	 * 						 concerning a paper</b><dd>
+	 * @param the_controller
 	 */
 	public AcceptRejectGUI(final Controller the_controller) {
 		super();
@@ -448,16 +456,25 @@ public class AcceptRejectGUI extends JPanel {
 	}
 	
 	/**
-	 * Getter for the HomeGUI JPanel.
+	 * Getter for the AcceptRejectGUI JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The AcceptRejectGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The AcceptRejectGUI JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the AcceptRejectGUI.
 	 */
 	public JComponent getGUI() {
 		return contentPane;
 	}
 	
-
-	
+	/**
+	 * Method is used to assign a numerical value (1 or 2) to the button selected by the user.
+	 * 
+	 * <dt><b>Preconditions: A button is selected.</b><dd>
+	 * <dt><b>Postconditions: The numerical value is returned.</b><dd>
+	 * @param btn1
+	 * @param btn2
+	 * @return index_of_selected.  The int value associated with the button selected.
+	 */
 	private int getSingleRtnAnswer(final JRadioButton btn1, final JRadioButton btn2){
 		int index_of_selected = 0;
 		if (btn1.isSelected()){
@@ -472,6 +489,9 @@ public class AcceptRejectGUI extends JPanel {
 	
 	/**
 	 * Set up the actions to associate events with outside logic
+	 * 
+	 * <dt><b>Preconditions: The AcceptRejectGUI is instantiated.</b><dd>
+	 * <dt><b>Postconditions: actions associated with each button will be returned.</b><dd>
 	 */
 	private void setupActions(){
 		/*
@@ -524,7 +544,6 @@ public class AcceptRejectGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add more to the submit action?
 				int answer = getSingleRtnAnswer(Q_1, Q_2);
 				if (answer == 2) {
 					System.out.println("accepted");

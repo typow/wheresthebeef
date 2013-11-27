@@ -12,7 +12,6 @@
 package controller;
 
 import java.sql.Connection;
-//import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +22,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Observable;
@@ -39,7 +37,7 @@ import view.GUIEnum.paperStatusAuthorViewable;
  * and the database.
  * 
  * @author Jacob Hall
- * @version 11/10/13
+ * @version 90 Date: 11/27/13
  */
 public class Controller extends Observable{
 	

@@ -47,11 +47,10 @@ import javax.swing.ListSelectionModel;
 /**
 * The Assign Sub-Program Chair Interface JPanel
 * 
-* Allows the user to assign a Sub-Program Chair to a paper in the CMS.
+* Allows the Program Chair to assign a Sub-Program Chair to a paper in the CMS.
 * @author Jacob Hall
-* @version 11/17/13
+* @version 90 Date: 11/27/13
 */
-
 @SuppressWarnings("serial")
 public class AssignSubPCGUI extends JPanel {
 	
@@ -116,11 +115,6 @@ public class AssignSubPCGUI extends JPanel {
 	private static final String SUBMIT_REVIEW_STRING = "Submit this review form (ALT+S)";
 	
 	/*
-	 * the maximum allowable number of reviewers for a single paper
-	 */
-	private static int MAX_NUM_REVIWERS = 4;
-	
-	/*
 	 * the JPanel containing the entire SubmitPaperGUI
 	 */
 	private JPanel contentPane;
@@ -151,13 +145,6 @@ public class AssignSubPCGUI extends JPanel {
 	private String paper_author = "";
 	
 	/*
-	 * integer value used to represent the number of reviewers currently
-	 * assigned to a paper.  This can't be more than 4.  It is used to 
-	 * validate that business rule.
-	 */
-	private int num_of_reviewers = 0;
-	
-	/*
 	 * The list of users that can be selected from to be considered
 	 * for reviewers of the paper.
 	 */
@@ -184,7 +171,14 @@ public class AssignSubPCGUI extends JPanel {
 	private Action my_submit_action;
 
 	/**
-	 * Create the JPanel.
+	 * Create the JPanel that contains the AssignSubPCGUI.
+	 * 
+	 * <dt><b>Preconditions: The controller object has been instantiated.  The PC is the user logged in
+	 * 						 in relation to the paper being evaluated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
+	 * 						 concerning a paper</b><dd>
+	 * 
+	 * @param the_controller
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public AssignSubPCGUI(final Controller the_controller) {
@@ -410,9 +404,11 @@ public class AssignSubPCGUI extends JPanel {
 	}
 	
 	/**
-	 * Getter for the HomeGUI JPanel.
+	 * Getter for the AssignSubPCGUI JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The AssignSubPCGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The AssignSubPCGUI JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the AssignSubPCGUI.
 	 */
 	public JComponent getGUI() {
 		return contentPane;
@@ -420,6 +416,9 @@ public class AssignSubPCGUI extends JPanel {
 	
 	/**
 	 * Set up the actions to associate events with outside logic
+	 * 
+	 * <dt><b>Preconditions: The AssignSubPCGUI is instantiated.</b><dd>
+	 * <dt><b>Postconditions: actions associated with each button will be returned.</b><dd>
 	 */
 	private void setupActions(){
 		/*
@@ -472,7 +471,6 @@ public class AssignSubPCGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add more to the submit action?
 				List<String> result = listOfAvailableForSubPC.getSelectedValuesList();		//the single result of what the user selected
 				if (result.isEmpty()){
 					JOptionPane.showMessageDialog(contentPane, "No Sub-Program Chair selected.  Make a selection or return to " +

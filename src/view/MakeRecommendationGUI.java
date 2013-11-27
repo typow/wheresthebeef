@@ -48,9 +48,8 @@ import javax.swing.border.EtchedBorder;
 * 
 * Allows the user to make a recommendation for a paper in the CMS.
 * @author Jacob Hall
-* @version 11/17/13
+* @version 90 Date: 11/27/13
 */
-
 @SuppressWarnings("serial")
 public class MakeRecommendationGUI extends JPanel {
 	
@@ -175,13 +174,20 @@ public class MakeRecommendationGUI extends JPanel {
 	 */
 	private Action my_submit_action;
 	
+	/*
+	 * the button group used to group the five buttons that indicate
+	 * the level of recommendation the SubPC has for the particular paper.
+	 */
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-
 	
-	
-
 	/**
-	 * Create the JPanel.
+	 * Create the JPanel that contains the MakeRecommendationGUI.
+	 * 
+	 * <dt><b>Preconditions: The controller object has been instantiated.  The SubPC is the user logged in
+	 * 						 in relation to the paper being evaluated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
+	 * 						 concerning a paper</b><dd>
+	 * @param the_controller
 	 */
 	public MakeRecommendationGUI(final Controller the_controller) {
 		super();
@@ -220,9 +226,6 @@ public class MakeRecommendationGUI extends JPanel {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		//JLabel label = new JLabel(controller.getCurrentUsername().toString());
-		//Windows Builder Pro edits out the above line when you use it.  Replace the label
-		//declaration when needed because it inserts <dynamic> into the label text 
 		JLabel fieldUsername = new JLabel(username);
 		fieldUsername.setBounds(10, 70, 157, 20);
 		panel_1.add(fieldUsername);
@@ -467,16 +470,30 @@ public class MakeRecommendationGUI extends JPanel {
 	}
 	
 	/**
-	 * Getter for the HomeGUI JPanel.
+	 * Getter for the MakeRecommendationGUI JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The MakeRecommendationGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The MakeRecommendationGUI JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the MakeRecommendationGUI.
 	 */
 	public JComponent getGUI() {
 		return contentPane;
 	}
 	
 
-	
+	/**
+	 * Method is used to assign a numerical value (1 - 5) to the button selected by the user.
+	 * 
+	 * <dt><b>Preconditions: A button is selected.</b><dd>
+	 * <dt><b>Postconditions: The numerical value is returned.</b><dd>
+	 * 
+	 * @param btn1
+	 * @param btn2
+	 * @param btn3
+	 * @param btn4
+	 * @param btn5
+	 * @return index_of_selected.  The int value associated with the button selected.
+	 */
 	private int getSingleRtnAnswer(final JRadioButton btn1, final JRadioButton btn2,
 			final JRadioButton btn3, final JRadioButton btn4, final JRadioButton btn5){
 		int index_of_selected = 0;
@@ -500,6 +517,9 @@ public class MakeRecommendationGUI extends JPanel {
 	
 	/**
 	 * Set up the actions to associate events with outside logic
+	 * 
+	 * <dt><b>Preconditions: The MakeRecommendationGUI is instantiated.</b><dd>
+	 * <dt><b>Postconditions: actions associated with each button will be returned.</b><dd>
 	 */
 	private void setupActions(){
 		/*
@@ -552,7 +572,6 @@ public class MakeRecommendationGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add more to the submit action?
 				int answer = getSingleRtnAnswer(Q_1, Q_2, Q_3, Q_4, Q_5);
 				if (answer == 1 || answer == 2) {
 					controller.setPaperStatus(current_conf, current_paper, paperStatusAuthorViewable.UNDER_REVIEW, 

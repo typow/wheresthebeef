@@ -40,9 +40,9 @@ import controller.Controller;
  * 
  * Allows the user to create new conferences, see conferences they're associated with,
  * and see all other upcoming conferences.
- * @author Jacob Hall
- * @version 11/13/13
- */
+* @author Jacob Hall
+* @version 90 Date: 11/27/13
+*/
 @SuppressWarnings("serial")
 public class HomeGUI extends JPanel {
 	
@@ -98,15 +98,17 @@ public class HomeGUI extends JPanel {
 	 */
 	private static final String NEW_CONF_STRING = "Create new conference in the CMS (ALT+N)";
 	
+	//TODO: this is temporary.  It will be removed later.
 	private static final String TEMP_TITLE_STRING = "temp: one of many btns in the table above linked to a specific paper and conf, user has a relation";
 
+	//TODO: this is temporary.  It will be removed later.
 	private static final String TEMP_STRING = "This button is temporary.  " +
 			"Eventually, it will be one of many buttons listed in the table above, " +
 			"each linking the user to the paper management GUI.  Remove this later " +
 			"once those buttons are implemented.";
-	
+	//TODO: this is temporary.  It will be removed later.
 	private static final String TEMP_TITLE_STRING_TWO = "temp: on of many btns in table above, no paper in focus, user has no realtion to the conf yet";
-
+	//TODO: this is temporary.  It will be removed later.
 	private static final String TEMP_STRING_TWO = "This button is temporary.  " +
 			"Eventually, it will be one of many buttons listed in the table above, " +
 			"each linking the user to the paper management GUI.  Remove this later " +
@@ -135,14 +137,21 @@ public class HomeGUI extends JPanel {
 	 */
 	private Action my_new_conf_action;
 	
-	private Action my_temp_paper_selected_action;
 	
+	//TODO: this is temporary.  It will be removed later.
+	private Action my_temp_paper_selected_action;
+	//TODO: this is temporary.  It will be removed later.
 	private Action my_temp_conf_selected_action;
 	
 	private JPanel inner_panel;
 
 	/**
-	 * Create the JPanel.
+	 * Create the JPanel that contains the HomeGUI.
+	 * 
+	 * <dt><b>Preconditions: The controller object has been instantiated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
+	 * 						 concerning a paper</b><dd>
+	 * @param the_controller
 	 */
 	public HomeGUI(final Controller the_controller) {
 		super();
@@ -205,9 +214,7 @@ public class HomeGUI extends JPanel {
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		createScrollPane();
-		
-		
-		
+
 		JLabel lblUpcommingConferences = new JLabel("Upcomming Conferences");
 		lblUpcommingConferences.setBounds(204, 266, 213, 20);
 		inner_panel.add(lblUpcommingConferences);
@@ -233,6 +240,13 @@ public class HomeGUI extends JPanel {
 		inner_panel.add(btnNewButton);
 	}
 	
+	/**
+	 * 
+	 * 
+	 * <dt><b>Preconditions: </b><dd>
+	 * <dt><b>Postconditions: </b><dd>
+	 * @return contentPane JPanel containing the AcceptRejectGUI.
+	 */
 	private void createScrollPane() {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(204, 98, 514, 125);
@@ -266,7 +280,9 @@ public class HomeGUI extends JPanel {
 	/**
 	 * Getter for the HomeGUI JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The HomeGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The HomeGUI JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the HomeGUI.
 	 */
 	public JComponent getGUI() {
 		return contentPane;
@@ -274,6 +290,9 @@ public class HomeGUI extends JPanel {
 	
 	/**
 	 * Set up the actions to associate events with outside logic
+	 * 
+	 * <dt><b>Preconditions: The HomeGUI is instantiated.</b><dd>
+	 * <dt><b>Postconditions: actions associated with each button will be returned.</b><dd>
 	 */
 	private void setupActions(){
 		/*

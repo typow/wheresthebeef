@@ -39,11 +39,9 @@ import controller.Controller;
  * The Login user interface JPanel
  * 
  * @author Warrick Holfeld
- * @author Jacob Hall (revised on 11/10/13 to add into project and began adding
- * 			Action associations with the buttons.)
- * @see setupActions for example on how I began linking buttons with the Controller
- * 			and the state machine that will control which GUI is currently displayed.
- * @version 11/10/13
+ * @author Jacob Hall
+ * 	
+ * @version 90 Date: 11/27/13
  */
 @SuppressWarnings("serial")
 public class LoginGUI extends JPanel {
@@ -119,7 +117,11 @@ public class LoginGUI extends JPanel {
 	private Action my_login_action;
 
 	/**
-	 * Create the frame.
+	 * Create the JPanel that contains the LoginGUI.
+	 * 
+	 * <dt><b>Preconditions: The controller object has been instantiated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to show the Login Screen</b><dd>
+	 * @param the_controller
 	 */
 	public LoginGUI(final Controller the_controller) {
 		super();
@@ -194,7 +196,9 @@ public class LoginGUI extends JPanel {
 	/**
 	 * Getter for the LoginGUI JPanel.
 	 * 
-	 * @return contentPane JPanel containing the LoginGUI
+	 * <dt><b>Preconditions: The LoginGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The LoginGUI JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the LoginGUI.
 	 */
 	public JComponent getGUI() {
 		return contentPane;
@@ -202,8 +206,10 @@ public class LoginGUI extends JPanel {
 	
 	/**
 	 * Set up the actions to associate events with outside logic
+	 * 
+	 * <dt><b>Preconditions: The LoginGUI is instantiated.</b><dd>
+	 * <dt><b>Postconditions: actions associated with each button will be returned.</b><dd>
 	 */
-	 //Tyler changed commented section
 	private void setupActions(){
 		my_register_action = new AbstractAction(REGISTER_TITLE_STRING, null)
 		{			

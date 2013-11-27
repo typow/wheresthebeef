@@ -11,16 +11,22 @@
 
 package view;
 
+/**
+ * The enumeration class that holds the enums for: GUI state, 
+ * paper status that's viewable for administrative purposes,
+ * paper status that's viewable for author's purposes,
+ * and the relationship a user logged in has with a paper.
+ * 
+ * @author Jacob Hall
+ * @version 90 Date: 11/27/13
+ */
 public class GUIEnum {
 
 	/**
 	 * The enumeration class to reference what state the GUI is in.
 	 * 
-	 * More states need to be added to correspond to the various GUI
-	 * windows needed to drive this program.
-	 * 
-	 * @author Jacob Hall
-	 * @version 10 Nov 2013
+	 * <dt><b>Preconditions: </b><dd>
+	 * <dt><b>Postconditions: </b><dd>
 	 */
 	public enum StateOfGUI{
 		/**
@@ -74,6 +80,12 @@ public class GUIEnum {
 		
 	}
 	
+	/**
+	 * The paper status that's viewable for administrative purposes.
+	 * 
+	 * <dt><b>Preconditions: </b><dd>
+	 * <dt><b>Postconditions: </b><dd>
+	 */
 	public enum paperStatusAdminViewable{
 		/**
 		 * the paper has been submitted.
@@ -113,6 +125,12 @@ public class GUIEnum {
 		REJECTED,
 	}
 	
+	/**
+	 * The paper status that's viewable for an author's purposes.
+	 * 
+	 * <dt><b>Preconditions: </b><dd>
+	 * <dt><b>Postconditions: </b><dd>
+	 */
 	public enum paperStatusAuthorViewable{
 		/**
 		 * the paper has been submitted.
@@ -132,6 +150,12 @@ public class GUIEnum {
 		REJECTED,
 	}
 	
+	/**
+	 * The relationship a user has with a paper.
+	 * 
+	 * <dt><b>Preconditions: </b><dd>
+	 * <dt><b>Postconditions: </b><dd>
+	 */
 	public enum paperRelation{
 		/**
 		 * the user is the Author of the paper

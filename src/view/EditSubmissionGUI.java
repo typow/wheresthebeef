@@ -38,9 +38,8 @@ import controller.Controller;
 * 
 * Allows the user to edit a submitted paper in the CMS.
 * @author Jacob Hall
-* @version 11/17/13
+* @version 90 Date: 11/27/13
 */
-
 @SuppressWarnings("serial")
 public class EditSubmissionGUI extends JPanel {
 	
@@ -160,7 +159,13 @@ public class EditSubmissionGUI extends JPanel {
 	private Action my_delete_submission_action;
 
 	/**
-	 * Create the JPanel.
+	 * Create the JPanel that contains the EditSubmissionGUI.
+	 * 
+	 * <dt><b>Preconditions: The controller object has been instantiated.  The Author is the user logged in
+	 * 						 in relation to the paper being evaluated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
+	 * 						 concerning a paper</b><dd>
+	 * @param the_controller
 	 */
 	public EditSubmissionGUI(final Controller the_controller) {
 		super();
@@ -290,9 +295,11 @@ public class EditSubmissionGUI extends JPanel {
 	}
 	
 	/**
-	 * Getter for the HomeGUI JPanel.
+	 * Getter for the EditSubmissionGUI JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The EditSubmissionGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The EditSubmissionGUI JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the EditSubmissionGUI.
 	 */
 	public JComponent getGUI() {
 		return contentPane;
@@ -300,6 +307,9 @@ public class EditSubmissionGUI extends JPanel {
 	
 	/**
 	 * Set up the actions to associate events with outside logic
+	 * 
+	 * <dt><b>Preconditions: The EditSubmissionGUI is instantiated.</b><dd>
+	 * <dt><b>Postconditions: actions associated with each button will be returned.</b><dd>
 	 */
 	private void setupActions(){
 		/*

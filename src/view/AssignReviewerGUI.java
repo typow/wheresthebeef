@@ -49,9 +49,8 @@ import controller.Controller;
 * 
 * Allows the user to assign a reviewer(s) to a paper in the CMS.
 * @author Jacob Hall
-* @version 11/17/13
+* @version 90 Date: 11/27/13
 */
-
 @SuppressWarnings("serial")
 public class AssignReviewerGUI extends JPanel {
 	
@@ -184,7 +183,13 @@ public class AssignReviewerGUI extends JPanel {
 	private Action my_submit_action;
 
 	/**
-	 * Create the JPanel.
+	 * Create the JPanel that contains the AssignReviewerGUI.
+	 * 
+	 * <dt><b>Preconditions: The controller object has been instantiated.  The SubPC is the user logged in
+	 * 						 in relation to the paper being evaluated.</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
+	 * 						 concerning a paper</b><dd>
+	 * @param the_controller
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public AssignReviewerGUI(final Controller the_controller) {
@@ -392,7 +397,6 @@ public class AssignReviewerGUI extends JPanel {
 		lblReviewersAlreadyAssigned.setBounds(28, 0, 211, 20);
 		panel_6.add(lblReviewersAlreadyAssigned);
 		
-		//TODO: get the array of users already assigned as reviewers to this paper (if any)
 		String[] users_already_assigned = controller.getUsersAssignedAsReviewers(current_conf, current_paper);
 		num_of_reviewers = users_already_assigned.length;
 		
@@ -501,9 +505,11 @@ public class AssignReviewerGUI extends JPanel {
 	}
 	
 	/**
-	 * Getter for the HomeGUI JPanel.
+	 * Getter for the AssignReviewerGUI JPanel.
 	 * 
-	 * @return contentPane JPanel containing the HomeGUI
+	 * <dt><b>Preconditions: The AssignReviewerGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The AssignReviewerGUI JPanel is returned.</b><dd>
+	 * @return contentPane JPanel containing the AssignReviewerGUI.
 	 */
 	public JComponent getGUI() {
 		return contentPane;
@@ -511,6 +517,9 @@ public class AssignReviewerGUI extends JPanel {
 	
 	/**
 	 * Set up the actions to associate events with outside logic
+	 * 
+	 * <dt><b>Preconditions: The AssignReviewerGUI is instantiated.</b><dd>
+	 * <dt><b>Postconditions: actions associated with each button will be returned.</b><dd>
 	 */
 	private void setupActions(){
 		/*
@@ -563,7 +572,6 @@ public class AssignReviewerGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				//TODO: add more to the submit action?
 				List<String> results = list.getSelectedValuesList();		//the unchecked results of what the user selected
 				String[] the_reviewers = new String[4];						//array to hold the results (max possible is 4)
 				int num_open_review_slots = MAX_NUM_REVIWERS - num_of_reviewers; //the number of slots remaining after

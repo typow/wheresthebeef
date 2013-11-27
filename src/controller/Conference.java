@@ -14,11 +14,13 @@ package controller;
 import java.util.Date;
 
 /**
- * The Conference object will hold information relevant to a single conference so that the object can be 
- * passed around as a container holding the relevant data.
+ * This Conference object is just a temporary container to efficiently pass data to and from the Controller.  It can
+ * be instantiated long enough pack multiple Objects in a data structure which is then unpacked and the data can be
+ * retrieved.  There isn't a full set of Conference Objects always available to reflect all the conferences existing
+ * in the database.
  * 
  * @author Jacob Hall
- * @version 11/15/13
+ * @version 90 Date: 11/15/13
  */
 public class Conference {
 
@@ -35,6 +37,22 @@ public class Conference {
 	private Date author_notification_deadline;
 	private String conference_summary;
 	
+	/**
+	 * Constructor for the Conference Object
+	 * 
+	 * @param the_conf_title
+	 * @param the_program_chair
+	 * @param the_conf_date
+	 * @param the_conf_address
+	 * @param the_conf_city
+	 * @param the_conf_state
+	 * @param the_con_zip
+	 * @param the_submission_deadline
+	 * @param the_review_deadline
+	 * @param the_sub_pc_recommend_deadline
+	 * @param the_author_notification_deadline
+	 * @param the_conference_summary
+	 */
 	public Conference(final String the_conf_title, final String the_program_chair, final Date the_conf_date, 
 			final String the_conf_address, final String the_conf_city, final String the_conf_state, final String the_con_zip, 
 			final Date the_submission_deadline, final Date the_review_deadline, final Date the_sub_pc_recommend_deadline, 
@@ -52,9 +70,6 @@ public class Conference {
 		author_notification_deadline = the_author_notification_deadline;
 		conference_summary = the_conference_summary;
 	}
-	
-	//TODO: add getters for this so that the conference object can be passed around and dat retrieved from it.
-	
 	public String getConfTitle(){
 		return conf_title;
 	}

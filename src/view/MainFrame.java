@@ -26,21 +26,22 @@ import controller.Controller;
  * The Main Frame to run the CMS software in.
  * 
  * @author Jacob Hall
- * @version 11/10/13
- */
+* @version 90 Date: 11/27/13
+*/
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements Observer {
 	
-	/**
+	/*
 	 * The current JPanal Component being used by the MainFrame JFrame
 	 */
 	private Component currentPanel;
 	
-	/**
+	/*
 	 * The Controller object that handles the business logic and acts as an interface
 	 * between the GUI and the database.
 	 */
 	private static Controller controller;
+	
 	/**
 	 * Creates and makes visible the MainFrame for the CMS software.
 	 * 
@@ -66,6 +67,11 @@ public class MainFrame extends JFrame implements Observer {
 	/**
 	 * Method creates a state machine that will allow discrete states to
 	 * represent the current mode the GUI is in.
+	 * 
+	 * <dt><b>Preconditions: the controller has been instantiated</b><dd>
+	 * <dt><b>Postconditions: The currentPanel is set to the state that is current
+	 * 						within the controller which maintains the context of what
+	 * 						GUI should be displayed.</b><dd>
 	 */
 	public void setFrame() {
 		switch (controller.getStateOfGUI()) {
@@ -173,6 +179,10 @@ public class MainFrame extends JFrame implements Observer {
 	 * The update method for the Observer interface. Method updates the frame
 	 * with the appropriate mode of operation the GUI should transition to.
 	 * 
+	 * <dt><b>Preconditions: the controller is instantiated as Observable</b><dd>
+	 * <dt><b>Postconditions: when update is called, the next frame will be
+	 * 						updated with the new context.</b><dd>
+	 * 
 	 * @param the_object
 	 *            The Observable that called this method.
 	 * @param the_arg
@@ -180,16 +190,14 @@ public class MainFrame extends JFrame implements Observer {
 	 */
 	@Override
 	public void update(final Observable the_object, final Object the_arg) {
-		//TODO: Add logic according to the_arg passed in.  If it's a state change in the GUI
-		//		then the setFrame() needs to be called.  If not, some other update should
-		//		take place and the GUI shouldn't change states.  However, maybe the GUI
-		//		will need to be refreshed if new data should be populated in a table
-		//		and the GUI should now reflect this.
 		setFrame();
 	}
 
 	/**
 	 * Create the frame.
+	 * 
+	 * <dt><b>Preconditions: none</b><dd>
+	 * <dt><b>Postconditions: a frame is created and the CMS software is initiated.</b><dd>
 	 */
 	public MainFrame() {
 		setUpFrame();
@@ -198,6 +206,13 @@ public class MainFrame extends JFrame implements Observer {
 		setLayout(new BorderLayout());
 	}
 	
+	/**
+	 * Method sets up the frame initially, instantiates the single Controller Object used
+	 * by the CMS software and initializes the first JPanel viewable to be the login window.
+	 * 
+	 * <dt><b>Preconditions: none</b><dd>
+	 * <dt><b>Postconditions: Controller is instantiated, and the login window is loaded.</b><dd>
+	 */
 	private void setUpFrame(){
 		controller = new Controller();
 		LoginGUI loginWindow = new LoginGUI(controller);
