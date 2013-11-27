@@ -415,12 +415,25 @@ public class ManageDatabase{
 			System.out.println("Error resetting papers." + e.getMessage());
 		}
 	}
+	private void resetConferences(){
+		clearConference();
+		try {
+			@SuppressWarnings("deprecation")
+			PreparedStatement statement = connect.prepareStatement("INSERT INTO conference(NAME,  PROGCHAIR,  CONDATE,  SUBMITDATE,  REVIEWDATE,  RECDATE,  NOTIFYDATE,  SUMMARY)" +
+					" VALUES ('test', 'Boba Fett', '11/26/2013', '11/26/2013', '11/26/2013', '11/26/2013', '11/26/2013', 'test method')");
+			statement.execute();
+		} catch (SQLException e) {
+			System.out.println("Check for valid Username failed");
+			e.printStackTrace();
+		}
+	}
 	
 	public static void main(String args[]) {
 		ManageDatabase md = new ManageDatabase();
 		md.clearDatabase();
 		md.resetDatabase();
 		md.resetPapers();
+		md.resetConferences();
 		md.printDatabase();
 	}
 	

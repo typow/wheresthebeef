@@ -19,6 +19,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -687,9 +689,9 @@ public class Controller extends Observable{
 		return the_conf_array;
 	}
 	
-	public Conference[] getUpcommingConferences(final String the_username){
+	public Conference[] getUpcommingConferences() throws ParseException{
 	//TODO: 
-    	ArrayList<String> al = new ArrayList<String>();
+    	ArrayList<Conference> al = new ArrayList<Conference>();
 		try {
 			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conference WHERE NOTIFYDATE <= '"+new Date().toLocaleString()+"'");
 			resultSet = statement.executeQuery();
@@ -708,7 +710,7 @@ public class Controller extends Observable{
 	                        String value = resultSet.getString(i);
 	                        record.add(value);
 	                }
-	                String value = methodWhichConvertsArrayListToStringTheWayYouNeedItFormatted(record);
+	                Conference value = infoForAConference(record);
 	                al.add(value);
 	        }    
 	    	while (resultSet.next()) {
@@ -727,8 +729,29 @@ public class Controller extends Observable{
 		Conference[] the_conf_array = new Conference[1];
 		return the_conf_array;
 	}
-	
-	private String methodWhichConvertsArrayListToStringTheWayYouNeedItFormatted(
+	private Conference infoForAConference(
+			ArrayList<String> record) throws ParseException {
+		DateFormat formatter; 
+		Date conferencedate; 
+		Date paperSubmissionDate; 
+		Date reviewPaperDate; 
+		Date recommendationPaperDate; 
+		Date notificationDate; 
+		formatter = new SimpleDateFormat("yy-MM-dd");
+		String conferenceName = record.get(0);
+		String programChair = record.get(1);
+		conferencedate = formatter.parse(record.get(2));
+		paperSubmissionDate = formatter.parse(record.get(2));
+		reviewPaperDate = formatter.parse(record.get(2));
+		recommendationPaperDate = formatter.parse(record.get(2));
+		notificationDate = formatter.parse(record.get(2));
+		String summary = record.get(7);
+
+		
+		Conference conference = new Conference(conferenceName, programChair, conferencedate, current_user, current_user, current_user, current_user, paperSubmissionDate, reviewPaperDate, recommendationPaperDate, notificationDate, summary);
+		return conference;
+	}
+	private String infoForAPaper(
 			ArrayList<String> record) {
 		String conference = "";
 		for(int i = 0; i < record.size();i++) {
@@ -741,7 +764,6 @@ public class Controller extends Observable{
 		}
 		return conference;
 	}
-
 
 	public String[] getMyPapers(final String the_conf, final String the_username){
 	//TODO: A GUI is going to need to get a string of paper titles that they are associated
@@ -767,7 +789,7 @@ public class Controller extends Observable{
 	                        String value = resultSet.getString(i);
 	                        record.add(value);
 	                }
-	                String value = methodWhichConvertsArrayListToStringTheWayYouNeedItFormatted(record);
+	                String value = infoForAPaper(record);
 	                al.add(value);
 	        }    
 	    	while (resultSet.next()) {
@@ -805,9 +827,9 @@ public class Controller extends Observable{
 	}
 
 	
-	public static void main(String args[]) {
+	public static void main(String args[]) throws ParseException {
 		Controller controller = new Controller();
-		controller.getMyPapers("Bio Conference", "Boba Fett");
+		controller.getUpcommingConferences();
 	}
 	
 }
