@@ -36,8 +36,23 @@ public class ManageDatabase{
 		      connect = DriverManager.getConnection("jdbc:derby://localhost:1527/CMSDB;");
 		      
 		} catch(Exception e) {
-			System.out.println("Failed to connect!");
+			System.out.println("Failed to connect! " + e.getMessage());
 		} 
+		
+//		PreparedStatement statement;
+//		try {
+//			//statement = connect.prepareStatement("DROP TABLE conference");
+//			//statement.execute();
+//			
+//			statement = connect.prepareStatement("CREATE TABLE conferences(name varchar(100), " +
+//					"progchair varchar(16), condate date, submitdate date, reviewdate date, " +
+//					"recdate date, notifydate date, summary long varchar)");
+//			statement.execute();
+//			
+//			System.out.println("Successfully dropped.");
+//		} catch (SQLException e) {
+//			System.out.println("Error during setup. " + e.getMessage());
+//		}
 	}
 	
 	/**
@@ -45,7 +60,7 @@ public class ManageDatabase{
 	 * repopulates it with a test data set. This set contains 
 	 * -15 users
 	 * -5 papers
-	 * -7 conferences
+	 * -7 conferencess
 	 * -10 reviews
 	 * -3 recommendations
 	 * 
@@ -55,6 +70,8 @@ public class ManageDatabase{
 	 */
 	public void resetDatabase(){
 		resetUsers();
+		resetPapers();
+		resetConferences();
 	}
 	
 	/**
@@ -70,7 +87,7 @@ public class ManageDatabase{
 	public void clearDatabase(){
 		
 		clearUsers();
-		clearConference();
+		clearConferences();
 		clearPapers();
 		clearReviews();
 		clearRecommendations();
@@ -82,7 +99,7 @@ public class ManageDatabase{
 	 */
 	public void printDatabase(){
 		
-		printConference();
+		printConferences();
 		System.out.println();
 		printPapers();
 		System.out.println();
@@ -102,30 +119,30 @@ public class ManageDatabase{
 	public void clearUsers(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DELETE FROM userstablefixed");
+			statement = connect.prepareStatement("DELETE FROM users");
 			statement.execute();
 			
 			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error clearing userstablefixed table.");
+			System.out.println("Error clearing users table. " + e.getMessage());
 		}
 	}
 	
 	/**
-	 * Clears all data in the conference table by dropping it 
+	 * Clears all data in the conferences table by dropping it 
 	 * and recreating it.
 	 * 
 	 * @author Aaron
 	 */
-	private void clearConference(){
+	private void clearConferences(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DELETE FROM conference");
+			statement = connect.prepareStatement("DELETE FROM conferences");
 			statement.execute();
 			
 			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error clearing conference table.");
+			System.out.println("Error clearing conferences table. " + e.getMessage());
 		}
 	}
 	
@@ -138,12 +155,12 @@ public class ManageDatabase{
 	private void clearPapers(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DELETE FROM paperstablefixed");
+			statement = connect.prepareStatement("DELETE FROM papers");
 			statement.execute();
 			
 			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error clearing paperstablefixed table.");
+			System.out.println("Error clearing papers table. " + e.getMessage());
 		}
 	}
 	
@@ -156,12 +173,12 @@ public class ManageDatabase{
 	private void clearReviews(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DELETE FROM REVIEWSTABLEFIXED");
+			statement = connect.prepareStatement("DELETE FROM reviews");
 			statement.execute();
 			
 			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error clearing REVIEWSTABLEFIXED table.");
+			System.out.println("Error clearing reviews table. " + e.getMessage());
 		}
 	}
 	
@@ -174,12 +191,12 @@ public class ManageDatabase{
 	private void clearRecommendations(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DELETE FROM RECOMMENDATIONSTABLEFIXED");
+			statement = connect.prepareStatement("DELETE FROM recommendations");
 			statement.execute();
 			
 			System.out.println("Successfully cleared.");
 		} catch (SQLException e) {
-			System.out.println("Error clearing RECOMMENDATIONSTABLEFIXED table.");
+			System.out.println("Error clearing recommendations table. " + e.getMessage());
 		}
 	}
 	
@@ -192,7 +209,7 @@ public class ManageDatabase{
 	private void printUsers(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("SELECT * FROM userstablefixed");
+			statement = connect.prepareStatement("SELECT * FROM users");
 			
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -216,19 +233,19 @@ public class ManageDatabase{
 		        }
 					
 		} catch (SQLException e) {
-			System.out.println("Error printing table.");
+			System.out.println("Error printing table. " + e.getMessage());
 		}
 	}
 	
 	/**
-	 * Prints out the contents of the entire conference table. 
+	 * Prints out the contents of the entire conferences table. 
 	 * 
 	 * @author Aaron
 	 */
-	private void printConference(){
+	private void printConferences(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("SELECT * FROM conference");
+			statement = connect.prepareStatement("SELECT * FROM conferences");
 			
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -252,7 +269,7 @@ public class ManageDatabase{
 		        }
 					
 		} catch (SQLException e) {
-			System.out.println("Error printing table.");
+			System.out.println("Error printing table. " + e.getMessage());
 		}
 	}
 	
@@ -264,7 +281,7 @@ public class ManageDatabase{
 	private void printPapers(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("SELECT * FROM PAPERSTABLEFIXED");
+			statement = connect.prepareStatement("SELECT * FROM papers");
 			
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -288,7 +305,7 @@ public class ManageDatabase{
 		        }
 					
 		} catch (SQLException e) {
-			System.out.println("Error printing table.");
+			System.out.println("Error printing table. " + e.getMessage());
 		}
 	}
 	
@@ -300,7 +317,7 @@ public class ManageDatabase{
 	private void printReviews(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("SELECT * FROM REVIEWSTABLEFIXED");
+			statement = connect.prepareStatement("SELECT * FROM reviews");
 			
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -324,7 +341,7 @@ public class ManageDatabase{
 		        }
 					
 		} catch (SQLException e) {
-			System.out.println("Error printing table.");
+			System.out.println("Error printing table. " + e.getMessage());
 		}
 	}
 	
@@ -336,7 +353,7 @@ public class ManageDatabase{
 	private void printRecommendations(){
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("SELECT * FROM RECOMMENDATIONSTABLEFIXED");
+			statement = connect.prepareStatement("SELECT * FROM recommendations");
 			
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -360,7 +377,7 @@ public class ManageDatabase{
 		        }
 					
 		} catch (SQLException e) {
-			System.out.println("Error printing table." + e.getMessage());
+			System.out.println("Error printing table. " + e.getMessage());
 		}
 	}
 	
@@ -374,7 +391,7 @@ public class ManageDatabase{
 		
 		try {
 			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO userstablefixed (USERNAME,  FIRSTNAME,  MI,  LASTNAME,  SPECIALITY) VALUES ('ajm1','Aaron','J','Merrill','Engineering Computer')," +
+					"INSERT INTO users (USERNAME,  FIRSTNAME,  MI,  LASTNAME,  SPECIALITY) VALUES ('ajm1','Aaron','J','Merrill','Engineering Computer')," +
 					"('sethk1','Seth','D','Kramer','Engineering Checmial')," +
 					"('typow','Tyler','M','Powers','Engineering Bio')," +
 					"('warfeld','Warrick','M','Holfeld','Engineering Electronic')," +
@@ -391,7 +408,7 @@ public class ManageDatabase{
 					"('ripped','Michael','G','Phelps','Engineering Electronic')");
 			statement.execute();
 		} catch (SQLException e) {
-			System.out.println("Error resetting users." + e.getMessage());
+			System.out.println("Error resetting users. " + e.getMessage());
 		}
 	}
 	
@@ -405,35 +422,35 @@ public class ManageDatabase{
 		
 		try {
 			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO paperstablefixed (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME,  STATUS)  VALUES (0,'Boba Fett','Surviving the Sarlacc','text','Bio Conference','SUBMITTED')," +
-					"(1,'Boba Fett','Analysis of Horspools Algorithm','text','Conference of Algorithmic analysis','REVIEWED')," +
-					"(2,'Boba Fett','Baking Pi','text','Small Computer Conference','ACCEPTED')," +
-					"(3,'Boba Fett','A More Perfect Union Set','text','Comp-Sci Annual','SUBMITTED')," +
-					"(4,'Boba Fett','Packing on Abs','text','Bio Conference','SUBMITTED')");
+					"INSERT INTO papers (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME,  STATUS)  VALUES " +
+					"(0,'Boba Fett','Surviving the Sarlacc','text','Bio conferences','SUBMITTED')," +
+					"(1,'Aaron Merrill','Analysis of Horspools Algorithm','text','conferences of Algorithmic analysis','REVIEWED')," +
+					"(2,'Tyler Powers','Baking Pi','text','Small Computer conferences','ACCEPTED')," +
+					"(3,'Barack Obama','A More Perfect Union Set','text','Comp-Sci Annual','SUBMITTED')," +
+					"(4,'Michael Phelps','Packing on Abs','text','Bio conferences','SUBMITTED')");
 			statement.execute();
 		} catch (SQLException e) {
-			System.out.println("Error resetting papers." + e.getMessage());
+			System.out.println("Error resetting papers. " + e.getMessage());
 		}
 	}
+	
 	private void resetConferences(){
-		clearConference();
+		clearConferences();
 		try {
-			@SuppressWarnings("deprecation")
-			PreparedStatement statement = connect.prepareStatement("INSERT INTO conference(NAME,  PROGCHAIR,  CONDATE,  SUBMITDATE,  REVIEWDATE,  RECDATE,  NOTIFYDATE,  SUMMARY)" +
+			PreparedStatement statement = connect.prepareStatement("INSERT INTO conferences(NAME,  PROGCHAIR,  CONDATE,  SUBMITDATE,  REVIEWDATE,  RECDATE,  NOTIFYDATE,  SUMMARY)" +
 					" VALUES ('test', 'Boba Fett', '11/26/2013', '11/26/2013', '11/26/2013', '11/26/2013', '11/26/2013', 'test method')");
 			statement.execute();
 		} catch (SQLException e) {
-			System.out.println("Check for valid Username failed");
+			System.out.println("Error resetting conferences " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 	
 	public static void main(String args[]) {
 		ManageDatabase md = new ManageDatabase();
-		md.clearDatabase();
-		md.resetDatabase();
-		md.resetPapers();
-		md.resetConferences();
+		//md.resetUsers();
+		//md.resetPapers();
+		//md.resetConferences();
 		md.printDatabase();
 	}
 	

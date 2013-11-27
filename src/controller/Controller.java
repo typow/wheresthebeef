@@ -154,7 +154,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM USERSTABLEFIXED WHERE username='" + the_username + "'");
+					"SELECT * FROM users WHERE username='" + the_username + "'");
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
@@ -202,7 +202,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO USERSTABLEFIXED VALUES ('" + the_username + "', '" + the_first_name + "', '" +
+					"INSERT INTO users VALUES ('" + the_username + "', '" + the_first_name + "', '" +
 					the_middle_name + "', '" + the_last_name + "', '" + the_specialty + "')");
 			statement.execute();
 			System.out.println(the_username + " Successfully added user");
@@ -241,7 +241,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM USERSTABLEFIXED WHERE username=" +"'" + the_username +"'");
+					"SELECT * FROM users WHERE username=" +"'" + the_username +"'");
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
@@ -271,7 +271,7 @@ public class Controller extends Observable{
 		
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conference WHERE name='" + the_conference_title + "'");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conferences WHERE name='" + the_conference_title + "'");
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
@@ -298,7 +298,7 @@ public class Controller extends Observable{
 		try {
 			@SuppressWarnings("deprecation")
 			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO conference VALUES ('" + the_conference.getConfTitle() + "', '" + the_conference.getProgramChair() + "', '" +
+					"INSERT INTO conferences VALUES ('" + the_conference.getConfTitle() + "', '" + the_conference.getProgramChair() + "', '" +
 							the_conference.getConfDate().toLocaleString() + "', '" + the_conference.getSubmissionDead().toLocaleString() + "', '" + the_conference.getReviewDead().toLocaleString() + "', '" + 
 							the_conference.getSubPCReccomendDead().toLocaleString() + "', '" + the_conference.getAuthorNotificationDead().toLocaleString() + "', '" + the_conference.getConfSummary() + "')");
 			statement.execute();
@@ -350,7 +350,7 @@ public class Controller extends Observable{
 		int i = 0;
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("SELECT ID FROM PAPERSTABLEFIXED");
+			PreparedStatement statement = connect.prepareStatement("SELECT ID FROM papers");
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -364,7 +364,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM PAPERSTABLEFIXED WHERE author='" + the_username + "' AND confname ='"+the_conference.getConfTitle()+"'");
+					"SELECT * FROM papers WHERE author='" + the_username + "' AND confname ='"+the_conference.getConfTitle()+"'");
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -380,7 +380,7 @@ public class Controller extends Observable{
 		//		a detailed status update according to deadlines and where it's at in the whole review process. (Jacob)
 		if(i<4) {
 			try {			
-				PreparedStatement statement = connect.prepareStatement("INSERT INTO PAPERSTABLEFIXED (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME) VALUES (" + total + ", '" + the_username + "', '" +
+				PreparedStatement statement = connect.prepareStatement("INSERT INTO papers (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME) VALUES (" + total + ", '" + the_username + "', '" +
 								the_paper_title + "', '" + the_file_submitted + "', '" +
 								the_conference.getConfTitle() + "')");
 				statement.execute();
@@ -500,7 +500,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM PAPERSTABLEFIXED WHERE confname=" +"'" + the_conf.getConfTitle() +"' AND name='" +
+					"SELECT * FROM papers WHERE confname=" +"'" + the_conf.getConfTitle() +"' AND name='" +
 					the_paper + "'");
 			resultSet = statement.executeQuery();
 			
@@ -644,7 +644,7 @@ public class Controller extends Observable{
 		int total = 0;
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("SELECT ID FROM PAPERSTABLEFIXED");
+			PreparedStatement statement = connect.prepareStatement("SELECT ID FROM papers");
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -657,7 +657,7 @@ public class Controller extends Observable{
 		}
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("INSERT INTO recommendationstablefixed(id, paperid, subchair, conference, papername, paperauthor, q1, rationale" +
+			PreparedStatement statement = connect.prepareStatement("INSERT INTO recommendations(id, paperid, subchair, conference, papername, paperauthor, q1, rationale" +
 					" VALUE("+total+")");
 			resultSet = statement.executeQuery();
 			
@@ -693,7 +693,7 @@ public class Controller extends Observable{
 	//TODO: 
     	ArrayList<Conference> al = new ArrayList<Conference>();
 		try {
-			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conference WHERE NOTIFYDATE <= '"+new Date().toLocaleString()+"'");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conferences WHERE NOTIFYDATE <= '"+new Date().toLocaleString()+"'");
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 			int numberOfColumns = rsmd.getColumnCount();
@@ -771,7 +771,7 @@ public class Controller extends Observable{
 		ArrayList<String> al = new ArrayList<String>();
 		try {			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM PAPERSTABLEFIXED WHERE confname=" +"'" + the_conf +"' AND author='" +
+					"SELECT * FROM papers WHERE confname=" +"'" + the_conf +"' AND author='" +
 							the_username + "'");
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
