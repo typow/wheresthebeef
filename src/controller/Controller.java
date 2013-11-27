@@ -349,22 +349,47 @@ public class Controller extends Observable{
 		//TODO: add the user viewable status and the admin viewable status.  These are already set up in the GUIEnum class.
 		//		We need two because the user should only see a general indication of the progress and the admin needs to see
 		//		a detailed status update according to deadlines and where it's at in the whole review process. (Jacob)
-		try {			
-			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO papers VALUES ('" + 1 + "', '" + the_username + "', '" +
-							the_paper_title + "', '" + the_file_submitted + "')");
-			statement.execute();
-			System.out.println(the_paper_title + " Successfully added paper");
+		
+		int i = 0;
+		int total = 0;
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM papers");
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				total++;
+			}
 		} catch (SQLException e) {
-			System.out.println("Check for valid paper failed");
+			System.out.println("Check for valid conference name failed");
 			e.printStackTrace();
 		}
-//		if (number of papers in the conference == 4){
-//			throw new Exception("Author cannot submit more than 4 papers to a single conference.");
-//		}
-//		else{
-//			add the paper to the database.
-//		}
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM papers WHERE author='" + the_username + "'");
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				i++;
+			}
+		} catch (SQLException e) {
+			System.out.println("Check for valid conference name failed");
+			e.printStackTrace();
+		}
+		if(i<4) {
+			try {
+				PreparedStatement statement = connect.prepareStatement(
+						"INSERT INTO papers (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME) VALUES (" + total+1 + ", '" + the_username + "', '" +
+								the_paper_title + "', '" + the_file_submitted + "', '" + the_conference.getConfTitle()+"')");
+				statement.execute();
+				System.out.println(the_paper_title + " Successfully added paper");
+			} catch (SQLException e) {
+				System.out.println("Check for valid paper failed");
+				e.printStackTrace();
+			}
+		} else {
+			throw new Exception("Author cannot submit more than 4 papers to a single conference.");
+		}
 		setCurrentPaper(the_paper_title);
 	}
 	
@@ -453,6 +478,7 @@ public class Controller extends Observable{
 		//TODO: the GUI will call this method to verify that there aren't already 4 reviews and that the user
 		//		attempting to submit the review hasn't already submitted one.  If there are already 4 reviews,
 		//		or the user has already submitted one, return false.
+		
 		return permission_to_add;
 	}
 	
