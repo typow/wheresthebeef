@@ -231,7 +231,6 @@ public class ManageDatabase{
 		            }
 		            System.out.println("");  
 		        }
-					
 		} catch (SQLException e) {
 			System.out.println("Error printing table. " + e.getMessage());
 		}

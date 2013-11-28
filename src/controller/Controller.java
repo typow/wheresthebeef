@@ -766,7 +766,7 @@ public class Controller extends Observable{
 		return reviewers;
 	}
 	
-	public String getUserAssignedAsPC(final Conference the_conference, final String current_paper){
+	public String getUserAssignedAsPC(final Conference the_conference, final int current_paper){
 		//TODO: return the username of the person assigned as PC for a particular paper
 		
 				//temporary:
@@ -774,12 +774,24 @@ public class Controller extends Observable{
 		return name;
 	}
 	
-	public String getUserAssignedAsSubPC(final Conference the_conference, final String current_paper){
+	public String getUserAssignedAsSubPC(final Conference the_conference, final int current_paper){
 		//TODO: return the username of the person assigned as Sub PC for a particular paper
-		
-		//temporary:
-		String name = "program chair's username";
-		return name;
+		String subPC = null;
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT subchair FROM recommendations WHERE conference=" +"'" + the_conference.getConfTitle() + 
+					"' AND paperid='" + current_paper + "'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				subPC = resultSet.getString(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Get subpc grade failed!");
+		}
+		return subPC;
 	}
 	
 	public String[] getAvailableReviewers(final Conference the_conference, final String the_paper, final String the_person_assigning){
@@ -810,20 +822,57 @@ public class Controller extends Observable{
 	 * @param username
 	 * @return
 	 */
-	public String[] getAvailableForSubPC(final Conference current_conf, final String current_paper, final String username){
+	public String[] getAvailableForSubPC(final Conference current_conf, final int current_paper, final String username){
 		//TODO: the AssignSubPCGUI needs an array of usernames of the people capable of being a SubPC.
 		//		Note: - the PC can't be the SubPC.
 		//			  - the Author of the paper can't be the SubPC of their own paper.
 		//			  - the reviewer can't be the SubPC, although we shouldn't have to check this.  The SubPC is the person
 		//				who assigns the reviewer, so it's the chicken and egg thing.
 		//			  - any other business rules I'm forgetting?  (Jacob)
-		
+		ArrayList<String> al = new ArrayList<String>();
+		PreparedStatement statement;
+		try {
+			statement = connect.prepareStatement("SELECT * FROM users");
+			
+			resultSet = statement.executeQuery();
+			ResultSetMetaData rsmd = resultSet.getMetaData();
+						
+			int numberOfColumns = rsmd.getColumnCount();
+			  
+		    	for (int i = 1; i <= numberOfColumns; i++) {
+		    		if (i > 1) System.out.print(",  ");
+		    		String columnName = rsmd.getColumnName(i);
+		    		System.out.print(columnName);
+		    	}
+		    	System.out.println("");
+		    	
+		    	while (resultSet.next()) {
+	                ArrayList<String> record = new ArrayList<String>();
+		            for (int i = 1; i <= numberOfColumns; i++) {
+		            	if (i > 1) System.out.print(",  ");
+		            	String columnValue = resultSet.getString(i);
+                        record.add(columnValue);
+		            	System.out.print(columnValue);
+                }
+                String value = infoForAUser(record);
+                al.add(value); 
+		            System.out.println("");  
+		        }
+		} catch (SQLException e) {
+			System.out.println("Error printing table. " + e.getMessage());
+		}
 		
 					//temporary:
 					String[] reviewers = new String[]{"Hank Williams", "Johnny Cash", "Willy Nelson", "Walyne Jennings", "Elvis Presley"};
 		return reviewers;
 	}
 	
+	private String infoForAUser(ArrayList<String> record) {
+		String conference = record.get(0);
+		return conference;
+	}
+
+
 	public void addSubPC(final Conference the_conference, final String the_paper, final String the_sub_pc){
 		//TODO: add this person as the SubPC.  We've already populated the list of potential with the correct people
 		//		so we shouldn't have to do any checking here.  The AssignSubPCGUI will ensure a non-null result is sent.
@@ -857,7 +906,7 @@ public class Controller extends Observable{
 		}
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("INSERT INTO recommendations(id, paperid, subchair, conference, papername, paperauthor, q1, rationale" +
+			PreparedStatement statement = connect.prepareStatement("INSERT INTO recommendations(id, paperid, subchair, conference, papername, paperauthor, q1, rationale)" +
 					" VALUE("+total+"PaperId"+"'"+the_sub_pc+"'"+"'"+the_conference.getConfTitle()+"'"+the_paper+"'"+"PaperAuthor"+"q1"+"rationale"+")");
 			resultSet = statement.executeQuery();
 			
@@ -1041,11 +1090,32 @@ public class Controller extends Observable{
 	    }
 	}
 
+	public int getPaperID(String current_paper) {
+		int paper = 0;
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement("SELECT id FROM papers where NAME='"+current_paper+"'");
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				paper = resultSet.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Check for valid Username failed");
+			e.printStackTrace();
+		}
+		return paper;
+	}
 	
 	public static void main(String args[]) throws ParseException {
 		Controller controller = new Controller();
-		controller.getUpcommingConferences();
+		Conference[] conn = controller.getUpcommingConferences();
+		controller.getAvailableForSubPC(conn[0], 5, "Boba Fett");
 		controller.getMyPapers("TestTest", "Test username");
+		controller.getPaperID("Packing on Abs");
 	}
+
+
 	
 }

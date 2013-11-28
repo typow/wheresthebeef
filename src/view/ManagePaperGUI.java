@@ -433,12 +433,13 @@ public class ManagePaperGUI extends JPanel{
 			JPanel tabRecommendation = (JPanel) recommendationPanel.getGUI();
 			tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
 		}
-		
+		int paperId = controller.getPaperID(current_paper);
 		if ((current_paper_relation == paperRelation.PC)||(current_paper_relation == paperRelation.SUBPC)){
 			ManagementPanel managePanel = new ManagementPanel(current_paper, 
 					controller.getPaperAuthor(current_conf, current_paper), controller.getAdminPaperStatus(current_conf, current_paper), 
-					controller.getUserAssignedAsPC(current_conf, current_paper),
-					controller.getUserAssignedAsSubPC(current_conf, current_paper),
+					
+					controller.getUserAssignedAsPC(current_conf, paperId),
+					controller.getUserAssignedAsSubPC(current_conf, paperId),
 					controller.getUsersAssignedAsReviewers(current_conf, current_paper));
 			JPanel tabManagement = (JPanel) managePanel.getGUI();
 			tabbedPane.addTab("Management", null, tabManagement, null);

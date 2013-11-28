@@ -386,7 +386,8 @@ public class AssignSubPCGUI extends JPanel {
 		listOfAvailableForSubPC = new JList();
 		listOfAvailableForSubPC.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listOfAvailableForSubPC.setModel(new AbstractListModel() {
-			String[] values = controller.getAvailableForSubPC(current_conf, current_paper, username);
+			int paperId = controller.getPaperID(current_paper);
+			String[] values = controller.getAvailableForSubPC(current_conf, paperId, username);
 			public int getSize() {
 				return values.length;
 			}
