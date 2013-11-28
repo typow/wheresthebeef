@@ -320,5 +320,37 @@ public class ControllerTest  {
 		assertEquals("Test Recommendation", controller.getPaperRecommendationRationale(
 				testConference, "Test PaperTitle"));
 	}
+	
+	/**
+	 * Test method for {@link controller.Controller#getPaperAuthor(controller.Conference, java.lang.String)}.
+	 */
+	@Test
+	public void testGetPaperAuthor() {
+		Controller controller = new Controller();
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		if (!controller.checkConferenceExists("Small Computer Conference")) {
+			controller.createNewConference(testConference);
+		}
+		String paper = "Baking Pi";
+		String expectedAuthor = "Tyler Powers";
+		String testedAuthor = "";
+		try {
+			testedAuthor = controller.getPaperAuthor(testConference, paper);
+		} catch(Exception e) {
+			fail("did not connect to database");
+			e.getStackTrace();
+		}
+		assertEquals(expectedAuthor, testedAuthor);
+		
+		try {
+			testedAuthor = controller.getPaperAuthor(testConference, "wrong paper title");
+		} catch(Exception e) {
+			fail("did not connect to database");
+			e.getStackTrace();
+		}
+		assertEquals("", testedAuthor);
+	}
 
 }

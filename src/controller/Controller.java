@@ -591,7 +591,8 @@ public class Controller extends Observable{
 	}
 	
 	/**
-	 * Used by another user to see the author of the paper that they are examining.
+	 * Used by another user to see the author of the paper that they are examining.  Returns blank string
+	 * if nothing was found.
 	 * 
 	 * @param the_conf The conference that the paper is a part of
 	 * @param the_paper The name of the paper the current user is looking at (not the author of the paper)
@@ -599,7 +600,7 @@ public class Controller extends Observable{
 	 */
 	public String getPaperAuthor(final Conference the_conf, final String the_paper){
 		String username = "";
-		//TODO: the GUI will call this method when another user (administrator of some sort) needs to review
+		//		the GUI will call this method when another user (administrator of some sort) needs to review
 		//		or recommend a paper.  They will be the current user and will need to retrieve the username
 		//		of the person who Authored the paper.  (Jacob)
 		
