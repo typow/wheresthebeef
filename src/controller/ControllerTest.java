@@ -324,6 +324,7 @@ public class ControllerTest  {
 	/**
 	 * Test method for {@link controller.Controller#getPaperAuthor(controller.Conference, java.lang.String)}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetPaperAuthor() {
 		Controller controller = new Controller();
@@ -351,6 +352,30 @@ public class ControllerTest  {
 			e.getStackTrace();
 		}
 		assertEquals("", testedAuthor);
+	}
+	
+	/**
+	 * Test method for {@link controller.Controller#getPaperRecommendationNumericalValuefinal(controller.Conference, java.lang.String)}.
+	 */
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testGetPaperRecommendationNumericalValuefinal() {
+		Controller controller = new Controller();
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		if (!controller.checkConferenceExists("Small Computer Conference")) {
+			controller.createNewConference(testConference);
+		}
+		int expectedVal = 5;
+	}
+	
+	/**
+	 * Test method for
+	 */
+	@Test
+	public void testAddPaperRecommendation() {
+		Controller controller = new Controller();
 	}
 
 }

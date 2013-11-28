@@ -322,9 +322,10 @@ public class Controller extends Observable{
 		
 		//NOTE..........................
 		//TODO: this method prints out the stack trace no matter what.  If the title exists or doesn't.
+		//(TYLER) i changed conferences to conference in the statement this should fix it if it does fix spacing
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conferences WHERE name='" + the_conference_title + "'");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conference WHERE name='" + the_conference_title + "'");
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
@@ -487,7 +488,8 @@ public class Controller extends Observable{
 		//		a detailed status update according to deadlines and where it's at in the whole review process. (Jacob)
 		if(i<4) {
 			try {			
-				PreparedStatement statement = connect.prepareStatement("INSERT INTO papers (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME) VALUES (" + total + ", '" + the_username + "', '" +
+				PreparedStatement statement = connect.prepareStatement("INSERT INTO papers (ID,  AUTHOR,  " +
+						"NAME,  TEXT,  CONFNAME) VALUES (" + total + ", '" + the_username + "', '" +
 								the_paper_title + "', '" + the_file_submitted + "', '" +
 								the_conference.getConfTitle() + "')");
 				statement.execute();
@@ -640,7 +642,46 @@ public class Controller extends Observable{
 		//		to submit a recommendation again, they will just be re-writing over a previous recommendation.  If you want to
 		//		handle this differently, let me know because I'll have to insert a try/catch and print out the exception message
 		//		to let them know they can only make a recommendation once. Add this info to the database linked to the paper
-		//		it's associated with. (Jacob)			
+		//		it's associated with. (Jacob)	
+		int paperID = -1;	//not a paper
+		//This try catch just gets the paperID from the author and papername passed in
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE name=" +"'" + current_paper_being_recommended +
+					"' AND author='" + the_paper_author + "'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+					paperID = resultSet.getInt(1);			
+			}
+		} catch(Exception e) {
+			e.getStackTrace();
+			System.out.println("Failed to addREC and get paperID");
+		}
+		//This either if the rec exists update it or if not add it
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM recommendations WHERE paperid=" + paperID);
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				statement = connect.prepareStatement("UPDATE recommendations SET paperid=" + paperID +
+						", subchair='" + the_sub_pc_username + "', conference='" + current_conf.getConfTitle() +
+						"', papername='" + current_paper_being_recommended + "', paperauthor='" +
+						the_paper_author + "', q1=" + the_numerical_value + ", rationale='" + 
+						the_rational_for_recommendation + "' WHERE id=" + paperID);		
+			} else {
+				statement = connect.prepareStatement("INSERT INTO recommendations VALUES (" + paperID + ", " +
+						paperID + ", '" + the_sub_pc_username + "', '" + current_conf.getConfTitle() +
+						"', '" + current_paper_being_recommended + "', '" + the_paper_author + "', " +
+						the_numerical_value + ", '" + the_rational_for_recommendation + "')");
+			}
+		} catch(Exception e) {
+			e.getStackTrace();
+			System.out.println("Failed to just addREC");
+		}
 	}
 	
 	public String getPaperRecommendationRationale(final Conference the_conf, final String the_paper){
@@ -682,12 +723,24 @@ public class Controller extends Observable{
 	
 	public int getPaperRecommendationNumericalValuefinal(final Conference the_conf, final String the_paper){
 		
-		//TODO: the GUI needs to be able to retrieve the SubPC's recommendation for a paper
+		//		the GUI needs to be able to retrieve the SubPC's recommendation for a paper
 		//		return the numerical value associated with the 5 JRadioButtons for the recommendation level. (Jacob)
-		
-		//temporary
-		int temp = 2;
-		return temp;
+		int value = 0;
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM recommendations WHERE conference=" +"'" + the_conf.getConfTitle() + 
+					"' AND papername='" + the_paper + "'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				value = resultSet.getInt(7);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Get subpc grade failed!");
+		}
+		return value;
 	}
 	
 	public String getPaperRecommendationSubPCName(final Conference the_conf, final String the_paper){
