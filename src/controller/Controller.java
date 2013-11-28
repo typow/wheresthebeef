@@ -831,7 +831,20 @@ public class Controller extends Observable{
 		int total = 0;
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("SELECT ID FROM papers");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM papers");
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				total+=1;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Check for valid Username failed");
+			e.printStackTrace();
+		}
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement("SELECT ID FROM papers where papername='"+the_paper+"'");
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -845,7 +858,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement("INSERT INTO recommendations(id, paperid, subchair, conference, papername, paperauthor, q1, rationale" +
-					" VALUE("+total+")");
+					" VALUE("+total+"PaperId"+"'"+the_sub_pc+"'"+"'"+the_conference.getConfTitle()+"'"+the_paper+"'"+"PaperAuthor"+"q1"+"rationale"+")");
 			resultSet = statement.executeQuery();
 			
 		} catch (Exception e) {
@@ -912,8 +925,17 @@ public class Controller extends Observable{
 			System.out.println("Check for valid conference name failed");
 			e.printStackTrace();
 		}
-		//temporary
-		Conference[] the_conf_array = new Conference[1];
+		Conference[] the_conf_array;
+		if(al.size()>0) {
+			the_conf_array = new Conference[al.size()];
+			for(int i=0;i<al.size();i++){
+				the_conf_array[i]=al.get(i);
+			}
+		} else {
+			the_conf_array = new Conference[1];
+			the_conf_array[0] = null;
+		}
+
 		return the_conf_array;
 	}
 	private Conference infoForAConference(
@@ -946,7 +968,6 @@ public class Controller extends Observable{
 				conference +=record.get(i)+ ", ";
 			} else {
 				conference +=record.get(i);
-
 			}
 		}
 		return conference;
@@ -990,9 +1011,16 @@ public class Controller extends Observable{
 		} catch (Exception e) {
 			System.out.println("Get full name failed!");
 		}
+		
 		String[] papers = new String[al.size()];
-		for(int i=0;i<al.size();i++){
-			papers[i]=al.get(i);
+		if(al.size()>0) {
+			papers = new String[al.size()];
+			for(int i=0;i<al.size();i++){
+				papers[i]=al.get(i);
+			}
+		} else {
+			papers = new String[1];
+			papers[0] = null;
 		}
 		return papers;
 	}
@@ -1017,6 +1045,7 @@ public class Controller extends Observable{
 	public static void main(String args[]) throws ParseException {
 		Controller controller = new Controller();
 		controller.getUpcommingConferences();
+		controller.getMyPapers("TestTest", "Test username");
 	}
 	
 }
