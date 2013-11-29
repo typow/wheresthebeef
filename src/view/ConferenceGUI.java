@@ -40,7 +40,7 @@ import controller.Controller;
  * objects
  * 
  * @author Warrick Holfeld
- * @version 11/19/13
+ * @version 11/29/13
  */
 public class ConferenceGUI extends JPanel {
 
