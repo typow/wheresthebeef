@@ -21,36 +21,35 @@ import javax.swing.JFrame;
 
 import controller.Controller;
 
-
 /**
  * The Main Frame to run the CMS software in.
  * 
  * @author Jacob Hall
-* @version 90 Date: 11/27/13
-*/
+ * @author warrick Holfeld
+ * @version 112 Date: 11/28/13
+ */
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements Observer {
-	
+
 	/*
 	 * The current JPanal Component being used by the MainFrame JFrame
 	 */
 	private Component currentPanel;
-	
+
 	/*
-	 * The Controller object that handles the business logic and acts as an interface
-	 * between the GUI and the database.
+	 * The Controller object that handles the business logic and acts as an
+	 * interface between the GUI and the database.
 	 */
 	private static Controller controller;
-	
+
 	/**
 	 * Creates and makes visible the MainFrame for the CMS software.
 	 * 
-	 * @param args Command line arguments, ignored.
+	 * @param args
+	 *            Command line arguments, ignored.
 	 * @throws CloneNotSupportedException
 	 */
-	public static void main(String[] args) 
-		throws CloneNotSupportedException
-		{
+	public static void main(String[] args) throws CloneNotSupportedException {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -68,10 +67,12 @@ public class MainFrame extends JFrame implements Observer {
 	 * Method creates a state machine that will allow discrete states to
 	 * represent the current mode the GUI is in.
 	 * 
-	 * <dt><b>Preconditions: the controller has been instantiated</b><dd>
-	 * <dt><b>Postconditions: The currentPanel is set to the state that is current
-	 * 						within the controller which maintains the context of what
-	 * 						GUI should be displayed.</b><dd>
+	 * <dt><b>Preconditions: the controller has been instantiated</b>
+	 * <dd>
+	 * <dt><b>Postconditions: The currentPanel is set to the state that is
+	 * current within the controller which maintains the context of what GUI
+	 * should be displayed.</b>
+	 * <dd>
 	 */
 	public void setFrame() {
 		switch (controller.getStateOfGUI()) {
@@ -99,8 +100,18 @@ public class MainFrame extends JFrame implements Observer {
 			pack();
 			setVisible(true);
 			break;
+		case CONFERENCE:
+			ConferenceGUI ConferenceWindow = new ConferenceGUI(controller);
+			setTitle("Conferences");
+			this.remove(currentPanel);
+			currentPanel = ConferenceWindow.getGUI();
+			add(currentPanel);
+			pack();
+			setVisible(true);
+			break;
 		case NEW_CONFERENCE:
-			NewConferenceGUI newConferenceWindow = new NewConferenceGUI(controller);
+			NewConferenceGUI newConferenceWindow = new NewConferenceGUI(
+					controller);
 			setTitle("Create a New Conference");
 			this.remove(currentPanel);
 			currentPanel = newConferenceWindow.getGUI();
@@ -125,7 +136,8 @@ public class MainFrame extends JFrame implements Observer {
 			setVisible(true);
 			break;
 		case EDIT_SUBMISSION:
-			EditSubmissionGUI editSubmissionWindow = new EditSubmissionGUI(controller);
+			EditSubmissionGUI editSubmissionWindow = new EditSubmissionGUI(
+					controller);
 			this.remove(currentPanel);
 			currentPanel = editSubmissionWindow.getGUI();
 			add(currentPanel);
@@ -141,7 +153,8 @@ public class MainFrame extends JFrame implements Observer {
 			setVisible(true);
 			break;
 		case SUBMIT_RECOMMENDATION:
-			MakeRecommendationGUI submitRecommendationWindow = new MakeRecommendationGUI(controller);
+			MakeRecommendationGUI submitRecommendationWindow = new MakeRecommendationGUI(
+					controller);
 			this.remove(currentPanel);
 			currentPanel = submitRecommendationWindow.getGUI();
 			add(currentPanel);
@@ -149,7 +162,8 @@ public class MainFrame extends JFrame implements Observer {
 			setVisible(true);
 			break;
 		case ASSIGN_REVIEWER:
-			AssignReviewerGUI assignReviewerWindow = new AssignReviewerGUI(controller);
+			AssignReviewerGUI assignReviewerWindow = new AssignReviewerGUI(
+					controller);
 			this.remove(currentPanel);
 			currentPanel = assignReviewerWindow.getGUI();
 			add(currentPanel);
@@ -179,9 +193,11 @@ public class MainFrame extends JFrame implements Observer {
 	 * The update method for the Observer interface. Method updates the frame
 	 * with the appropriate mode of operation the GUI should transition to.
 	 * 
-	 * <dt><b>Preconditions: the controller is instantiated as Observable</b><dd>
+	 * <dt><b>Preconditions: the controller is instantiated as Observable</b>
+	 * <dd>
 	 * <dt><b>Postconditions: when update is called, the next frame will be
-	 * 						updated with the new context.</b><dd>
+	 * updated with the new context.</b>
+	 * <dd>
 	 * 
 	 * @param the_object
 	 *            The Observable that called this method.
@@ -196,8 +212,11 @@ public class MainFrame extends JFrame implements Observer {
 	/**
 	 * Create the frame.
 	 * 
-	 * <dt><b>Preconditions: none</b><dd>
-	 * <dt><b>Postconditions: a frame is created and the CMS software is initiated.</b><dd>
+	 * <dt><b>Preconditions: none</b>
+	 * <dd>
+	 * <dt><b>Postconditions: a frame is created and the CMS software is
+	 * initiated.</b>
+	 * <dd>
 	 */
 	public MainFrame() {
 		setUpFrame();
@@ -205,15 +224,19 @@ public class MainFrame extends JFrame implements Observer {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 	}
-	
+
 	/**
-	 * Method sets up the frame initially, instantiates the single Controller Object used
-	 * by the CMS software and initializes the first JPanel viewable to be the login window.
+	 * Method sets up the frame initially, instantiates the single Controller
+	 * Object used by the CMS software and initializes the first JPanel viewable
+	 * to be the login window.
 	 * 
-	 * <dt><b>Preconditions: none</b><dd>
-	 * <dt><b>Postconditions: Controller is instantiated, and the login window is loaded.</b><dd>
+	 * <dt><b>Preconditions: none</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Controller is instantiated, and the login window
+	 * is loaded.</b>
+	 * <dd>
 	 */
-	private void setUpFrame(){
+	private void setUpFrame() {
 		controller = new Controller();
 		LoginGUI loginWindow = new LoginGUI(controller);
 		this.setResizable(false);

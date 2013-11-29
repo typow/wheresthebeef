@@ -18,7 +18,8 @@ package view;
  * and the relationship a user logged in has with a paper.
  * 
  * @author Jacob Hall
- * @version 90 Date: 11/27/13
+ * @author Warrick Holfeld
+ * @version 112 Date: 11/28/13
  */
 public class GUIEnum {
 
@@ -76,8 +77,11 @@ public class GUIEnum {
 		/**
 		 * Make the accept/reject paper user interface visible.
 		 */
-		ACCEPT_REJECT;
-		
+		ACCEPT_REJECT,
+		/**
+		 * Make the conference user interface visible.
+		 */
+		CONFERENCE;
 	}
 	
 	/**

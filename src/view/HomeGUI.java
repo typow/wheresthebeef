@@ -125,7 +125,6 @@ public class HomeGUI extends JPanel {
 			+ "once those buttons are implemented.";
 
 	private JPanel contentPane;
-	private JTable table;
 
 	/*
 	 * The CMS controller
@@ -195,12 +194,6 @@ public class HomeGUI extends JPanel {
 		contentPane.add(inner_panel);
 		inner_panel.setLayout(null);
 
-		// JLabel label = new
-		// JLabel(controller.getCurrentUsername().toString());
-		// Windows Builder Pro edits out the above line when you use it. Replace
-		// the label
-		// declaration when needed because it inserts <dynamic> into the label
-		// text
 		JLabel username_label = new JLabel(controller.getCurrentUsername().toString());
 		username_label.setBounds(20, 66, 150, 20);
 		inner_panel.add(username_label);
