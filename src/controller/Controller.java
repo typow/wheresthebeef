@@ -778,7 +778,6 @@ public class Controller extends Observable{
 		//TODO: return the username of the person assigned as Sub PC for a particular paper
 		String subPC = null;
 		try {
-			
 			PreparedStatement statement = connect.prepareStatement(
 					"SELECT subchair FROM recommendations WHERE conference=" +"'" + the_conference.getConfTitle() + 
 					"' AND paperid='" + current_paper + "'");
@@ -831,6 +830,7 @@ public class Controller extends Observable{
 		//			  - any other business rules I'm forgetting?  (Jacob)
 		ArrayList<String> al = new ArrayList<String>();
 		PreparedStatement statement;
+		//1) List of all users registered
 		try {
 			statement = connect.prepareStatement("SELECT * FROM users");
 			
@@ -861,7 +861,9 @@ public class Controller extends Observable{
 		} catch (SQLException e) {
 			System.out.println("Error printing table. " + e.getMessage());
 		}
-		
+		//2) take PC user name out of array
+		//3) take author of paper out
+		//4) don't allow reviewers to be sub PC
 					//temporary:
 					String[] reviewers = new String[]{"Hank Williams", "Johnny Cash", "Willy Nelson", "Walyne Jennings", "Elvis Presley"};
 		return reviewers;
@@ -880,7 +882,7 @@ public class Controller extends Observable{
 		int total = 0;
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("SELECT * FROM papers");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM recommendations");
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -891,23 +893,12 @@ public class Controller extends Observable{
 			System.out.println("Check for valid Username failed");
 			e.printStackTrace();
 		}
+		int id = getPaperID(the_paper);
+		String author = getPaperAuthor(the_conference, the_paper);
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("SELECT ID FROM papers where papername='"+the_paper+"'");
-			resultSet = statement.executeQuery();
-			
-			while(resultSet.next()) {
-				total+=1;
-			}
-			
-		} catch (SQLException e) {
-			System.out.println("Check for valid Username failed");
-			e.printStackTrace();
-		}
-		try {
-			
-			PreparedStatement statement = connect.prepareStatement("INSERT INTO recommendations(id, paperid, subchair, conference, papername, paperauthor, q1, rationale)" +
-					" VALUE("+total+"PaperId"+"'"+the_sub_pc+"'"+"'"+the_conference.getConfTitle()+"'"+the_paper+"'"+"PaperAuthor"+"q1"+"rationale"+")");
+			PreparedStatement statement = connect.prepareStatement("INSERT INTO recommendations(id, paperid, subchair, conference, papername, paperauthor)" +
+					" VALUE("+total+id+"'"+the_sub_pc+"'"+"'"+the_conference.getConfTitle()+"'"+the_paper+"'"+author+"')");
 			resultSet = statement.executeQuery();
 			
 		} catch (Exception e) {
