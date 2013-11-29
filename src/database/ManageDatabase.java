@@ -422,11 +422,11 @@ public class ManageDatabase{
 		try {
 			PreparedStatement statement = connect.prepareStatement(
 					"INSERT INTO papers (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME,  STATUS)  VALUES " +
-					"(0,'Boba Fett','Surviving the Sarlacc','text','Bio conferences','SUBMITTED')," +
-					"(1,'Aaron Merrill','Analysis of Horspools Algorithm','text','conferences of Algorithmic analysis','REVIEWED')," +
-					"(2,'Tyler Powers','Baking Pi','text','Small Computer conferences','ACCEPTED')," +
-					"(3,'Barack Obama','A More Perfect Union Set','text','Comp-Sci Annual','SUBMITTED')," +
-					"(4,'Michael Phelps','Packing on Abs','text','Bio conferences','SUBMITTED')");
+					"(0,'bounty','Surviving the Sarlacc','text','Bio conferences','SUBMITTED')," +
+					"(1,'ajm1','Analysis of Horspools Algorithm','text','conferences of Algorithmic analysis','REVIEWED')," +
+					"(2,'typow','Baking Pi','text','Small Computer conferences','ACCEPTED')," +
+					"(3,'da-man','A More Perfect Union Set','text','Comp-Sci Annual','SUBMITTED')," +
+					"(4,'ripped','Packing on Abs','text','Bio conferences','SUBMITTED')");
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println("Error resetting papers. " + e.getMessage());

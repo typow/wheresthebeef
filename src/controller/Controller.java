@@ -818,10 +818,10 @@ public class Controller extends Observable{
 	 * @author David
 	 * @param current_conf
 	 * @param current_paper
-	 * @param username
+	 * @param the_pc
 	 * @return
 	 */
-	public String[] getAvailableForSubPC(final Conference current_conf, final int current_paper, final String username){
+	public String[] getAvailableForSubPC(final Conference current_conf, final int current_paper, final String the_pc){
 		//TODO: the AssignSubPCGUI needs an array of usernames of the people capable of being a SubPC.
 		//		Note: - the PC can't be the SubPC.
 		//			  - the Author of the paper can't be the SubPC of their own paper.
@@ -856,21 +856,69 @@ public class Controller extends Observable{
                 }
                 String value = infoForAUser(record);
                 al.add(value); 
-		            System.out.println("");  
+		            System.out.println("");
 		        }
 		} catch (SQLException e) {
 			System.out.println("Error printing table. " + e.getMessage());
 		}
 		//2) take PC user name out of array
+		al.remove(the_pc);
+//
+//		String pc = getUserIdForPC(current_conf);
+//		for(int i = 0; i < al.size(); i++) {
+//			if(al.get(i).equals(pc)) {
+//				al.remove(the_pc);
+//			}
+//		}
 		//3) take author of paper out
+		String authorUsername = getAuthorUsernameForPaper(current_paper);
+		for(int i = 0; i < al.size(); i++) {
+			if(al.get(i).equals(authorUsername)) {
+				al.remove(authorUsername);
+			}
+		}
 		//4) don't allow reviewers to be sub PC
 					//temporary:
 					String[] reviewers = new String[]{"Hank Williams", "Johnny Cash", "Willy Nelson", "Walyne Jennings", "Elvis Presley"};
 		return reviewers;
 	}
+//	private String getUserIdForPC(Conference current_conf) {
+//		String pc = "";
+//		try {
+//			
+//			PreparedStatement statement = connect.prepareStatement(
+//					"SELECT PROGCHAIR FROM conferences WHERE name=" +"'" + current_conf.getConfTitle() +"'");
+//			resultSet = statement.executeQuery();
+//			
+//			if (resultSet.next()) {
+//				pc = resultSet.getString(1);
+//			}
+//			
+//		} catch (Exception e) {
+//			System.out.println("Get full name failed!");
+//		}
+//		return pc;
+//	}
+	private String getAuthorUsernameForPaper(int the_paper_id) {
+		String authorid = "";
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT author FROM papers WHERE id=" + the_paper_id);
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				authorid = resultSet.getString(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Get full name failed!");
+		}
+		return authorid;
+	}
 	
-	private String infoForAUser(ArrayList<String> record) {
-		String conference = record.get(0);
+	private String infoForAUser(ArrayList<String> the_conference) {
+		String conference = the_conference.get(0);
 		return conference;
 	}
 
@@ -933,7 +981,7 @@ public class Controller extends Observable{
 	//TODO: 
     	ArrayList<Conference> al = new ArrayList<Conference>();
 		try {
-			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conferences WHERE NOTIFYDATE <= '"+new Date().toLocaleString()+"'");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conferences WHERE NOTIFYDATE >= '"+new Date().toLocaleString()+"'");
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 			int numberOfColumns = rsmd.getColumnCount();
@@ -1102,7 +1150,7 @@ public class Controller extends Observable{
 	public static void main(String args[]) throws ParseException {
 		Controller controller = new Controller();
 		Conference[] conn = controller.getUpcommingConferences();
-		controller.getAvailableForSubPC(conn[0], 5, "Boba Fett");
+		controller.getAvailableForSubPC(conn[1], 2, "Tyler Powers");
 		controller.getMyPapers("TestTest", "Test username");
 		controller.getPaperID("Packing on Abs");
 	}

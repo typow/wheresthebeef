@@ -170,7 +170,7 @@ public class SubmitPaperGUI extends JPanel {
 		super();
 		controller = the_controller;
 		current_conf = controller.getCurrentConference();
-		username = controller.getFullName(controller.getCurrentUsername()).toString();
+		username = controller.getCurrentUsername();
 		setupActions();
 		setBounds(100, 100, 722, 520);
 		contentPane = new JPanel();

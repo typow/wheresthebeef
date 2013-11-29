@@ -282,7 +282,6 @@ public class HomeGUI extends JPanel {
 			jl.setFont(font.deriveFont(attributes));
 			panel_for_scrollpane.add(jl);
 		}
-		
 		for (Conference element : curr_conference_array) {
 			final String conference_title = element.getConfTitle();
 			final Conference curr_conference = element;
