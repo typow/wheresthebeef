@@ -81,11 +81,10 @@ public class ConferenceGUI extends JPanel {
 	public ConferenceGUI(final Controller the_controller) {
 		super();
 		controller = the_controller;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+
 		
 		JButton btnIcon = new JButton("");
 		btnIcon.setForeground(BACKGROUND_COLOR);
