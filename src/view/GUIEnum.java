@@ -20,6 +20,17 @@ package view;
  * @author Jacob Hall
  * @author Warrick Holfeld
  * @version 112 Date: 11/28/13
+ * 
+ * @author Seth Kramer
+ * @version 113 Date: 11/29/13
+ * 
+ * If new enumerations are added to AdminViewable or AuthorViewable
+ * they MUST be added to the end of the enumeration due to the fact
+ * that the methods that convert strings (and convert admin enum
+ * to author enum) call ordinal() on the enumeration (i.e. 
+ * its location). Any equivalent viewable enumeration between admin
+ * and author must be placed at the same ordinal location in both.
+ *
  */
 public class GUIEnum {
 
@@ -100,8 +111,16 @@ public class GUIEnum {
 		 */
 		UNDER_REVIEW,
 		/**
-		 * the paper has been reviewed.
+		 * the paper has been accepted for the conference
 		 */
+		ACCEPTED,
+		/**
+		 * the paper has not been accepted for the conference
+		 */
+		REJECTED,
+		/**
+		 * the paper has been reviewed.
+		 */	
 		REVIEWED,
 		/**
 		 * the paper is overdue for review.
@@ -118,15 +137,7 @@ public class GUIEnum {
 		/**
 		 * the recommendation for the paper has been submitted and it is not recommended for acceptance.
 		 */
-		NOT_RECOMMENDED,
-		/**
-		 * the paper has been accepted for the conference
-		 */
-		ACCEPTED,
-		/**
-		 * the paper has not been accepted for the conference
-		 */
-		REJECTED,
+		NOT_RECOMMENDED;	
 	}
 	
 	/**
@@ -151,7 +162,7 @@ public class GUIEnum {
 		/**
 		 * the paper has not been accepted for the conference
 		 */
-		REJECTED,
+		REJECTED;
 	}
 	
 	/**
@@ -179,4 +190,84 @@ public class GUIEnum {
 		PC,
 	}
 
+	public static paperStatusAdminViewable stringToAdminViewable(String the_status) {
+		paperStatusAdminViewable result = null;
+		
+		switch (the_status) {
+		
+			case "SUBMITTED":
+				result = paperStatusAdminViewable.SUBMITTED;
+				break;
+			
+			case "UNDER_REVIEW":
+				result = paperStatusAdminViewable.UNDER_REVIEW;
+				break;
+			
+			case "REVIEWED":
+				result = paperStatusAdminViewable.REVIEWED;
+				break;
+				
+			case "OVERDUE_FOR_REVIEW":
+				result = paperStatusAdminViewable.OVERDUE_FOR_REVIEW;
+				break;
+			
+			case "RECOMMENDED":
+				result = paperStatusAdminViewable.RECOMMENDED;
+				break;
+				
+			case "OVERDUE_FOR_RECOMMEND":
+				result = paperStatusAdminViewable.OVERDUE_FOR_RECOMMEND;
+				break;
+				
+			case "NOT_RECOMMENDED":
+				result = paperStatusAdminViewable.NOT_RECOMMENDED;
+				break;
+				
+			case "ACCEPTED":
+				result = paperStatusAdminViewable.ACCEPTED;
+				break;
+			
+			case "REJECTED":
+				result = paperStatusAdminViewable.REJECTED;
+				break;					
+		}
+		
+		return result;
+	}
+	
+	public static paperStatusAuthorViewable stringToAuthorViewable(String the_status) {
+		int result = stringToAdminViewable(the_status).ordinal();
+		return paperStatusAuthorViewable.values()[result];
+	}
+	
+	/*
+	public static void main(String args[]) {
+		String test = "ACCEPTED";	 
+		paperStatusAdminViewable admin = stringToAdminViewable(test);
+		System.out.println(admin.ordinal());	
+		
+		paperStatusAuthorViewable author = stringToAuthorViewable(test);
+		System.out.println(author.ordinal());
+		
+		switch (author) {
+		
+			case SUBMITTED:
+				System.out.println("SUBMITTED");
+				break;
+			
+			case UNDER_REVIEW:
+				System.out.println("UNDER REVIEW");
+				break;
+				
+			case ACCEPTED:
+				System.out.println("ACCEPTED");
+				break;
+				
+			case REJECTED:
+				System.out.println("REJECTED");
+				break;
+		}
+			
+	}
+	*/
 }
