@@ -1166,6 +1166,8 @@ public class Controller extends Observable{
 		//		reviewers assigned here are valid; not violating business rules.  Therefore, you should be able to just
 		//		add these names in without checking, unless I'm missing something.  Let me know if I need to change how
 		//		this is being handled.  (Jacob)
+		
+		
 	}
 	/**
 	 * @author David
@@ -1340,9 +1342,10 @@ public class Controller extends Observable{
 	public Conference[] getMyConferences(final String the_username){
 	//TODO: do this....
 		//temporary
+		
 		ResultSet resultSet2;
-		Conference[] the_conf_array = new Conference[100];
-		int index = 0;
+		List<Conference> the_conf_array = new ArrayList<Conference>();
+		
 		//First add conferences they are PC of
 		try {
 			
@@ -1356,8 +1359,7 @@ public class Controller extends Observable{
 				Conference con = new Conference(resultSet.getString(1), resultSet.getString(2),
 						resultSet.getDate(3), "", "", "", "", resultSet.getDate(4), resultSet.getDate(5),
 						resultSet.getDate(6), resultSet.getDate(7), resultSet.getString(8));
-				the_conf_array[index] = con;
-				index++;
+				the_conf_array.add(con);
 			}
 			
 		} catch (Exception e) {
@@ -1372,7 +1374,9 @@ public class Controller extends Observable{
 					"SELECT * FROM recommendations WHERE subchair=" +"'" + the_username + "'");
 			resultSet = statement.executeQuery();
 			//Add the conferences the user is subPC of to the array
+			
 			while (resultSet.next()) {
+				
 				//gets the data for the conference to create a conference object to add to the array
 				PreparedStatement statement2 = connect.prepareStatement(
 						"SELECT * FROM conference WHERE name=" +"'" + resultSet.getString(4) + "'");
@@ -1381,8 +1385,7 @@ public class Controller extends Observable{
 				Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
 						resultSet2.getDate(3), "", "", "", "", resultSet2.getDate(4), resultSet2.getDate(5),
 						resultSet2.getDate(6), resultSet2.getDate(7), resultSet2.getString(8));
-				the_conf_array[index] = con;
-				index++;
+				the_conf_array.add(con);
 			}
 			
 		} catch (Exception e) {
@@ -1406,23 +1409,24 @@ public class Controller extends Observable{
 				Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
 						resultSet2.getDate(3), "", "", "", "", resultSet2.getDate(4), resultSet2.getDate(5),
 						resultSet2.getDate(6), resultSet2.getDate(7), resultSet2.getString(8));
-				the_conf_array[index] = con;
-				index++;
+				the_conf_array.add(con);
 			}
 			
 		} catch (Exception e) {
 			System.out.println("getMyConferences failed in adding reviewer conf");
 		}
-		/*
+		
 		//Fourth add conferences they are authors for papers of
 		try {
 			
-			//Get all papers with a match for the username as the author of the conference
+			//Get all papers with a match for the username as the author 
 			PreparedStatement statement = connect.prepareStatement(
 					"SELECT * FROM papers WHERE author=" +"'" + the_username + "'");
 			resultSet = statement.executeQuery();
+			
 			//Add the conferences the author has a paper in to the array
 			while (resultSet.next()) {
+				
 				//gets the data for the conference to create a conference object to add to the array
 				PreparedStatement statement2 = connect.prepareStatement(
 						"SELECT * FROM conference WHERE name=" +"'" + resultSet.getString(5) + "'");
@@ -1431,16 +1435,14 @@ public class Controller extends Observable{
 				Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
 						resultSet2.getDate(3), "", "", "", "", resultSet2.getDate(4), resultSet2.getDate(5),
 						resultSet2.getDate(6), resultSet2.getDate(7), resultSet2.getString(8));
-				the_conf_array[index] = con;
-				index++;
+				the_conf_array.add(con);
 			}
 			
 		} catch (Exception e) {
-			System.out.println("getMyConferences failed in adding author conf");
-			e.getStackTrace();
+			System.out.println("getMyConferences failed in adding author conf" + e.getMessage());
 		}
-		*/
-		return the_conf_array;
+		
+		return (Conference[]) the_conf_array.toArray();
 	}
 	
 	public Conference[] getUpcommingConferences() throws ParseException{
