@@ -222,7 +222,7 @@ public class ConferenceGUI extends JPanel {
 				conference_dates_panel.add(new JLabel(""));
 			}
 			if (i % 3 == 0) {
-				conference_dates_panel.add(new JLabel("1/1/11"));
+				conference_dates_panel.add(new JLabel (conference_date_array[((i/3)-1)]));
 			}
 
 		}
