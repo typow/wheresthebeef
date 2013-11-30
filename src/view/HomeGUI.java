@@ -264,10 +264,16 @@ public class HomeGUI extends JPanel {
 		Conference[] upcoming_conference_array = controller
 				.getMyConferences(controller.getCurrentUsername().toString());
 		
-		int total_current_conf = upcoming_conference_array.length;
+		int total_upcoming_conf = 0;
+		
+
+		if(upcoming_conference_array != null) {
+			total_upcoming_conf = upcoming_conference_array.length;
+		}
+		
 
 		JPanel panel_for_scrollpane = new JPanel(new GridLayout(
-				1, COLUMN_NAMES.length));
+				(total_upcoming_conf + 1), COLUMN_NAMES.length));
 
 		for (int i = 0; i < COLUMN_NAMES.length; i++) {
 			JLabel jl = new JLabel(COLUMN_NAMES[i], JLabel.CENTER);
@@ -281,50 +287,50 @@ public class HomeGUI extends JPanel {
 		}
 		
 
-//		if (upcoming_conference_array != null) {
-//			for (Conference element : upcoming_conference_array) {
-//				final String conference_title = element.getConfTitle();
-//				final Conference upcoming_conference = element;
-//				final JLabel conference_name_jl = new JLabel(conference_title,
-//						JLabel.CENTER);
-//				conference_name_jl.setBorder(BorderFactory
-//						.createLineBorder(Color.BLACK));
-//				conference_name_jl.setForeground(Color.BLUE);
-//				conference_name_jl.setCursor(new java.awt.Cursor(
-//						java.awt.Cursor.HAND_CURSOR));
-//				final String box_clicked = conference_title + "box clicked";
-//				final Font entered = new Font("Tahoma", Font.BOLD, 17);
-//				final Font exited = new Font("Tahoma", Font.BOLD, 12);
-//				conference_name_jl.addMouseListener(new MouseListener() {
-//					public void mouseClicked(MouseEvent arg0) {
-//
-//					}
-//
-//					public void mouseEntered(MouseEvent arg0) {
-//						conference_name_jl.setFont(entered);
-//					}
-//
-//					public void mouseExited(MouseEvent arg0) {
-//						conference_name_jl.setFont(exited);
-//					}
-//
-//					public void mousePressed(MouseEvent arg0) {
-//						System.out.println(box_clicked);
-//						controller.setCurrentConference(upcoming_conference);
-//						controller.setStateOfGUI(StateOfGUI.CONFERENCE);
-//					}
-//
-//					public void mouseReleased(MouseEvent arg0) {
-//					}
-//				});
-//				panel_for_scrollpane.add(conference_name_jl);
-//				JLabel date_jl = new JLabel(element.getConfDate().toString(),
-//						JLabel.CENTER);
-//				date_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-//				panel_for_scrollpane.add(date_jl);
-//			}
-//			
-//		}
+		if (upcoming_conference_array != null) {
+			for (Conference element : upcoming_conference_array) {
+				final String conference_title = element.getConfTitle();
+				final Conference upcoming_conference = element;
+				final JLabel conference_name_jl = new JLabel(conference_title,
+						JLabel.CENTER);
+				conference_name_jl.setBorder(BorderFactory
+						.createLineBorder(Color.BLACK));
+				conference_name_jl.setForeground(Color.BLUE);
+				conference_name_jl.setCursor(new java.awt.Cursor(
+						java.awt.Cursor.HAND_CURSOR));
+				final String box_clicked = conference_title + "box clicked";
+				final Font entered = new Font("Tahoma", Font.BOLD, 17);
+				final Font exited = new Font("Tahoma", Font.BOLD, 12);
+				conference_name_jl.addMouseListener(new MouseListener() {
+					public void mouseClicked(MouseEvent arg0) {
+
+					}
+
+					public void mouseEntered(MouseEvent arg0) {
+						conference_name_jl.setFont(entered);
+					}
+
+					public void mouseExited(MouseEvent arg0) {
+						conference_name_jl.setFont(exited);
+					}
+
+					public void mousePressed(MouseEvent arg0) {
+						System.out.println(box_clicked);
+						controller.setCurrentConference(upcoming_conference);
+						controller.setStateOfGUI(StateOfGUI.CONFERENCE);
+					}
+
+					public void mouseReleased(MouseEvent arg0) {
+					}
+				});
+				panel_for_scrollpane.add(conference_name_jl);
+				JLabel date_jl = new JLabel(element.getConfDate().toString(),
+						JLabel.CENTER);
+				date_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				panel_for_scrollpane.add(date_jl);
+			}
+			
+		}
 		
 
 		panel_for_scrollpane.setSize(10000, 10000);
