@@ -18,11 +18,14 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
 import java.awt.font.TextAttribute;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,6 +35,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.border.BevelBorder;
+
+import view.GUIEnum.StateOfGUI;
 
 import controller.Controller;
 
@@ -121,6 +126,8 @@ public class ConferenceGUI extends JPanel {
 		contentPane.add(main_panel, BorderLayout.CENTER);
 		main_panel.setLayout(null);
 
+		buildButtonPanel();
+		
 		buildScrollPanel();
 
 		buildUserDataPanel();
@@ -174,6 +181,24 @@ public class ConferenceGUI extends JPanel {
 				
 	}
 
+	private void buildButtonPanel() {
+		JPanel button_panel = new JPanel();
+		button_panel.setBounds(10, 137, 182, 197);
+		
+		
+		
+		JButton logout_button = new JButton(my_logout_action);
+		logout_button.setBounds(20, 97, 150, 22);
+		button_panel.add(logout_button);
+
+		JButton back_button = new JButton(my_back_action);
+		back_button.setBounds(20, 130, 152, 22);
+		button_panel.add(back_button);
+		
+		main_panel.add(button_panel);
+		
+	}
+
 	/**
 	 * Builds the the panel that shows the users info.
 	 */
@@ -183,20 +208,13 @@ public class ConferenceGUI extends JPanel {
 				null, null, null));
 		user_info_panel.setBackground(INNER_BACKGROUND_COLOR);
 		user_info_panel.setBounds(201, 234, 213, 100);
-		user_info_panel.setLayout(new GridLayout(3, 2));
+		user_info_panel.setLayout(new GridLayout(2, 2));
 		JLabel label_2 = new JLabel(" User:");
 		label_2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		user_info_panel.add(label_2);
 		JLabel label = new JLabel(controller.getCurrentUsername());
 		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		user_info_panel.add(label);
-		JLabel label_3 = new JLabel(" Position:");
-		label_3.setFont(new Font("Tahoma", Font.BOLD, 11));
-		user_info_panel.add(label_3);
-		
-		JLabel label_1 = new JLabel("Needs fixed");
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		user_info_panel.add(label_1);
 		JLabel label_4 = new JLabel(" Date:");
 		label_4.setFont(new Font("Tahoma", Font.BOLD, 11));
 		user_info_panel.add(label_4);
@@ -277,6 +295,47 @@ public class ConferenceGUI extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(panel_for_scrollpane, 22, 32);
 		scrollPane.setBounds(10, 350, 1235, 300);
 		main_panel.add(scrollPane);
+
+	}
+	private void setupActions() {
+		/*
+		 * The action associated with clicking Logout
+		 */
+		my_logout_action = new AbstractAction(LOGOUT_TITLE_STRING, null) {
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				controller.setCurrentUsername(""); // blank because they're
+													// logging out
+				// we need to reset the current user to "null".
+				controller.setCurrentConference(null);
+				controller.setCurrentPaper("");
+				controller.setStateOfGUI(StateOfGUI.LOGIN);
+			}
+		};
+		my_logout_action.putValue(Action.SHORT_DESCRIPTION, LOGOUT_STRING);
+		my_logout_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_L);
+
+		/*
+		 * The action associated with clicking back, in this case, the same as
+		 * logging out. In the future, the back button will just take you back
+		 * to the previous screen, but for the sake of continuity and flow, I
+		 * included the back button here as well
+		 */
+		my_back_action = new AbstractAction(BACK_TITLE_STRING, null) {
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				controller.setCurrentUsername(""); // blank because in this
+													// case,
+				// the user is logging out by going back one screen.
+				controller.setCurrentConference(null);
+				controller.setCurrentPaper("");
+				controller.setStateOfGUI(StateOfGUI.HOME);
+			}
+		};
+		my_back_action.putValue(Action.SHORT_DESCRIPTION, BACK_STRING);
+		my_back_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_B);
+
+
 
 	}
 }
