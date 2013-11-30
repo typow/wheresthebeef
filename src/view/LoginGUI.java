@@ -65,6 +65,7 @@ public class LoginGUI extends JPanel {
 	 * The size of the JPanel.
 	 */
 	private static final Dimension WIN_DIMENSION = new Dimension(1280, 720);
+//	private static final Dimension WIN_DIMENSION = new Dimension(1024, 720?);
 
 	/*
 	 * The message the will pop up when the user floats above the button.

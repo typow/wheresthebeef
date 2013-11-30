@@ -685,7 +685,6 @@ public class ManagePaperGUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setCurrentUsername(""); //blank because they're logging out
-					//we need to reset the current user to "null".
 				controller.setCurrentConference(null);
 				controller.setCurrentPaper("");
 				controller.setStateOfGUI(StateOfGUI.LOGIN);
@@ -715,6 +714,8 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
+				controller.setCurrentConference(null);
+				controller.setCurrentPaper("");
 				controller.setStateOfGUI(StateOfGUI.HOME);
 			}
 		};
@@ -729,7 +730,6 @@ public class ManagePaperGUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setStateOfGUI(StateOfGUI.SUBMIT_PAPER);
-				System.out.println("submit paper....");
 			}
 		};
 		my_submit_paper_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_PAPER_STRING);
@@ -748,7 +748,6 @@ public class ManagePaperGUI extends JPanel{
 				}
 				else {
 					controller.setStateOfGUI(StateOfGUI.EDIT_SUBMISSION);
-					System.out.println("edit submission....");
 				}
 			}
 		};
@@ -764,7 +763,6 @@ public class ManagePaperGUI extends JPanel{
 			public void actionPerformed(ActionEvent the_event) {
 				if (controller.canAddReview(current_conf, current_paper, controller.getCurrentUsername())){
 					controller.setStateOfGUI(StateOfGUI.SUBMIT_REVIEW);
-					System.out.println("submit review....");
 				}
 			}
 		};
@@ -779,7 +777,6 @@ public class ManagePaperGUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setStateOfGUI(StateOfGUI.SUBMIT_RECOMMENDATION);
-				System.out.println("make a recommendation....");
 			}
 		};
 		my_make_recommendation_action.putValue(Action.SHORT_DESCRIPTION, MAKE_RECOMMENDATION_STRING);
@@ -793,7 +790,6 @@ public class ManagePaperGUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setStateOfGUI(StateOfGUI.ASSIGN_REVIEWER);
-				System.out.println("assign a reviewer....");
 			}
 		};
 		my_assign_reviewer_action.putValue(Action.SHORT_DESCRIPTION, ASSIGN_REVIEWER_STRING);
@@ -807,7 +803,6 @@ public class ManagePaperGUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setStateOfGUI(StateOfGUI.ASSIGN_SUB_PC);
-				System.out.println("assign a subprogram chair....");
 			}
 		};
 		my_assign_subpc_action.putValue(Action.SHORT_DESCRIPTION, ASSIGN_SUBPC_STRING);
@@ -821,7 +816,6 @@ public class ManagePaperGUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setStateOfGUI(StateOfGUI.ACCEPT_REJECT);
-				System.out.println("accept/reject a paper...");
 			}
 		};
 		my_accept_reject_action.putValue(Action.SHORT_DESCRIPTION, ACCEPT_REJECT_STRING);

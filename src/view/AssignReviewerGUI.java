@@ -530,7 +530,6 @@ public class AssignReviewerGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setCurrentUsername(""); //blank because they're logging out
-					//we need to reset the current user to "null".
 				controller.setCurrentPaper("");
 				controller.setCurrentConference(null);
 				controller.setStateOfGUI(StateOfGUI.LOGIN);
@@ -559,6 +558,8 @@ public class AssignReviewerGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
+				controller.setCurrentConference(null);
+				controller.setCurrentPaper("");
 				controller.setStateOfGUI(StateOfGUI.HOME);
 			}
 		};

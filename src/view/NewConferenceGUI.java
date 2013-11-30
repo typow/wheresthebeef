@@ -478,6 +478,8 @@ public class NewConferenceGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
+				controller.setCurrentConference(null);
+				controller.setCurrentPaper("");
 				controller.setStateOfGUI(StateOfGUI.HOME);
 			}
 		};
