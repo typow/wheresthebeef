@@ -1003,7 +1003,7 @@ public class Controller extends Observable{
 		String author = "";
 		String PC = "";
 		
-		boolean ruleViolated = false;		// boolean to keep track if one of the business rules has been violated
+		boolean ruleViolated;		// boolean to keep track if one of the business rules has been violated
 		
 		try {
 			
@@ -1038,6 +1038,7 @@ public class Controller extends Observable{
 					
 					// The reviewer can't be the person assigning unless they're the PC
 					if (user.equals(PC) || (!(user.equals(the_person_assigning)))) {
+						ruleViolated = false;
 						
 						// The reviewer can't have already been assigned to this paper
 						for (int i = 0; i < reviewers.length && !ruleViolated; i++) {
