@@ -194,7 +194,8 @@ public class HomeGUI extends JPanel {
 		contentPane.add(inner_panel);
 		inner_panel.setLayout(null);
 
-		JLabel username_label = new JLabel(controller.getCurrentUsername().toString());
+		JLabel username_label = new JLabel(controller.getCurrentUsername()
+				.toString());
 		username_label.setBounds(20, 66, 150, 20);
 		inner_panel.add(username_label);
 
@@ -229,10 +230,10 @@ public class HomeGUI extends JPanel {
 		inner_panel.add(lblUpcomingConferences);
 		lblUpcomingConferences.setFont(new Font("Tahoma", Font.BOLD, 16));
 
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(204, 297, 514, 125);
-		inner_panel.add(scrollPane_1);
-		scrollPane_1.setViewportBorder(new BevelBorder(BevelBorder.LOWERED,
+		JScrollPane upcoming_conference_scrollpane = new JScrollPane();
+		upcoming_conference_scrollpane.setBounds(204, 297, 514, 125);
+		inner_panel.add(upcoming_conference_scrollpane);
+		upcoming_conference_scrollpane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED,
 				null, null, null, null));
 
 		JLabel lblUserHomePage = new JLabel("User Home Page");
@@ -261,18 +262,15 @@ public class HomeGUI extends JPanel {
 	 * @return contentPane JPanel containing the AcceptRejectGUI.
 	 */
 	private void createMyConferencesScrollPane() {
-		JScrollPane my_conferences_scrollPane = new JScrollPane();
-		my_conferences_scrollPane.setBounds(204, 98, 514, 125);
-		inner_panel.add(my_conferences_scrollPane);
-		my_conferences_scrollPane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null,
-				null, null, null));
-		Conference[] curr_conference_array = controller.getMyConferences(controller.getCurrentUsername().toString());
+		
+		Conference[] curr_conference_array = controller
+				.getMyConferences(controller.getCurrentUsername().toString());
 		int total_current_conf = curr_conference_array.length;
 
-		JPanel panel_for_scrollpane = new JPanel(new GridLayout(total_current_conf + 1,
-				COLUMN_NAMES.length));
-		
-		for(int i = 0; i < COLUMN_NAMES.length; i++) {
+		JPanel panel_for_scrollpane = new JPanel(new GridLayout(
+				1, 2));
+
+		for (int i = 0; i < COLUMN_NAMES.length; i++) {
 			JLabel jl = new JLabel(COLUMN_NAMES[i], JLabel.CENTER);
 			jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			jl.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -281,46 +279,63 @@ public class HomeGUI extends JPanel {
 			attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 			jl.setFont(font.deriveFont(attributes));
 			panel_for_scrollpane.add(jl);
+			System.out.println(COLUMN_NAMES.length);
 		}
-		for (Conference element : curr_conference_array) {
-			final String conference_title = element.getConfTitle();
-			final Conference curr_conference = element;
-			final JLabel conference_name_jl = new JLabel(conference_title, JLabel.CENTER);
-			conference_name_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			conference_name_jl.setForeground(Color.BLUE);
-			conference_name_jl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-			final String box_clicked = conference_title + "box clicked";
-			final Font entered = new Font("Tahoma", Font.BOLD, 17);
-			final Font exited = new Font("Tahoma", Font.BOLD, 12);
-			conference_name_jl.addMouseListener(new MouseListener() {
-				public void mouseClicked(MouseEvent arg0) {
-
-				}
-
-				public void mouseEntered(MouseEvent arg0) {
-					conference_name_jl.setFont(entered);
-				}
-
-				public void mouseExited(MouseEvent arg0) {
-					conference_name_jl.setFont(exited);
-				}
-
-				public void mousePressed(MouseEvent arg0) {
-					System.out.println(box_clicked);
-					controller.setCurrentConference(curr_conference);
-				}
-
-				public void mouseReleased(MouseEvent arg0) {
-				}
-			});
-			panel_for_scrollpane.add(conference_name_jl);
-			JLabel date_jl = new JLabel(element.getConfDate().toString(), JLabel.CENTER);
-			date_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			panel_for_scrollpane.add(date_jl);
-		}
-
-		my_conferences_scrollPane.add(panel_for_scrollpane);
-
+		
+		System.out.println(curr_conference_array.toString());
+		System.out.println(curr_conference_array.length);
+//		System.out.println(curr_conference_array[0].toString());
+//		if (curr_conference_array != null) {
+//			for (Conference element : curr_conference_array) {
+//				final String conference_title = element.getConfTitle();
+//				final Conference curr_conference = element;
+//				final JLabel conference_name_jl = new JLabel(conference_title,
+//						JLabel.CENTER);
+//				conference_name_jl.setBorder(BorderFactory
+//						.createLineBorder(Color.BLACK));
+//				conference_name_jl.setForeground(Color.BLUE);
+//				conference_name_jl.setCursor(new java.awt.Cursor(
+//						java.awt.Cursor.HAND_CURSOR));
+//				final String box_clicked = conference_title + "box clicked";
+//				final Font entered = new Font("Tahoma", Font.BOLD, 17);
+//				final Font exited = new Font("Tahoma", Font.BOLD, 12);
+//				conference_name_jl.addMouseListener(new MouseListener() {
+//					public void mouseClicked(MouseEvent arg0) {
+//
+//					}
+//
+//					public void mouseEntered(MouseEvent arg0) {
+//						conference_name_jl.setFont(entered);
+//					}
+//
+//					public void mouseExited(MouseEvent arg0) {
+//						conference_name_jl.setFont(exited);
+//					}
+//
+//					public void mousePressed(MouseEvent arg0) {
+//						System.out.println(box_clicked);
+//						controller.setCurrentConference(curr_conference);
+//					}
+//
+//					public void mouseReleased(MouseEvent arg0) {
+//					}
+//				});
+//				panel_for_scrollpane.add(conference_name_jl);
+//				JLabel date_jl = new JLabel(element.getConfDate().toString(),
+//						JLabel.CENTER);
+//				date_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//				panel_for_scrollpane.add(date_jl);
+//			}
+//			
+//		}
+		
+		panel_for_scrollpane.setBackground(BACKGROUND_COLOR);
+		panel_for_scrollpane.setSize(10000, 10000);
+		JScrollPane my_conferences_scrollpane = new JScrollPane(panel_for_scrollpane, 22, 32);
+		my_conferences_scrollpane.setBounds(204, 98, 514, 125);
+		my_conferences_scrollpane.setViewportBorder(new BevelBorder(
+				BevelBorder.LOWERED, null, null, null, null));
+		inner_panel.add(my_conferences_scrollpane);
 	}
 
 	/**
