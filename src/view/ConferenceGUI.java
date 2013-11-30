@@ -201,11 +201,11 @@ public class ConferenceGUI extends JPanel {
 	private void createConferenceDateArray() {
 		JPanel conference_dates_panel = new JPanel();
 		String[] conference_date_array = new String[5];
-//		conference_date_array[0]= controller.getCurrentConference().getSubmissionDead().toString();
-//		conference_date_array[1]= controller.getCurrentConference().get
-//		conference_date_array[2]= controller.getCurrentConference().
-//		conference_date_array[3]= controller.getCurrentConference().
-//		conference_date_array[4]= controller.getCurrentConference().
+		conference_date_array[0]= controller.getCurrentConference().getSubmissionDead().toString();
+		conference_date_array[1]= controller.getCurrentConference().getReviewDead().toString();
+		conference_date_array[2]= controller.getCurrentConference().getSubPCReccomendDead().toString();
+		conference_date_array[3]= controller.getCurrentConference().getAuthorNotificationDead().toString();
+		conference_date_array[4]= controller.getCurrentConference().getConfDate().toString();
 		conference_dates_panel.setBorder(new BevelBorder(BevelBorder.LOWERED,
 				null, null, null, null));
 		conference_dates_panel.setBounds(848, 234, 397, 100);
