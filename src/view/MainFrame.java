@@ -83,6 +83,7 @@ public class MainFrame extends JFrame implements Observer {
 			add(currentPanel);
 			pack();
 			setVisible(true);
+			loginWindow.setDefaultCurserPosition();
 			break;
 		case REGISTER:
 			RegisterGUI registerWindow = new RegisterGUI(controller);
@@ -245,5 +246,20 @@ public class MainFrame extends JFrame implements Observer {
 		add(currentPanel);
 		pack();
 		setVisible(true);
+		loginWindow.setDefaultCurserPosition();
 	}
 }
+
+/*
+ * TODO:
+ * 
+ * 1.  controller.addReviewers()
+ * 2.  controller.canAddReview()
+ * 3.  controller.setPaperRelation()
+ * 4.  controller.getRelationToPaper()
+ * 5.  controller.checkValidUsernamePassword()
+ * 7.  controller.getReviews()
+ * 
+ * 
+ * 
+ */

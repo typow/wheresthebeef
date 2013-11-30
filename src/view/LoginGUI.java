@@ -187,7 +187,6 @@ public class LoginGUI extends JPanel {
 		separator.setBounds(20, 127, 1250, 12);
 		contentPane.add(separator);
 		
-		
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -203,6 +202,10 @@ public class LoginGUI extends JPanel {
 	 */
 	public JComponent getGUI() {
 		return contentPane;
+	}
+	
+	public void setDefaultCurserPosition(){
+		username_field.requestFocusInWindow();
 	}
 	
 	/**
