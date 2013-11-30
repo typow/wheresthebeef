@@ -91,9 +91,24 @@ public class ConferenceGUI extends JPanel {
 	private static final String BACK_STRING = "Navigate to the last screen (ALT+B)";
 	
 	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String SUBMIT_STRING = "Navigate to the submit paper screen (ALT+S)";
+	
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String LOGOUT_STRING = "Logout of the system (ALT+L)";
+	
+	/*
 	 * the Action associated with the logout button
 	 */
 	private Action my_logout_action;
+	
+	/*
+	 * the Action associated with the submit button
+	 */
+	private Action my_submit_action;
 
 	/*
 	 * the Action associated with the back button
@@ -109,11 +124,11 @@ public class ConferenceGUI extends JPanel {
 	 * The text to display on the logout button.
 	 */
 	private static final String LOGOUT_TITLE_STRING = "Logout";
-
+	
 	/*
-	 * The message the will pop up when the user floats above the button.
+	 * The text to display on the logout button.
 	 */
-	private static final String LOGOUT_STRING = "Logout of the system (ALT+L)";
+	private static final String SUBMIT_TITLE_STRING = "Submit Paper";
 
 	/*
 	 * The text to display on the logout button.
@@ -150,37 +165,16 @@ public class ConferenceGUI extends JPanel {
 		buildScrollPanel();
 
 		buildUserDataPanel();
+		
+		submitPapersetup();
+		
+		createConferenceDateArray();
 
-		JPanel conference_dates_panel = new JPanel();
-		conference_dates_panel.setBorder(new BevelBorder(BevelBorder.LOWERED,
-				null, null, null, null));
-		conference_dates_panel.setBounds(848, 234, 397, 100);
-		conference_dates_panel.setLayout(new GridLayout(5, 3));
-		JLabel deadline_label = new JLabel(" Deadline Dates:");
-		deadline_label.setFont(new Font("Tahoma", Font.BOLD, 11));
-		conference_dates_panel.add(deadline_label);
-		for (int i = 2; i <= 15; i++) {
-			if ((i - 2) % 3 == 0) {
-				conference_dates_panel.add(new JLabel(
-						DEADLINES_PANEL[(i - 2) / 3]));
-			}
-			if (i % 3 == 1) {
-				conference_dates_panel.add(new JLabel(""));
-			}
-			if (i % 3 == 0) {
-				conference_dates_panel.add(new JLabel("1/1/11"));
-			}
-
-		}
-		conference_dates_panel.setBackground(INNER_BACKGROUND_COLOR);
-		main_panel.add(conference_dates_panel);
+		
 		
 		
 
-		JButton btnNewButton = new JButton("Submit Paper");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnNewButton.setBounds(429, 234, 404, 101);
-		main_panel.add(btnNewButton);
+		
 		
 		JPanel conference_panel = new JPanel();
 		conference_panel.setBounds(10, 137, 1235, 91);//(848, 234, 397, 100);
@@ -204,6 +198,51 @@ public class ConferenceGUI extends JPanel {
 	
 	
 
+	private void createConferenceDateArray() {
+		JPanel conference_dates_panel = new JPanel();
+		String[] conference_date_array = new String[5];
+//		conference_date_array[0]= controller.getCurrentConference().getSubmissionDead().toString();
+//		conference_date_array[1]= controller.getCurrentConference().get
+//		conference_date_array[2]= controller.getCurrentConference().
+//		conference_date_array[3]= controller.getCurrentConference().
+//		conference_date_array[4]= controller.getCurrentConference().
+		conference_dates_panel.setBorder(new BevelBorder(BevelBorder.LOWERED,
+				null, null, null, null));
+		conference_dates_panel.setBounds(848, 234, 397, 100);
+		conference_dates_panel.setLayout(new GridLayout(5, 3));
+		JLabel deadline_label = new JLabel(" Deadline Dates:");
+		deadline_label.setFont(new Font("Tahoma", Font.BOLD, 11));
+		conference_dates_panel.add(deadline_label);
+		for (int i = 2; i <= 15; i++) {
+			if ((i - 2) % 3 == 0) {
+				conference_dates_panel.add(new JLabel(
+						DEADLINES_PANEL[(i - 2) / 3]));
+			}
+			if (i % 3 == 1) {
+				conference_dates_panel.add(new JLabel(""));
+			}
+			if (i % 3 == 0) {
+				conference_dates_panel.add(new JLabel("1/1/11"));
+			}
+
+		}
+		conference_dates_panel.setBackground(INNER_BACKGROUND_COLOR);
+		main_panel.add(conference_dates_panel);
+		
+	}
+
+
+
+	private void submitPapersetup() {
+		JButton btnNewButton = new JButton("Submit Paper");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnNewButton.setBounds(429, 234, 404, 101);
+		main_panel.add(btnNewButton);
+		
+	}
+
+
+
 	private void buildButtonPanel() {
 		JPanel button_panel = new JPanel();
 		button_panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null,
@@ -223,7 +262,7 @@ public class ConferenceGUI extends JPanel {
 		button_panel.add(logout_button);
 
 		JButton back_button = new JButton(my_back_action);
-		back_button.setBounds(15, 50, 150, 22);
+		back_button.setBounds(15, 54, 150, 22);
 		button_panel.add(back_button);
 		
 		main_panel.add(button_panel);
@@ -348,10 +387,7 @@ public class ConferenceGUI extends JPanel {
 		my_logout_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_L);
 
 		/*
-		 * The action associated with clicking back, in this case, the same as
-		 * logging out. In the future, the back button will just take you back
-		 * to the previous screen, but for the sake of continuity and flow, I
-		 * included the back button here as well
+		 * The action associated with clicking back, in this case the homeGUI screen. 
 		 */
 		my_back_action = new AbstractAction(BACK_TITLE_STRING, null) {
 			@Override
@@ -366,6 +402,20 @@ public class ConferenceGUI extends JPanel {
 		};
 		my_back_action.putValue(Action.SHORT_DESCRIPTION, BACK_STRING);
 		my_back_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_B);
+		
+		/*
+		 * The action associated with clicking submit paper 
+		 */
+		my_submit_action = new AbstractAction(BACK_TITLE_STRING, null) {
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				// the user is logging out by going back one screen.
+				controller.setCurrentPaper("");
+				controller.setStateOfGUI(StateOfGUI.SUBMIT_PAPER);
+			}
+		};
+		my_submit_action.putValue(Action.SHORT_DESCRIPTION, BACK_STRING);
+		my_submit_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_S);
 
 	}
 }
