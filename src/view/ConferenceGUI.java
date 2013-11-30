@@ -24,7 +24,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -42,6 +41,7 @@ import controller.Controller;
  * @author Warrick Holfeld
  * @version 11/29/13
  */
+@SuppressWarnings("serial")
 public class ConferenceGUI extends JPanel {
 
 	private JPanel contentPane;
