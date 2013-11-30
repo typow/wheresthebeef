@@ -204,6 +204,13 @@ public class LoginGUI extends JPanel {
 		return contentPane;
 	}
 	
+	/**
+	 * 
+	 * Sets the initial curser position to the username field.
+	 * 
+	 * <dt><b>Preconditions: The LoginGUI has already been instantiated.</b><dd>
+	 * <dt><b>Postconditions: The curser position is set to the username field.</b><dd>
+	 */
 	public void setDefaultCurserPosition(){
 		username_field.requestFocusInWindow();
 	}

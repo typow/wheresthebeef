@@ -523,7 +523,7 @@ public class Controller extends Observable{
 		//		they are a reviewer from the review table if not check if they are subprog from rec table
 		String username = "";
 		//temporary:
-		paperRelation relation = paperRelation.AUTHOR;
+		paperRelation relation = paperRelation.REVIEWER;
 		//First Check if they are the author
 		try {
 			
