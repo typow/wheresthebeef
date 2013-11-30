@@ -574,7 +574,7 @@ public class Controller extends Observable{
 			resultSet = statement.executeQuery();
 			
 			while (resultSet.next()) {
-				if (resultSet.getString(5).equals(the_conference)) {		// Tests that the paper is associated
+				if (resultSet.getString(5).equals(the_conference.getConfTitle())) {		// Tests that the paper is associated
 																    // with the desired conference.
 					
 					adminStatus = GUIEnum.stringToAdminViewable(resultSet.getString(7));	
@@ -609,7 +609,7 @@ public class Controller extends Observable{
 			resultSet = statement.executeQuery();
 			
 			while (resultSet.next()) {
-				if (resultSet.getString(5).equals(the_conference)) {		// Tests that the paper is associated
+				if (resultSet.getString(5).equals(the_conference.getConfTitle())) {		// Tests that the paper is associated
 																    // with the desired conference.
 					
 					authorStatus = GUIEnum.stringToAuthorViewable(resultSet.getString(6));
@@ -827,7 +827,7 @@ public class Controller extends Observable{
 			resultSet = statement.executeQuery();
 			
 			while (resultSet.next()) {
-				if (resultSet.getString(5).equals(the_conf)) {		// Tests that the paper is associated
+				if (resultSet.getString(5).equals(the_conf.getConfTitle())) {		// Tests that the paper is associated
 																    // with the desired conference.
 					paperID = resultSet.getInt(1);
 					break;
@@ -904,7 +904,7 @@ public class Controller extends Observable{
 			resultSet = statement.executeQuery();
 			
 			while (resultSet.next()) {
-				if (resultSet.getString(5).equals(the_conference)) {		// Tests that the paper is associated
+				if (resultSet.getString(5).equals(the_conference.getConfTitle())) {		// Tests that the paper is associated
 																    		// with the desired conference.
 					paperID = resultSet.getInt(1);
 					break;
