@@ -26,8 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 
-import com.jgoodies.forms.builder.ButtonStackBuilder;
-
+import view.GUIEnum;
 import view.GUIEnum.StateOfGUI;
 import view.GUIEnum.paperRelation;
 import view.GUIEnum.paperStatusAdminViewable;
@@ -565,20 +564,67 @@ public class Controller extends Observable{
 	}
 	
 	public paperStatusAdminViewable getAdminPaperStatus(final Conference the_conference, final String the_paper_title){
-		//TODO: return the adminstrative viewable status of the paper.
 		
+		paperStatusAdminViewable adminStatus = null;
 		
-		//temporary:
-		paperStatusAdminViewable adminStatus = paperStatusAdminViewable.SUBMITTED;
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE name=" +"'" + the_paper_title +"'");
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				if (resultSet.getString(5).equals(the_conference)) {		// Tests that the paper is associated
+																    // with the desired conference.
+					
+					adminStatus = GUIEnum.stringToAdminViewable(resultSet.getString(7));	
+					break;
+				}			
+			}
+						
+		} catch (Exception e) {
+			System.out.println("paperStatusAdminViewable failed!");
+		}
+		
+		if (adminStatus.equals(null)) {
+			System.out.println("paperStatusAdminViewable failed!");
+		}
+		
 		return adminStatus;
 	}
 	
-	public paperStatusAuthorViewable getStatusAuthorView(final Conference the_conference, final String the_paper_title){
-		//TODO: return the author viewable status of the paper.
+	/*
+	 * Returns the status of the paper that an author is privy to given the title of a paper
+	 * and its corresponding conference. This method returns null if there is either a SQL exception
+	 * or if the paper title isn't associated with the passed in conference.
+	 */
+	public paperStatusAuthorViewable getStatusAuthorView(final Conference the_conference, final String the_paper_title) {
 		
+		paperStatusAuthorViewable authorStatus = null;
 		
-		//temporary:
-		paperStatusAuthorViewable authorStatus = paperStatusAuthorViewable.SUBMITTED;
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE name=" +"'" + the_paper_title +"'");
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				if (resultSet.getString(5).equals(the_conference)) {		// Tests that the paper is associated
+																    // with the desired conference.
+					
+					authorStatus = GUIEnum.stringToAuthorViewable(resultSet.getString(6));
+					break;
+				}			
+			}
+						
+		} catch (Exception e) {
+			System.out.println("paperStatusAuthorViewable failed!");
+		}
+		
+		if (authorStatus.equals(null)) {
+			System.out.println("paperStatusAuthorViewable failed!");
+		}
+		
 		return authorStatus;
 	}
 	
@@ -763,9 +809,13 @@ public class Controller extends Observable{
 		}
 	}
 	
+	/*
+	 * Retrieves the SubPC's recommendation for a paper from the database
+	 * given a conference and a paper within that conference. If the paper does
+	 * not exist in that conference the sentinel value paperID = -1 and it returns
+	 * a blank string for the rationale.
+	 */
 	public String getPaperRecommendationRationale(final Conference the_conf, final String the_paper){
-		//TODO: the GUI needs to be able to retrieve the SubPC's recommendation for a paper
-		//		return the Recommendation Rationale String (Jacob)
 		
 		int paperID = -1;		// Sentinel -1: if selected paper doesn't exist in that conference.
 		String result = "";
@@ -788,6 +838,7 @@ public class Controller extends Observable{
 				statement = connect.prepareStatement(
 						"SELECT * FROM recommendations WHERE paperid= " + paperID);
 				resultSet = statement.executeQuery();
+				result = resultSet.getString(8);			// Location of the rationale in the Database
 			} else {
 				System.out.println("Requested Paper doesn't exist in that conference");
 			}
@@ -832,25 +883,87 @@ public class Controller extends Observable{
 		return temp;
 	}
 	
+	/*
+	 * This method returns all of the userNames of the reviewers that are assigned to a particular
+	 * paper. The length of the array indicates how many are assigned (i.e. 0 = no reviewers). This
+	 * method also prints to the console if the paper passed in has no association to the conference
+	 * passed in.
+	 */
 	public String[] getUsersAssignedAsReviewers(final Conference the_conference, final String current_paper){
-		//TODO: the AssignReviewerGUI (and propably the ManagePaperGUI) will use this method to retrieve an
-		//		array of usernames of the Reviewers assigned to a paper.  If there are none, return an empty array.
-		//		the GUI will use that datastruct to make sure that no more than 4 reviewers are assigned to a paper
-		//		already.  i.e. if 3 reviewers are returned here, 1 more can be added, no more.
 		
-				//temporary:
-				String[] reviewers = new String[]{"chippy"};
+		int count = 0;			// Keeps track of the number of reviewers for creating the array
+		int paperID = -1;		// ID # of the paper, to search for the reviewers. Sentinel -1 if
+								// the current_paper isn't associated with the_conference.
+		
+		String[] temp = new String[4];			// Temporarily stores the result from the DB
+		String[] result = new String[0];		// Default length 0 if no reviews- reassigned later if some exist in the DB
+		try {
 			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE name=" +"'" + current_paper +"'");
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				if (resultSet.getString(5).equals(the_conference)) {		// Tests that the paper is associated
+																    		// with the desired conference.
+					paperID = resultSet.getInt(1);
+					break;
+				}			
+			}	
+			
+			// If a valid paperID was found, gets all reviews associated with that paperID
+			if (paperID != -1) {
+				statement = connect.prepareStatement(
+						"SELECT * FROM reviews WHERE paperid= " + paperID);
+				resultSet = statement.executeQuery();
+				
+				// Goes through the resultSet of reviews which are associated with the paper
+				while (resultSet.next()) {				
+					temp[count] = resultSet.getString(3);
+					count++;
+				}
+				
+				// Copies the temp array into the result array
+				result = new String[count];
+				for (int i = 0; i < count; i++) {
+					result[i] = temp[i];
+				}
+				
+			} else {
+				System.out.println("Requested Paper doesn't exist in that conference");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getUsersAssignedAsReviewers failed!");
+		}		
 		
-		return reviewers;
+		return result;
 	}
 	
+	/*
+	 * Method that returns the PC for a given conference.
+	 * This method returns null if the conference can't be found in the database.
+	 */
+	//TODO: Check paperID
 	public String getUserAssignedAsPC(final Conference the_conference, final int current_paper){
-		//TODO: return the username of the person assigned as PC for a particular paper
 		
-				//temporary:
-				String name = "program chair's username";
-		return name;
+		String result = null;
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT progchair FROM conference WHERE name=" +"'" + the_conference.getConfTitle() +"'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				result = resultSet.getString(1);		
+			}	
+			
+			
+		} catch (Exception e) {
+			System.out.println("getUserAssignedAsPC failed!");
+		}
+		
+		return result;
 	}
 	
 	public String getUserAssignedAsSubPC(final Conference the_conference, final int current_paper){
@@ -872,17 +985,80 @@ public class Controller extends Observable{
 		return subPC;
 	}
 	
+	/*
+	 * Method that returns all of the available reviewers for a given paper.
+	 * This method follows the business rules:
+	 * 			- the reviewer can't be the author of the paper.
+			  	- the reviewer can't be the person assigning the review, unless they're the PC.
+				- the reviewer in this list can't be one of the reviewers already assigned to this paper (they can't be assigned twice)
+				- TODO: May need to insert more business rules
+	 * 
+	 */
 	public String[] getAvailableReviewers(final Conference the_conference, final String the_paper, final String the_person_assigning){
-		//TODO: theAssignReviewerGUI needs an array of usernames of people that are capable of being a reviewer
-		//		Note: - the reviewer can't be the author of the paper.
-		//			  - the reviewer can't be the person assigning the review, unless they're the PC.
-		//			  - the reviewer in this list can't be one of the reviewers already assigned to this paper (they can't be assigned twice)
-		//			  - insert any other business rules here I'm missing
-		//		return a string array and they'll be listed in the GUI to be picked from.
 		
-					//temporary:
-					String[] reviewers = new String[]{"hank", "biff", "sally", "Mr Who Flung Dung", "I.P. Freely"};
-		return reviewers;
+		List<String> result = new ArrayList<String>();
+		String[] reviewers = getUsersAssignedAsReviewers(the_conference, the_paper);		// Retrieves reviewers assigned to paper
+		
+		String user = "";		// User obtained from the database to test against business rules
+		String author = "";
+		String PC = "";
+		
+		boolean ruleViolated = false;		// boolean to keep track if one of the business rules has been violated
+		
+		try {
+			
+			// Get the author of the paper to check against usernames
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT author FROM papers WHERE name='" + the_paper + "'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				author = resultSet.getString(1);
+			}
+			
+			// Get program chair of conference to check against the_person_assigning
+			statement = connect.prepareStatement(
+					"SELECT progchair FROM conference WHERE name='" + the_conference.getConfTitle() + "'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				PC = resultSet.getString(1);
+			}
+			
+			// Gets a list of all users in the DB to check against business rules
+			statement = connect.prepareStatement(
+					"SELECT username FROM users");
+			resultSet = statement.executeQuery();			
+			
+			while (resultSet.next()) {
+				user = resultSet.getString(1);
+				
+				// The reviewer can't be the same as the author
+				if (!(author.equals(user))) {				
+					
+					// The reviewer can't be the person assigning unless they're the PC
+					if (user.equals(PC) || (!(user.equals(the_person_assigning)))) {
+						
+						// The reviewer can't have already been assigned to this paper
+						for (int i = 0; i < reviewers.length && !ruleViolated; i++) {
+							if (user.equals(reviewers[i])) {
+								ruleViolated = true;
+							}
+						}
+						
+						// If no rules were violated, add to list
+						if (!ruleViolated) {
+							result.add(user);
+						}
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getAvailableReviewers failed!");
+		}
+					
+		return (String[]) result.toArray();
 	}
 	
 	public void addReviewers(final Conference the_conference, final String the_paper, final String[] the_reviewers){
