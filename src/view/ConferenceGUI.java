@@ -13,11 +13,14 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.TextAttribute;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -74,6 +77,26 @@ public class ConferenceGUI extends JPanel {
 	 * The CMS controller
 	 */
 	private Controller controller;
+	
+	/*
+	 * The size of the JPanel.
+	 */
+	private static final Dimension WIN_DIMENSION = new Dimension(1280, 720);
+
+	/*
+	 * The text to display on the logout button.
+	 */
+	private static final String LOGOUT_TITLE_STRING = "Logout";
+
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String LOGOUT_STRING = "Logout of the system (ALT+L)";
+
+	/*
+	 * The text to display on the logout button.
+	 */
+	private static final String BACK_TITLE_STRING = "<-- Back";
 
 	/**
 	 * Create the frame.
@@ -81,8 +104,8 @@ public class ConferenceGUI extends JPanel {
 	public ConferenceGUI(final Controller the_controller) {
 		super();
 		controller = the_controller;
-		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();
+		contentPane.setPreferredSize(WIN_DIMENSION);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		
@@ -140,7 +163,7 @@ public class ConferenceGUI extends JPanel {
 		
 		main_panel.add(conference_panel);
 		JLabel conference_title_string = new JLabel(
-				"Trees: Our Best Friends or Worst Enemies?", JLabel.CENTER);
+				controller.getCurrentConference().getConfTitle(), JLabel.CENTER);
 		conference_panel.add(conference_title_string, BorderLayout.CENTER);
 		conference_title_string.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
@@ -164,19 +187,21 @@ public class ConferenceGUI extends JPanel {
 		JLabel label_2 = new JLabel(" User:");
 		label_2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		user_info_panel.add(label_2);
-		JLabel label = new JLabel("Biff McMann");
+		JLabel label = new JLabel(controller.getCurrentUsername());
 		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		user_info_panel.add(label);
 		JLabel label_3 = new JLabel(" Position:");
 		label_3.setFont(new Font("Tahoma", Font.BOLD, 11));
 		user_info_panel.add(label_3);
-		JLabel label_1 = new JLabel("Program Chair");
+		
+		JLabel label_1 = new JLabel("Needs fixed");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		user_info_panel.add(label_1);
 		JLabel label_4 = new JLabel(" Date:");
 		label_4.setFont(new Font("Tahoma", Font.BOLD, 11));
 		user_info_panel.add(label_4);
-		JLabel label_5 = new JLabel("9/23/2013");
+		String timestamp = new SimpleDateFormat("MM/dd/yyyy").format(Calendar.getInstance().getTime());
+		JLabel label_5 = new JLabel(timestamp);
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		user_info_panel.add(label_5);
 		main_panel.add(user_info_panel);

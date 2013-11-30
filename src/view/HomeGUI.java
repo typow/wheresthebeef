@@ -202,16 +202,16 @@ public class HomeGUI extends JPanel {
 		username_label.setHorizontalAlignment(SwingConstants.CENTER);
 		username_label.setFont(new Font("Tahoma", Font.BOLD, 16));
 
-		JButton button = new JButton(my_logout_action);
-		button.setBounds(20, 97, 150, 22);
-		inner_panel.add(button);
+		JButton logout_button = new JButton(my_logout_action);
+		logout_button.setBounds(20, 97, 150, 22);
+		inner_panel.add(logout_button);
 
-		JButton button_1 = new JButton(my_back_action);
-		button_1.setBounds(20, 130, 152, 22);
-		inner_panel.add(button_1);
-		JButton button_2 = new JButton(my_new_conf_action);
-		button_2.setBounds(22, 163, 150, 22);
-		inner_panel.add(button_2);
+		JButton back_button = new JButton(my_back_action);
+		back_button.setBounds(20, 130, 152, 22);
+		inner_panel.add(back_button);
+		JButton new_conf_button = new JButton(my_new_conf_action);
+		new_conf_button.setBounds(22, 163, 150, 22);
+		inner_panel.add(new_conf_button);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(182, 70, 2, 352);
