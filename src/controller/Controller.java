@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 
+import com.jgoodies.forms.builder.ButtonStackBuilder;
+
 import view.GUIEnum.StateOfGUI;
 import view.GUIEnum.paperRelation;
 import view.GUIEnum.paperStatusAdminViewable;
@@ -530,15 +532,36 @@ public class Controller extends Observable{
 			final String the_username, final paperRelation the_relation){
 		//TODO: The GUI needs to be able to set a person's relation to a paper to be later queried.  (Jacob)
 		//kind of the same idea as getRelationToPaper()
+		
+		
+		
 	}
 	
 	
-	
+	/**
+	 * Sets the statuses of a paper.
+	 * 
+	 * @param the_conference The conference object
+	 * @param the_paper_title The title of the paper.
+	 * @param the_author_viewable_status The status to be updated to.
+	 * @param the_admin_viewable_status The status to be updated to.
+	 * @author Aaron
+	 */
 	public void setPaperStatus(final Conference the_conference, final String the_paper_title, 
 			paperStatusAuthorViewable the_author_viewable_status, paperStatusAdminViewable the_admin_viewable_status){
 		
 		//TODO: this is a generic update of the Paper status for both author viewable and admin viewable called at different
 		//		points in the program when reviews are submitted and so on.
+		
+		try {
+			PreparedStatement statement = connect.prepareStatement("UPDATE papers SET status='" + the_author_viewable_status + "', " +
+					"adminstat='" + the_admin_viewable_status + "' WHERE name='" + the_paper_title + "'");
+			statement.execute();
+		} catch (SQLException e) {
+			System.out.println("Error setting paper status." + e.getMessage());
+		}
+		
+		
 	}
 	
 	public paperStatusAdminViewable getAdminPaperStatus(final Conference the_conference, final String the_paper_title){
@@ -567,14 +590,70 @@ public class Controller extends Observable{
 		return current_paper;
 	}
 	
+	/**
+	 * Deletes the paper from the table.
+	 * 
+	 * @param the_conference The conference object.
+	 * @param the_username The username of the current user.
+	 * @param the_paper_title The title of the paper to be deleted.
+	 * @author Aaron
+	 */
 	public void deletePaper(final Conference the_conference, final String the_username, final String the_paper_title){
 		//TODO: Remove this paper from the database
+		
+		PreparedStatement statement;
+		try {
+			statement = connect.prepareStatement("DELETE FROM papers WHERE name='" + the_paper_title + "'");
+			statement.execute();
+		} catch (SQLException e) {
+			System.out.println("Error deleting paper." + e.getMessage());
+		}
+		
 	}
 	
+	/**
+	 * Creates a new review.
+	 * 
+	 * @param the_reviewer_username The username of the reviewer.
+	 * @param the_conf The conference object.
+	 * @param the_paper The name of the paper the review is for.
+	 * @param the_paper_author The author of the paper being reviewed.
+	 * @param the_comments_to_subpc The comments to the sub program chair.
+	 * @param the_answersRadioBtn The answers to the review questions.
+	 * @param the_summary_comments The comments on the paper. 
+	 */
 	public void createNewReview(final String the_reviewer_username, final Conference the_conf, 
 			final String the_paper, final String the_paper_author, final String the_comments_to_subpc, 
 			final int[] the_answersRadioBtn, final String the_summary_comments){
 		//TODO: add these elements to the database as one single review item
+		
+		int paperId = 0;
+		try {
+			PreparedStatement statement = connect.prepareStatement("SELECT id FROM papers WHERE name='" + the_paper + "'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next())
+			{
+				paperId = Integer.parseInt(resultSet.getString(1));
+			}
+			System.out.println(paperId);
+			
+		} catch (SQLException e) {
+			System.out.println("Error creating new review." + e.getMessage());
+		}
+		
+		try {
+			PreparedStatement statement = connect.prepareStatement("INSERT INTO reviews VALUES (1, " + paperId + ", " +
+					"'" + the_reviewer_username + "', '" + the_conf.getConfTitle() + "', '" + the_paper + "', " +
+				    "'" + the_paper_author + "', " + the_answersRadioBtn[0] + ", " + the_answersRadioBtn[1] + ", " +
+				    the_answersRadioBtn[2] + ", " + the_answersRadioBtn[3] + ", " + the_answersRadioBtn[4] + ", " +
+				    the_answersRadioBtn[5] + ", " + the_answersRadioBtn[6] + ", " + the_answersRadioBtn[7] + ", " +
+				    the_answersRadioBtn[8] + ", " + the_answersRadioBtn[9] + ", '" + the_summary_comments + "')");
+			statement.execute();
+		} catch (SQLException e) {
+			System.out.println("Error creating new review part 2." + e.getMessage());
+		}
+		
 	}
 	/**
 	 * 
@@ -1150,9 +1229,17 @@ public class Controller extends Observable{
 	public static void main(String args[]) throws ParseException {
 		Controller controller = new Controller();
 		Conference[] conn = controller.getUpcommingConferences();
-		controller.getAvailableForSubPC(conn[1], 2, "Tyler Powers");
-		controller.getMyPapers("TestTest", "Test username");
-		controller.getPaperID("Packing on Abs");
+		//controller.getAvailableForSubPC(conn[1], 2, "Tyler Powers");
+		//controller.getMyPapers("TestTest", "Test username");
+		//controller.getPaperID("Packing on Abs");
+		//controller.setPaperStatus(conn[0], "Packing on Abs", paperStatusAuthorViewable.ACCEPTED, paperStatusAdminViewable.OVERDUE_FOR_RECOMMEND);
+		int buttons[] = new int[10];
+		for (int i = 0; i < 10; i++)
+		{
+			buttons[i] = i;
+		}
+		
+		controller.createNewReview("Obama", conn[0], "Baking Pi", "Michael Phelps", "Lame", buttons, "Lamer");
 	}
 
 
