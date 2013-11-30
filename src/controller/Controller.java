@@ -42,46 +42,46 @@ import view.GUIEnum.paperStatusAuthorViewable;
  */
 public class Controller extends Observable{
 	
-	/*
+	/**
 	 * The connection the controller has to the Database.
 	 * This connection is set up during construction.
 	 */
 	private Connection connect = null;
 	
-	/*
+	/**
 	 * The statement is the String that is fed to the database 
 	 * to issue SQL commands.
 	 */
 	private Statement statement = null;
 	
-	/*
+	/**
 	 * The resultSet is what is returned from the database
 	 * after the statement has been sent.
 	 */
 	private ResultSet resultSet = null;
 
-	/*
+	/**
 	 * The current state (mode of operation) the GUI is currently in.
 	 * @see StateOfGUI
 	 */
 	private StateOfGUI state;
 	
-	/*
+	/**
 	 * The current user logged in.
 	 */
 	private String current_user = "";
 	
-	/*
+	/**
 	 * The current conference (if any) that is being evaluated by the user 
 	 */
 	private Conference current_conference;
 	
-	/*
+	/**
 	 * The current paper (if any) that is being evaluated by the user
 	 */
 	private static String current_paper = "";
 	
-	/*
+	/**
 	 * A list of all conferences
 	 */
 	List<Conference> listOfAllConferences;
@@ -146,9 +146,9 @@ public class Controller extends Observable{
 	public Boolean checkValidUsername(final String the_username)
 	{
 		Boolean valid = false;
-		//TODO: check the username against database to see if this username
-		//		already exists in the database.  Jacob
-		//TODO: partially tested
+		//		 check the username against database to see if this username
+		//		 already exists in the database.  Jacob
+		//		 partially tested
 		
 		try {
 			
@@ -506,23 +506,119 @@ public class Controller extends Observable{
 	}
 	
 	/**
+	 * Returns the relation of the person passed in with the paper passed in.  Tells if they are Author,
+	 * Reviewer, SUBPC, or PC.
 	 * 
-	 * @param the_conference The conference 
-	 * @param the_paper_title
-	 * @param the_username
-	 * @return
+	 * @param the_conference The conference the conference the paper belongs to
+	 * @param the_paper_title The name of the paper being examined for relation to
+	 * @param the_username the name of the person looking to see the relation of the paper
+	 * @return an enum that tells what the relation is of the person to the paper.
 	 */
 	public paperRelation getRelationToPaper(final Conference the_conference, final String the_paper_title, 
 			final String the_username){
-		//TODO: I'm not sure how the database is tracking this, but the GUI's need to be able to retrieve
+		//		I'm not sure how the database is tracking this, but the GUI's need to be able to retrieve
 		//		the user's relationship to a paper.  If they are the AUTHOR, REVIEWER, .....  (Jacob)
 		//		Tracking this right now is clumsy but doable go through the the conf and check if username
 		//		the same as the PC if so hes the PC if not check if hes author of the paper if not check if
 		//		they are a reviewer from the review table if not check if they are subprog from rec table
-
+		String username = "";
+		//temporary:
+		paperRelation relation = paperRelation.AUTHOR;
+		//First Check if they are the author
+		try {
+			
+			//Get all papers that conference, paper title, and author match
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE confname=" +"'" + the_conference.getConfTitle() + 
+					"' AND name='" + the_paper_title + "'");
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				username = resultSet.getString(2);//Author in papers table
+				//Means they are an author
+				if(the_username == username) {
+					relation = paperRelation.AUTHOR;
+				}
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Get paperRelation failed in author check");
+		}
 		
-			//temporary:
-			paperRelation relation = paperRelation.AUTHOR;
+		//Second Check if they are a reviewer
+		try {
+			int paperid = -1;
+			//Get all papers that conference, paper title, and author match
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE name=" +"'" + the_paper_title + "' AND confname='" + 
+					the_conference.getConfTitle() + "'");
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				paperid = resultSet.getInt(1);//paperid in papers table
+				statement = connect.prepareStatement("SELECT * FROM reviews WHERE paperid=" + paperid);
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					username = resultSet.getString(3); //reviewer in reviews table
+					if(username == the_username){
+						//Means they are a reviewer
+						relation = paperRelation.REVIEWER;
+						break;
+					}
+				}
+			}	
+			
+		} catch (Exception e) {
+			System.out.println("Get paperRelation failed in reviewer check");
+		}
+		
+		//Third Check if they are a subPC
+		try {
+			int paperid = -1;
+			//Get all papers that conference, paper title, and author match
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE name=" +"'" + the_paper_title + "' AND confname='" + 
+					the_conference.getConfTitle() + "'");
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				paperid = resultSet.getInt(1);//paperid in papers table
+				statement = connect.prepareStatement("SELECT * FROM recommendations WHERE paperid=" + paperid);
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					username = resultSet.getString(3); //subPC in recommendations table
+					if(username == the_username){
+						//Means they are the SUBPC
+						relation = paperRelation.SUBPC;
+						break;
+					}
+				}
+			}	
+			
+		} catch (Exception e) {
+			System.out.println("Get paperRelation failed in subpc check");
+		}
+		
+		//Last Check if they are the PC
+		try {
+			
+			//Get all papers that conference, paper title, and author match
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM conference WHERE name=" +"'" + the_conference.getConfTitle() + "'");
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				username = resultSet.getString(2); //Progchair
+				if(username == the_username){
+					//Means they are the PC
+					relation = paperRelation.PC;
+				}
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Get paperRelation failed in pc check");
+		}
+		
 		return relation;
 	}
 	 
@@ -740,7 +836,7 @@ public class Controller extends Observable{
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
-				username += resultSet.getString(2);
+				username = resultSet.getString(2);
 			}
 			
 		} catch (Exception e) {
@@ -752,6 +848,7 @@ public class Controller extends Observable{
 	
 	/**
 	 * 
+	 * 
 	 * @param the_sub_pc_username
 	 * @param current_conf
 	 * @param current_paper_being_recommended
@@ -762,7 +859,7 @@ public class Controller extends Observable{
 	public void addPaperRecommendation(final String the_sub_pc_username, final Conference current_conf, 
 			final String current_paper_being_recommended, final String the_paper_author, final int the_numerical_value,
 			final String the_rational_for_recommendation){
-		//TODO: the MakeRecommendationGUI will call this when it needs to add a single recommendation to a paper.  There should
+		//		the MakeRecommendationGUI will call this when it needs to add a single recommendation to a paper.  There should
 		//		only be one recommendation per paper.  Right now, I'm going on the assumption that if a Sub-PC goes back in
 		//		to submit a recommendation again, they will just be re-writing over a previous recommendation.  If you want to
 		//		handle this differently, let me know because I'll have to insert a try/catch and print out the exception message
@@ -1235,10 +1332,114 @@ public class Controller extends Observable{
 		return temp;
 	}
 	
+	/**
+	 * 
+	 * @param the_username
+	 * @return
+	 */
 	public Conference[] getMyConferences(final String the_username){
 	//TODO: do this....
 		//temporary
-		Conference[] the_conf_array = new Conference[1];
+		ResultSet resultSet2;
+		Conference[] the_conf_array = new Conference[100];
+		int index = 0;
+		//First add conferences they are PC of
+		try {
+			
+			//Get all conferences with a match for the username as the PC of the conference
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM conference WHERE progchair=" +"'" + the_username + "'");
+			resultSet = statement.executeQuery();
+			
+			//Add the conferences the user is PC of to the array
+			while (resultSet.next()) {			//(1) = confname		(2) = progchair
+				Conference con = new Conference(resultSet.getString(1), resultSet.getString(2),
+						resultSet.getDate(3), "", "", "", "", resultSet.getDate(4), resultSet.getDate(5),
+						resultSet.getDate(6), resultSet.getDate(7), resultSet.getString(8));
+				the_conf_array[index] = con;
+				index++;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getMyConferences failed in adding PC conf");
+		}
+		
+		//Second add conferences they are SUBPC of
+		try {
+			
+			//Get all recommendations with a match for the username as the subPC of the conference
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM recommendations WHERE subchair=" +"'" + the_username + "'");
+			resultSet = statement.executeQuery();
+			//Add the conferences the user is subPC of to the array
+			while (resultSet.next()) {
+				//gets the data for the conference to create a conference object to add to the array
+				PreparedStatement statement2 = connect.prepareStatement(
+						"SELECT * FROM conference WHERE name=" +"'" + resultSet.getString(4) + "'");
+				resultSet2 = statement2.executeQuery();
+				
+				Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
+						resultSet2.getDate(3), "", "", "", "", resultSet2.getDate(4), resultSet2.getDate(5),
+						resultSet2.getDate(6), resultSet2.getDate(7), resultSet2.getString(8));
+				the_conf_array[index] = con;
+				index++;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getMyConferences failed in adding subPC conf");
+		}
+		
+		//Third add conferences they are reviewers for
+		try {
+			
+			//Get all reviews with a match for the username as the reviewer of the conference
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM reviews WHERE reviewer=" +"'" + the_username + "'");
+			resultSet = statement.executeQuery();
+			//Add the conferences the user is a reviewer of to the array
+			while (resultSet.next()) {
+				//gets the data for the conference to create a conference object to add to the array
+				PreparedStatement statement2 = connect.prepareStatement(
+						"SELECT * FROM conference WHERE name=" +"'" + resultSet.getString(4) + "'");
+				resultSet2 = statement2.executeQuery();
+				
+				Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
+						resultSet2.getDate(3), "", "", "", "", resultSet2.getDate(4), resultSet2.getDate(5),
+						resultSet2.getDate(6), resultSet2.getDate(7), resultSet2.getString(8));
+				the_conf_array[index] = con;
+				index++;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getMyConferences failed in adding reviewer conf");
+		}
+		/*
+		//Fourth add conferences they are authors for papers of
+		try {
+			
+			//Get all papers with a match for the username as the author of the conference
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE author=" +"'" + the_username + "'");
+			resultSet = statement.executeQuery();
+			//Add the conferences the author has a paper in to the array
+			while (resultSet.next()) {
+				//gets the data for the conference to create a conference object to add to the array
+				PreparedStatement statement2 = connect.prepareStatement(
+						"SELECT * FROM conference WHERE name=" +"'" + resultSet.getString(5) + "'");
+				resultSet2 = statement2.executeQuery();
+				
+				Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
+						resultSet2.getDate(3), "", "", "", "", resultSet2.getDate(4), resultSet2.getDate(5),
+						resultSet2.getDate(6), resultSet2.getDate(7), resultSet2.getString(8));
+				the_conf_array[index] = con;
+				index++;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getMyConferences failed in adding author conf");
+			e.getStackTrace();
+		}
+		*/
 		return the_conf_array;
 	}
 	
