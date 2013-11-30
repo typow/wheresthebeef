@@ -437,7 +437,7 @@ public class ManageDatabase{
 		clearConferences();
 		try {
 			PreparedStatement statement = connect.prepareStatement("INSERT INTO conferences(NAME,  PROGCHAIR,  CONDATE,  SUBMITDATE,  REVIEWDATE,  RECDATE,  NOTIFYDATE,  SUMMARY)" +
-					" VALUES ('test', 'Boba Fett', '11/26/2013', '11/26/2013', '11/26/2013', '11/26/2013', '11/26/2013', 'test method')");
+					" VALUES ('test', 'bounty', '11/26/2013', '11/26/2013', '11/26/2013', '11/26/2013', '11/26/2013', 'test method')");
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println("Error resetting conferences " + e.getMessage());
@@ -448,7 +448,7 @@ public class ManageDatabase{
 	public static void main(String args[]) {
 		ManageDatabase md = new ManageDatabase();
 		//md.resetUsers();
-		//md.resetPapers();
+		md.resetPapers();
 		//md.resetConferences();
 		md.printDatabase();
 	}
