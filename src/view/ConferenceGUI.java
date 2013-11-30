@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
@@ -39,6 +40,7 @@ import javax.swing.border.BevelBorder;
 import view.GUIEnum.StateOfGUI;
 
 import controller.Controller;
+import java.awt.event.ActionListener;
 
 /**
  * The View Conference Panel
@@ -84,6 +86,21 @@ public class ConferenceGUI extends JPanel {
 	private Controller controller;
 	
 	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String BACK_STRING = "Navigate to the last screen (ALT+B)";
+	
+	/*
+	 * the Action associated with the logout button
+	 */
+	private Action my_logout_action;
+
+	/*
+	 * the Action associated with the back button
+	 */
+	private Action my_back_action;
+	
+	/*
 	 * The size of the JPanel.
 	 */
 	private static final Dimension WIN_DIMENSION = new Dimension(1280, 720);
@@ -125,8 +142,10 @@ public class ConferenceGUI extends JPanel {
 		main_panel.setBackground(BACKGROUND_COLOR);
 		contentPane.add(main_panel, BorderLayout.CENTER);
 		main_panel.setLayout(null);
+		
+		setupActions();
 
-//		buildButtonPanel();
+		buildButtonPanel();
 		
 		buildScrollPanel();
 
@@ -155,6 +174,8 @@ public class ConferenceGUI extends JPanel {
 		}
 		conference_dates_panel.setBackground(INNER_BACKGROUND_COLOR);
 		main_panel.add(conference_dates_panel);
+		
+		
 
 		JButton btnNewButton = new JButton("Submit Paper");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -162,7 +183,7 @@ public class ConferenceGUI extends JPanel {
 		main_panel.add(btnNewButton);
 		
 		JPanel conference_panel = new JPanel();
-		conference_panel.setBounds(201, 137, 1044, 91);//(848, 234, 397, 100);
+		conference_panel.setBounds(10, 137, 1235, 91);//(848, 234, 397, 100);
 		conference_panel.setBackground(INNER_BACKGROUND_COLOR);
 		conference_panel.setBorder(new BevelBorder(BevelBorder.LOWERED,
 				null, null, null, null));
@@ -181,25 +202,33 @@ public class ConferenceGUI extends JPanel {
 				
 	}
 	
-//	set
-//
-//	private void buildButtonPanel() {
-//		JPanel button_panel = new JPanel();
-//		button_panel.setBounds(10, 137, 182, 197);
-//		
-//		
-//		
-//		JButton logout_button = new JButton(my_logout_action);
-//		logout_button.setBounds(20, 97, 150, 22);
-//		button_panel.add(logout_button);
-//
-//		JButton back_button = new JButton(my_back_action);
-//		back_button.setBounds(20, 130, 152, 22);
-//		button_panel.add(back_button);
-//		
-//		main_panel.add(button_panel);
-//		
-//	}
+	
+
+	private void buildButtonPanel() {
+		JPanel button_panel = new JPanel();
+		button_panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null,
+				null, null, null));
+		button_panel.setBackground(INNER_BACKGROUND_COLOR);
+		button_panel.setBounds(10, 234, 182, 100);
+		
+		
+		
+		JButton logout_button = new JButton(my_logout_action);
+		logout_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		button_panel.setLayout(null);
+		logout_button.setBounds(15, 16, 150, 22);
+		button_panel.add(logout_button);
+
+		JButton back_button = new JButton(my_back_action);
+		back_button.setBounds(15, 50, 150, 22);
+		button_panel.add(back_button);
+		
+		main_panel.add(button_panel);
+		
+	}
 
 	/**
 	 * Builds the the panel that shows the users info.
@@ -299,45 +328,44 @@ public class ConferenceGUI extends JPanel {
 		main_panel.add(scrollPane);
 
 	}
-//	private void setupActions() {
-//		/*
-//		 * The action associated with clicking Logout
-//		 */
-//		my_logout_action = new AbstractAction(LOGOUT_TITLE_STRING, null) {
-//			@Override
-//			public void actionPerformed(ActionEvent the_event) {
-//				controller.setCurrentUsername(""); // blank because they're
-//													// logging out
-//				// we need to reset the current user to "null".
-//				controller.setCurrentConference(null);
-//				controller.setCurrentPaper("");
-//				controller.setStateOfGUI(StateOfGUI.LOGIN);
-//			}
-//		};
-//		my_logout_action.putValue(Action.SHORT_DESCRIPTION, LOGOUT_STRING);
-//		my_logout_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_L);
-//
-//		/*
-//		 * The action associated with clicking back, in this case, the same as
-//		 * logging out. In the future, the back button will just take you back
-//		 * to the previous screen, but for the sake of continuity and flow, I
-//		 * included the back button here as well
-//		 */
-//		my_back_action = new AbstractAction(BACK_TITLE_STRING, null) {
-//			@Override
-//			public void actionPerformed(ActionEvent the_event) {
-//				controller.setCurrentUsername(""); // blank because in this
-//													// case,
-//				// the user is logging out by going back one screen.
-//				controller.setCurrentConference(null);
-//				controller.setCurrentPaper("");
-//				controller.setStateOfGUI(StateOfGUI.HOME);
-//			}
-//		};
-//		my_back_action.putValue(Action.SHORT_DESCRIPTION, BACK_STRING);
-//		my_back_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_B);
-//
-//
-//
-//	}
+
+	private void setupActions() {
+		/*
+		 * The action associated with clicking Logout
+		 */
+		my_logout_action = new AbstractAction(LOGOUT_TITLE_STRING, null) {
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				controller.setCurrentUsername(""); // blank because they're
+													// logging out
+				// we need to reset the current user to "null".
+				controller.setCurrentConference(null);
+				controller.setCurrentPaper("");
+				controller.setStateOfGUI(StateOfGUI.LOGIN);
+			}
+		};
+		my_logout_action.putValue(Action.SHORT_DESCRIPTION, LOGOUT_STRING);
+		my_logout_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_L);
+
+		/*
+		 * The action associated with clicking back, in this case, the same as
+		 * logging out. In the future, the back button will just take you back
+		 * to the previous screen, but for the sake of continuity and flow, I
+		 * included the back button here as well
+		 */
+		my_back_action = new AbstractAction(BACK_TITLE_STRING, null) {
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				controller.setCurrentUsername(""); // blank because in this
+													// case,
+				// the user is logging out by going back one screen.
+				controller.setCurrentConference(null);
+				controller.setCurrentPaper("");
+				controller.setStateOfGUI(StateOfGUI.HOME);
+			}
+		};
+		my_back_action.putValue(Action.SHORT_DESCRIPTION, BACK_STRING);
+		my_back_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_B);
+
+	}
 }
