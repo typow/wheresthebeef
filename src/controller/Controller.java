@@ -958,7 +958,16 @@ public class Controller extends Observable{
 		}
 		//4) don't allow reviewers to be sub PC
 					//temporary:
-					String[] reviewers = new String[]{"Hank Williams", "Johnny Cash", "Willy Nelson", "Walyne Jennings", "Elvis Presley"};
+					String[] reviewers;
+					if(al.size()>0) {
+						reviewers = new String[al.size()];
+						for(int i=0;i<al.size();i++){
+							reviewers[i]=al.get(i);
+						}
+					} else {
+						reviewers = new String[1];
+						reviewers[0] = "";
+					}
 		return reviewers;
 	}
 //	private String getUserIdForPC(Conference current_conf) {
@@ -1229,17 +1238,17 @@ public class Controller extends Observable{
 	public static void main(String args[]) throws ParseException {
 		Controller controller = new Controller();
 		Conference[] conn = controller.getUpcommingConferences();
-		//controller.getAvailableForSubPC(conn[1], 2, "Tyler Powers");
-		//controller.getMyPapers("TestTest", "Test username");
-		//controller.getPaperID("Packing on Abs");
-		//controller.setPaperStatus(conn[0], "Packing on Abs", paperStatusAuthorViewable.ACCEPTED, paperStatusAdminViewable.OVERDUE_FOR_RECOMMEND);
-		int buttons[] = new int[10];
-		for (int i = 0; i < 10; i++)
-		{
-			buttons[i] = i;
-		}
-		
-		controller.createNewReview("Obama", conn[0], "Baking Pi", "Michael Phelps", "Lame", buttons, "Lamer");
+		controller.getAvailableForSubPC(conn[1], 2, "Tyler Powers");
+		controller.getMyPapers("TestTest", "Test username");
+		controller.getPaperID("Packing on Abs");
+		controller.setPaperStatus(conn[0], "Packing on Abs", paperStatusAuthorViewable.ACCEPTED, paperStatusAdminViewable.OVERDUE_FOR_RECOMMEND);
+//		int buttons[] = new int[10];
+//		for (int i = 0; i < 10; i++)
+//		{
+//			buttons[i] = i;
+//		}
+//		
+//		controller.createNewReview("Obama", conn[0], "Baking Pi", "Michael Phelps", "Lame", buttons, "Lamer");
 	}
 
 
