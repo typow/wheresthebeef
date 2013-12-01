@@ -823,12 +823,57 @@ public class Controller extends Observable{
 	 */
 	public boolean canAddReview(final Conference the_conf, final String the_paper, final String the_username){
 		boolean permission_to_add = true;
+		List<String> al = new ArrayList<String>();
 		//TODO: the GUI will call this method to verify that there aren't already 4 reviews and that the user
 		//		attempting to submit the review hasn't already submitted one.  If there are already 4 reviews,
 		//		or the user has already submitted one, return false.
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement("SELECT REVIEWER FROM reviews where PAPERNAME = '"+the_paper+"'");
+			resultSet = statement.executeQuery();
+			ResultSetMetaData rsmd = resultSet.getMetaData();
+			int numberOfColumns = rsmd.getColumnCount();
+			  
+	    	for (int i = 1; i <= numberOfColumns; i++) {
+	    		if (i > 1) System.out.print(",  ");
+	    		String columnName = rsmd.getColumnName(i);
+	    		System.out.print(columnName);
+	    	}
+	    	System.out.println("");
+	        while (resultSet.next()) {
+	                ArrayList<String> record = new ArrayList<String>();
+	                for (int i = 1; i <= numberOfColumns; i++) {
+	                        String value = resultSet.getString(i);
+	                        record.add(value);
+	                }
+	                String value = infoForSubmittingReview(record);
+					al.add(value);
+	        }    
+			
+		} catch (SQLException e) {
+			System.out.println("Check for valid Username failed");
+			e.printStackTrace();
+		}
+		
+		if(al.size()>4 || al.contains(the_username)) {
+			permission_to_add = false;
+		}
 		return permission_to_add;
 	}
 	
+	private String infoForSubmittingReview(ArrayList<String> record) {
+		String conference = "";
+		for(int i = 0; i < record.size();i++) {
+			if(i+1<record.size()) {
+				conference +=record.get(i)+ ", ";
+			} else {
+				conference +=record.get(i);
+			}
+		}
+		return conference;
+	}
+
+
 	/**
 	 * Used by another user to see the author of the paper that they are examining.  Returns blank string
 	 * if nothing was found.
@@ -1548,6 +1593,7 @@ public class Controller extends Observable{
 	 * @return An array of Conferences that contains all upcoming conferences.
 	 * @author Aaron
 	 */
+	@SuppressWarnings("deprecation")
 	public Conference[] getUpcommingConferences(final String the_username) {
     	ArrayList<Conference> upcomingconf = new ArrayList<Conference>();
 		try {
@@ -1576,29 +1622,6 @@ public class Controller extends Observable{
 		
 		return upcomingconf.toArray(new Conference[upcomingconf.size()]);
 	}
-	
-	private Conference infoForAConference(
-			ArrayList<String> record) throws ParseException {
-		DateFormat formatter; 
-		Date conferencedate; 
-		Date paperSubmissionDate; 
-		Date reviewPaperDate; 
-		Date recommendationPaperDate; 
-		Date notificationDate; 
-		formatter = new SimpleDateFormat("yy-MM-dd");
-		String conferenceName = record.get(0);
-		String programChair = record.get(1);
-		conferencedate = formatter.parse(record.get(2));
-		paperSubmissionDate = formatter.parse(record.get(2));
-		reviewPaperDate = formatter.parse(record.get(2));
-		recommendationPaperDate = formatter.parse(record.get(2));
-		notificationDate = formatter.parse(record.get(2));
-		String summary = record.get(7);
-
-		
-		Conference conference = new Conference(conferenceName, programChair, conferencedate, current_user, current_user, current_user, current_user, paperSubmissionDate, reviewPaperDate, recommendationPaperDate, notificationDate, summary);
-		return conference;
-	}
 	private String infoForAPaper(
 			ArrayList<String> record) {
 		String conference = "";
@@ -1611,7 +1634,6 @@ public class Controller extends Observable{
 		}
 		return conference;
 	}
-
 	public String[] getMyPapers(final String the_conf, final String the_username){
 	//TODO: A GUI is going to need to get a string of paper titles that they are associated
 	//		with given a specific conference;
@@ -1715,11 +1737,12 @@ public class Controller extends Observable{
 	
 	public static void main(String args[]) throws ParseException, SQLException {
 		Controller controller = new Controller();
-		Conference[] c = controller.getMyConferences("warfeld");
+		Conference[] conn = controller.getUpcommingConferences("typow");
+		boolean c = controller.canAddReview(conn[0],"Baking Pi","yellow");
 		
-		for (int i = 0; i < c.length; i++) {
-			System.out.println(c[i].getConfTitle());
-		}
+//		for (int i = 0; i < c.length; i++) {
+//			System.out.println(c[i].getConfTitle());
+//		}
 		/*
 		Controller controller = new Controller();
 		Conference[] conn = controller.getMyConferences("warfeld");

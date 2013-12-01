@@ -486,8 +486,8 @@ public class ManageDatabase{
 		md.resetPapers();
 		md.resetUsers();
 		*/
-		md.resetReviews();
-		md.resetRecommendations();
+//		md.resetReviews();
+//		md.resetRecommendations();
 		md.printDatabase();
 	}
 	

@@ -262,7 +262,7 @@ public class HomeGUI extends JPanel {
 		
 		//needs to be changed to getUpcommingConferences
 		Conference[] upcoming_conference_array = controller
-				.getMyConferences(controller.getCurrentUsername().toString());
+				.getUpcommingConferences(controller.getCurrentUsername().toString());
 		
 		int total_upcoming_conf = 0;
 		
