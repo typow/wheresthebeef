@@ -435,6 +435,7 @@ public class ManagePaperGUI extends JPanel{
 			tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
 		}
 		int paperId = controller.getPaperID(current_paper);
+		System.out.println("paper admin status" + controller.getAdminPaperStatus(current_conf, current_paper));
 		if ((current_paper_relation == paperRelation.PC)||(current_paper_relation == paperRelation.SUBPC)){
 			ManagementPanel managePanel = new ManagementPanel(current_paper, 
 					controller.getPaperAuthor(current_conf, current_paper), controller.getAdminPaperStatus(current_conf, current_paper), 
@@ -531,7 +532,11 @@ public class ManagePaperGUI extends JPanel{
 			fieldPaperStatus = new JLabel(current_paper);
 		}
 		else {
-			fieldPaperStatus = new JLabel(controller.getAdminPaperStatus(current_conf, current_paper).toString());
+			String status = controller.getAdminPaperStatus(current_conf, current_paper).toString();
+			if (status == null){
+				status = "fix me";
+			}
+			fieldPaperStatus = new JLabel(status);
 		}
 		fieldPaperStatus.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldPaperStatus.setFont(new Font("Tahoma", Font.BOLD, 13));
