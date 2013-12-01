@@ -412,10 +412,9 @@ public class Controller extends Observable{
 		//		they are a reviewer from the review table if not check if they are subprog from rec table
 		String username = "";
 		//temporary:
-		paperRelation relation = paperRelation.REVIEWER;
+		paperRelation relation = paperRelation.AUTHOR;
 		//First Check if they are the author
 		try {
-			
 			//Get all papers that conference, paper title, and author match
 			PreparedStatement statement = connect.prepareStatement(
 					"SELECT * FROM papers WHERE confname=" +"'" + the_conference.getConfTitle() + 
@@ -477,7 +476,7 @@ public class Controller extends Observable{
 				while (resultSet.next()) {
 					username = resultSet.getString(3); //subPC in recommendations table
 					if(username == the_username){
-						//Means they are the SUBPC
+						//Means they are the SUBPCS
 						relation = paperRelation.SUBPC;
 						break;
 					}
@@ -662,11 +661,29 @@ public class Controller extends Observable{
 		return current_paper;
 	}
 	
+	/**
+	 * Returns the text of the paper that is passed in.
+	 * 
+	 * @param the_conf the conference the paper being examined belongs to
+	 * @param the_paper_title the paper that is getting its text returned
+	 * @return the text of the papers
+	 */
 	public String getPaperFilePath(final Conference the_conf, final String the_paper_title){
-		
-		//TODO: return the file path
-		String file_path = "";
-		return file_path;
+		String text = "";
+		try {
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT text FROM papers WHERE name=" +"'" + the_paper_title +"' AND confname='" +
+					the_conf.getConfTitle() + "'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				text = resultSet.getString(1);
+			}
+						
+		} catch (Exception e) {
+			System.out.println("fail to get paper text");
+		}
+		return text;
 	}
 	
 	/**
@@ -702,7 +719,6 @@ public class Controller extends Observable{
 	 * @param the_answersRadioBtn The answers to the review questions.
 	 * @param the_summary_comments The comments on the paper. 
 	 */
-	//NOT DONE CURRENT IN PROGRESS
 	public void createNewReview(final String the_reviewer_username, final Conference the_conf, 
 			final String the_paper, final String the_paper_author, final String the_comments_to_subpc, 
 			final int[] the_answersRadioBtn, final String the_summary_comments){
@@ -730,7 +746,8 @@ public class Controller extends Observable{
 				    "'" + the_paper_author + "', " + the_answersRadioBtn[0] + ", " + the_answersRadioBtn[1] + ", " +
 				    the_answersRadioBtn[2] + ", " + the_answersRadioBtn[3] + ", " + the_answersRadioBtn[4] + ", " +
 				    the_answersRadioBtn[5] + ", " + the_answersRadioBtn[6] + ", " + the_answersRadioBtn[7] + ", " +
-				    the_answersRadioBtn[8] + ", " + the_answersRadioBtn[9] + ", '" + the_summary_comments + "')");
+				    the_answersRadioBtn[8] + ", " + the_answersRadioBtn[9] + ", '" + the_summary_comments + "', ' +" +
+				    the_comments_to_subpc + "')");
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println("Error creating new review part 2." + e.getMessage());
@@ -1430,6 +1447,12 @@ public class Controller extends Observable{
 		
 	}
 	
+	/**
+	 * 
+	 * @param the_conference
+	 * @param the_paper
+	 * @return
+	 */
 	public Review[] getReviews(final Conference the_conference, final String the_paper){
 		//TODO: the ManagePaperGUI needs all the reviews that have been completed for a paper (if any)
 		//		I created a Review object so that the controller can pass back an array of Review objects
@@ -1437,6 +1460,7 @@ public class Controller extends Observable{
 		int paperID = -1;
 		int index = 0;
 		Review[] reviews = new Review[4];
+		List<Review> reviewarray = new ArrayList<Review>();
 		//Retrieve the PaperID from papers table to use for getting reviews from the reviews table
 		try {
 			PreparedStatement statement = connect.prepareStatement(
@@ -1456,23 +1480,18 @@ public class Controller extends Observable{
 					"SELECT * FROM reviews WHERE paperid=" + paperID);
 			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
-				reviews[index] = new Review(resultSet.getString(3), the_conference, resultSet.getString(3),
+				reviewarray.add(new Review(resultSet.getString(3), the_conference, resultSet.getString(3),
 						the_paper, resultSet.getString(5), resultSet.getString(18), 
-						new int[]{resultSet.getInt(7), resultSet.getInt(8), resultSet.getInt(9), resultSet.getInt(10), resultSet.getInt(11), resultSet.getInt(12), resultSet.getInt(13), resultSet.getInt(14), resultSet.getInt(15), resultSet.getInt(16)},
-						resultSet.getString(17));
+						new int[]{resultSet.getInt(7), resultSet.getInt(8),
+						resultSet.getInt(9), resultSet.getInt(10), resultSet.getInt(11), resultSet.getInt(12),
+						resultSet.getInt(13), resultSet.getInt(14), resultSet.getInt(15), resultSet.getInt(16)},
+						resultSet.getString(17)));
 			}
 		} catch (Exception e) {
 			System.out.println("failed at getting paper in getReviews");
 		}
 		
-		
-						//temporary:
-						Review[] temp = new Review[4];
-						temp[0] = new Review("Halmus", current_conference, "the_username", "the_paper", "the_paper_author", "the_comments_to_subpc", new int[]{1, 2, 3, 4, 5, 1, 2, 3, 4, 5}, "the_summary_comments");
-						temp[1] = new Review("Bob", current_conference, "trees", "why?", "joe", "i ate the whole thing", new int[]{2, 3, 4, 5, 1, 2, 3, 4, 5, 1}, "no");
-						temp[2] = new Review("Hank", current_conference, "grass", "why not?", "sally", "you did not", new int[]{4, 2, 5, 1, 2, 3, 3, 2, 5, 5}, "yes");
-						temp[3] = new Review("Bob", current_conference, "leaves", "Beause?", "paula", "I did to", new int[]{3, 4, 4, 5, 4, 3, 4, 5, 5, 5}, "What General Weygand called the Battle of France is over. I expect that the Battle of Britain is about to begin. Upon this battle depends the survival of Christian civilization. Upon it depends our own British life, and the long continuity of our institutions and our Empire. The whole fury and might of the enemy must very soon be turned on us. Hitler knows that he will have to break us in this Island or lose the war. If we can stand up to him, all Europe may be free and the life of the world may move forward into broad, sunlit uplands. But if we fail, then the whole world, including the United States, including all that we have known and cared for, will sink into the abyss of a new Dark Age made more sinister, and perhaps more protracted, by the lights of perverted science. Let us therefore brace ourselves to our duties, and so bear ourselves that if the British Empire and its Commonwealth last for a thousand years, men will still say, 'This was their finest hour.'");
-		return reviews;
+		return reviewarray.toArray(new Review[reviewarray.size()]);
 	}
 	
 	/**

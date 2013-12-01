@@ -488,8 +488,8 @@ public class ManageDatabase{
 		Controller controller = new Controller();
 		//md.resetUsers();
 		
-		md.resetConference();
-		md.resetPapers();
+		//md.resetConference();
+		//md.resetPapers();
 		//md.resetUsers();
 //		md.resetReviews();
 //		md.resetRecommendations();
