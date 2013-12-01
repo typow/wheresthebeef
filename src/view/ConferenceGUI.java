@@ -315,6 +315,7 @@ public class ConferenceGUI extends JPanel {
 		
 		Paper[] my_paper_array = controller.getMyPapers(controller.getCurrentConference(), controller.getCurrentUsername());
 		
+		
 		if(my_paper_array != null) {
 			number_of_papers = my_paper_array.length;
 		}
