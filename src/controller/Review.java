@@ -63,7 +63,7 @@ public class Review {
 	public Conference getConference(){
 		return conference;
 	}
-	
+
 	public String getUsername(){
 		return username;
 	}

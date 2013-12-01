@@ -704,6 +704,7 @@ public class Controller extends Observable{
 	 * @param the_answersRadioBtn The answers to the review questions.
 	 * @param the_summary_comments The comments on the paper. 
 	 */
+	//NOT DONE CURRENT IN PROGRESS
 	public void createNewReview(final String the_reviewer_username, final Conference the_conf, 
 			final String the_paper, final String the_paper_author, final String the_comments_to_subpc, 
 			final int[] the_answersRadioBtn, final String the_summary_comments){
@@ -1435,6 +1436,36 @@ public class Controller extends Observable{
 		//TODO: the ManagePaperGUI needs all the reviews that have been completed for a paper (if any)
 		//		I created a Review object so that the controller can pass back an array of Review objects
 		//		all at once.  No more than 4 are allowed to be created, so that shouldn't have to be a check here.
+		int paperID = -1;
+		int index = 0;
+		Review[] reviews = new Review[4];
+		//Retrieve the PaperID from papers table to use for getting reviews from the reviews table
+		try {
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT id FROM papers WHERE name='" + the_paper + "', AND confname='" +
+					the_conference.getConfTitle() + "'");
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				paperID = resultSet.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println("failed at getting paper in getReviews");
+		}
+		
+		//Retrieve reviews from reviews table using the paperid
+		try {
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM reviews WHERE paperid=" + paperID);
+			resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				reviews[index] = new Review(resultSet.getString(3), the_conference, resultSet.getString(3),
+						the_paper, resultSet.getString(5), resultSet.getString(18), 
+						new int[]{resultSet.getInt(7), resultSet.getInt(8), resultSet.getInt(9), resultSet.getInt(10), resultSet.getInt(11), resultSet.getInt(12), resultSet.getInt(13), resultSet.getInt(14), resultSet.getInt(15), resultSet.getInt(16)},
+						resultSet.getString(17));
+			}
+		} catch (Exception e) {
+			System.out.println("failed at getting paper in getReviews");
+		}
 		
 		
 						//temporary:
@@ -1443,7 +1474,7 @@ public class Controller extends Observable{
 						temp[1] = new Review("Bob", current_conference, "trees", "why?", "joe", "i ate the whole thing", new int[]{2, 3, 4, 5, 1, 2, 3, 4, 5, 1}, "no");
 						temp[2] = new Review("Hank", current_conference, "grass", "why not?", "sally", "you did not", new int[]{4, 2, 5, 1, 2, 3, 3, 2, 5, 5}, "yes");
 						temp[3] = new Review("Bob", current_conference, "leaves", "Beause?", "paula", "I did to", new int[]{3, 4, 4, 5, 4, 3, 4, 5, 5, 5}, "What General Weygand called the Battle of France is over. I expect that the Battle of Britain is about to begin. Upon this battle depends the survival of Christian civilization. Upon it depends our own British life, and the long continuity of our institutions and our Empire. The whole fury and might of the enemy must very soon be turned on us. Hitler knows that he will have to break us in this Island or lose the war. If we can stand up to him, all Europe may be free and the life of the world may move forward into broad, sunlit uplands. But if we fail, then the whole world, including the United States, including all that we have known and cared for, will sink into the abyss of a new Dark Age made more sinister, and perhaps more protracted, by the lights of perverted science. Let us therefore brace ourselves to our duties, and so bear ourselves that if the British Empire and its Commonwealth last for a thousand years, men will still say, 'This was their finest hour.'");
-		return temp;
+		return reviews;
 	}
 	
 	/**
@@ -1714,11 +1745,16 @@ public class Controller extends Observable{
 	    }
 	}
 
+	/**
+	 * 
+	 * @param current_paper
+	 * @return
+	 */
 	public int getPaperID(String current_paper) {
 		int paper = 0;
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("SELECT id FROM papers where NAME='"+current_paper+"'");
+			PreparedStatement statement = connect.prepareStatement("SELECT id FROM papers WHERE name='"+current_paper+"'");
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {

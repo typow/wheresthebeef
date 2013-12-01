@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Date;
+
+import controller.Conference;
+import controller.Controller;
 
 /**
  * This class manages the database. It allows for the data to be cleared,
@@ -481,13 +485,21 @@ public class ManageDatabase{
 	
 	public static void main(String args[]) {
 		ManageDatabase md = new ManageDatabase();
-		/*
-		md.resetConferences();
+		Controller controller = new Controller();
+		//md.resetUsers();
+		
+		md.resetConference();
 		md.resetPapers();
 		md.resetUsers();
-		*/
 //		md.resetReviews();
 //		md.resetRecommendations();
+		/*
+		Conference testConference = new Conference("Bio conferences", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		controller.addPaperRecommendation("typow", testConference, "Packing on Abs", "ripped", 5,
+				"He wrote such a good paper hes just too amazing.  so dreamy");
+		*/
 		md.printDatabase();
 	}
 	
