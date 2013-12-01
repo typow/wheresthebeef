@@ -1632,7 +1632,7 @@ public class Controller extends Observable{
 			e.printStackTrace();
 		}
 		
-		return copy.toArray(new Conference[upcomingconf.size()]);
+		return copy.toArray(new Conference[copy.size()]);
 	}
 	private String infoForAPaper(
 			ArrayList<String> record) {
