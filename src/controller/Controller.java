@@ -1592,26 +1592,38 @@ public class Controller extends Observable{
 	 * @param the_username The username of the current user.
 	 * @return An array of Conferences that contains all upcoming conferences.
 	 * @author Aaron
+	 * @throws ParseException 
 	 */
 	@SuppressWarnings("deprecation")
 	public Conference[] getUpcommingConferences(final String the_username) {
     	ArrayList<Conference> upcomingconf = new ArrayList<Conference>();
+    	ArrayList<Conference> copy = new ArrayList<Conference>();
+    	SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		Conference[] myConferences = getMyConferences(the_username);
+
 		try {
-			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conferences WHERE NOTIFYDATE >= '"+new Date().toLocaleString()+"'");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conferences WHERE NOTIFYDATE >= '"+formatter.format(new Date())+"'");
 			resultSet = statement.executeQuery();
-			Conference[] myConferences = getMyConferences(the_username);
-			
+			ResultSetMetaData rsmd = resultSet.getMetaData();
+			int numberOfColumns = rsmd.getColumnCount();
+			  
+	    	for (int i = 1; i <= numberOfColumns; i++) {
+	    		if (i > 1) System.out.print(",  ");
+	    		String columnName = rsmd.getColumnName(i);
+	    		System.out.print(columnName);
+	    	}
+	    	System.out.println("");
 			while (resultSet.next()) {			
 				Conference con = new Conference(resultSet.getString(1), resultSet.getString(2),
 						resultSet.getDate(3), "", "", "", "", resultSet.getDate(4), resultSet.getDate(5),
 						resultSet.getDate(6), resultSet.getDate(7), resultSet.getString(8));
 				upcomingconf.add(con);
 			}	
-			
+			copy = new ArrayList<Conference>(upcomingconf);
 			for (Conference c : upcomingconf){
 				for(int i = 0; i < myConferences.length; i++){
 					if (myConferences[i].getConfTitle().equals(c.getConfTitle())){
-						upcomingconf.remove(c);
+						copy.remove(c);
 					}
 				}
 			}
@@ -1620,7 +1632,7 @@ public class Controller extends Observable{
 			e.printStackTrace();
 		}
 		
-		return upcomingconf.toArray(new Conference[upcomingconf.size()]);
+		return copy.toArray(new Conference[upcomingconf.size()]);
 	}
 	private String infoForAPaper(
 			ArrayList<String> record) {
