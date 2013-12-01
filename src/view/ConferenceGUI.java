@@ -302,6 +302,7 @@ public class ConferenceGUI extends JPanel {
 
 		// use get my author status
 
+		//Seth look here to test this for loop for paper objects
 		int number_of_papers = 0;
 
 		Paper[] my_paper_array = controller.getMyPapers(
@@ -310,14 +311,9 @@ public class ConferenceGUI extends JPanel {
 
 		if (my_paper_array != null) {
 			number_of_papers = my_paper_array.length;
-		}
-
+		}	
+	
 		System.out.println("number of papers in array = " + number_of_papers);
-		// if(number_of_papers>0){
-		// System.out.println("paper object title = " +
-		// my_paper_array[0].getPaperTitle());
-		// }
-		//Seth look here to test this for loop
 		for (int i = 0; i < number_of_papers; i++) {
 			System.out.println("paper object title = "
 					+ my_paper_array[i].getPaperTitle());
