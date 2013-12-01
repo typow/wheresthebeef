@@ -1,8 +1,26 @@
+/*
+ * TCES360 Conference Management System
+ * Warrick Holfeld
+ * Jacob Hall
+ * Aarron Merril
+ * Tyler Powers
+ * Seth Kramer
+ * David Swanson
+ * 11/10/13
+ */
+
 package controller;
 
 import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
 
+/**
+ * This Paper object was created to help in passing of information from the 
+ * controller to the ConferenceGUI in an array.
+ * 
+ * @author Jacob Hall
+ * @version 148 Date: 12/1/13
+ */
 public class Paper {
 	private String conf_title = "";
 	private String paper_title = "";
@@ -14,6 +32,18 @@ public class Paper {
 	private String[] reviewers;
 	private int id;
 	
+	/**
+	 * Constructor for the Paper object
+	 * @param the_conf_title
+	 * @param the_paper_title
+	 * @param the_author
+	 * @param the_status_author_viewable
+	 * @param the_status_admin_viewable
+	 * @param the_sub_pc
+	 * @param the_pc
+	 * @param the_reviewers
+	 * @param the_id
+	 */
 	public Paper(final String the_conf_title, final String the_paper_title, 
 			final String the_author, 
 			final paperStatusAuthorViewable the_status_author_viewable,
