@@ -11,6 +11,9 @@
 
 package controller;
 
+import Conference;
+import Paper;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -1076,7 +1079,7 @@ public class Controller extends Observable{
 	 */
 	//paper does not need to be passed in unless you for some reason need to match the 
 	//paper conf to the conf that was passed in
-	public String getUserAssignedAsPC(final Conference the_conference, final int current_paper){
+	public String getUserAssignedAsPC(final Conference the_conference){
 		
 		String result = null;
 		try {
@@ -1677,57 +1680,77 @@ public class Controller extends Observable{
 	 * @param the_username
 	 * @return
 	 */
-	public String[] getMyPapers(final String the_conf, final String the_username){
-	//TODO: A GUI is going to need to get a string of paper titles that they are associated
-	//		with given a specific conference;
-		ArrayList<String> al = new ArrayList<String>();
-		try {			
-			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM papers WHERE confname=" +"'" + the_conf +"' AND author='" +
-							the_username + "'");
-			resultSet = statement.executeQuery();
-			ResultSetMetaData rsmd = resultSet.getMetaData();
-			int numberOfColumns = rsmd.getColumnCount();
-			  
-	    	for (int i = 1; i <= numberOfColumns; i++) {
-	    		if (i > 1) System.out.print(",  ");
-	    		String columnName = rsmd.getColumnName(i);
-	    		System.out.print(columnName);
-	    	}
-	    	System.out.println("");
-	        while (resultSet.next()) {
-	                ArrayList<String> record = new ArrayList<String>();
-	                for (int i = 1; i <= numberOfColumns; i++) {
-	                        String value = resultSet.getString(i);
-	                        record.add(value);
-	                }
-	                String value = infoForAPaper(record);
-	                al.add(value);
-	        }    
-	    	while (resultSet.next()) {
-	            for (int i = 1; i <= numberOfColumns; i++) {
-	            	if (i > 1) System.out.print(",  ");
-	            	String columnValue = resultSet.getString(i);
-	            	System.out.print(columnValue);
-	            }
-	            System.out.println("");  
-	        }
-		} catch (Exception e) {
-			System.out.println("Get full name failed!");
-		}
-		
-		String[] papers = new String[al.size()];
-		if(al.size()>0) {
-			papers = new String[al.size()];
-			for(int i=0;i<al.size();i++){
-				papers[i]=al.get(i);
+	public Paper[] getMyPapers(final Conference the_conf, final String the_username){
+		//TODO: A GUI is going to need to get a string of paper titles that they are associated
+		//		with given a specific conference;
+			
+			List<Paper> paperList = new ArrayList<Paper>();
+			ResultSet resultSet2;
+			
+			try {	
+				
+				// Retrieves all papers if PC of conference
+				if (the_username.equals(getUserAssignedAsPC(the_conf))) {
+					PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE confname=" +"'" + the_conf +"'");
+					resultSet = statement.executeQuery();
+							  
+					while (resultSet.next()) {
+						paperList.add(createPaperObject(the_conf, the_username, resultSet));
+					}			
+					
+				} else {	// Not PC of conference
+					
+					// Checks second for being an author of papers in the given conference
+					PreparedStatement statement = connect.prepareStatement(
+							"SELECT * FROM papers WHERE confname=" +"'" + the_conf.getConfTitle() +
+							"' AND author='" + the_username + "'");
+					resultSet = statement.executeQuery();
+				  
+					while (resultSet.next()) {
+						paperList.add(createPaperObject(the_conf, the_username, resultSet));
+					}
+					
+					// Checks third if they are the SubPC of any papers in the conference
+					statement = connect.prepareStatement(
+							"SELECT paperid FROM recommendations WHERE conference=" +"'" + the_conf.getConfTitle() +
+							"' AND subchair='" + the_username + "'");
+					resultSet = statement.executeQuery();
+					
+					while (resultSet.next()) {
+						statement = connect.prepareStatement(
+								"SELECT * FROM papers WHERE id=" + resultSet.getInt(1));
+						resultSet2 = statement.executeQuery();
+						
+						if (resultSet2.next()) {
+							paperList.add(createPaperObject(the_conf, the_username, resultSet2));
+						}
+					}
+					
+					// Checks fourth if they are a Reviewer for any paper in the conference
+					statement = connect.prepareStatement(
+							"SELECT paperid FROM reviews WHERE conference=" +"'" + the_conf.getConfTitle() +
+							"' AND subchair='" + the_username + "'");
+					resultSet = statement.executeQuery();
+					
+					while (resultSet.next()) {
+						statement = connect.prepareStatement(
+								"SELECT * FROM papers WHERE id=" + resultSet.getInt(1));
+						resultSet2 = statement.executeQuery();
+						
+						if (resultSet2.next()) {
+							paperList.add(createPaperObject(the_conf, the_username, resultSet2));
+						}
+					}
+				}
+		    	
+			} catch (Exception e) {
+				System.out.println("getMyPapers failed!");
 			}
-		} else {
-			papers = new String[1];
-			papers[0] = null;
+			
+			
+			return paperList.toArray(new Paper[paperList.size()]);
 		}
-		return papers;
-	}
 	
 	private void close() {
 		try {
@@ -1780,6 +1803,28 @@ public class Controller extends Observable{
 		}
 		
 		return result;
+	}
+	
+	private Paper createPaperObject(final Conference the_conference, final String the_username, 
+			final ResultSet rs) {
+
+		Paper paper = null;
+		try {
+			int paperID = rs.getInt(1);
+			String paperName = rs.getString(3);
+
+			paper = new Paper(rs.getString(5), rs.getString(3), rs.getString(2), 
+					getStatusAuthorView(the_conference, the_username),
+					getAdminPaperStatus(the_conference, the_username),
+					getUserAssignedAsSubPC(the_conference, paperID), 
+					getUserAssignedAsPC(the_conference), 
+					getUsersAssignedAsReviewers(the_conference, paperName),
+					paperID);
+		} catch (Exception e) {
+			System.out.println("createPaperObject failed!");
+		}
+
+		return paper;
 	}
 
 	
