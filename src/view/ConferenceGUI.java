@@ -16,10 +16,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.ActionEvent;
 import java.awt.font.TextAttribute;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,9 +39,8 @@ import javax.swing.JSeparator;
 import javax.swing.border.BevelBorder;
 
 import view.GUIEnum.StateOfGUI;
-
 import controller.Controller;
-import java.awt.event.ActionListener;
+import controller.Paper;
 
 /**
  * The View Conference Panel
@@ -309,9 +309,11 @@ public class ConferenceGUI extends JPanel {
 	 */
 	private void buildScrollPanel() {
 		
+		//use get my author status
+		
 		int number_of_papers = 0;
 		
-		String[] my_paper_array = controller.getMyPapers(controller.getCurrentConference().getConfTitle(), controller.getCurrentUsername());
+		Paper[] my_paper_array = controller.getMyPapers(controller.getCurrentConference(), controller.getCurrentUsername());
 		
 		if(my_paper_array != null) {
 			number_of_papers = my_paper_array.length;
@@ -323,6 +325,8 @@ public class ConferenceGUI extends JPanel {
 		JPanel panel_for_scrollpane = new JPanel(new GridLayout((number_of_papers + 1), COLUMN_NAMES.length));
 		panel_for_scrollpane.setBorder(new BevelBorder(BevelBorder.LOWERED,
 				null, null, null, null));
+		
+		//Create column headers
 		for (int i = 0; i < COLUMN_NAMES.length; i++) {
 			JLabel jl = new JLabel(COLUMN_NAMES[i], JLabel.CENTER);
 			jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -333,11 +337,12 @@ public class ConferenceGUI extends JPanel {
 			jl.setFont(font.deriveFont(attributes));
 			panel_for_scrollpane.add(jl);
 		}
+		//populate columns with paper data
 		for (int i = COLUMN_NAMES.length+1; i <= ((number_of_papers + 1) * COLUMN_NAMES.length); i++) {
 
 			if ((i - 1) % COLUMN_NAMES.length == 0) {
 
-				final JLabel jl = new JLabel(my_paper_array[0], JLabel.CENTER);
+				final JLabel jl = new JLabel(my_paper_array[i/COLUMN_NAMES.length].getPaperTitle(), JLabel.CENTER);
 				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				jl.setForeground(Color.BLUE);
 				jl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -358,8 +363,8 @@ public class ConferenceGUI extends JPanel {
 					}
 
 					public void mousePressed(MouseEvent arg0) {
-//						controller.setCurrentConference(curr_conference);
-//						controller.setStateOfGUI(StateOfGUI.CONFERENCE);
+						controller.setCurrentPaper(jl.getText());
+						controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 					}
 
 					public void mouseReleased(MouseEvent arg0) {
