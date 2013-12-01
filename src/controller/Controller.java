@@ -25,6 +25,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 
+import database.ManageDatabase;
+
 import view.GUIEnum;
 import view.GUIEnum.StateOfGUI;
 import view.GUIEnum.paperRelation;
@@ -1709,8 +1711,8 @@ public class Controller extends Observable{
 					resultSet = statement.executeQuery();
 							  
 					while (resultSet.next()) {
-						paperList.add(createPaperObject(the_conf, the_username, resultSet));
-					}			
+						createPaperObjects(paperList, the_conf, the_username, resultSet);
+					}	
 					
 				} else {	// Not PC of conference
 					
@@ -1721,7 +1723,7 @@ public class Controller extends Observable{
 					resultSet = statement.executeQuery();
 				  
 					while (resultSet.next()) {
-						paperList.add(createPaperObject(the_conf, the_username, resultSet));
+						createPaperObjects(paperList, the_conf, the_username, resultSet);
 					}
 					
 					// Checks third if they are the SubPC of any papers in the conference
@@ -1736,7 +1738,7 @@ public class Controller extends Observable{
 						resultSet2 = statement.executeQuery();
 						
 						if (resultSet2.next()) {
-							paperList.add(createPaperObject(the_conf, the_username, resultSet2));
+							createPaperObjects(paperList, the_conf, the_username, resultSet);
 						}
 					}
 					
@@ -1753,7 +1755,7 @@ public class Controller extends Observable{
 						resultSet2 = statement.executeQuery();
 						
 						if (resultSet2.next()) {
-							paperList.add(createPaperObject(the_conf, the_username, resultSet2));
+							createPaperObjects(paperList, the_conf, the_username, resultSet);
 						}
 					}
 					
@@ -1820,37 +1822,43 @@ public class Controller extends Observable{
 		return result;
 	}
 	
-	private Paper createPaperObject(final Conference the_conference, final String the_username, 
-			final ResultSet rs) {
+	private void createPaperObjects(List<Paper> the_paper_list, final Conference the_conference, 
+			final String the_username, final ResultSet rs) {
 
 		Paper paper = null;
+		
 		try {
-			int paperID = rs.getInt(1);
-			String paperName = rs.getString(3);
+			do {
 			
-			paper = new Paper(rs.getString(5), rs.getString(3), rs.getString(2), 
-					getStatusAuthorView(the_conference, paperName),
-					getAdminPaperStatus(the_conference, paperName),
-					getUserAssignedAsSubPC(the_conference, paperID), 
-					getUserAssignedAsPC(the_conference), 
-					getUsersAssignedAsReviewers(the_conference, paperName),
-					paperID);
+				int paperID = rs.getInt(1);
+				String paperName = rs.getString(3);
+			
+				the_paper_list.add(new Paper(rs.getString(5), rs.getString(3), rs.getString(2), 
+						getStatusAuthorView(the_conference, paperName),
+						getAdminPaperStatus(the_conference, paperName),
+						getUserAssignedAsSubPC(the_conference, paperID), 
+						getUserAssignedAsPC(the_conference), 
+						getUsersAssignedAsReviewers(the_conference, paperName),
+						paperID));
+			
+			} while (rs.next());
+			
 		} catch (Exception e) {
 			System.out.println("createPaperObject failed!");
 		}
-
-		return paper;
 	}
 
 	
 	public static void main(String args[]) throws ParseException, SQLException {
 		
 		Controller controller = new Controller();
-		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
+		ManageDatabase md = new ManageDatabase();
+		md.printDatabase();
+		Conference testConference = new Conference("Trees Have Feelings", "Halmus", new Date(2000, 1, 1), "Test Address", 
 				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
 				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
 		
-		Paper papers[] = controller.getMyPapers(testConference, "typow");
+		Paper papers[] = controller.getMyPapers(testConference, "Halmus");
 		
 		for (int i = 0; i < papers.length; i++) {
 			System.out.println(papers[i].getConfTitle());
