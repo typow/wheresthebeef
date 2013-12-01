@@ -456,6 +456,8 @@ public class SubmitPaperGUI extends JPanel {
 					catch (Exception e){
 						JOptionPane.showMessageDialog(contentPane, e);
 					}
+					controller.setPaperStatus(current_conf, paper_title, paperStatusAuthorViewable.SUBMITTED, 
+							paperStatusAdminViewable.SUBMITTED);
 					controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 				}
 			}

@@ -508,7 +508,7 @@ public class Controller extends Observable{
 		} catch (Exception e) {
 			System.out.println("Get paperRelation failed in pc check");
 		}
-		
+		System.out.println("relation to paper: " + relation.toString());
 		return relation;
 	}
 	 
