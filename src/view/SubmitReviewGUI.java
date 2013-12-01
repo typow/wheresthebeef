@@ -144,6 +144,13 @@ public class SubmitReviewGUI extends JPanel {
 	 * and PC.
 	 */
 	private JTextArea fieldConfidentialComments = new JTextArea(" ");
+	
+	/*
+	 * the scroll pane that holds all questions and fields for the review 
+	 * form.
+	 */
+	private JScrollPane mainScrollPane;
+	
 	/*
 	 * the Action associated with the Main button
 	 */
@@ -232,12 +239,12 @@ public class SubmitReviewGUI extends JPanel {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(222, 70, 582, 400);
-		panel_1.add(scrollPane);
+		mainScrollPane = new JScrollPane();
+		mainScrollPane.setBounds(222, 70, 582, 400);
+		panel_1.add(mainScrollPane);
 		
 		JPanel panel = new JPanel();
-		scrollPane.setViewportView(panel);
+		mainScrollPane.setViewportView(panel);
 		panel.setBackground(Color.WHITE);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[] {550};
@@ -1000,7 +1007,7 @@ public class SubmitReviewGUI extends JPanel {
 		fieldSummaryComments.setLineWrap(true);
 		fieldSummaryComments.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		scrollPane.getVerticalScrollBar().setValue(0);
+		mainScrollPane.getVerticalScrollBar().setValue(0);
 
 		JLabel fieldUsername = new JLabel(username);
 		fieldUsername.setBounds(10, 70, 157, 20);
@@ -1110,6 +1117,10 @@ public class SubmitReviewGUI extends JPanel {
 			index_of_selected = 1;
 		}
 		return index_of_selected;
+	}
+	
+	public void setScrollPaneToTop(){
+		mainScrollPane.getVerticalScrollBar().setValue(0);
 	}
 	
 	/**
