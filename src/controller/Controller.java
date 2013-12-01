@@ -110,15 +110,7 @@ public class Controller extends Observable{
 	 * 
 	 * @param the_state
 	 */
-	public void setStateOfGUI(StateOfGUI the_state){
-		
-		//TODO: add some logic:   if (!the_state.equals(state){
-		//		if you're already in the GUI, you shouldn't be able to go back to the 
-		//		same GUI.  The next state should not equal the current one.
-		//		However, maybe a GUI should be able to "refresh" if new data is supposed
-		//		to be populated to a table or something like that?   Jacob
-		// UNTESTED!!!
-		
+	public void setStateOfGUI(StateOfGUI the_state){	
 		if (the_state != state) {
 			state = the_state;	
 			setChanged();
@@ -324,9 +316,10 @@ public class Controller extends Observable{
 		//NOTE..........................
 		//TODO: this method prints out the stack trace no matter what.  If the title exists or doesn't.
 		//(TYLER) i changed conferences to conference in the statement this should fix it if it does fix spacing
+		// (SETH) It's actually "conferences" that's in the database
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conference WHERE name='" + the_conference_title + "'");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conferences WHERE name='" + the_conference_title + "'");
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
@@ -426,9 +419,6 @@ public class Controller extends Observable{
 	 * @param the_conference_name
 	 */
 	public void setCurrentConference(final Conference the_conference_name){
-		//TODO: The GUI will need to be able to update the current conference being looked at by the user
-		//		The controller will need to update the current_conference in this class to reflect that so
-		//		that the GUI can call and retrieve the conference information for display.  Jacob
 		current_conference = the_conference_name;
 	}
 	/**
