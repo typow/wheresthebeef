@@ -664,6 +664,13 @@ public class Controller extends Observable{
 		return current_paper;
 	}
 	
+	public String getPaperFilePath(final Conference the_conf, final String the_paper_title){
+		
+		//TODO: return the file path
+		String file_path = "";
+		return file_path;
+	}
+	
 	/**
 	 * Deletes the paper from the table.
 	 * 
@@ -792,7 +799,6 @@ public class Controller extends Observable{
 		return conference;
 	}
 
-
 	/**
 	 * Used by another user to see the author of the paper that they are examining.  Returns blank string
 	 * if nothing was found.
@@ -806,8 +812,6 @@ public class Controller extends Observable{
 		//		the GUI will call this method when another user (administrator of some sort) needs to review
 		//		or recommend a paper.  They will be the current user and will need to retrieve the username
 		//		of the person who Authored the paper.  (Jacob)
-		
-		
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
