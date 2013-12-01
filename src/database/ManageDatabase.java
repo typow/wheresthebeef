@@ -444,7 +444,7 @@ public class ManageDatabase{
 	private void resetConference(){
 		clearConferences();
 		try {
-			PreparedStatement statement = connect.prepareStatement("INSERT INTO conference(NAME,  PROGCHAIR,  CONDATE,  SUBMITDATE,  REVIEWDATE,  RECDATE,  NOTIFYDATE,  SUMMARY)" +
+			PreparedStatement statement = connect.prepareStatement("INSERT INTO conferences(NAME,  PROGCHAIR,  CONDATE,  SUBMITDATE,  REVIEWDATE,  RECDATE,  NOTIFYDATE,  SUMMARY)" +
 					" VALUES ('Small Computer Conference', 'typow', '2/26/2014', '1/26/2014', '2/5/2014', '2/10/2014', '2/15/2014', 'Test method')," +
 					"('Trees Have Feelings', 'Halmus', '3/10/2014', '2/1/2014', '2/10/2014', '2/15/2014', '2/20/2014', 'Another test method')," +
 					"('Everything Math', 'ajm1', '5/15/2014', '4/1/2014', '4/10/2014', '4/15/2014', '4/20/2014', 'Another test method')");
@@ -490,7 +490,7 @@ public class ManageDatabase{
 		
 		md.resetConference();
 		md.resetPapers();
-		md.resetUsers();
+		//md.resetUsers();
 //		md.resetReviews();
 //		md.resetRecommendations();
 		/*
