@@ -622,13 +622,39 @@ public class Controller extends Observable{
 		return relation;
 	}
 	 
-	
 	public void setPaperRelation(final Conference the_conference, final String the_paper_title, 
 			final String the_username, final paperRelation the_relation){
 		//TODO: The GUI needs to be able to set a person's relation to a paper to be later queried.  (Jacob)
 		//kind of the same idea as getRelationToPaper()
-		
-		
+		//TODO: Kind of wondering what the point of this method is. If we know the conference and paper,
+		//doesn't that make this kind of pointless? Or maybe I don't get what this method is supposed to do.
+		//It seems like we would never need to set a user's relation in regards to a given paper when we know
+		//the conference. For example, if we know the conference we can find out who the pc is. Why would we
+		//need to set the pc in a conference that already has one? 
+		if (the_relation == paperRelation.PC){ //This case also makes no sense.
+			try {
+				PreparedStatement statement = connect.prepareStatement("");
+				resultSet = statement.executeQuery();
+				
+			} catch (SQLException e) {
+				System.out.println("Error setting paper relation." + e.getMessage());
+			}
+		} else if (the_relation == paperRelation.SUBPC) { //Same with this one?
+			addSubPC(the_conference, the_paper_title, the_username);
+		} else if (the_relation == paperRelation.REVIEWER) { //This one could have a use...
+			String[] reviewer = new String[1];
+			reviewer[0] = the_username;
+			addReviewers(the_conference, the_paper_title, reviewer);
+		} else { //Isn't this a trivial case? When would we set an user as an author of paper?
+			try {
+				PreparedStatement statement = connect.prepareStatement("UPDATE papers SET author='" + the_username + "'");
+				statement.execute();
+				
+			} catch (SQLException e) {
+				System.out.println("Error setting paper relation." + e.getMessage());
+			}
+			
+		}
 		
 	}
 	
@@ -975,9 +1001,20 @@ public class Controller extends Observable{
 		//		return the username of the SubPC that made the recommendation.
 		//		maybe this "getter" already exists in some form?  if so, just let me know and I'll adjust (Jacob)
 		
-		//temporary
-		String temp = "Clayton";
-		return temp;
+		String subPCName = "";
+		try {
+			PreparedStatement statement = connect.prepareStatement("SELECT subchair FROM recommendations WHERE " +
+					"papername= '" + the_paper + "'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()){
+				subPCName = resultSet.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Error getting paper recommendation subpc name." + e.getMessage());
+		}
+		return subPCName;
 	}
 	
 	/*
@@ -1159,13 +1196,63 @@ public class Controller extends Observable{
 		return (String[]) result.toArray();
 	}
 	
+	/**
+	 * Adds the reviewers to the paper.
+	 * 
+	 * @param the_conference The conference the paper is in.
+	 * @param the_paper The paper the reviewers are reviewing.
+	 * @param the_reviewers The users who are reviewing the paper.
+	 * @author Aaron
+	 */
 	public void addReviewers(final Conference the_conference, final String the_paper, final String[] the_reviewers){
-		//TODO: add these reviewers to the database as assigned to the_paper in the_conference.
-		//		The AssignReviewerGUI is checking to make sure how many reviewers are already assigned to the paper
-		//		it is also checking (along with your help in the getAvailableReviewers method) to make sure that the
-		//		reviewers assigned here are valid; not violating business rules.  Therefore, you should be able to just
-		//		add these names in without checking, unless I'm missing something.  Let me know if I need to change how
-		//		this is being handled.  (Jacob)
+		//Gets the correct paperId and paperAuthor for the paper.
+		int paperId = 0;
+		String paperAuthor = "";
+		try {
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM papers WHERE name='" + the_paper + "'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next())
+			{
+				paperId = Integer.parseInt(resultSet.getString(1));
+				paperAuthor = resultSet.getString(2);
+			}
+			System.out.println(paperId);
+			
+		} catch (SQLException e) {
+			System.out.println("Error creating new review. 1" + e.getMessage());
+		}
+		
+		for (int i = 0; i < the_reviewers.length; i++){
+			PreparedStatement statement;
+			try {
+				
+				statement = connect.prepareStatement("SELECT * FROM reviews");
+				resultSet = statement.executeQuery();
+				//iterates through and adds unique ids to the reviews.
+				int j = 0;
+				int otherId = 0;
+				int id = 0;
+				while (resultSet.next()){
+					otherId = Integer.parseInt(resultSet.getString(1));
+					if (j != otherId){
+						id = j;
+						
+					}
+					else {
+						id = j + 1;
+					}
+					j++;
+				}
+				//Adds the reviewer to the table by adding a "blank" review. 
+				statement = connect.prepareStatement("INSERT INTO reviews VALUES (" + id + "," + paperId + ",'" +
+			    the_reviewers[i] + "','" + the_conference.getConfTitle() + "','" + the_paper + "','" +
+			    paperAuthor + "',0,0,0,0,0,0,0,0,0,0,'No comments at this time.')");
+				statement.execute();
+			} catch (SQLException e) {
+				System.out.println("Error adding reviewers. 2" + e.getMessage());
+			}	
+		}
 		
 		
 	}
@@ -1456,55 +1543,42 @@ public class Controller extends Observable{
 		return the_conf_array.toArray(new Conference[the_conf_array.size()]);
 	}
 	
-	public Conference[] getUpcommingConferences(final String the_username) throws ParseException{
-	//TODO: 
-    	ArrayList<Conference> al = new ArrayList<Conference>();
+	/**
+	 * Gets all conferences that are upcoming but not in myConferences.
+	 * 
+	 * @param the_username The username of the current user.
+	 * @return An array of Conferences that contains all upcoming conferences.
+	 * @author Aaron
+	 */
+	public Conference[] getUpcommingConferences(final String the_username) {
+    	ArrayList<Conference> upcomingconf = new ArrayList<Conference>();
 		try {
-			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conferences WHERE NOTIFYDATE >= '"+new Date().toLocaleString()+"'");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conference WHERE NOTIFYDATE >= '"+new Date().toLocaleString()+"'");
 			resultSet = statement.executeQuery();
-			ResultSetMetaData rsmd = resultSet.getMetaData();
-			int numberOfColumns = rsmd.getColumnCount();
-			  
-	    	for (int i = 1; i <= numberOfColumns; i++) {
-	    		if (i > 1) System.out.print(",  ");
-	    		String columnName = rsmd.getColumnName(i);
-	    		System.out.print(columnName);
-	    	}
-	    	System.out.println("");
-	        while (resultSet.next()) {
-	                ArrayList<String> record = new ArrayList<String>();
-	                for (int i = 1; i <= numberOfColumns; i++) {
-	                        String value = resultSet.getString(i);
-	                        record.add(value);
-	                }
-	                Conference value = infoForAConference(record);
-	                al.add(value); 
-	        }    
-	    	while (resultSet.next()) {
-	            for (int i = 1; i <= numberOfColumns; i++) {
-	            	if (i > 1) System.out.print(",  ");
-	            	String columnValue = resultSet.getString(i);
-	            	System.out.print(columnValue);
-	            }
-	            System.out.println("");  
-	        }
+			Conference[] myConferences = getMyConferences(the_username);
+			
+			while (resultSet.next()) {			
+				Conference con = new Conference(resultSet.getString(1), resultSet.getString(2),
+						resultSet.getDate(3), "", "", "", "", resultSet.getDate(4), resultSet.getDate(5),
+						resultSet.getDate(6), resultSet.getDate(7), resultSet.getString(8));
+				upcomingconf.add(con);
+			}	
+			
+			for (Conference c : upcomingconf){
+				for(int i = 0; i < myConferences.length; i++){
+					if (myConferences[i].getConfTitle().equals(c.getConfTitle())){
+						upcomingconf.remove(c);
+					}
+				}
+			}
 		} catch (SQLException e) {
 			System.out.println("Check for valid conference name failed");
 			e.printStackTrace();
 		}
-		Conference[] the_conf_array;
-		if(al.size()>0) {
-			the_conf_array = new Conference[al.size()];
-			for(int i=0;i<al.size();i++){
-				the_conf_array[i]=al.get(i);
-			}
-		} else {
-			the_conf_array = new Conference[1];
-			the_conf_array[0] = null;
-		}
-
-		return the_conf_array;
+		
+		return upcomingconf.toArray(new Conference[upcomingconf.size()]);
 	}
+	
 	private Conference infoForAConference(
 			ArrayList<String> record) throws ParseException {
 		DateFormat formatter; 
@@ -1629,8 +1703,26 @@ public class Controller extends Observable{
 	
 	public static void main(String args[]) throws ParseException, SQLException {
 		Controller controller = new Controller();
+//<<<<<<< .mine
+		Conference[] conn = controller.getUpcommingConferences("typow");
+//		controller.getAvailableForSubPC(conn[1], 2, "Tyler Powers");
+//		controller.getMyPapers("TestTest", "Test username");
+//		controller.getPaperID("Packing on Abs");
+//		controller.setPaperStatus(conn[0], "Packing on Abs", paperStatusAuthorViewable.ACCEPTED, paperStatusAdminViewable.OVERDUE_FOR_RECOMMEND);
+//		String reviewers[] = new String[4];
+//		for (int i = 0; i < 4; i++)
+//		{
+//			reviewers[i] = "test";
+//		}
+//		controller.addReviewers(conn[0], "Packing on Abs", reviewers);
+		//String subpc = controller.getPaperRecommendationSubPCName(conn[0], "Packing on Abs");
+		//System.out.println(subpc);
+		for (int i = 0; i < conn.length; i++){
+			System.out.println(conn[0].getConfTitle());
+		}
+//=======
 		ManageDatabase md = new ManageDatabase();
-		md.printDatabase();
+		md.printDatabase();;
 		
 		/*
 		Conference testConference1 = new Conference("Small Computer conferences", "PC", new Date(2000, 1, 1), "Test Address", 
@@ -1639,7 +1731,7 @@ public class Controller extends Observable{
 		*/
 		
 	
-		Conference[] c = controller.getMyConferences("typow");
+		//Conference[] c = controller.getMyConferences("typow");
 		
 		
 		
@@ -1652,6 +1744,7 @@ public class Controller extends Observable{
 //		}
 //		
 //		controller.createNewReview("Obama", conn[0], "Baking Pi", "Michael Phelps", "Lame", buttons, "Lamer");
+//>>>>>>> .r138
 	}
 
 
