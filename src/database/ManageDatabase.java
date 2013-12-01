@@ -295,7 +295,7 @@ public class ManageDatabase{
 		    	System.out.println("");
 		    	
 		    	while (resultSet.next()) {
-		            for (int i = 1; i <= numberOfColumns; i++) {
+		            for (int i = 1; i <= numberOfColumns; i++) {	
 		            	if (i > 1) System.out.print(",  ");
 		            	String columnValue = resultSet.getString(i);
 		            	System.out.print(columnValue);
@@ -391,11 +391,11 @@ public class ManageDatabase{
 		try {
 			PreparedStatement statement = connect.prepareStatement(
 					"INSERT INTO users (USERNAME,  FIRSTNAME,  MI,  LASTNAME,  SPECIALITY) VALUES ('ajm1','Aaron','J','Merrill','Engineering Computer')," +
-					"('sethk1','Seth','D','Kramer','Engineering Checmial')," +
+					"('sethk2','Seth','D','Kramer','Engineering Chemical')," +
 					"('typow','Tyler','M','Powers','Engineering Bio')," +
 					"('warfeld','Warrick','M','Holfeld','Engineering Electronic')," +
 					"('d-man','David','P','Swanson','--Other--')," +
-					"('jacobhall','Jacob','M','Hall','Engineering Computer')," +
+					"('Halmus','Jacob','M','Hall','Engineering Computer')," +
 					"('idol','Ryan','P','Seacrest','--Other--')," +
 					"('thor','Chris','W','Hemsworth','Engineering Bio')," +
 					"('yellow','Spongebob','S','Squarepants','Engineering Bio')," +
@@ -421,12 +421,16 @@ public class ManageDatabase{
 		
 		try {
 			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO papers (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME,  STATUS)  VALUES " +
-					"(0,'bounty','Surviving the Sarlacc','text','Bio conferences','SUBMITTED')," +
-					"(1,'ajm1','Analysis of Horspools Algorithm','text','conferences of Algorithmic analysis','REVIEWED')," +
-					"(2,'typow','Baking Pi','text','Small Computer conferences','ACCEPTED')," +
-					"(3,'da-man','A More Perfect Union Set','text','Comp-Sci Annual','SUBMITTED')," +
-					"(4,'ripped','Packing on Abs','text','Bio conferences','SUBMITTED')");
+					"INSERT INTO papers (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME,  STATUS, ADMINSTAT)  VALUES " +
+					"(0,'warfeld','Surviving the Sarlacc','text','Everything Math','SUBMITTED','SUBMITTED')," +
+					"(1,'ajm1','Analysis of Horspools Algorithm','text','Everything Math','REVIEWED','SUBMITTED')," +
+					"(2,'typow','Baking Pi','text','Small Computer Conference','ACCEPTED','SUBMITTED')," +
+					"(3,'da-man','A More Perfect Union Set','text','Everything Math','SUBMITTED','SUBMITTED')," +
+					"(4,'warfeld','Packing on grey matter','text','Everything Math','SUBMITTED','SUBMITTED'), " +
+					"(5,'sethk2','Wooden Computers','text','Small Computer Conference','SUBMITTED','SUBMITTED')," +
+					"(6,'Halmus','Plants and You','text','Trees Have Feelings','SUBMITTED','SUBMITTED')," +
+					"(7,'d-man','Wild Maples of the North','text','Trees Have Feelings','SUBMITTED','SUBMITTED')," +
+					"(8,'ajm1','Sequoias- A Love Story','text','Trees Have Feelings','SUBMITTED','SUBMITTED')");
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println("Error resetting papers. " + e.getMessage());
@@ -437,7 +441,9 @@ public class ManageDatabase{
 		clearConferences();
 		try {
 			PreparedStatement statement = connect.prepareStatement("INSERT INTO conferences(NAME,  PROGCHAIR,  CONDATE,  SUBMITDATE,  REVIEWDATE,  RECDATE,  NOTIFYDATE,  SUMMARY)" +
-					" VALUES ('test', 'bounty', '11/26/2013', '11/26/2013', '11/26/2013', '11/26/2013', '11/26/2013', 'test method')");
+					" VALUES ('Small Computer Conference', 'typow', '2/26/2014', '1/26/2014', '2/5/2014', '2/10/2014', '2/15/2014', 'Test method')," +
+					"('Trees Have Feelings', 'Halmus', '3/10/2014', '2/1/2014', '2/10/2014', '2/15/2014', '2/20/2014', 'Another test method')," +
+					"('Everything Math', 'ajm1', '5/15/2014', '4/1/2014', '4/10/2014', '4/15/2014', '4/20/2014', 'Another test method')");
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println("Error resetting conferences " + e.getMessage());
@@ -447,9 +453,12 @@ public class ManageDatabase{
 	
 	public static void main(String args[]) {
 		ManageDatabase md = new ManageDatabase();
-		//md.resetUsers();
+		/*
+		md.resetConferences();
 		md.resetPapers();
-		//md.resetConferences();
+		md.resetUsers();
+		*/
+		
 		md.printDatabase();
 	}
 	

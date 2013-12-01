@@ -31,6 +31,7 @@ import view.GUIEnum.StateOfGUI;
 import view.GUIEnum.paperRelation;
 import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
+import database.ManageDatabase;
 
 
 /**
@@ -96,7 +97,6 @@ public class Controller extends Observable{
 		try {		      
 		      Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();	      	
 		      connect = DriverManager.getConnection("jdbc:derby://localhost:1527/CMSDB;");
-		      System.out.println("Success!! Lets eat Cake!!");
 		      
 		} catch(Exception e) {
 			System.out.println("Failed to connect!");
@@ -1342,15 +1342,17 @@ public class Controller extends Observable{
 	public Conference[] getMyConferences(final String the_username){
 	//TODO: do this....
 		//temporary
-		
+
 		ResultSet resultSet2;
+		PreparedStatement statement;
 		List<Conference> the_conf_array = new ArrayList<Conference>();
 		
-		//First add conferences they are PC of
+		//First add conferences they are PC of	
+		/*
 		try {
 			
 			//Get all conferences with a match for the username as the PC of the conference
-			PreparedStatement statement = connect.prepareStatement(
+			statement = connect.prepareStatement(
 					"SELECT * FROM conference WHERE progchair=" +"'" + the_username + "'");
 			resultSet = statement.executeQuery();
 			
@@ -1366,11 +1368,12 @@ public class Controller extends Observable{
 			System.out.println("getMyConferences failed in adding PC conf");
 		}
 		
+		
 		//Second add conferences they are SUBPC of
 		try {
 			
 			//Get all recommendations with a match for the username as the subPC of the conference
-			PreparedStatement statement = connect.prepareStatement(
+			statement = connect.prepareStatement(
 					"SELECT * FROM recommendations WHERE subchair=" +"'" + the_username + "'");
 			resultSet = statement.executeQuery();
 			//Add the conferences the user is subPC of to the array
@@ -1382,10 +1385,12 @@ public class Controller extends Observable{
 						"SELECT * FROM conference WHERE name=" +"'" + resultSet.getString(4) + "'");
 				resultSet2 = statement2.executeQuery();
 				
-				Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
+				if (resultSet2.next()) {
+					Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
 						resultSet2.getDate(3), "", "", "", "", resultSet2.getDate(4), resultSet2.getDate(5),
 						resultSet2.getDate(6), resultSet2.getDate(7), resultSet2.getString(8));
-				the_conf_array.add(con);
+					the_conf_array.add(con);
+				}
 			}
 			
 		} catch (Exception e) {
@@ -1396,7 +1401,7 @@ public class Controller extends Observable{
 		try {
 			
 			//Get all reviews with a match for the username as the reviewer of the conference
-			PreparedStatement statement = connect.prepareStatement(
+			statement = connect.prepareStatement(
 					"SELECT * FROM reviews WHERE reviewer=" +"'" + the_username + "'");
 			resultSet = statement.executeQuery();
 			//Add the conferences the user is a reviewer of to the array
@@ -1406,46 +1411,52 @@ public class Controller extends Observable{
 						"SELECT * FROM conference WHERE name=" +"'" + resultSet.getString(4) + "'");
 				resultSet2 = statement2.executeQuery();
 				
-				Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
+				if (resultSet2.next()) {
+					Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
 						resultSet2.getDate(3), "", "", "", "", resultSet2.getDate(4), resultSet2.getDate(5),
 						resultSet2.getDate(6), resultSet2.getDate(7), resultSet2.getString(8));
-				the_conf_array.add(con);
+					the_conf_array.add(con);
+				}
 			}
 			
 		} catch (Exception e) {
 			System.out.println("getMyConferences failed in adding reviewer conf");
-		}
+		}*/
 		
 		//Fourth add conferences they are authors for papers of
 		try {
 			
 			//Get all papers with a match for the username as the author 
-			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM papers WHERE author=" +"'" + the_username + "'");
+			statement = connect.prepareStatement(
+					"SELECT * FROM papers WHERE author='" + the_username + "'");
 			resultSet = statement.executeQuery();
-			
+				
 			//Add the conferences the author has a paper in to the array
 			while (resultSet.next()) {
 				
 				//gets the data for the conference to create a conference object to add to the array
+				String conferenceName = resultSet.getString(5);
+				System.out.println(conferenceName);
 				PreparedStatement statement2 = connect.prepareStatement(
-						"SELECT * FROM conference WHERE name=" +"'" + resultSet.getString(5) + "'");
+						"SELECT * FROM conference WHERE name=" +"'" + conferenceName + "'");
 				resultSet2 = statement2.executeQuery();
 				
-				Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
+				if (resultSet2.next()) {
+					Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
 						resultSet2.getDate(3), "", "", "", "", resultSet2.getDate(4), resultSet2.getDate(5),
 						resultSet2.getDate(6), resultSet2.getDate(7), resultSet2.getString(8));
-				the_conf_array.add(con);
+					the_conf_array.add(con);
+				}
 			}
 			
 		} catch (Exception e) {
 			System.out.println("getMyConferences failed in adding author conf" + e.getMessage());
 		}
 		
-		return (Conference[]) the_conf_array.toArray();
+		return the_conf_array.toArray(new Conference[the_conf_array.size()]);
 	}
 	
-	public Conference[] getUpcommingConferences() throws ParseException{
+	public Conference[] getUpcommingConferences(final String the_username) throws ParseException{
 	//TODO: 
     	ArrayList<Conference> al = new ArrayList<Conference>();
 		try {
@@ -1614,14 +1625,26 @@ public class Controller extends Observable{
 		}
 		return paper;
 	}
+
 	
-	public static void main(String args[]) throws ParseException {
+	public static void main(String args[]) throws ParseException, SQLException {
 		Controller controller = new Controller();
-		Conference[] conn = controller.getUpcommingConferences();
-		controller.getAvailableForSubPC(conn[1], 2, "Tyler Powers");
-		controller.getMyPapers("TestTest", "Test username");
-		controller.getPaperID("Packing on Abs");
-		controller.setPaperStatus(conn[0], "Packing on Abs", paperStatusAuthorViewable.ACCEPTED, paperStatusAdminViewable.OVERDUE_FOR_RECOMMEND);
+		ManageDatabase md = new ManageDatabase();
+		md.printDatabase();
+		
+		/*
+		Conference testConference1 = new Conference("Small Computer conferences", "PC", new Date(2000, 1, 1), "Test Address", 
+				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
+				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		*/
+		
+	
+		Conference[] c = controller.getMyConferences("typow");
+		
+		
+		
+		
+		
 //		int buttons[] = new int[10];
 //		for (int i = 0; i < 10; i++)
 //		{
