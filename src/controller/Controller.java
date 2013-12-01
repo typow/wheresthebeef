@@ -1808,6 +1808,50 @@ public class Controller extends Observable{
 		return paper;
 	}
 	
+	private void createPaperObjects(List<Paper> the_paper_list, final Conference the_conference, 
+			final String the_username, final ResultSet rs) {
+
+		Paper paper = null;
+		
+		try {
+			do {
+			
+				int paperID = rs.getInt(1);
+				String paperName = rs.getString(3);
+				
+				if (!isPaperInList(paperName, the_paper_list)) {
+					
+					// Adds new paper to the list
+					the_paper_list.add(new Paper(rs.getString(5), rs.getString(3), rs.getString(2), 
+							getStatusAuthorView(the_conference, paperName),
+							getAdminPaperStatus(the_conference, paperName),
+							getUserAssignedAsSubPC(the_conference, paperID), 
+							getUserAssignedAsPC(the_conference), 
+							getUsersAssignedAsReviewers(the_conference, paperName),
+							paperID));
+				}
+			
+			} while (rs.next());
+			
+		} catch (Exception e) {
+			System.out.println("createPaperObject failed!");
+		}
+	}
+	
+	private boolean isPaperInList(String the_paperTitle, List<Paper> the_paperList) {
+		boolean result = false;
+		
+		for (int i = 0; (i < the_paperList.size()) && !result; i++) {
+			
+			// If the paper title is the same as the title in the list: result = true
+			if (the_paperTitle.equals(the_paperList.get(i).getPaperTitle())) {
+				result = true;
+			}
+		}
+		
+		return result;
+	}
+	
 	private boolean isConfInList(Conference the_conference, List<Conference> the_conferenceList) {
 		boolean result = false;
 		
@@ -1820,32 +1864,6 @@ public class Controller extends Observable{
 		}
 		
 		return result;
-	}
-	
-	private void createPaperObjects(List<Paper> the_paper_list, final Conference the_conference, 
-			final String the_username, final ResultSet rs) {
-
-		Paper paper = null;
-		
-		try {
-			do {
-			
-				int paperID = rs.getInt(1);
-				String paperName = rs.getString(3);
-			
-				the_paper_list.add(new Paper(rs.getString(5), rs.getString(3), rs.getString(2), 
-						getStatusAuthorView(the_conference, paperName),
-						getAdminPaperStatus(the_conference, paperName),
-						getUserAssignedAsSubPC(the_conference, paperID), 
-						getUserAssignedAsPC(the_conference), 
-						getUsersAssignedAsReviewers(the_conference, paperName),
-						paperID));
-			
-			} while (rs.next());
-			
-		} catch (Exception e) {
-			System.out.println("createPaperObject failed!");
-		}
 	}
 
 	
