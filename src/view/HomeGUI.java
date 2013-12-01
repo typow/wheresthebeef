@@ -315,7 +315,6 @@ public class HomeGUI extends JPanel {
 					}
 
 					public void mousePressed(MouseEvent arg0) {
-						System.out.println(box_clicked);
 						controller.setCurrentConference(upcoming_conference);
 						controller.setStateOfGUI(StateOfGUI.CONFERENCE);
 					}
@@ -409,7 +408,6 @@ public class HomeGUI extends JPanel {
 					}
 
 					public void mousePressed(MouseEvent arg0) {
-						System.out.println(box_clicked);
 						controller.setCurrentConference(curr_conference);
 						controller.setStateOfGUI(StateOfGUI.CONFERENCE);
 					}

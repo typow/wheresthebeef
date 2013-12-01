@@ -234,10 +234,10 @@ public class ConferenceGUI extends JPanel {
 
 
 	private void submitPapersetup() {
-		JButton btnNewButton = new JButton("Submit Paper");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnNewButton.setBounds(429, 234, 404, 101);
-		main_panel.add(btnNewButton);
+		JButton submit_button = new JButton(my_submit_action);
+		submit_button.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		submit_button.setBounds(429, 234, 404, 101);
+		main_panel.add(submit_button);
 		
 	}
 
@@ -308,7 +308,19 @@ public class ConferenceGUI extends JPanel {
 	 * conference.
 	 */
 	private void buildScrollPanel() {
-		JPanel panel_for_scrollpane = new JPanel(new GridLayout(7, COLUMN_NAMES.length));
+		
+		int number_of_papers = 0;
+		
+		String[] my_paper_array = controller.getMyPapers(controller.getCurrentConference().getConfTitle(), controller.getCurrentUsername());
+		
+		if(my_paper_array != null) {
+			number_of_papers = my_paper_array.length;
+		}
+		
+		System.out.println("number of papers in array = " + number_of_papers);
+		System.out.println(my_paper_array[0]);
+		
+		JPanel panel_for_scrollpane = new JPanel(new GridLayout((number_of_papers + 1), COLUMN_NAMES.length));
 		panel_for_scrollpane.setBorder(new BevelBorder(BevelBorder.LOWERED,
 				null, null, null, null));
 		for (int i = 0; i < COLUMN_NAMES.length; i++) {
@@ -321,10 +333,11 @@ public class ConferenceGUI extends JPanel {
 			jl.setFont(font.deriveFont(attributes));
 			panel_for_scrollpane.add(jl);
 		}
-		for (int i = COLUMN_NAMES.length+1; i <= 42; i++) {
+		for (int i = COLUMN_NAMES.length+1; i <= ((number_of_papers + 1) * COLUMN_NAMES.length); i++) {
 
 			if ((i - 1) % COLUMN_NAMES.length == 0) {
-				final JLabel jl = new JLabel("Box " + i, JLabel.CENTER);
+
+				final JLabel jl = new JLabel(my_paper_array[0], JLabel.CENTER);
 				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				jl.setForeground(Color.BLUE);
 				jl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -345,7 +358,8 @@ public class ConferenceGUI extends JPanel {
 					}
 
 					public void mousePressed(MouseEvent arg0) {
-						System.out.println(box_clicked);
+//						controller.setCurrentConference(curr_conference);
+//						controller.setStateOfGUI(StateOfGUI.CONFERENCE);
 					}
 
 					public void mouseReleased(MouseEvent arg0) {
@@ -392,9 +406,6 @@ public class ConferenceGUI extends JPanel {
 		my_back_action = new AbstractAction(BACK_TITLE_STRING, null) {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				controller.setCurrentUsername(""); // blank because in this
-													// case,
-				// the user is logging out by going back one screen.
 				controller.setCurrentConference(null);
 				controller.setCurrentPaper("");
 				controller.setStateOfGUI(StateOfGUI.HOME);
@@ -406,7 +417,7 @@ public class ConferenceGUI extends JPanel {
 		/*
 		 * The action associated with clicking submit paper 
 		 */
-		my_submit_action = new AbstractAction(BACK_TITLE_STRING, null) {
+		my_submit_action = new AbstractAction(SUBMIT_TITLE_STRING, null) {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				// the user is logging out by going back one screen.
@@ -414,7 +425,7 @@ public class ConferenceGUI extends JPanel {
 				controller.setStateOfGUI(StateOfGUI.SUBMIT_PAPER);
 			}
 		};
-		my_submit_action.putValue(Action.SHORT_DESCRIPTION, BACK_STRING);
+		my_submit_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_STRING);
 		my_submit_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_S);
 
 	}
