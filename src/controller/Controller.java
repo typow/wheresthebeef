@@ -135,13 +135,8 @@ public class Controller extends Observable{
 	 * @return valid  Returns true if the username exists in the database.
 	 */
 	//Tyler Powers was here
-	public Boolean checkValidUsername(final String the_username)
-	{
-		Boolean valid = false;
-		//		 check the username against database to see if this username
-		//		 already exists in the database.  Jacob
-		//		 partially tested
-		
+	public Boolean checkValidUsername(final String the_username) {
+		Boolean valid = false;		
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
@@ -169,9 +164,22 @@ public class Controller extends Observable{
 	 */
 	public Boolean checkValidUsernamePassword(final String the_username, 
 												final String the_password){
-		Boolean valid = true;
-		//TODO: check the username/password combo against the database to see if this 
-		//		username and password combo are valid.  Jacob
+		Boolean valid = false;		
+		try {
+			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM users WHERE username='" + the_username + "' AND password='" + the_password +
+					"'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				valid = true;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Check for valid Username failed");
+			e.printStackTrace();
+		}
 		return valid;
 	}
 	/**
@@ -257,65 +265,6 @@ public class Controller extends Observable{
 	 */
 	public Boolean checkConferenceExists(final String the_conference_title) {
 		Boolean valid = false;
-		//TODO: check the conference title against database to see if this conference title
-		//		already exists in the database.  Jacob
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		//NOTE..........................
-		//TODO: this method prints out the stack trace no matter what.  If the title exists or doesn't.
-		//(TYLER) i changed conferences to conference in the statement this should fix it if it does fix spacing
 		// (SETH) It's actually "conferences" that's in the database
 		try {
 			
@@ -331,59 +280,7 @@ public class Controller extends Observable{
 		}
 		return valid;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	/**
 	 * creates a new conference. GUI code first sees if checkConferenceExists(final String the_conference_title)
@@ -400,9 +297,13 @@ public class Controller extends Observable{
 		try {
 			@SuppressWarnings("deprecation")
 			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO conferences VALUES ('" + the_conference.getConfTitle() + "', '" + the_conference.getProgramChair() + "', '" +
-							the_conference.getConfDate().toLocaleString() + "', '" + the_conference.getSubmissionDead().toLocaleString() + "', '" + the_conference.getReviewDead().toLocaleString() + "', '" + 
-							the_conference.getSubPCReccomendDead().toLocaleString() + "', '" + the_conference.getAuthorNotificationDead().toLocaleString() + "', '" + the_conference.getConfSummary() + "')");
+					"INSERT INTO conferences VALUES ('" + the_conference.getConfTitle() + "', '" +
+					the_conference.getProgramChair() + "', '" + the_conference.getConfDate().toLocaleString() +
+					"', '" + the_conference.getSubmissionDead().toLocaleString() + "', '" +
+					the_conference.getReviewDead().toLocaleString() + "', '" +
+					the_conference.getSubPCReccomendDead().toLocaleString() + "', '" +
+					the_conference.getAuthorNotificationDead().toLocaleString() + "', '" +
+					the_conference.getConfSummary() + "')");
 			statement.execute();
 			System.out.println(the_conference.getConfTitle() + " Successfully added conference");
 			listOfAllConferences.add(the_conference);
@@ -661,12 +562,13 @@ public class Controller extends Observable{
 	public void setPaperStatus(final Conference the_conference, final String the_paper_title, 
 			paperStatusAuthorViewable the_author_viewable_status, paperStatusAdminViewable the_admin_viewable_status){
 		
-		//TODO: this is a generic update of the Paper status for both author viewable and admin viewable called at different
+		//		this is a generic update of the Paper status for both author viewable and admin viewable called at different
 		//		points in the program when reviews are submitted and so on.
 		
 		try {
 			PreparedStatement statement = connect.prepareStatement("UPDATE papers SET status='" + the_author_viewable_status + "', " +
-					"adminstat='" + the_admin_viewable_status + "' WHERE name='" + the_paper_title + "'");
+					"adminstat='" + the_admin_viewable_status + "' WHERE name='" + the_paper_title + "' AND confname='" +
+					the_conference.getConfTitle() + "'");
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println("Error setting paper status." + e.getMessage());
@@ -675,6 +577,12 @@ public class Controller extends Observable{
 		
 	}
 	
+	/**
+	 * 
+	 * @param the_conference
+	 * @param the_paper_title
+	 * @return
+	 */
 	public paperStatusAdminViewable getAdminPaperStatus(final Conference the_conference, final String the_paper_title){
 		
 		paperStatusAdminViewable adminStatus = null;
@@ -705,7 +613,7 @@ public class Controller extends Observable{
 		return adminStatus;
 	}
 	
-	/*
+	/**
 	 * Returns the status of the paper that an author is privy to given the title of a paper
 	 * and its corresponding conference. This method returns null if there is either a SQL exception
 	 * or if the paper title isn't associated with the passed in conference.
@@ -740,10 +648,18 @@ public class Controller extends Observable{
 		return authorStatus;
 	}
 	
+	/**
+	 * 
+	 * @param the_paper
+	 */
 	public void setCurrentPaper(final String the_paper){
 		current_paper = the_paper;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getCurrentPaper(){
 		return current_paper;
 	}
@@ -757,11 +673,12 @@ public class Controller extends Observable{
 	 * @author Aaron
 	 */
 	public void deletePaper(final Conference the_conference, final String the_username, final String the_paper_title){
-		//TODO: Remove this paper from the database
+		//		Remove this paper from the database
 		
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DELETE FROM papers WHERE name='" + the_paper_title + "'");
+			statement = connect.prepareStatement("DELETE FROM papers WHERE name='" + the_paper_title + "' AND" +
+					"confname='" + the_conference.getConfTitle() + "'");
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println("Error deleting paper." + e.getMessage());
@@ -783,16 +700,17 @@ public class Controller extends Observable{
 	public void createNewReview(final String the_reviewer_username, final Conference the_conf, 
 			final String the_paper, final String the_paper_author, final String the_comments_to_subpc, 
 			final int[] the_answersRadioBtn, final String the_summary_comments){
-		//TODO: add these elements to the database as one single review item
+		//		add these elements to the database as one single review item
 		
 		int paperId = 0;
 		try {
-			PreparedStatement statement = connect.prepareStatement("SELECT id FROM papers WHERE name='" + the_paper + "'");
+			PreparedStatement statement = connect.prepareStatement("SELECT id FROM papers WHERE name='" +
+					the_paper + "' AND confname='" + the_conf.getConfTitle() + "'");
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next())
 			{
-				paperId = Integer.parseInt(resultSet.getString(1));
+				paperId = resultSet.getInt(1);
 			}
 			System.out.println(paperId);
 			
@@ -829,7 +747,8 @@ public class Controller extends Observable{
 		//		or the user has already submitted one, return false.
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("SELECT REVIEWER FROM reviews where PAPERNAME = '"+the_paper+"'");
+			PreparedStatement statement = connect.prepareStatement("SELECT reviewer FROM reviews WHERE papername='"+
+					the_paper+"'");
 			resultSet = statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 			int numberOfColumns = rsmd.getColumnCount();
@@ -908,14 +827,15 @@ public class Controller extends Observable{
 	}
 	
 	/**
+	 * Adds a recommendation of the SubProgramChair to the database with their grade and rationale of
+	 * the paper passed in
 	 * 
-	 * 
-	 * @param the_sub_pc_username
-	 * @param current_conf
-	 * @param current_paper_being_recommended
-	 * @param the_paper_author
-	 * @param the_numerical_value
-	 * @param the_rational_for_recommendation
+	 * @param the_sub_pc_username the subprogramchair recommending the paper
+	 * @param current_conf the conference the paper being recommended belongs to
+	 * @param current_paper_being_recommended the paper that is being recommended
+	 * @param the_paper_author the author of the paper being recommended
+	 * @param the_numerical_value the grade the subprogramchair gave the paper
+	 * @param the_rational_for_recommendation the rationale behind the subprogramchairs grade
 	 */
 	public void addPaperRecommendation(final String the_sub_pc_username, final Conference current_conf, 
 			final String current_paper_being_recommended, final String the_paper_author, final int the_numerical_value,
@@ -934,9 +854,8 @@ public class Controller extends Observable{
 					"SELECT * FROM papers WHERE name=" +"'" + current_paper_being_recommended +
 					"' AND author='" + the_paper_author + "'");
 			resultSet = statement.executeQuery();
-			
 			if (resultSet.next()) {
-					paperID = resultSet.getInt(1);			
+					paperID = resultSet.getInt(1);
 			}
 		} catch(Exception e) {
 			e.getStackTrace();
@@ -950,28 +869,35 @@ public class Controller extends Observable{
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
+				
 				statement = connect.prepareStatement("UPDATE recommendations SET paperid=" + paperID +
 						", subchair='" + the_sub_pc_username + "', conference='" + current_conf.getConfTitle() +
 						"', papername='" + current_paper_being_recommended + "', paperauthor='" +
 						the_paper_author + "', q1=" + the_numerical_value + ", rationale='" + 
-						the_rational_for_recommendation + "' WHERE id=" + paperID);		
+						the_rational_for_recommendation + "' WHERE id=" + paperID);	
+				statement.execute();
 			} else {
-				statement = connect.prepareStatement("INSERT INTO recommendations VALUES (" + paperID + ", " +
-						paperID + ", '" + the_sub_pc_username + "', '" + current_conf.getConfTitle() +
-						"', '" + current_paper_being_recommended + "', '" + the_paper_author + "', " +
-						the_numerical_value + ", '" + the_rational_for_recommendation + "')");
+				statement = connect.prepareStatement("INSERT INTO recommendations VALUES (" +
+				paperID + "," + paperID + ",'" + the_sub_pc_username + "','" + current_conf.getConfTitle() +
+				"','" + current_paper_being_recommended + "','" + the_paper_author + "'," + 
+				the_numerical_value + ", '" + the_rational_for_recommendation + "')");
+				statement.execute();
 			}
 		} catch(Exception e) {
-			e.getStackTrace();
-			System.out.println("Failed to just addREC");
+			e.printStackTrace();
+			System.out.println("Failed to just addREC" + e.getMessage());
 		}
 	}
 	
-	/*
+	/**
 	 * Retrieves the SubPC's recommendation for a paper from the database
 	 * given a conference and a paper within that conference. If the paper does
 	 * not exist in that conference the sentinel value paperID = -1 and it returns
 	 * a blank string for the rationale.
+	 * 
+	 * @param the_conf the conference the recommendation belongs to
+	 * @param the_paper the paper the recommendation belongs to
+	 * @return the recommendation of the paper being examined
 	 */
 	public String getPaperRecommendationRationale(final Conference the_conf, final String the_paper){
 		
@@ -1008,7 +934,14 @@ public class Controller extends Observable{
 		return result;
 	}
 
-	
+	/**
+	 * Retrieves the numerical grade given to the_paper passed by the subprogramchair of that paper 
+	 * for the_conf passed in. 
+	 * 
+	 * @param the_conf the conference the paper is in whose grade is being retrieved
+	 * @param the_paper the paper whose grade is being retrieved
+	 * @return the numerical grade of the paper
+	 */
 	public int getPaperRecommendationNumericalValuefinal(final Conference the_conf, final String the_paper){
 		
 		//		the GUI needs to be able to retrieve the SubPC's recommendation for a paper
@@ -1031,15 +964,23 @@ public class Controller extends Observable{
 		return value;
 	}
 	
+	/**
+	 * Retrieves the SubProgramChair's username from the recommendation of the paper passed in from the
+	 * conference passed in.
+	 * 
+	 * @param the_conf the conference the paper whose recommendation is being retrieved
+	 * @param the_paper the paper whose recommendation is being retrieved
+	 * @return the SubProgramChair's username
+	 */
 	public String getPaperRecommendationSubPCName(final Conference the_conf, final String the_paper){
-		//TODO: the GUI needs to be able to retrieve the SubPC's recommendation for a paper
+		//		the GUI needs to be able to retrieve the SubPC's recommendation for a paper
 		//		return the username of the SubPC that made the recommendation.
 		//		maybe this "getter" already exists in some form?  if so, just let me know and I'll adjust (Jacob)
 		
 		String subPCName = "";
 		try {
 			PreparedStatement statement = connect.prepareStatement("SELECT subchair FROM recommendations WHERE " +
-					"papername= '" + the_paper + "'");
+					"papername= '" + the_paper + "' AND conference='" + the_conf.getConfTitle() + "'");
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()){
@@ -1057,6 +998,16 @@ public class Controller extends Observable{
 	 * paper. The length of the array indicates how many are assigned (i.e. 0 = no reviewers). This
 	 * method also prints to the console if the paper passed in has no association to the conference
 	 * passed in.
+	 */
+	/**
+	 * This method returns all of the userNames of the reviewers that are assigned to a particular
+	 * paper. The length of the array indicates how many are assigned (i.e. 0 = no reviewers). This
+	 * method also prints to the console if the paper passed in has no association to the conference
+	 * passed in.
+	 * 
+	 * @param the_conference the conference the paper belongs to
+	 * @param current_paper the paper whose reviewers are being retrieved
+	 * @return an array of reviewers of the current paper
 	 */
 	public String[] getUsersAssignedAsReviewers(final Conference the_conference, final String current_paper){
 		
@@ -1109,11 +1060,17 @@ public class Controller extends Observable{
 		return result;
 	}
 	
-	/*
+	
+	/**
 	 * Method that returns the PC for a given conference.
 	 * This method returns null if the conference can't be found in the database.
+	 * 
+	 * @param the_conference the conference the returned PC is from
+	 * @param current_paper a paper from the conference the PC is from
+	 * @return the username of the PC
 	 */
-	//TODO: Check paperID
+	//paper does not need to be passed in unless you for some reason need to match the 
+	//paper conf to the conf that was passed in
 	public String getUserAssignedAsPC(final Conference the_conference, final int current_paper){
 		
 		String result = null;
@@ -1135,8 +1092,15 @@ public class Controller extends Observable{
 		return result;
 	}
 	
+	/**
+	 * Retrieves the SubProgramChair of the paper matching the paperid passed in for the conference passed in.
+	 * 
+	 * @param the_conference the conference being examined
+	 * @param current_paper the paper being examined
+	 * @return the SubProgramChair's username
+	 */
 	public String getUserAssignedAsSubPC(final Conference the_conference, final int current_paper){
-		//TODO: return the username of the person assigned as Sub PC for a particular paper
+		//	 return the username of the person assigned as Sub PC for a particular paper
 		String subPC = null;
 		try {
 			PreparedStatement statement = connect.prepareStatement(
@@ -1154,14 +1118,19 @@ public class Controller extends Observable{
 		return subPC;
 	}
 	
-	/*
+	
+	/**
 	 * Method that returns all of the available reviewers for a given paper.
 	 * This method follows the business rules:
 	 * 			- the reviewer can't be the author of the paper.
-			  	- the reviewer can't be the person assigning the review, unless they're the PC.
-				- the reviewer in this list can't be one of the reviewers already assigned to this paper (they can't be assigned twice)
-				- TODO: May need to insert more business rules
+	 *			- the reviewer can't be the person assigning the review, unless they're the PC.
+	 *			- the reviewer in this list can't be one of the reviewers already assigned to this paper (they can't be assigned twice)
+	 *			- TODO: May need to insert more business rules
 	 * 
+	 * @param the_conference the conference the paper being looked at belongs to
+	 * @param the_paper the paper being checked for available reviewers
+	 * @param the_person_assigning the subpc/pc assigning the reviewers to the paper
+	 * @return an array of available users who can review this paper following th business rules
 	 */
 	public String[] getAvailableReviewers(final Conference the_conference, final String the_paper, final String the_person_assigning){
 		
@@ -1230,6 +1199,7 @@ public class Controller extends Observable{
 					
 		return (String[]) result.toArray();
 	}
+	
 	
 	/**
 	 * Adds the reviewers to the paper.
@@ -1385,6 +1355,12 @@ public class Controller extends Observable{
 //		}
 //		return pc;
 //	}
+	
+	/**
+	 * 
+	 * @param the_paper_id
+	 * @return
+	 */
 	private String getAuthorUsernameForPaper(int the_paper_id) {
 		String authorid = "";
 		try {
@@ -1403,12 +1379,22 @@ public class Controller extends Observable{
 		return authorid;
 	}
 	
+	/**
+	 * 
+	 * @param the_conference
+	 * @return
+	 */
 	private String infoForAUser(ArrayList<String> the_conference) {
 		String conference = the_conference.get(0);
 		return conference;
 	}
 
-
+	/**
+	 * 
+	 * @param the_conference
+	 * @param the_paper
+	 * @param the_sub_pc
+	 */
 	public void addSubPC(final Conference the_conference, final String the_paper, final String the_sub_pc){
 		//TODO: add this person as the SubPC.  We've already populated the list of potential with the correct people
 		//		so we shouldn't have to do any checking here.  The AssignSubPCGUI will ensure a non-null result is sent.
@@ -1462,9 +1448,6 @@ public class Controller extends Observable{
 	 * @return
 	 */
 	public Conference[] getMyConferences(final String the_username){
-	//TODO: do this....
-		//temporary
-
 		ResultSet resultSet2;
 		PreparedStatement statement;
 		List<Conference> the_conf_array = new ArrayList<Conference>();
@@ -1634,6 +1617,12 @@ public class Controller extends Observable{
 		
 		return copy.toArray(new Conference[copy.size()]);
 	}
+	
+	/**
+	 * 
+	 * @param record
+	 * @return
+	 */
 	private String infoForAPaper(
 			ArrayList<String> record) {
 		String conference = "";
@@ -1646,6 +1635,13 @@ public class Controller extends Observable{
 		}
 		return conference;
 	}
+	
+	/**
+	 * 
+	 * @param the_conf
+	 * @param the_username
+	 * @return
+	 */
 	public String[] getMyPapers(final String the_conf, final String the_username){
 	//TODO: A GUI is going to need to get a string of paper titles that they are associated
 	//		with given a specific conference;
@@ -1767,24 +1763,6 @@ public class Controller extends Observable{
 		//ManageDatabase md = new ManageDatabase();
 		//md.printDatabase();
 		/*
-//<<<<<<< .mine
-		//Conference[] conn = controller.getUpcommingConferences("typow");
-//		controller.getAvailableForSubPC(conn[1], 2, "Tyler Powers");
-//		controller.getMyPapers("TestTest", "Test username");
-//		controller.getPaperID("Packing on Abs");
-//		controller.setPaperStatus(conn[0], "Packing on Abs", paperStatusAuthorViewable.ACCEPTED, paperStatusAdminViewable.OVERDUE_FOR_RECOMMEND);
-//		String reviewers[] = new String[4];
-//		for (int i = 0; i < 4; i++)
-//		{
-//			reviewers[i] = "test";
-//		}
-//		controller.addReviewers(conn[0], "Packing on Abs", reviewers);
-		//String subpc = controller.getPaperRecommendationSubPCName(conn[0], "Packing on Abs");
-		//System.out.println(subpc);
-		for (int i = 0; i < conn.length; i++){
-			System.out.println(conn[0].getConfTitle());
-		}
-//=======
 		ManageDatabase md = new ManageDatabase();
 		md.printDatabase();;
 		
@@ -1808,9 +1786,5 @@ public class Controller extends Observable{
 //		}
 //		
 //		controller.createNewReview("Obama", conn[0], "Baking Pi", "Michael Phelps", "Lame", buttons, "Lamer");
-//>>>>>>> .r138*/
 	}
-
-
-	
 }
