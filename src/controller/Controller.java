@@ -1435,12 +1435,11 @@ public class Controller extends Observable{
 		List<Conference> the_conf_array = new ArrayList<Conference>();
 		
 		//First add conferences they are PC of	
-		/*
 		try {
 			
 			//Get all conferences with a match for the username as the PC of the conference
 			statement = connect.prepareStatement(
-					"SELECT * FROM conference WHERE progchair=" +"'" + the_username + "'");
+					"SELECT * FROM conferences WHERE progchair=" +"'" + the_username + "'");
 			resultSet = statement.executeQuery();
 			
 			//Add the conferences the user is PC of to the array
@@ -1455,7 +1454,7 @@ public class Controller extends Observable{
 			System.out.println("getMyConferences failed in adding PC conf");
 		}
 		
-		
+	
 		//Second add conferences they are SUBPC of
 		try {
 			
@@ -1469,14 +1468,18 @@ public class Controller extends Observable{
 				
 				//gets the data for the conference to create a conference object to add to the array
 				PreparedStatement statement2 = connect.prepareStatement(
-						"SELECT * FROM conference WHERE name=" +"'" + resultSet.getString(4) + "'");
+						"SELECT * FROM conferences WHERE name=" +"'" + resultSet.getString(4) + "'");
 				resultSet2 = statement2.executeQuery();
 				
 				if (resultSet2.next()) {
 					Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
 						resultSet2.getDate(3), "", "", "", "", resultSet2.getDate(4), resultSet2.getDate(5),
 						resultSet2.getDate(6), resultSet2.getDate(7), resultSet2.getString(8));
-					the_conf_array.add(con);
+					
+					// Add only if the conference isn't in the list yet
+					if (!isConfInList(con, the_conf_array)) {
+						the_conf_array.add(con);
+					}
 				}
 			}
 			
@@ -1495,20 +1498,24 @@ public class Controller extends Observable{
 			while (resultSet.next()) {
 				//gets the data for the conference to create a conference object to add to the array
 				PreparedStatement statement2 = connect.prepareStatement(
-						"SELECT * FROM conference WHERE name=" +"'" + resultSet.getString(4) + "'");
+						"SELECT * FROM conferences WHERE name=" +"'" + resultSet.getString(4) + "'");
 				resultSet2 = statement2.executeQuery();
 				
 				if (resultSet2.next()) {
 					Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
 						resultSet2.getDate(3), "", "", "", "", resultSet2.getDate(4), resultSet2.getDate(5),
 						resultSet2.getDate(6), resultSet2.getDate(7), resultSet2.getString(8));
-					the_conf_array.add(con);
+					
+					// Add only if the conference isn't in the list yet
+					if (!isConfInList(con, the_conf_array)) {
+						the_conf_array.add(con);
+					}
 				}
 			}
 			
 		} catch (Exception e) {
 			System.out.println("getMyConferences failed in adding reviewer conf");
-		}*/
+		}
 		
 		//Fourth add conferences they are authors for papers of
 		try {
@@ -1520,19 +1527,20 @@ public class Controller extends Observable{
 				
 			//Add the conferences the author has a paper in to the array
 			while (resultSet.next()) {
-				
 				//gets the data for the conference to create a conference object to add to the array
-				String conferenceName = resultSet.getString(5);
-				System.out.println(conferenceName);
 				PreparedStatement statement2 = connect.prepareStatement(
-						"SELECT * FROM conference WHERE name=" +"'" + conferenceName + "'");
+						"SELECT * FROM conferences WHERE name='" + resultSet.getString(5) + "'");
 				resultSet2 = statement2.executeQuery();
 				
 				if (resultSet2.next()) {
 					Conference con = new Conference(resultSet2.getString(1), resultSet2.getString(2),
 						resultSet2.getDate(3), "", "", "", "", resultSet2.getDate(4), resultSet2.getDate(5),
 						resultSet2.getDate(6), resultSet2.getDate(7), resultSet2.getString(8));
-					the_conf_array.add(con);
+					
+					// Add only if the conference isn't in the list yet
+					if (!isConfInList(con, the_conf_array)) {
+						the_conf_array.add(con);
+					}
 				}
 			}
 			
@@ -1553,7 +1561,7 @@ public class Controller extends Observable{
 	public Conference[] getUpcommingConferences(final String the_username) {
     	ArrayList<Conference> upcomingconf = new ArrayList<Conference>();
 		try {
-			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conference WHERE NOTIFYDATE >= '"+new Date().toLocaleString()+"'");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conferences WHERE NOTIFYDATE >= '"+new Date().toLocaleString()+"'");
 			resultSet = statement.executeQuery();
 			Conference[] myConferences = getMyConferences(the_username);
 			
@@ -1699,12 +1707,43 @@ public class Controller extends Observable{
 		}
 		return paper;
 	}
+	
+	private boolean isConfInList(Conference the_conference, List<Conference> the_conferenceList) {
+		boolean result = false;
+		
+		for (int i = 0; (i < the_conferenceList.size()) && !result; i++) {
+			
+			// If the conference title is the same as the title in the list: result = true
+			if (the_conference.getConfTitle().equals(the_conferenceList.get(i).getConfTitle())) {
+				result = true;
+			}
+		}
+		
+		return result;
+	}
 
 	
 	public static void main(String args[]) throws ParseException, SQLException {
 		Controller controller = new Controller();
+		Conference[] c = controller.getMyConferences("warfeld");
+		
+		for (int i = 0; i < c.length; i++) {
+			System.out.println(c[i].getConfTitle());
+		}
+		/*
+		Controller controller = new Controller();
+		Conference[] conn = controller.getMyConferences("warfeld");
+		
+		for (int i = 0; i < conn.length; i++) {
+			System.out.println(conn[i].getConfTitle());
+		}*/
+		
+		
+		//ManageDatabase md = new ManageDatabase();
+		//md.printDatabase();
+		/*
 //<<<<<<< .mine
-		Conference[] conn = controller.getUpcommingConferences("typow");
+		//Conference[] conn = controller.getUpcommingConferences("typow");
 //		controller.getAvailableForSubPC(conn[1], 2, "Tyler Powers");
 //		controller.getMyPapers("TestTest", "Test username");
 //		controller.getPaperID("Packing on Abs");
@@ -1744,7 +1783,7 @@ public class Controller extends Observable{
 //		}
 //		
 //		controller.createNewReview("Obama", conn[0], "Baking Pi", "Michael Phelps", "Lame", buttons, "Lamer");
-//>>>>>>> .r138
+//>>>>>>> .r138*/
 	}
 
 
