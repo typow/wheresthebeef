@@ -321,7 +321,9 @@ public class ConferenceGUI extends JPanel {
 		}
 		
 		System.out.println("number of papers in array = " + number_of_papers);
-		System.out.println(my_paper_array[0]);
+		if(number_of_papers>0){
+			System.out.println("paper object title = " + my_paper_array[0].getPaperTitle());
+		}
 		
 		JPanel panel_for_scrollpane = new JPanel(new GridLayout((number_of_papers + 1), COLUMN_NAMES.length));
 		panel_for_scrollpane.setBorder(new BevelBorder(BevelBorder.LOWERED,
@@ -343,7 +345,7 @@ public class ConferenceGUI extends JPanel {
 
 			if ((i - 1) % COLUMN_NAMES.length == 0) {
 
-				final JLabel jl = new JLabel(my_paper_array[i/COLUMN_NAMES.length].getPaperTitle(), JLabel.CENTER);
+				final JLabel jl = new JLabel(my_paper_array[(i/COLUMN_NAMES.length)-1].getPaperTitle(), JLabel.CENTER);
 				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				jl.setForeground(Color.BLUE);
 				jl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
