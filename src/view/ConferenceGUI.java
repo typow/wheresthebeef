@@ -345,7 +345,8 @@ public class ConferenceGUI extends JPanel {
 
 			if ((i - 1) % COLUMN_NAMES.length == 0) {
 
-				final JLabel jl = new JLabel(my_paper_array[(i/COLUMN_NAMES.length)-1].getPaperTitle(), JLabel.CENTER);
+				final Paper curr_paper = my_paper_array[(i/COLUMN_NAMES.length)-1];
+				final JLabel jl = new JLabel(curr_paper.getPaperTitle(), JLabel.CENTER);
 				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				jl.setForeground(Color.BLUE);
 				jl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -366,7 +367,7 @@ public class ConferenceGUI extends JPanel {
 					}
 
 					public void mousePressed(MouseEvent arg0) {
-						controller.setCurrentPaper(jl.getText());
+						controller.setCurrentPaper(curr_paper.getPaperTitle());
 						controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 					}
 
