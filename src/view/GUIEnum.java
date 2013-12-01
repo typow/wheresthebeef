@@ -102,6 +102,7 @@ public class GUIEnum {
 	 * <dt><b>Postconditions: </b><dd>
 	 */
 	public enum paperStatusAdminViewable{
+		isNULL,
 		/**
 		 * the paper has been submitted.
 		 */
@@ -147,6 +148,7 @@ public class GUIEnum {
 	 * <dt><b>Postconditions: </b><dd>
 	 */
 	public enum paperStatusAuthorViewable{
+		isNULL,
 		/**
 		 * the paper has been submitted.
 		 */
@@ -195,6 +197,10 @@ public class GUIEnum {
 		
 		switch (the_status) {
 		
+			case "isNULL":
+				result = paperStatusAdminViewable.isNULL;
+				break;
+				
 			case "SUBMITTED":
 				result = paperStatusAdminViewable.SUBMITTED;
 				break;

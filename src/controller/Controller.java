@@ -1097,7 +1097,7 @@ public class Controller extends Observable{
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT progchair FROM conference WHERE name=" +"'" + the_conference.getConfTitle() +"'");
+					"SELECT progchair FROM conferences WHERE name=" +"'" + the_conference.getConfTitle() +"'");
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
@@ -1121,11 +1121,12 @@ public class Controller extends Observable{
 	 */
 	public String getUserAssignedAsSubPC(final Conference the_conference, final int current_paper){
 		//	 return the username of the person assigned as Sub PC for a particular paper
+		
 		String subPC = null;
 		try {
 			PreparedStatement statement = connect.prepareStatement(
 					"SELECT subchair FROM recommendations WHERE conference=" +"'" + the_conference.getConfTitle() + 
-					"' AND paperid='" + current_paper + "'");
+					"' AND paperid=" + current_paper);
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
@@ -1695,8 +1696,6 @@ public class Controller extends Observable{
 	 * @return
 	 */
 	public Paper[] getMyPapers(final Conference the_conf, final String the_username){
-		//TODO: A GUI is going to need to get a string of paper titles that they are associated
-		//		with given a specific conference;
 			
 			List<Paper> paperList = new ArrayList<Paper>();
 			ResultSet resultSet2;
@@ -1706,7 +1705,7 @@ public class Controller extends Observable{
 				// Retrieves all papers if PC of conference
 				if (the_username.equals(getUserAssignedAsPC(the_conf))) {
 					PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM papers WHERE confname=" +"'" + the_conf +"'");
+					"SELECT * FROM papers WHERE confname=" +"'" + the_conf.getConfTitle() +"'");
 					resultSet = statement.executeQuery();
 							  
 					while (resultSet.next()) {
@@ -1741,10 +1740,11 @@ public class Controller extends Observable{
 						}
 					}
 					
+					
 					// Checks fourth if they are a Reviewer for any paper in the conference
 					statement = connect.prepareStatement(
 							"SELECT paperid FROM reviews WHERE conference=" +"'" + the_conf.getConfTitle() +
-							"' AND subchair='" + the_username + "'");
+							"' AND reviewer='" + the_username + "'");
 					resultSet = statement.executeQuery();
 					
 					while (resultSet.next()) {
@@ -1756,10 +1756,11 @@ public class Controller extends Observable{
 							paperList.add(createPaperObject(the_conf, the_username, resultSet2));
 						}
 					}
+					
 				}
 		    	
 			} catch (Exception e) {
-				System.out.println("getMyPapers failed!");
+				System.out.println("getMyPapers failed!" + e.getMessage());
 			}
 			
 			
@@ -1826,10 +1827,10 @@ public class Controller extends Observable{
 		try {
 			int paperID = rs.getInt(1);
 			String paperName = rs.getString(3);
-
+			
 			paper = new Paper(rs.getString(5), rs.getString(3), rs.getString(2), 
-					getStatusAuthorView(the_conference, the_username),
-					getAdminPaperStatus(the_conference, the_username),
+					getStatusAuthorView(the_conference, paperName),
+					getAdminPaperStatus(the_conference, paperName),
 					getUserAssignedAsSubPC(the_conference, paperID), 
 					getUserAssignedAsPC(the_conference), 
 					getUsersAssignedAsReviewers(the_conference, paperName),
@@ -1843,9 +1844,34 @@ public class Controller extends Observable{
 
 	
 	public static void main(String args[]) throws ParseException, SQLException {
+		
+		Controller controller = new Controller();
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
+				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
+				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		
+		Paper papers[] = controller.getMyPapers(testConference, "typow");
+		
+		for (int i = 0; i < papers.length; i++) {
+			System.out.println(papers[i].getConfTitle());
+			System.out.println(papers[i].getPaperTitle());
+			System.out.println(papers[i].getAuthor());
+			System.out.println(papers[i].getStatusAuthorViewable());
+			System.out.println(papers[i].getStatusAdminViewable());
+			System.out.println(papers[i].getSubPC());
+			System.out.println(papers[i].getID());
+			
+			String reviewers[] = papers[i].getReviewers();
+			for (int j = 0; j < reviewers.length; j++) {
+				System.out.println(reviewers[i]);
+			}
+		}
+		
+		/*
 		Controller controller = new Controller();
 		Conference[] conn = controller.getUpcommingConferences("typow");
 		boolean c = controller.canAddReview(conn[0],"Baking Pi","yellow");
+		*/
 		
 //		for (int i = 0; i < c.length; i++) {
 //			System.out.println(c[i].getConfTitle());
