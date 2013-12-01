@@ -450,6 +450,7 @@ public class SubmitPaperGUI extends JPanel {
 					try{
 						controller.createNewPaper(current_conf, username, paper_title, fileSubmited, 
 								paperStatusAuthorViewable.SUBMITTED, paperStatusAdminViewable.SUBMITTED);
+						System.out.println("fileSubmited " + fileSubmited);
 						controller.setPaperRelation(current_conf, paper_title, username, paperRelation.AUTHOR);
 					}
 					catch (Exception e){

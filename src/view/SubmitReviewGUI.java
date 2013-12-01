@@ -104,7 +104,7 @@ public class SubmitReviewGUI extends JPanel {
 	private static final String MAIN_STRING = "Return to Main user interface (ALT+M)";
 	
 	/*
-	 * The text to display on the main button.
+	 * The text to display on the submit review button.
 	 */
 	private static final String SUBMIT_REVIEW_TITLE_STRING = "Submit";
 
@@ -112,6 +112,16 @@ public class SubmitReviewGUI extends JPanel {
 	 * The message the will pop up when the user floats above the button.
 	 */
 	private static final String SUBMIT_REVIEW_STRING = "Submit this review form (ALT+S)";
+	
+	/*
+	 * The text to display on the view paper button.
+	 */
+	private static final String VIEW_PAPER_TITLE_STRING = "View Paper";
+
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String VIEW_PAPER_STRING = "View the submitted paper (ALT+V)";
 	
 	/*
 	 * the JPanel containing the entire SubmitPaperGUI
@@ -170,6 +180,11 @@ public class SubmitReviewGUI extends JPanel {
 	 * the Action associated with the Edit Submission button
 	 */
 	private Action my_submit_action;
+	
+	/*
+	 * the Action associated with the View Paper button
+	 */
+	private Action my_view_paper_action;
 	
 	/*
 	 * Button groups used to link buttons in groups of 5 relative
@@ -1049,6 +1064,11 @@ public class SubmitReviewGUI extends JPanel {
 		lblSubmitANew.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblSubmitANew.setBounds(20, 15, 791, 20);
 		panel_1.add(lblSubmitANew);
+		
+		JButton btnViewPaper = new JButton(my_view_paper_action);
+		btnViewPaper.setText("View Paper");
+		btnViewPaper.setBounds(20, 481, 150, 29);
+		panel_1.add(btnViewPaper);
 	}
 	
 	/**
@@ -1194,6 +1214,21 @@ public class SubmitReviewGUI extends JPanel {
 		};
 		my_submit_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_REVIEW_STRING);
 		my_submit_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_S);
+		
+		/*
+		 * The action associated with clicking the View Paper button.
+		 */
+		my_view_paper_action = new AbstractAction(VIEW_PAPER_TITLE_STRING, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+//				controller.getPaperFilePath(current_conf, controller.getCurrentPaper());
+				PaperFrame frame = new PaperFrame();
+			}
+		};
+		my_view_paper_action.putValue(Action.SHORT_DESCRIPTION, VIEW_PAPER_STRING);
+		my_view_paper_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_V);
+		
 	}
 }
 

@@ -82,6 +82,10 @@ public class Paper {
 	}
 	
 	public String getSubPC(){
+		return sub_pc;
+	}
+	
+	public String getPC(){
 		return pc;
 	}
 	
