@@ -353,48 +353,48 @@ public class ConferenceGUI extends JPanel {
 			panel_for_scrollpane.add(jl);
 		}
 		// populate columns with paper data
-//		for (int i = COLUMN_NAMES.length + 1; i <= ((number_of_papers + 1) * COLUMN_NAMES.length); i++) {
-//
-//			if ((i - 1) % COLUMN_NAMES.length == 0) {
-//
-//				final Paper curr_paper = my_paper_array[(i / COLUMN_NAMES.length) - 1];
-//				final JLabel jl = new JLabel(curr_paper.getPaperTitle(),
-//						JLabel.CENTER);
-//				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-//				jl.setForeground(Color.BLUE);
-//				jl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-//				final String box_clicked = "clicked box " + i;
-//				final Font entered = new Font("Tahoma", Font.BOLD, 17);
-//				final Font exited = new Font("Tahoma", Font.BOLD, 12);
-//				jl.addMouseListener(new MouseListener() {
-//					public void mouseClicked(MouseEvent arg0) {
-//
-//					}
-//
-//					public void mouseEntered(MouseEvent arg0) {
-//						jl.setFont(entered);
-//					}
-//
-//					public void mouseExited(MouseEvent arg0) {
-//						jl.setFont(exited);
-//					}
-//
-//					public void mousePressed(MouseEvent arg0) {
-//						controller.setCurrentPaper(curr_paper.getPaperTitle());
-//						controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
-//					}
-//
-//					public void mouseReleased(MouseEvent arg0) {
-//					}
-//				});
-//				panel_for_scrollpane.add(jl);
-//			} else {
-//				JLabel jl = new JLabel("Box" + i, JLabel.CENTER);
-//				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-//				panel_for_scrollpane.add(jl);
-//			}
-//
-//		}
+		for (int i = COLUMN_NAMES.length + 1; i <= ((number_of_papers + 1) * COLUMN_NAMES.length); i++) {
+
+			if ((i - 1) % COLUMN_NAMES.length == 0) {
+
+				final Paper curr_paper = my_paper_array[(i / COLUMN_NAMES.length) - 1];
+				final JLabel jl = new JLabel(curr_paper.getPaperTitle(),
+						JLabel.CENTER);
+				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				jl.setForeground(Color.BLUE);
+				jl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+				final String box_clicked = "clicked box " + i;
+				final Font entered = new Font("Tahoma", Font.BOLD, 17);
+				final Font exited = new Font("Tahoma", Font.BOLD, 12);
+				jl.addMouseListener(new MouseListener() {
+					public void mouseClicked(MouseEvent arg0) {
+
+					}
+
+					public void mouseEntered(MouseEvent arg0) {
+						jl.setFont(entered);
+					}
+
+					public void mouseExited(MouseEvent arg0) {
+						jl.setFont(exited);
+					}
+
+					public void mousePressed(MouseEvent arg0) {
+						controller.setCurrentPaper(curr_paper.getPaperTitle());
+						controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+					}
+
+					public void mouseReleased(MouseEvent arg0) {
+					}
+				});
+				panel_for_scrollpane.add(jl);
+			} else {
+				JLabel jl = new JLabel("Box" + i, JLabel.CENTER);
+				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				panel_for_scrollpane.add(jl);
+			}
+
+		}
 
 		panel_for_scrollpane.setBackground(INNER_BACKGROUND_COLOR);
 		panel_for_scrollpane.setSize(10000, 10000);
