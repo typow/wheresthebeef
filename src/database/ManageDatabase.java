@@ -487,15 +487,15 @@ public class ManageDatabase{
 		ManageDatabase md = new ManageDatabase();
 		md.printDatabase();
 		
+		/*
 		md.resetUsers();		
 		md.resetConference();
 		md.resetPapers();
 		md.resetUsers();
 		md.resetReviews();
 		md.resetRecommendations();
-		
 		md.printDatabase();
-		
+		*/
 	}
 	
 }

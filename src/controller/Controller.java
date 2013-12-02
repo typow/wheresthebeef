@@ -417,16 +417,19 @@ public class Controller extends Observable{
 		try {
 			//Get all papers that conference, paper title, and author match
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM papers WHERE confname=" +"'" + the_conference.getConfTitle() + 
-					"' AND name='" + the_paper_title + "'");
+					"SELECT * FROM papers WHERE confname='" + the_conference.getConfTitle() + 
+					"' AND name='" + the_paper_title + "' AND author='" + the_username + "'");
 			resultSet = statement.executeQuery();
-			
-			while (resultSet.next()) {
+
+			if (resultSet.next()) {
+				relation = paperRelation.AUTHOR;
+				/*TESTING
 				username = resultSet.getString(2);//Author in papers table
 				//Means they are an author
 				if(the_username.equals(username)) {
 					relation = paperRelation.AUTHOR;
 				}
+				*/
 			}
 			
 		} catch (Exception e) {
@@ -504,6 +507,7 @@ public class Controller extends Observable{
 				if(username.equals(the_username)){
 					//Means they are the PC
 					relation = paperRelation.PC;
+					break;
 				}
 			}
 			
@@ -541,7 +545,7 @@ public class Controller extends Observable{
 		} else { //Isn't this a trivial case? When would we set an user as an author of paper?
 			try {
 				PreparedStatement statement = connect.prepareStatement("UPDATE papers SET author='" + the_username + "'");
-				statement.execute();
+				statement.execute();								//TODO: fix this to where= otherwise sets entire table 
 				
 			} catch (SQLException e) {
 				System.out.println("Error setting paper relation." + e.getMessage());
@@ -704,7 +708,7 @@ public class Controller extends Observable{
 		
 		PreparedStatement statement;
 		try {
-			statement = connect.prepareStatement("DELETE FROM papers WHERE name='" + the_paper_title + "' AND" +
+			statement = connect.prepareStatement("DELETE FROM papers WHERE name='" + the_paper_title + "' AND " +
 					"confname='" + the_conference.getConfTitle() + "'");
 			statement.execute();
 		} catch (SQLException e) {
