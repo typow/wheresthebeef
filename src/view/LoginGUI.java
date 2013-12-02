@@ -243,7 +243,7 @@ public class LoginGUI extends JPanel {
 				else if (password.equals("")){
 					JOptionPane.showMessageDialog(contentPane, "Please enter a password.");
 				}
-				else if (!controller.checkValidUsername(username))//Changed from username and password to just password
+				else if (!controller.checkValidUsernamePassword(username, password))//Changed from username and password to just password
 				{
 					JOptionPane.showMessageDialog(contentPane, "Invalid username and password");
 				}
