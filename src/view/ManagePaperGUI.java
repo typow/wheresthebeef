@@ -274,8 +274,8 @@ public class ManagePaperGUI extends JPanel{
 			current_paper = controller.getCurrentPaper();
 		}
 		current_user = controller.getCurrentUsername();
-		current_paper_relation = controller.getRelationToPaper(current_conf, current_paper, current_user);
 		JPanel mainPanel = setUpMainPanel();
+		current_paper_relation = controller.getRelationToPaper(current_conf, current_paper, current_user);	
 		mainPanel.add(setupTabbedPane());
 	}
 	

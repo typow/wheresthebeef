@@ -510,7 +510,7 @@ public class Controller extends Observable{
 		} catch (Exception e) {
 			System.out.println("Get paperRelation failed in pc check");
 		}
-		
+		System.out.println("Relation: " + relation);
 		return relation;
 	}
 	 
@@ -523,6 +523,7 @@ public class Controller extends Observable{
 		//It seems like we would never need to set a user's relation in regards to a given paper when we know
 		//the conference. For example, if we know the conference we can find out who the pc is. Why would we
 		//need to set the pc in a conference that already has one? 
+		/*
 		if (the_relation == paperRelation.PC){ //This case also makes no sense.
 			try {
 				PreparedStatement statement = connect.prepareStatement("");
@@ -546,7 +547,7 @@ public class Controller extends Observable{
 				System.out.println("Error setting paper relation." + e.getMessage());
 			}
 			
-		}
+		}*/
 		
 	}
 	
@@ -1883,7 +1884,7 @@ public class Controller extends Observable{
 		System.out.println(relation);*/
 		/*
 		try {
-			controller.createNewPaper(testConference, "beans", "fun times", "", 
+			controller.createNewPaper(testConference, "Ranger", "fun times", "", 
 					paperStatusAuthorViewable.SUBMITTED, paperStatusAdminViewable.ACCEPTED);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -487,9 +487,7 @@ public class ManageDatabase{
 		ManageDatabase md = new ManageDatabase();
 		md.printDatabase();
 		
-		/*
-		md.resetUsers();
-		
+		md.resetUsers();		
 		md.resetConference();
 		md.resetPapers();
 		md.resetUsers();
@@ -497,7 +495,7 @@ public class ManageDatabase{
 		md.resetRecommendations();
 		
 		md.printDatabase();
-		*/
+		
 	}
 	
 }
