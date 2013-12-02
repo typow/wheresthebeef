@@ -525,45 +525,7 @@ public class Controller extends Observable{
 		System.out.println("Relation: " + relation);
 		return relation;
 	}
-	 
-	public void setPaperRelation(final Conference the_conference, final String the_paper_title, 
-			final String the_username, final paperRelation the_relation){
-		//TODO: The GUI needs to be able to set a person's relation to a paper to be later queried.  (Jacob)
-		//kind of the same idea as getRelationToPaper()
-		//TODO: Kind of wondering what the point of this method is. If we know the conference and paper,
-		//doesn't that make this kind of pointless? Or maybe I don't get what this method is supposed to do.
-		//It seems like we would never need to set a user's relation in regards to a given paper when we know
-		//the conference. For example, if we know the conference we can find out who the pc is. Why would we
-		//need to set the pc in a conference that already has one? 
-		/*
-		if (the_relation == paperRelation.PC){ //This case also makes no sense.
-			try {
-				PreparedStatement statement = connect.prepareStatement("");
-				resultSet = statement.executeQuery();
-				
-			} catch (SQLException e) {
-				System.out.println("Error setting paper relation." + e.getMessage());
-			}
-		} else if (the_relation == paperRelation.SUBPC) { //Same with this one?
-			addSubPC(the_conference, the_paper_title, the_username);
-		} else if (the_relation == paperRelation.REVIEWER) { //This one could have a use...
-			String[] reviewer = new String[1];
-			reviewer[0] = the_username;
-			addReviewers(the_conference, the_paper_title, reviewer);
-		} else { //Isn't this a trivial case? When would we set an user as an author of paper?
-			try {
-				PreparedStatement statement = connect.prepareStatement("UPDATE papers SET author='" + the_username + "'");
-				statement.execute();								//TODO: fix this to where= otherwise sets entire table 
-				
-			} catch (SQLException e) {
-				System.out.println("Error setting paper relation." + e.getMessage());
-			}
-			
-		}*/
-		
-	}
-	
-	
+	 	
 	/**
 	 * Sets the statuses of a paper.
 	 * 
