@@ -410,7 +410,6 @@ public class Controller extends Observable{
 		ResultSet resultSet2;
 		String username = "";
 		paperRelation relation = paperRelation.AUTHOR;
-		System.out.println(the_username);
 		
 		//First Check if they are the author
 		try {
