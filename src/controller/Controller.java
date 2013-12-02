@@ -25,13 +25,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 
-import database.ManageDatabase;
-
 import view.GUIEnum;
 import view.GUIEnum.StateOfGUI;
 import view.GUIEnum.paperRelation;
 import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
+import database.ManageDatabase;
 
 
 /**
@@ -407,14 +406,12 @@ public class Controller extends Observable{
 	 */
 	public paperRelation getRelationToPaper(final Conference the_conference, final String the_paper_title, 
 			final String the_username){
-		//		I'm not sure how the database is tracking this, but the GUI's need to be able to retrieve
-		//		the user's relationship to a paper.  If they are the AUTHOR, REVIEWER, .....  (Jacob)
-		//		Tracking this right now is clumsy but doable go through the the conf and check if username
-		//		the same as the PC if so hes the PC if not check if hes author of the paper if not check if
-		//		they are a reviewer from the review table if not check if they are subprog from rec table
+		
+		ResultSet resultSet2;
 		String username = "";
-		//temporary:
 		paperRelation relation = paperRelation.AUTHOR;
+		System.out.println(the_username);
+		
 		//First Check if they are the author
 		try {
 			//Get all papers that conference, paper title, and author match
@@ -426,7 +423,7 @@ public class Controller extends Observable{
 			while (resultSet.next()) {
 				username = resultSet.getString(2);//Author in papers table
 				//Means they are an author
-				if(the_username == username) {
+				if(the_username.equals(username)) {
 					relation = paperRelation.AUTHOR;
 				}
 			}
@@ -446,11 +443,14 @@ public class Controller extends Observable{
 			
 			while (resultSet.next()) {
 				paperid = resultSet.getInt(1);//paperid in papers table
+				
 				statement = connect.prepareStatement("SELECT * FROM reviews WHERE paperid=" + paperid);
-				resultSet = statement.executeQuery();
-				while (resultSet.next()) {
-					username = resultSet.getString(3); //reviewer in reviews table
-					if(username == the_username){
+				resultSet2 = statement.executeQuery();
+				
+				while (resultSet2.next()) {
+					username = resultSet2.getString(3); //reviewer in reviews table
+					
+					if(username.equals(the_username)) {
 						//Means they are a reviewer
 						relation = paperRelation.REVIEWER;
 						break;
@@ -474,10 +474,11 @@ public class Controller extends Observable{
 			while (resultSet.next()) {
 				paperid = resultSet.getInt(1);//paperid in papers table
 				statement = connect.prepareStatement("SELECT * FROM recommendations WHERE paperid=" + paperid);
-				resultSet = statement.executeQuery();
-				while (resultSet.next()) {
-					username = resultSet.getString(3); //subPC in recommendations table
-					if(username == the_username){
+				resultSet2 = statement.executeQuery();
+				
+				while (resultSet2.next()) {
+					username = resultSet2.getString(3); //subPC in recommendations table
+					if(username.equals(the_username)) {
 						//Means they are the SUBPCS
 						relation = paperRelation.SUBPC;
 						break;
@@ -494,12 +495,12 @@ public class Controller extends Observable{
 			
 			//Get all papers that conference, paper title, and author match
 			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM conference WHERE name=" +"'" + the_conference.getConfTitle() + "'");
+					"SELECT * FROM conferences WHERE name=" +"'" + the_conference.getConfTitle() + "'");
 			resultSet = statement.executeQuery();
 			
 			while (resultSet.next()) {
 				username = resultSet.getString(2); //Progchair
-				if(username == the_username){
+				if(username.equals(the_username)){
 					//Means they are the PC
 					relation = paperRelation.PC;
 				}
@@ -508,7 +509,7 @@ public class Controller extends Observable{
 		} catch (Exception e) {
 			System.out.println("Get paperRelation failed in pc check");
 		}
-		System.out.println("relation to paper: " + relation.toString());
+		
 		return relation;
 	}
 	 
@@ -1872,26 +1873,12 @@ public class Controller extends Observable{
 		Controller controller = new Controller();
 		ManageDatabase md = new ManageDatabase();
 		md.printDatabase();
-		Conference testConference = new Conference("Trees Have Feelings", "Halmus", new Date(2000, 1, 1), "Test Address", 
+		Conference testConference = new Conference("Small Computer Conference", "Halmus", new Date(2000, 1, 1), "Test Address", 
 				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
 				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
 		
-		Paper papers[] = controller.getMyPapers(testConference, "Halmus");
-		
-		for (int i = 0; i < papers.length; i++) {
-			System.out.println(papers[i].getConfTitle());
-			System.out.println(papers[i].getPaperTitle());
-			System.out.println(papers[i].getAuthor());
-			System.out.println(papers[i].getStatusAuthorViewable());
-			System.out.println(papers[i].getStatusAdminViewable());
-			System.out.println(papers[i].getSubPC());
-			System.out.println(papers[i].getID());
-			
-			String reviewers[] = papers[i].getReviewers();
-			for (int j = 0; j < reviewers.length; j++) {
-				System.out.println(reviewers[i]);
-			}
-		}
+		paperRelation relation = controller.getRelationToPaper(testConference, "Baking Pi", "warfeld");
+		System.out.println(relation);
 		
 		/*
 		Controller controller = new Controller();
