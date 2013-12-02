@@ -377,12 +377,14 @@ public class Controller extends Observable{
 		//TODO: add the user viewable status and the admin viewable status.  These are already set up in the GUIEnum class.
 		//		We need two because the user should only see a general indication of the progress and the admin needs to see
 		//		a detailed status update according to deadlines and where it's at in the whole review process. (Jacob)
-		if(i<4) {
+		if(i<=4) {
 			try {			
-				PreparedStatement statement = connect.prepareStatement("INSERT INTO papers (ID,  AUTHOR,  " +
-						"NAME,  TEXT,  CONFNAME) VALUES (" + total + ", '" + the_username + "', '" +
-								the_paper_title + "', '" + the_file_submitted + "', '" +
-								the_conference.getConfTitle() + "')");
+				PreparedStatement statement = connect.prepareStatement(
+						"INSERT INTO papers (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME,  STATUS, ADMINSTAT)  VALUES " +
+						"(" + total +", '" + the_username + "', '" + the_paper_title + "', '" +
+								the_file_submitted + "', '" + the_conference.getConfTitle() +
+								"', '" + the_user_viewable_status + "', '" + the_admin_viewable_status + "')");
+				
 				statement.execute();
 				System.out.println(the_paper_title + " Successfully added paper");
 			} catch (SQLException e) {
@@ -1872,12 +1874,21 @@ public class Controller extends Observable{
 		Controller controller = new Controller();
 		ManageDatabase md = new ManageDatabase();
 		md.printDatabase();
+		
 		Conference testConference = new Conference("Small Computer Conference", "Halmus", new Date(2000, 1, 1), "Test Address", 
 				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
 				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
-		
+		/*
 		paperRelation relation = controller.getRelationToPaper(testConference, "Baking Pi", "warfeld");
-		System.out.println(relation);
+		System.out.println(relation);*/
+		/*
+		try {
+			controller.createNewPaper(testConference, "beans", "fun times", "", 
+					paperStatusAuthorViewable.SUBMITTED, paperStatusAdminViewable.ACCEPTED);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		
 		/*
 		Controller controller = new Controller();

@@ -485,7 +485,9 @@ public class ManageDatabase{
 	
 	public static void main(String args[]) {
 		ManageDatabase md = new ManageDatabase();
-
+		md.printDatabase();
+		
+		/*
 		md.resetUsers();
 		
 		md.resetConference();
@@ -495,6 +497,7 @@ public class ManageDatabase{
 		md.resetRecommendations();
 		
 		md.printDatabase();
+		*/
 	}
 	
 }
