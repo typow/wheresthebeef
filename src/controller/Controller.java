@@ -353,7 +353,11 @@ public class Controller extends Observable{
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
-				total+=1;
+				if (!(resultSet.getInt(1) == total)) {
+					break;
+				} else {
+					total+=1;
+				}
 			}
 			
 		} catch (SQLException e) {
