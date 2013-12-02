@@ -16,6 +16,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -202,6 +203,8 @@ public class ManagePaperGUI extends JPanel{
 	 * the current user
 	 */
 	private String current_user;
+	
+	private HashMap<String, Boolean> reviews_complete_map = new HashMap<String, Boolean>();
 	
 	/*
 	 * the Action associated with the logout button
@@ -441,7 +444,8 @@ public class ManagePaperGUI extends JPanel{
 					controller.getPaperAuthor(current_conf, current_paper), controller.getAdminPaperStatus(current_conf, current_paper), 
 					controller.getUserAssignedAsPC(current_conf),
 					controller.getUserAssignedAsSubPC(current_conf, paperId),
-					controller.getUsersAssignedAsReviewers(current_conf, current_paper));
+					controller.getUsersAssignedAsReviewers(current_conf, current_paper),
+					reviews_complete_map);
 			JPanel tabManagement = (JPanel) managePanel.getGUI();
 			tabbedPane.addTab("Management", null, tabManagement, null);
 		}
@@ -639,24 +643,28 @@ public class ManagePaperGUI extends JPanel{
 			}
 		} else {
 			if (num_reviews > 0) {
+				reviews_complete_map.put(the_reviews[0].getReviewerName(), true);
 				ReviewPanel tabReview1 = new ReviewPanel(the_reviews[0], 1, true, true, true);
 				JPanel review_panel_1 = (JPanel) tabReview1.getGUI();
 				reviewPanel.addTab("Review #1", null, review_panel_1, null);
 				num_reviews--;
 			}
 			if (num_reviews > 0) {
+				reviews_complete_map.put(the_reviews[1].getReviewerName(), true);
 				ReviewPanel tabReview2 = new ReviewPanel(the_reviews[1], 2, true, true, true);
 				JPanel review_panel_2 = (JPanel) tabReview2.getGUI();
 				reviewPanel.addTab("Review #2", null, review_panel_2, null);
 				num_reviews--;
 			}
 			if (num_reviews > 0) {
+				reviews_complete_map.put(the_reviews[2].getReviewerName(), true);
 				ReviewPanel tabReview3 = new ReviewPanel(the_reviews[2], 3, true, true, true);
 				JPanel review_panel_3 = (JPanel) tabReview3.getGUI();
 				reviewPanel.addTab("Review #3", null, review_panel_3, null);
 				num_reviews--;
 			}
 			if (num_reviews > 0) {
+				reviews_complete_map.put(the_reviews[3].getReviewerName(), true);
 				ReviewPanel tabReview4 = new ReviewPanel(the_reviews[3], 4, true, true, true);
 				JPanel review_panel_4 = (JPanel) tabReview4.getGUI();
 				reviewPanel.addTab("Review #4", null, review_panel_4, null);

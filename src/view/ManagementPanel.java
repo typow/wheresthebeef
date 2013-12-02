@@ -16,6 +16,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.HashMap;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -56,9 +57,10 @@ public class ManagementPanel extends JPanel{
 	 */
 	public ManagementPanel(final String the_current_paper, final String the_paper_author, 
 			final paperStatusAdminViewable the_admin_status, final String the_pc_username,
-			final String the_sub_pc_username, final String[] the_reviewer_usernames){
+			final String the_sub_pc_username, final String[] the_reviewer_usernames,
+			final HashMap<String, Boolean> the_reviews_complete_map){
 		tabManagement = setupManagementPanel(the_current_paper, the_paper_author, the_admin_status, 
-				the_pc_username, the_sub_pc_username, the_reviewer_usernames);
+				the_pc_username, the_sub_pc_username, the_reviewer_usernames, the_reviews_complete_map);
 	}	 
 	
 	/**
@@ -74,7 +76,8 @@ public class ManagementPanel extends JPanel{
 	 */
 	private JPanel setupManagementPanel(final String the_current_paper, final String the_paper_author, 
 			paperStatusAdminViewable the_admin_status, final String the_pc_username,
-			final String the_sub_pc_username, final String[] the_reviewer_usernames){
+			final String the_sub_pc_username, final String[] the_reviewer_usernames,
+			final HashMap<String, Boolean> the_reviews_complete_map){
 		
 		tabManagement = new JPanel();
 		tabManagement.setBackground(Color.WHITE);
@@ -181,6 +184,7 @@ public class ManagementPanel extends JPanel{
 		
 		if (the_admin_status == null){
 			the_admin_status = paperStatusAdminViewable.SUBMITTED;
+			System.out.println("the null admin status was defaulted to SUBMITTED; there's still a problem.");
 		}
 		JLabel fieldPaperAdminStatus = new JLabel(the_admin_status.toString());
 		fieldPaperAdminStatus.setHorizontalAlignment(SwingConstants.LEFT);
@@ -335,7 +339,12 @@ public class ManagementPanel extends JPanel{
 		lblReview1Submitted.setBounds(156, -1, 209, 20);
 		panel_10.add(lblReview1Submitted);
 		
-		JLabel fieldReview1SubmittedStatus = new JLabel("<dynamic>");
+		//TODO: needs to be tested
+		Boolean is_review_complete = false;
+		if (the_reviews_complete_map.containsKey(reviewer_1_username)){
+			is_review_complete = the_reviews_complete_map.get(reviewer_1_username);
+		}
+		JLabel fieldReview1SubmittedStatus = new JLabel(is_review_complete.toString());
 		fieldReview1SubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldReview1SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReview1SubmittedStatus.setBounds(389, 0, 180, 20);
@@ -377,7 +386,12 @@ public class ManagementPanel extends JPanel{
 		lblReview2Submitted.setBounds(156, -1, 209, 20);
 		panel_12.add(lblReview2Submitted);
 		
-		JLabel fieldReview2SubmittedStatus = new JLabel("<dynamic>");
+		//TODO: needs to be tested
+		is_review_complete = false;
+		if (the_reviews_complete_map.containsKey(reviewer_2_username)){
+			is_review_complete = the_reviews_complete_map.get(reviewer_2_username);
+		}
+		JLabel fieldReview2SubmittedStatus = new JLabel(is_review_complete.toString());
 		fieldReview2SubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldReview2SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReview2SubmittedStatus.setBounds(389, 0, 180, 20);
@@ -419,7 +433,12 @@ public class ManagementPanel extends JPanel{
 		lblReview3Submitted.setBounds(156, -1, 209, 20);
 		panel_14.add(lblReview3Submitted);
 		
-		JLabel fieldReview3SubmittedStatus = new JLabel("<dynamic>");
+		//TODO: needs to be tested
+		is_review_complete = false;
+		if (the_reviews_complete_map.containsKey(reviewer_3_username)){
+			is_review_complete = the_reviews_complete_map.get(reviewer_3_username);
+		}
+		JLabel fieldReview3SubmittedStatus = new JLabel(is_review_complete.toString());
 		fieldReview3SubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldReview3SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReview3SubmittedStatus.setBounds(389, 0, 180, 20);
@@ -461,7 +480,12 @@ public class ManagementPanel extends JPanel{
 		lblReview4Submitted.setBounds(156, -1, 209, 20);
 		panel_16.add(lblReview4Submitted);
 		
-		JLabel fieldReview4SubmittedStatus = new JLabel("<dynamic>");
+		//TODO: needs to be tested
+		is_review_complete = false;
+		if (the_reviews_complete_map.containsKey(reviewer_4_username)){
+			is_review_complete = the_reviews_complete_map.get(reviewer_4_username);
+		}
+		JLabel fieldReview4SubmittedStatus = new JLabel(is_review_complete.toString());
 		fieldReview4SubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldReview4SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReview4SubmittedStatus.setBounds(389, 0, 180, 20);
