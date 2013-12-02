@@ -267,15 +267,16 @@ public class ManagePaperGUI extends JPanel{
 	public ManagePaperGUI(final Controller the_controller) {
 		super();
 		controller = the_controller;
+		current_conf = controller.getCurrentConference();
+		current_user = controller.getCurrentUsername();
 		if (controller.getCurrentPaper() == ""){
 			current_paper = "No Paper Submitted";
 		}
 		else {
 			current_paper = controller.getCurrentPaper();
 		}
-		current_user = controller.getCurrentUsername();
-		JPanel mainPanel = setUpMainPanel();
 		current_paper_relation = controller.getRelationToPaper(current_conf, current_paper, current_user);	
+		JPanel mainPanel = setUpMainPanel();
 		mainPanel.add(setupTabbedPane());
 	}
 	
@@ -289,7 +290,6 @@ public class ManagePaperGUI extends JPanel{
 	 * @return mainPanel JPanel containing the MainPanel
 	 */
 	private JPanel setUpMainPanel(){
-		current_conf = controller.getCurrentConference();
 		setupActions();
 		setBounds(100, 100, 722, 520);
 		contentPane = new JPanel();
