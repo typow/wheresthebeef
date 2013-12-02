@@ -89,16 +89,6 @@ public class HomeGUI extends JPanel {
 	private static final String LOGOUT_STRING = "Logout of the system (ALT+L)";
 
 	/*
-	 * The text to display on the logout button.
-	 */
-	private static final String BACK_TITLE_STRING = "<-- Back";
-
-	/*
-	 * The message the will pop up when the user floats above the button.
-	 */
-	private static final String BACK_STRING = "Navigate to the last screen (ALT+B)";
-
-	/*
 	 * The text to display on the create new conference button.
 	 */
 	private static final String NEW_CONF_TITLE_STRING = "Create New Conference";
@@ -135,11 +125,6 @@ public class HomeGUI extends JPanel {
 	 * the Action associated with the logout button
 	 */
 	private Action my_logout_action;
-
-	/*
-	 * the Action associated with the back button
-	 */
-	private Action my_back_action;
 
 	/*
 	 * the Action associated with the new conference button
@@ -205,12 +190,8 @@ public class HomeGUI extends JPanel {
 		JButton logout_button = new JButton(my_logout_action);
 		logout_button.setBounds(20, 97, 150, 22);
 		inner_panel.add(logout_button);
-
-		JButton back_button = new JButton(my_back_action);
-		back_button.setBounds(20, 130, 152, 22);
-		inner_panel.add(back_button);
 		JButton new_conf_button = new JButton(my_new_conf_action);
-		new_conf_button.setBounds(22, 163, 150, 22);
+		new_conf_button.setBounds(20, 130, 150, 22);
 		inner_panel.add(new_conf_button);
 
 		JSeparator separator_1 = new JSeparator();
@@ -473,26 +454,6 @@ public class HomeGUI extends JPanel {
 		};
 		my_logout_action.putValue(Action.SHORT_DESCRIPTION, LOGOUT_STRING);
 		my_logout_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_L);
-
-		/*
-		 * The action associated with clicking back, in this case, the same as
-		 * logging out. In the future, the back button will just take you back
-		 * to the previous screen, but for the sake of continuity and flow, I
-		 * included the back button here as well
-		 */
-		my_back_action = new AbstractAction(BACK_TITLE_STRING, null) {
-			@Override
-			public void actionPerformed(ActionEvent the_event) {
-				controller.setCurrentUsername(""); // blank because in this
-													// case,
-				// the user is logging out by going back one screen.
-				controller.setCurrentConference(null);
-				controller.setCurrentPaper("");
-				controller.setStateOfGUI(StateOfGUI.LOGIN);
-			}
-		};
-		my_back_action.putValue(Action.SHORT_DESCRIPTION, BACK_STRING);
-		my_back_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_B);
 
 		/*
 		 * The action associated with clicking the Create New Conference button.

@@ -706,7 +706,7 @@ public class ManagePaperGUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				controller.setCurrentPaper("");
-				controller.setStateOfGUI(StateOfGUI.NEW_CONFERENCE);
+				controller.setStateOfGUI(StateOfGUI.CONFERENCE);
 			}
 		};
 		my_back_action.putValue(Action.SHORT_DESCRIPTION, BACK_STRING);

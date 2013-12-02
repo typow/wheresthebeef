@@ -73,7 +73,7 @@ public class ManagementPanel extends JPanel{
 	 * @return localTabManagement The tab containing the management JPanel
 	 */
 	private JPanel setupManagementPanel(final String the_current_paper, final String the_paper_author, 
-			final paperStatusAdminViewable the_admin_status, final String the_pc_username,
+			paperStatusAdminViewable the_admin_status, final String the_pc_username,
 			final String the_sub_pc_username, final String[] the_reviewer_usernames){
 		
 		tabManagement = new JPanel();
@@ -179,6 +179,9 @@ public class ManagementPanel extends JPanel{
 		lblPaperAdminStatus.setBounds(28, 0, 141, 20);
 		panel_3.add(lblPaperAdminStatus);
 		
+		if (the_admin_status == null){
+			the_admin_status = paperStatusAdminViewable.SUBMITTED;
+		}
 		JLabel fieldPaperAdminStatus = new JLabel(the_admin_status.toString());
 		fieldPaperAdminStatus.setHorizontalAlignment(SwingConstants.LEFT);
 		fieldPaperAdminStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
