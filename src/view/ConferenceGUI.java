@@ -414,11 +414,29 @@ public class ConferenceGUI extends JPanel {
 				} 
 				//reviews
 //				if(controller.getCurrentUsername().equalsIgnoreCase(curr_paper.getPC()) | controller.getCurrentUsername().equalsIgnoreCase(curr_paper.getSubPC())) {
-//					String sub_pc = curr_paper.getSubPC();
-//					if(sub_pc == null) {
-//						sub_pc = "Unassigned";
+//					String[] reviewer_array = curr_paper.getReviewers();
+//					String reviewer_string = "";
+//					int assigned_reviewers = 0;
+//					if(reviewer_array != null) {
+//						assigned_reviewers = reviewer_array.length;
+//						//reviewer_array = "Unassigned";
 //					}
-//					JLabel sub_pc_jl = new JLabel(sub_pc, JLabel.CENTER);
+//					for (int j = 0; j<reviewer_array.length; j++) {
+//						if(reviewer_array[j] != null) {
+//							reviewer_string = reviewer_string + reviewer_array[j];
+//							if (j != 3) {
+//								reviewer_string = reviewer_string + ", ";
+//							}
+//						} 
+//					}
+//					
+//					for (int j = assigned_reviewers; j< 4;j++) {
+//						reviewer_string = reviewer_string + "UNASSIGNED";
+//						if (j != 3) {
+//							reviewer_string = reviewer_string + ", ";
+//						}
+//					}
+//					JLabel sub_pc_jl = new JLabel(reviewer_string, JLabel.CENTER);
 //					sub_pc_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 //					panel_for_scrollpane.add(sub_pc_jl);
 //				} else {
