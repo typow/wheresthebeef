@@ -134,6 +134,7 @@ public class Controller extends Observable{
 	 * @return valid  Returns true if the username exists in the database.
 	 */
 	//Tyler Powers was here
+	
 	public Boolean checkValidUsername(final String the_username) {
 		Boolean valid = false;		
 		try {
@@ -152,6 +153,7 @@ public class Controller extends Observable{
 		}
 		return valid;
 	}
+	
 	
 	/**
 	 * Checks the username and password combination against the database.
@@ -213,7 +215,7 @@ public class Controller extends Observable{
 	/**
 	 * Sets the current user to the username of the person currently logged in.
 	 * 
-	 * @param the_username
+	 * @param the_username the username of the current person logged in
 	 */
 	public void setCurrentUsername(final String the_username){
 		current_user = the_username;
@@ -221,6 +223,7 @@ public class Controller extends Observable{
 	
 	/**
 	 * Returns the username of the current person logged in.
+	 * 
 	 * @return current_user The current user
 	 */
 	public String getCurrentUsername(){
@@ -229,6 +232,7 @@ public class Controller extends Observable{
 	
 	/**
 	 * Returns the full name of the individual when the username is passed in
+	 * 
 	 * @param the_username The username of the individual being queried
 	 * @return The full name of the person.
 	 */
@@ -952,10 +956,12 @@ public class Controller extends Observable{
 			}
 			
 			if (paperID != -1) {
-				statement = connect.prepareStatement(
-						"SELECT * FROM recommendations WHERE paperid= " + paperID);
+				statement = connect.prepareStatement("SELECT * FROM recommendations WHERE paperid=" + paperID);
 				resultSet = statement.executeQuery();
-				result = resultSet.getString(8);			// Location of the rationale in the Database
+				if(resultSet.next()) {
+					result = resultSet.getString(8);			// Location of the rationale in the DatabaseS
+				}
+				
 			} else {
 				System.out.println("Requested Paper doesn't exist in that conference");
 			}
@@ -1013,7 +1019,7 @@ public class Controller extends Observable{
 		String subPCName = "";
 		try {
 			PreparedStatement statement = connect.prepareStatement("SELECT subchair FROM recommendations WHERE " +
-					"papername= '" + the_paper + "' AND conference='" + the_conf.getConfTitle() + "'");
+					"papername='" + the_paper + "' AND conference='" + the_conf.getConfTitle() + "'");
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()){
@@ -1302,6 +1308,7 @@ public class Controller extends Observable{
 	 * @param the_pc
 	 * @return
 	 */
+	//TODO: returns the author of the paper as available username THIS IS INCORRECT
 	public String[] getAvailableForSubPC(final Conference current_conf, final int current_paper, final String the_pc){
 		//TODO: the AssignSubPCGUI needs an array of usernames of the people capable of being a SubPC.
 		//		Note: - the PC can't be the SubPC.
@@ -1424,51 +1431,61 @@ public class Controller extends Observable{
 	}
 
 	/**
+	 * Assigned the SubProgramChair username passed in to the paper that was passed in for the conference passed in.
 	 * 
-	 * @param the_conference
-	 * @param the_paper
-	 * @param the_sub_pc
+	 * @param the_conference the conference the paper belongs to
+	 * @param the_paper the paper beings assigned to a SubProgramChair
+	 * @param the_sub_pc the username of the SubProgramChair
 	 */
+	
 	public void addSubPC(final Conference the_conference, final String the_paper, final String the_sub_pc){
-		//TODO: add this person as the SubPC.  We've already populated the list of potential with the correct people
+		//		add this person as the SubPC.  We've already populated the list of potential with the correct people
 		//		so we shouldn't have to do any checking here.  The AssignSubPCGUI will ensure a non-null result is sent.
 		//		(Jacob)
-		int total = 0;
+		int paperID = -1;
+		String author = "";
 		try {
-			
-			PreparedStatement statement = connect.prepareStatement("SELECT * FROM recommendations");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM papers WHERE name='" + the_paper +
+					"' AND confname='" + the_conference.getConfTitle() + "'");
 			resultSet = statement.executeQuery();
-			
-			while(resultSet.next()) {
-				total+=1;
+			//First get the paperid from papers table this is the same as id for recommendation
+			if(resultSet.next()) {
+				paperID = resultSet.getInt(1);
+				author = resultSet.getString(2);
+				System.out.println("got paper id in addSubPC");
+			} else {
+				System.out.println("DIDNT GET PAPERID IN ADDSUBPC");
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("Check for valid Username failed");
+			System.out.println("getting paper id failed in addSubPC");
 			e.printStackTrace();
 		}
-		int id = getPaperID(the_paper);
-		String author = getPaperAuthor(the_conference, the_paper);
+		
 		try {
-			
-			PreparedStatement statement = connect.prepareStatement("INSERT INTO recommendations(id, paperid, subchair, conference, papername, paperauthor)" +
-					" VALUE("+total+id+"'"+the_sub_pc+"'"+"'"+the_conference.getConfTitle()+"'"+the_paper+"'"+author+"')");
-			resultSet = statement.executeQuery();
+			//Now insert into recommendations the subpc passed in
+			PreparedStatement statement = connect.prepareStatement("INSERT INTO recommendations VALUES (" + 
+					paperID + ", " + paperID + ", '" + the_sub_pc+ "', '" + the_conference.getConfTitle() + 
+					"', '" + the_paper + "', '" + author + "', " + 0 + ", '')");
+			statement.execute();
+			System.out.println("added SubPC in addSubPC");
 			
 		} catch (Exception e) {
-			System.out.println("Get full name failed!");
+			e.printStackTrace();
+			System.out.println("failed to addSubPC!");
 		}
 		
 	}
 	
 	/**
+	 * Returns an array of Review Objects of the given paper in the given conference.
 	 * 
-	 * @param the_conference
-	 * @param the_paper
-	 * @return
+	 * @param the_conference the conference the paper belongs to
+	 * @param the_paper the paper whose reviews are being retrieved
+	 * @return An array of Review objects of the given paper.
 	 */
 	public Review[] getReviews(final Conference the_conference, final String the_paper){
-		//TODO: the ManagePaperGUI needs all the reviews that have been completed for a paper (if any)
+		//		the ManagePaperGUI needs all the reviews that have been completed for a paper (if any)
 		//		I created a Review object so that the controller can pass back an array of Review objects
 		//		all at once.  No more than 4 are allowed to be created, so that shouldn't have to be a check here.
 		int paperID = -1;
@@ -1477,9 +1494,8 @@ public class Controller extends Observable{
 		List<Review> reviewarray = new ArrayList<Review>();
 		//Retrieve the PaperID from papers table to use for getting reviews from the reviews table
 		try {
-			PreparedStatement statement = connect.prepareStatement(
-					"SELECT id FROM papers WHERE name='" + the_paper + "', AND confname='" +
-					the_conference.getConfTitle() + "'");
+			PreparedStatement statement = connect.prepareStatement("SELECT * FROM papers WHERE name='" + the_paper +
+					"' AND confname='" + the_conference.getConfTitle() + "'");
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				paperID = resultSet.getInt(1);
@@ -1502,16 +1518,17 @@ public class Controller extends Observable{
 						resultSet.getString(17)));
 			}
 		} catch (Exception e) {
-			System.out.println("failed at getting paper in getReviews");
+			System.out.println("failed at retrieving reviews in getReviews");
 		}
 		
 		return reviewarray.toArray(new Review[reviewarray.size()]);
 	}
 	
 	/**
+	 * Returns an array of Conference objects that the user that is passed in belongs too.
 	 * 
-	 * @param the_username
-	 * @return
+	 * @param the_username the username of the person being looked at
+	 * @return An array of conferences that the user is a part of.
 	 */
 	public Conference[] getMyConferences(final String the_username){
 		ResultSet resultSet2;
@@ -1703,10 +1720,11 @@ public class Controller extends Observable{
 	}
 	
 	/**
+	 * Returns an array of Papers that are in the conference passed in and are associated in some way with the user.
 	 * 
-	 * @param the_conf
-	 * @param the_username
-	 * @return
+	 * @param the_conf the conference whose papers are being examined
+	 * @param the_username the username of the person who is associated with the returned papers
+	 * @return An array of Papers from the conference that the user takes part in
 	 */
 	public Paper[] getMyPapers(final Conference the_conf, final String the_username){
 			
@@ -1895,7 +1913,7 @@ public class Controller extends Observable{
 			controller.createNewPaper(testConference, "Ranger", "fun times", "", 
 					paperStatusAuthorViewable.SUBMITTED, paperStatusAdminViewable.ACCEPTED);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			 //Auto-generated catch block
 			e.printStackTrace();
 		}*/
 		

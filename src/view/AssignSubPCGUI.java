@@ -187,6 +187,7 @@ public class AssignSubPCGUI extends JPanel {
 		current_conf = controller.getCurrentConference();
 		username = controller.getCurrentUsername();
 		paper_author = controller.getFullName(controller.getPaperAuthor(current_conf, current_paper));
+		current_paper = controller.getCurrentPaper();
 		setupActions();
 		setBounds(100, 100, 722, 520);
 		contentPane = new JPanel();

@@ -475,7 +475,7 @@ public class ManageDatabase{
 		try {
 			PreparedStatement statement = connect.prepareStatement("INSERT INTO recommendations(ID, PAPERID, SUBCHAIR, CONFERENCE, PAPERNAME, PAPERAUTHOR, " +
 					"Q1, RATIONALE) VALUES (0, 1, 'bounty', 'conferences of Algorithmic analysis', 'Analysis of Horspools Algorithm', 'ajm1', 4, 'Tricky')," +
-					"(1, 4, 'thor','Bio conferences', 'Packing on Abs', 'ripped', 5, 'Helped me gain a six-pack')");
+					"(2, 2, 'thor','Small Computer Conference', 'Baking Pi', 'typow', 2, 'Helped me gain a six-pack')");
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println("Error resetting recommendations " + e.getMessage());
@@ -487,7 +487,7 @@ public class ManageDatabase{
 		ManageDatabase md = new ManageDatabase();
 		md.printDatabase();
 		
-		/*
+		
 		md.resetUsers();		
 		md.resetConference();
 		md.resetPapers();
@@ -495,7 +495,7 @@ public class ManageDatabase{
 		md.resetReviews();
 		md.resetRecommendations();
 		md.printDatabase();
-		*/
+		
 	}
 	
 }
