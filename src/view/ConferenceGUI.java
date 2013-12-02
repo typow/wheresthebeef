@@ -314,27 +314,28 @@ public class ConferenceGUI extends JPanel {
 		}	
 	
 		System.out.println("number of papers in array = " + number_of_papers);
-		for (int i = 0; i < number_of_papers; i++) {
-			System.out.println("paper object title = "
-					+ my_paper_array[i].getPaperTitle());
-			System.out.println("paper object author = "
-					+ my_paper_array[i].getAuthor());
-			System.out.println("paper object author status viewable = "
-					+ my_paper_array[i].getStatusAuthorViewable());
-			System.out.println("Conference object Program Chair = "
-					+ controller.getCurrentConference().getProgramChair());
-			System.out.println("Paper object SubPC = "
-					+ my_paper_array[i].getSubPC());
-			String[] reviewer_array = my_paper_array[i].getReviewers();
-			if (reviewer_array != null) {
-				System.out.println("Reviewer array lenthth = "
-						+ reviewer_array.length);
-				for (int j = 0; j < reviewer_array.length; j++) {
-					System.out.println("reviewer[" + j + "] is "
-							+ reviewer_array[j]);
-				}
-			}
-		}
+
+//		for (int i = 0; i < number_of_papers; i++) {
+//			System.out.println("paper object title = "
+//					+ my_paper_array[i].getPaperTitle());
+//			System.out.println("paper object author = "
+//					+ my_paper_array[i].getAuthor());
+//			System.out.println("paper object author status viewable = "
+//					+ my_paper_array[i].getStatusAuthorViewable());
+//			System.out.println("Conference object Program Chair = "
+//					+ controller.getCurrentConference().getProgramChair());
+//			System.out.println("Paper object SubPC = "
+//					+ my_paper_array[i].getSubPC());
+//			String[] reviewer_array = my_paper_array[i].getReviewers();
+//			if (reviewer_array != null) {
+//				System.out.println("Reviewer array lenthth = "
+//						+ reviewer_array.length);
+//				for (int j = 0; j < reviewer_array.length; j++) {
+//					System.out.println("reviewer[" + j + "] is "
+//							+ reviewer_array[j]);
+//				}
+//			}
+//		}
 
 		JPanel panel_for_scrollpane = new JPanel(new GridLayout(
 				(number_of_papers + 1), COLUMN_NAMES.length));
@@ -392,7 +393,42 @@ public class ConferenceGUI extends JPanel {
 				JLabel author_jl = new JLabel(curr_paper.getAuthor(), JLabel.CENTER);
 				author_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				panel_for_scrollpane.add(author_jl);
-				i++;
+				JLabel status_jl = new JLabel(curr_paper.getStatusAuthorViewable().toString(), JLabel.CENTER);
+				status_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				panel_for_scrollpane.add(status_jl);
+				JLabel program_chair_jl = new JLabel(curr_paper.getPC(), JLabel.CENTER);
+				program_chair_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				panel_for_scrollpane.add(program_chair_jl);
+				if(controller.getCurrentUsername().equalsIgnoreCase(curr_paper.getPC()) | controller.getCurrentUsername().equalsIgnoreCase(curr_paper.getSubPC())) {
+					String sub_pc = curr_paper.getSubPC();
+					if(sub_pc == null) {
+						sub_pc = "Unassigned";
+					}
+					JLabel sub_pc_jl = new JLabel(sub_pc, JLabel.CENTER);
+					sub_pc_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+					panel_for_scrollpane.add(sub_pc_jl);
+				} else {
+					JLabel private_jl = new JLabel("Private", JLabel.CENTER);
+					private_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+					panel_for_scrollpane.add(private_jl);
+				} 
+				//reviews
+//				if(controller.getCurrentUsername().equalsIgnoreCase(curr_paper.getPC()) | controller.getCurrentUsername().equalsIgnoreCase(curr_paper.getSubPC())) {
+//					String sub_pc = curr_paper.getSubPC();
+//					if(sub_pc == null) {
+//						sub_pc = "Unassigned";
+//					}
+//					JLabel sub_pc_jl = new JLabel(sub_pc, JLabel.CENTER);
+//					sub_pc_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//					panel_for_scrollpane.add(sub_pc_jl);
+//				} else {
+//					JLabel private_jl = new JLabel("Private", JLabel.CENTER);
+//					private_jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//					panel_for_scrollpane.add(private_jl);
+//				} 
+				
+				
+				i+=4;
 			} else {
 				JLabel jl = new JLabel("Box" + i, JLabel.CENTER);
 				jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
