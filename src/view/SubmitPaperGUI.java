@@ -390,7 +390,7 @@ public class SubmitPaperGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				controller.setStateOfGUI(StateOfGUI.CONFERENCE);
 			}
 		};
 		my_back_action.putValue(Action.SHORT_DESCRIPTION, BACK_STRING);
