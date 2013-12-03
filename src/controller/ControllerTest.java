@@ -252,6 +252,45 @@ public class ControllerTest  {
 	public void testCreateNewPaper() {
 		fail("Not yet implemented");
 	}
+	/**
+	 * Test method for {@link controller.Controller#getRelationToPaper(controller.Conference, java.lang.String, java.lang.String)}.
+	 */
+	@Test
+	public void testGetRelationToPaper() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#setPaperRelation(controller.Conference, java.lang.String, java.lang.String, view.GUIEnum.paperRelation)}.
+	 */
+	@Test
+	public void testSetPaperRelation() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#setPaperStatus(controller.Conference, java.lang.String, view.GUIEnum.paperStatusAuthorViewable, view.GUIEnum.paperStatusAdminViewable)}.
+	 */
+	@Test
+	public void testSetPaperStatus() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#getAdminPaperStatus(controller.Conference, java.lang.String)}.
+	 */
+	@Test
+	public void testGetAdminPaperStatus() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#getStatusAuthorView(controller.Conference, java.lang.String)}.
+	 */
+	@Test
+	public void testGetStatusAuthorView() {
+		fail("Not yet implemented");
+	}
 
 	/**
 	 * Test method for {@link controller.Controller#setCurrentPaper(java.lang.String)}.
@@ -268,7 +307,15 @@ public class ControllerTest  {
 	public void testGetCurrentPaper() {
 		fail("Not yet implemented");
 	}
-
+	
+	/**
+	 * Test method for {@link controller.Controller#getPaperFilePath(controller.Conference, java.lang.String)}.
+	 */
+	@Test
+	public void testGetPaperFilePath() {
+		fail("Not yet implemented");
+	}
+	
 	/**
 	 * Test method for {@link controller.Controller#deletePaper(controller.Conference, java.lang.String, java.lang.String)}.
 	 */
@@ -293,34 +340,6 @@ public class ControllerTest  {
 		fail("Not yet implemented");
 	}
 
-	@SuppressWarnings("deprecation")
-	@Test
-	public void testGetPaperRecommendationRationale() {
-		Controller controller = new Controller();
-		Conference testConference = new Conference("TestTest", "PC", new Date(2000, 1, 1), "Test Address", 
-				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
-				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
-		
-		
-		if (!controller.checkConferenceExists("TestTest")) {
-			controller.createNewConference(testConference);
-		} 
-		
-		try {
-			controller.createNewPaper(testConference, "Test username", "Test PaperTitle", 
-					"Test FileSubmittted", paperStatusAuthorViewable.SUBMITTED, 
-					paperStatusAdminViewable.ACCEPTED);
-		} catch (Exception e) {
-			// Paper already exists
-		}
-		
-		controller.addPaperRecommendation("Sub PC", testConference, 
-				"Test PaperTitle", "Test Author", 5, "Test Recommendation");
-		
-		assertEquals("Test Recommendation", controller.getPaperRecommendationRationale(
-				testConference, "Test PaperTitle"));
-	}
-	
 	/**
 	 * Test method for {@link controller.Controller#getPaperAuthor(controller.Conference, java.lang.String)}.
 	 */
@@ -353,6 +372,44 @@ public class ControllerTest  {
 		}
 		assertEquals("", testedAuthor);
 	}
+
+	/**
+	 * Test method for
+	 */
+	@Test
+	public void testAddPaperRecommendation() {
+		Controller controller = new Controller();
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testGetPaperRecommendationRationale() {
+		Controller controller = new Controller();
+		Conference testConference = new Conference("TestTest", "PC", new Date(2000, 1, 1), "Test Address", 
+				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
+				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		
+		
+		if (!controller.checkConferenceExists("TestTest")) {
+			controller.createNewConference(testConference);
+		} 
+		
+		try {
+			controller.createNewPaper(testConference, "Test username", "Test PaperTitle", 
+					"Test FileSubmittted", paperStatusAuthorViewable.SUBMITTED, 
+					paperStatusAdminViewable.ACCEPTED);
+		} catch (Exception e) {
+			// Paper already exists
+		}
+		
+		controller.addPaperRecommendation("Sub PC", testConference, 
+				"Test PaperTitle", "Test Author", 5, "Test Recommendation");
+		
+		assertEquals("Test Recommendation", controller.getPaperRecommendationRationale(
+				testConference, "Test PaperTitle"));
+	}
+	
+	
 	
 	/**
 	 * Test method for {@link controller.Controller#getPaperRecommendationNumericalValuefinal(controller.Conference, java.lang.String)}.
@@ -371,11 +428,115 @@ public class ControllerTest  {
 	}
 	
 	/**
-	 * Test method for
+	 * Test method for {@link controller.Controller#getPaperRecommendationSubPCName(controller.Conference, java.lang.String)}.
 	 */
 	@Test
-	public void testAddPaperRecommendation() {
-		Controller controller = new Controller();
+	public void testGetPaperRecommendationSubPCName() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#getUsersAssignedAsReviewers(controller.Conference, java.lang.String)}.
+	 */
+	@Test
+	public void testGetUsersAssignedAsReviewers() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#getUserAssignedAsPC(controller.Conference)}.
+	 */
+	@Test
+	public void testGetUserAssignedAsPC() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#getUserAssignedAsSubPC(controller.Conference, int)}.
+	 */
+	@Test
+	public void testGetUserAssignedAsSubPC() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#getAvailableReviewers(controller.Conference, java.lang.String, java.lang.String)}.
+	 */
+	@Test
+	public void testGetAvailableReviewers() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#addReviewers(controller.Conference, java.lang.String, java.lang.String[])}.
+	 */
+	@Test
+	public void testAddReviewers() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#getAvailableForSubPC(controller.Conference, int, java.lang.String)}.
+	 */
+	@Test
+	public void testGetAvailableForSubPC() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#addSubPC(controller.Conference, java.lang.String, java.lang.String)}.
+	 */
+	@Test
+	public void testAddSubPC() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#getReviews(controller.Conference, java.lang.String)}.
+	 */
+	@Test
+	public void testGetReviews() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#getMyConferences(java.lang.String)}.
+	 */
+	@Test
+	public void testGetMyConferences() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#getUpcommingConferences(java.lang.String)}.
+	 */
+	@Test
+	public void testGetUpcommingConferences() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#getMyPapers(controller.Conference, java.lang.String)}.
+	 */
+	@Test
+	public void testGetMyPapers() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#getPaperID(java.lang.String)}.
+	 */
+	@Test
+	public void testGetPaperID() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link controller.Controller#main(java.lang.String[])}.
+	 */
+	@Test
+	public void testMain() {
+		fail("Not yet implemented");
 	}
 
 }

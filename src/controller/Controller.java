@@ -335,12 +335,12 @@ public class Controller extends Observable{
 	/**
 	 * Used to add a new paper to database and see if number of submissions is at max.
 	 * @author David
-	 * @param the_conference
-	 * @param the_username
-	 * @param the_paper_title
-	 * @param the_file_submitted
-	 * @param the_user_viewable_status
-	 * @param the_admin_viewable_status
+	 * @param the_conference the conference that the paper is being added to.
+	 * @param the_username the author's username
+	 * @param the_paper_title the title of the paper
+	 * @param the_file_submitted the file location
+	 * @param the_user_viewable_status the paper status that's viewable for an author's purposes. 
+	 * @param the_admin_viewable_status paper status that's viewable for an administrative purposes. 
 	 * @throws Exception
 	 */
 	public void createNewPaper(final Conference the_conference, final String the_username, final String the_paper_title, 
@@ -866,12 +866,15 @@ public class Controller extends Observable{
 	}
 
 	/**
+	 * A method that is called to see if the number of reviews on a paper is less than 4 and that the
+	 * current user hasn't already submitted a review.
 	 * 
 	 * @author David
-	 * @param the_conf
-	 * @param the_paper
-	 * @param the_username
-	 * @return
+	 * @param the_conf the conference that the paper is in
+	 * @param the_paper the name of the paper
+	 * @param the_username the user that is trying to submit the paper.
+	 * @return true if the current user has not submitted a review or the number of reviews is less than or equal 4
+	 * 		   false if the current user has submitted a review or the number of reviews is greater than 4
 	 */
 	public boolean canAddReview(final Conference the_conf, final String the_paper, final String the_username){
 		boolean permission_to_add = true;
@@ -1226,11 +1229,12 @@ public class Controller extends Observable{
 	}
 	
 	/**
-	 * Retrieves the SubProgramChair of the paper matching the paperid passed in for the conference passed in.
+	 * Retrieves the subprogram chair of the paper matching the paperid passed in for the conference passed in.
 	 * 
+	 * @author David
 	 * @param the_conference the conference being examined
 	 * @param current_paper the paper being examined
-	 * @return the SubProgramChair's username
+	 * @return the subprogram chair's username
 	 */
 	public String getUserAssignedAsSubPC(final Conference the_conference, final int current_paper){
 		//	 return the username of the person assigned as Sub PC for a particular paper
@@ -1396,11 +1400,18 @@ public class Controller extends Observable{
 		
 	}
 	/**
+	 * A method that populates a string array of all users that are capable of being a subprogram chair.
+	 * 
+	 *Note: - the PC can't be the SubPC.
+	 *		- the Author of the paper can't be the SubPC of their own paper.
+	 *		- the reviewer can't be the SubPC, although we shouldn't have to check this.  The SubPC is the person
+	 *		  who assigns the reviewer, so it's the chicken and egg thing.
+	 *		- any other business rules I'm forgetting?  (Jacob)
 	 * @author David
-	 * @param current_conf
-	 * @param current_paper
-	 * @param the_pc
-	 * @return
+	 * @param current_conf the conference the paper is in
+	 * @param current_paper the paper that is having a subprogram chair added.
+	 * @param the_pc the name of the program chair.
+	 * @return a string array that contains all usernames of users that are available for subprogram chair.
 	 */
 	//TODO: returns the author of the paper as available username THIS IS INCORRECT
 	public String[] getAvailableForSubPC(final Conference current_conf, final int current_paper, final String the_pc){
@@ -1472,25 +1483,7 @@ public class Controller extends Observable{
 						reviewers[0] = "";
 					}
 		return reviewers;
-	}
-//	private String getUserIdForPC(Conference current_conf) {
-//		String pc = "";
-//		try {
-//			
-//			PreparedStatement statement = connect.prepareStatement(
-//					"SELECT PROGCHAIR FROM conferences WHERE name=" +"'" + current_conf.getConfTitle() +"'");
-//			resultSet = statement.executeQuery();
-//			
-//			if (resultSet.next()) {
-//				pc = resultSet.getString(1);
-//			}
-//			
-//		} catch (Exception e) {
-//			System.out.println("Get full name failed!");
-//		}
-//		return pc;
-//	}
-	
+	}	
 	/**
 	 * 
 	 * @param the_paper_id
@@ -1525,11 +1518,12 @@ public class Controller extends Observable{
 	}
 
 	/**
-	 * Assigned the SubProgramChair username passed in to the paper that was passed in for the conference passed in.
+	 * Assigned the subprogram chair username passed in to the paper that was passed in for the conference passed in.
 	 * 
+	 * @author David
 	 * @param the_conference the conference the paper belongs to
-	 * @param the_paper the paper beings assigned to a SubProgramChair
-	 * @param the_sub_pc the username of the SubProgramChair
+	 * @param the_paper the paper beings assigned to a subprogram chair
+	 * @param the_sub_pc the username of the subprogram chair
 	 */
 	
 	public void addSubPC(final Conference the_conference, final String the_paper, final String the_sub_pc){
@@ -1793,29 +1787,11 @@ public class Controller extends Observable{
 		}
 		
 		return copy.toArray(new Conference[copy.size()]);
-	}
-	
-	/**
-	 * 
-	 * @param record
-	 * @return
-	 */
-	private String infoForAPaper(
-			ArrayList<String> record) {
-		String conference = "";
-		for(int i = 0; i < record.size();i++) {
-			if(i+1<record.size()) {
-				conference +=record.get(i)+ ", ";
-			} else {
-				conference +=record.get(i);
-			}
-		}
-		return conference;
-	}
-	
+	}	
 	/**
 	 * Returns an array of Papers that are in the conference passed in and are associated in some way with the user.
 	 * 
+	 * @author David
 	 * @param the_conf the conference whose papers are being examined
 	 * @param the_username the username of the person who is associated with the returned papers
 	 * @return An array of Papers from the conference that the user takes part in
