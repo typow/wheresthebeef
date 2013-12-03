@@ -353,7 +353,7 @@ public class Controller extends Observable{
 		int i = 0;
 		try {
 			
-			PreparedStatement statement = connect.prepareStatement("SELECT ID FROM papers");
+			PreparedStatement statement = connect.prepareStatement("SELECT id FROM papers ORDER BY id ASC");
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -382,7 +382,7 @@ public class Controller extends Observable{
 			System.out.println("Check for valid Username failed");
 			e.printStackTrace();
 		}
-		//TODO: add the user viewable status and the admin viewable status.  These are already set up in the GUIEnum class.
+		//	  	add the user viewable status and the admin viewable status.  These are already set up in the GUIEnum class.
 		//		We need two because the user should only see a general indication of the progress and the admin needs to see
 		//		a detailed status update according to deadlines and where it's at in the whole review process. (Jacob)
 		if(i<=4) {
@@ -617,12 +617,13 @@ public class Controller extends Observable{
 			}
 						
 		} catch (Exception e) {
-			System.out.println("paperStatusAdminViewable failed!");
+			System.out.println("paperStatusAdminViewable failed in SQL!");
 		}
-		
+		/*
 		if (adminStatus.equals(null)) {
-			System.out.println("paperStatusAdminViewable failed!");
+			System.out.println("paperStatusAdminViewable failed in null check!");
 		}
+		*/
 		
 		return adminStatus;
 	}
@@ -654,11 +655,11 @@ public class Controller extends Observable{
 		} catch (Exception e) {
 			System.out.println("paperStatusAuthorViewable failed!");
 		}
-		
+		/*
 		if (authorStatus.equals(null)) {
 			System.out.println("paperStatusAuthorViewable failed!");
 		}
-		
+		*/
 		return authorStatus;
 	}
 	
@@ -718,9 +719,83 @@ public class Controller extends Observable{
 		try {
 			statement = connect.prepareStatement("DELETE FROM papers WHERE name='" + the_paper_title + "' AND " +
 					"confname='" + the_conference.getConfTitle() + "'");
+			deleteReviews(the_conference, the_username, the_paper_title);
+			deleteRec(the_conference, the_username, the_paper_title);
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println("Error deleting paper." + e.getMessage());
+		}
+		
+	}
+	
+	/**
+	 * Deletes all the reviews related to the paper passed in.
+	 * 
+	 * @param the_conference the conference the reviews belongs to
+	 * @param the_username the author of the paper whose reviews are being deleted
+	 * @param the_paper_title the name of the paper whose reviews are being deleted
+	 */
+	private void deleteReviews(final Conference the_conference, final String the_username, final String the_paper_title){
+		//		deletes reviews associated to the paper passed in
+		int paperID = -1;
+		
+		try {
+			PreparedStatement statement = connect.prepareStatement(
+				"SELECT * FROM papers WHERE name='" + the_paper_title +"' AND confname='" +
+			the_conference.getConfTitle() + "'");
+			resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				paperID = resultSet.getInt(1);
+			}
+			
+		} catch(Exception e) {
+			System.out.println("Error in deleteReview get ID." + e.getMessage());
+		}
+		
+		try {
+			PreparedStatement statement = connect.prepareStatement("DELETE FROM reviews WHERE paperid=" +
+					paperID + " AND " + "id=" + paperID);
+			statement.execute();
+			
+		} catch (SQLException e) {
+			System.out.println("Error deleting review." + e.getMessage());
+		}
+		
+	}
+	
+	/**
+	 * Deletes all the recommendations related to the paper passed in.
+	 * 
+	 * @param the_conference the conference the recommendations belongs to
+	 * @param the_username the author of the paper whose recommendations are being deleted
+	 * @param the_paper_title the name of the paper whose recommendations are being deleted
+	 */
+	private void deleteRec(final Conference the_conference, final String the_username, final String the_paper_title){
+		//		delete recommendations related to the paper passed in
+		int paperID = -1;
+		
+		try {
+			PreparedStatement statement = connect.prepareStatement(
+				"SELECT id FROM papers WHERE name=" +"'" + the_paper_title +"' AND confname='" +
+			the_conference.getConfTitle() + "'");
+			resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				paperID = resultSet.getInt(1);
+			}
+			
+		} catch(Exception e) {
+			System.out.println("Error in deleteRed for get id." + e.getMessage());
+		}
+		
+		try {
+			PreparedStatement statement = connect.prepareStatement("DELETE FROM recommendations WHERE id=" +
+					paperID + " AND " + "paperid=" + paperID);
+			statement.execute();
+			
+		} catch (SQLException e) {
+			System.out.println("Error deleting rec." + e.getMessage());
 		}
 		
 	}
@@ -1915,26 +1990,45 @@ public class Controller extends Observable{
 	}
 
 	
-	public static void main(String args[]) throws ParseException, SQLException {
+public static void main(String args[]) throws ParseException, SQLException {
 		
 		Controller controller = new Controller();
 		ManageDatabase md = new ManageDatabase();
-		md.printDatabase();
 		
-		Conference testConference = new Conference("Small Computer Conference", "Halmus", new Date(2000, 1, 1), "Test Address", 
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
 				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
 				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		
+		/*
+		int buttons[] = {9, 9, 9, 9, 9, 9, 9, 9, 9, 9};
+		controller.createNewReview("warfeld", testConference, "Baking Pi", "typow", "balls", 
+				buttons, "please work");*/
+		
+		
+		
+		/*
+		Paper papers[] = controller.getMyPapers(testConference, "thor");
+		
+		for (int i = 0; i < papers.length; i++) {
+			System.out.println(papers[i].getPaperTitle());
+			System.out.println(papers[i].getSubPC());
+		}*/
 		/*
 		paperRelation relation = controller.getRelationToPaper(testConference, "Baking Pi", "warfeld");
 		System.out.println(relation);*/
-		/*
+		
 		try {
+			controller.deletePaper(testConference, "typow", "Baking Pi");
 			controller.createNewPaper(testConference, "Ranger", "fun times", "", 
+					paperStatusAuthorViewable.SUBMITTED, paperStatusAdminViewable.ACCEPTED);
+			controller.createNewPaper(testConference, "Fungus", "sad times", "", 
 					paperStatusAuthorViewable.SUBMITTED, paperStatusAdminViewable.ACCEPTED);
 		} catch (Exception e) {
 			 //Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
+		
+		md.printDatabase();
 		
 		/*
 		Controller controller = new Controller();

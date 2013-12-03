@@ -438,7 +438,7 @@ public class ManagePaperGUI extends JPanel{
 			tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
 		}
 		int paperId = controller.getPaperID(current_paper);
-		//System.out.println("paper admin status" + controller.getAdminPaperStatus(current_conf, current_paper));
+		System.out.println("paper admin status" + controller.getAdminPaperStatus(current_conf, current_paper));
 		if ((current_paper_relation == paperRelation.PC)||(current_paper_relation == paperRelation.SUBPC)){
 			ManagementPanel managePanel = new ManagementPanel(current_paper, 
 					controller.getPaperAuthor(current_conf, current_paper), controller.getAdminPaperStatus(current_conf, current_paper), 

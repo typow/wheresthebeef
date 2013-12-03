@@ -195,6 +195,7 @@ public class AcceptRejectGUI extends JPanel {
 		super();
 		controller = the_controller;
 		current_conf = controller.getCurrentConference();
+		current_paper = controller.getCurrentPaper();
 		username = controller.getCurrentUsername();
 		paper_author = controller.getFullName(controller.getPaperAuthor(current_conf, current_paper));
 		setupActions();

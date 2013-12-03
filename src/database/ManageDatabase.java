@@ -460,8 +460,8 @@ public class ManageDatabase{
 		try {
 			PreparedStatement statement = connect.prepareStatement("INSERT INTO reviews(ID, PAPERID, REVIEWER, CONFERENCE, PAPERNAME, PAPERAUTHOR, " +
 					"Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, RATING, COMMENTS) " +
-					"VALUES (0, 2, 'warfeld', 'Small Computer Conference', 'Baking Pi', 'typow', 1,2,3,5,1,3,1,3,4,1, 'Dont get cocky, kid')," +
-					"(1, 2, 'noise', 'Small Computer Conference', 'Baking Pi', 'typow', 4,3,1,4,2,1,2,3,5,2, 'Gold medal winner!')," +
+					"VALUES (2, 2, 'warfeld', 'Small Computer Conference', 'Baking Pi', 'typow', 1,2,3,5,1,3,1,3,4,1, 'Dont get cocky, kid')," +
+					"(2, 2, 'noise', 'Small Computer Conference', 'Baking Pi', 'typow', 4,3,1,4,2,1,2,3,5,2, 'Gold medal winner!')," +
 					"(2, 3, 'yellow', 'Comp-Sci Annual', 'A More Perfect Union Set', 'da-man', 1,2,5,4,3,1,4,2,5,2, 'Square.')");
 			statement.execute();
 		} catch (SQLException e) {
@@ -487,13 +487,13 @@ public class ManageDatabase{
 		ManageDatabase md = new ManageDatabase();
 		md.printDatabase();
 		
-//		md.resetUsers();		
-//		md.resetConference();
-//		md.resetPapers();
-//		md.resetUsers();
-//		md.resetReviews();
-//		md.resetRecommendations();
-//		md.printDatabase();
+		md.resetUsers();		
+		md.resetConference();
+		md.resetPapers();
+		md.resetUsers();
+		md.resetReviews();
+		md.resetRecommendations();
+		md.printDatabase();
 		
 	}
 	
