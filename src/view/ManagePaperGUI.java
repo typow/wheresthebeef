@@ -774,9 +774,11 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				if (controller.canAddReview(current_conf, current_paper, controller.getCurrentUsername())){
+//				if (controller.canAddReview(current_conf, current_paper, controller.getCurrentUsername())){
+//					System.out.println("I can add a review");
 					controller.setStateOfGUI(StateOfGUI.SUBMIT_REVIEW);
-				}
+//				}
+//				System.out.println("I can't add a review");
 			}
 		};
 		my_submit_review_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_REVIEW_STRING);

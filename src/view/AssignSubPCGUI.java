@@ -33,17 +33,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import view.GUIEnum.StateOfGUI;
-import view.GUIEnum.paperRelation;
 import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
 import controller.Conference;
 import controller.Controller;
-import javax.swing.ListSelectionModel;
 
 /**
 * The Assign Sub-Program Chair Interface JPanel

@@ -194,7 +194,9 @@ public class MakeRecommendationGUI extends JPanel {
 		controller = the_controller;
 		current_conf = controller.getCurrentConference();
 		username = controller.getCurrentUsername();
-		paper_author = controller.getFullName(controller.getPaperAuthor(current_conf, current_paper));
+		current_paper = controller.getCurrentPaper();
+//		paper_author = controller.getFullName(controller.getPaperAuthor(current_conf, current_paper));
+		paper_author = controller.getPaperAuthor(current_conf, current_paper);
 		setupActions();
 		setBounds(100, 100, 722, 520);
 		contentPane = new JPanel();
@@ -583,6 +585,9 @@ public class MakeRecommendationGUI extends JPanel {
 					controller.setPaperStatus(current_conf, current_paper, paperStatusAuthorViewable.UNDER_REVIEW, 
 							paperStatusAdminViewable.RECOMMENDED);
 				}
+				System.out.println("current paper title in make recommendation: " + current_paper);
+				System.out.println("username in make recommendation: " + username);
+				System.out.println("paper_author in make recommendation: " + paper_author);
 				controller.addPaperRecommendation(username, current_conf, current_paper, 
 							paper_author, answer, textRationale.getText());
 				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);

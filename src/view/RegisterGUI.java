@@ -342,6 +342,8 @@ public class RegisterGUI extends JPanel {
 					}
 					controller.setCurrentUsername(username);
 					controller.addNewUser(username, password_1, first, middle, last, specialty);
+					System.out.println("password entered: " + password_1);
+					System.out.println("username entered: " + username);
 					controller.setStateOfGUI(StateOfGUI.HOME);
 				}
 			}

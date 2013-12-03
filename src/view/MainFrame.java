@@ -250,10 +250,3 @@ public class MainFrame extends JFrame implements Observer {
 		loginWindow.setDefaultCurserPosition();
 	}
 }
-
-/*
- * TODO:
- * 
- * controller.getReviews()
- * 
- */

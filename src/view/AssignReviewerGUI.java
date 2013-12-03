@@ -38,7 +38,6 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import view.GUIEnum.StateOfGUI;
-import view.GUIEnum.paperRelation;
 import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
 import controller.Conference;
@@ -196,6 +195,7 @@ public class AssignReviewerGUI extends JPanel {
 		super();
 		controller = the_controller;
 		current_conf = controller.getCurrentConference();
+		current_paper = controller.getCurrentPaper();
 		username = controller.getCurrentUsername();
 		paper_author = controller.getFullName(controller.getPaperAuthor(current_conf, current_paper));
 		setupActions();
@@ -603,7 +603,9 @@ public class AssignReviewerGUI extends JPanel {
 				else {
 					controller.setPaperStatus(current_conf, current_paper, paperStatusAuthorViewable.UNDER_REVIEW, 
 							paperStatusAdminViewable.UNDER_REVIEW);
+					the_reviewers = results.toArray(new String[results.size()]);
 					controller.addReviewers(current_conf, current_paper, the_reviewers);
+					System.out.println(the_reviewers[0].toString() + the_reviewers[1].toString());
 					controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 				}
 			}
