@@ -11,8 +11,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.After;
@@ -28,7 +30,6 @@ import view.GUIEnum.paperStatusAuthorViewable;
  *
  */
 public class ControllerTest  {
-	
 	/*
 	 * The connection the controller has to the Database.
 	 * This connection is set up during construction.
@@ -59,6 +60,7 @@ public class ControllerTest  {
 		} catch(Exception e) {
 			assert(false);
 		}
+
 	}
 	/**
 	 * @throws java.lang.Exception
@@ -167,65 +169,35 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testCheckConferenceExists() {
+		Controller controller = new Controller();
+
 		Boolean valid1 = false;
 		Boolean valid2 = false;
-		String the_conference_title = "a";
-		String the_conference_title2 = "b";
 
 		//TODO: check the conference title against database to see if this conference title
 		//		already exists in the database.  Jacob
 		
-		try {
-			
-			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM conference WHERE name='" + the_conference_title + "'");
-			resultSet = statement.executeQuery();
-			
-			if (resultSet.next()) {
-				valid1 = true;
-			}
-			
-		} catch (SQLException e) {
-			System.out.println("Check for valid conference name failed");
-			e.printStackTrace();
-		}
-		try {
-			
-			PreparedStatement statement = connect.prepareStatement(
-					"SELECT * FROM conference WHERE name='" + the_conference_title2 + "'");
-			resultSet = statement.executeQuery();
-			
-			if (resultSet.next()) {
-				valid2 = true;
-			}
-			
-		} catch (SQLException e) {
-			System.out.println("Check for valid conference name failed");
-			e.printStackTrace();
-		}
+		valid1 = controller.checkConferenceExists("a");
+		valid2 = controller.checkConferenceExists("b");
 		assertTrue(valid1 && !valid2);
 	}
 
 	/**
 	 * tests to see if conference zz can be added to the database. 
 	 * Test method for {@link controller.Controller#createNewConference(controller.Conference)}.
+	 * @throws Exception
 	 */
 	@Test
-	public void testCreateNewConference() {
-		boolean valid = true; 
-		try {			
-			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO conference VALUES ('" + "zz" + "', '" + "David" + "', '" +
-							"11/19/2013" + "', '" + "11/19/2013" + "', '" + "11/19/2013" + "', '" + 
-							"11/19/2013" + "', '" + "11/19/2013"+ "', '" + "JUnit Testing" + "')");
-			
-			valid = true;
-			assertTrue(valid);
-			statement = connect.prepareStatement("DELETE FROM conference WHERE name ='zz'");
-			statement.execute();
-		} catch (SQLException e) {
-			valid = false;
-			assertTrue(valid);
+	public void testCreateNewConference() throws Exception {
+		Controller controller = new Controller();
+		Conference the_conference = new Conference("zz", "Biff", new Date(), "3535 Wise street", 
+				"Bremerton", "WA", "98311",
+				new Date(), new Date(), new Date(), new Date(), "Junit Testing");
+		try {
+			controller.createNewConference(the_conference);
+			assert true;
+		} catch (Exception e) {
+			assert false;
 		}
 	}
 
@@ -247,10 +219,23 @@ public class ControllerTest  {
 
 	/**
 	 * Test method for {@link controller.Controller#createNewPaper(controller.Conference, java.lang.String, java.lang.String, java.lang.String)}.
+	 * @throws Exception 
 	 */
 	@Test
-	public void testCreateNewPaper() {
-		fail("Not yet implemented");
+	public void testCreateNewPaper() throws Exception {
+		Controller controller = new Controller();
+		Conference the_conference = new Conference("zz", "Biff", new Date(), "3535 Wise street", 
+				"Bremerton", "WA", "98311",
+				new Date(), new Date(), new Date(), new Date(), "Junit Testing");
+		 paperStatusAuthorViewable the_user_viewable_status = null;
+		 paperStatusAdminViewable  the_admin_viewable_status = null;
+		 
+	    try {
+	    	controller.createNewPaper(the_conference, "D-man", "JunitTest", "JunitTest home ", the_user_viewable_status, the_admin_viewable_status);
+	    	assert true;
+        } catch (Exception e) {
+        	assert false;
+        }
 	}
 	/**
 	 * Test method for {@link controller.Controller#getRelationToPaper(controller.Conference, java.lang.String, java.lang.String)}.
@@ -337,7 +322,11 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testCanAddReview() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		Conference the_conference = new Conference("zz", "Biff", new Date(), "3535 Wise street", 
+				"Bremerton", "WA", "98311",
+				new Date(), new Date(), new Date(), new Date(), "Junit Testing");
+		assertTrue(controller.canAddReview(the_conference, "junitTest", "USERNAME"));
 	}
 
 	/**
@@ -456,7 +445,18 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetUserAssignedAsSubPC() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		@SuppressWarnings("deprecation")
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		try {
+			controller.getUserAssignedAsSubPC(testConference, 2);
+			assert true;
+		} catch (Exception e) {
+			assert false;
+
+		}
 	}
 
 	/**
@@ -480,7 +480,17 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetAvailableForSubPC() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		@SuppressWarnings("deprecation")
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		try {
+			controller.getAvailableForSubPC(testConference, 2, "d-man");
+			assert true;
+		} catch (Exception e) {
+			assert false;
+		}
 	}
 
 	/**
@@ -488,7 +498,17 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testAddSubPC() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		@SuppressWarnings("deprecation")
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		try {
+			controller.addSubPC(testConference, "PAPER", "d-man");
+			assert true;
+		} catch (Exception e) {
+			assert false;
+		}
 	}
 
 	/**
@@ -520,7 +540,17 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetMyPapers() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		@SuppressWarnings("deprecation")
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		try {
+			controller.getMyPapers(testConference, "d-man");
+			assert true;
+		} catch (Exception e) {
+			assert false;
+		}
 	}
 
 	/**
