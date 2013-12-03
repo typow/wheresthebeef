@@ -203,7 +203,7 @@ public class Controller extends Observable{
 			
 			PreparedStatement statement = connect.prepareStatement(
 					"INSERT INTO users VALUES ('" + the_username + "', '" + the_first_name + "', '" +
-					the_middle_name + "', '" + the_last_name + "', '" + the_specialty + "')");
+					the_middle_name + "', '" + the_last_name + "', '" + the_specialty + "', '" + the_password + "')");
 			statement.execute();
 			System.out.println(the_username + " Successfully added user");
 		} catch (SQLException e) {
@@ -525,7 +525,45 @@ public class Controller extends Observable{
 		System.out.println("Relation: " + relation);
 		return relation;
 	}
-	 	
+	 
+	public void setPaperRelation(final Conference the_conference, final String the_paper_title, 
+			final String the_username, final paperRelation the_relation){
+		//TODO: The GUI needs to be able to set a person's relation to a paper to be later queried.  (Jacob)
+		//kind of the same idea as getRelationToPaper()
+		//TODO: Kind of wondering what the point of this method is. If we know the conference and paper,
+		//doesn't that make this kind of pointless? Or maybe I don't get what this method is supposed to do.
+		//It seems like we would never need to set a user's relation in regards to a given paper when we know
+		//the conference. For example, if we know the conference we can find out who the pc is. Why would we
+		//need to set the pc in a conference that already has one? 
+		/*
+		if (the_relation == paperRelation.PC){ //This case also makes no sense.
+			try {
+				PreparedStatement statement = connect.prepareStatement("");
+				resultSet = statement.executeQuery();
+				
+			} catch (SQLException e) {
+				System.out.println("Error setting paper relation." + e.getMessage());
+			}
+		} else if (the_relation == paperRelation.SUBPC) { //Same with this one?
+			addSubPC(the_conference, the_paper_title, the_username);
+		} else if (the_relation == paperRelation.REVIEWER) { //This one could have a use...
+			String[] reviewer = new String[1];
+			reviewer[0] = the_username;
+			addReviewers(the_conference, the_paper_title, reviewer);
+		} else { //Isn't this a trivial case? When would we set an user as an author of paper?
+			try {
+				PreparedStatement statement = connect.prepareStatement("UPDATE papers SET author='" + the_username + "'");
+				statement.execute();								//TODO: fix this to where= otherwise sets entire table 
+				
+			} catch (SQLException e) {
+				System.out.println("Error setting paper relation." + e.getMessage());
+			}
+			
+		}*/
+		
+	}
+	
+	
 	/**
 	 * Sets the statuses of a paper.
 	 * 
@@ -703,7 +741,7 @@ public class Controller extends Observable{
 			final int[] the_answersRadioBtn, final String the_summary_comments){
 		//		add these elements to the database as one single review item
 		
-		int paperId = 0;
+		int paperId = -1;
 		try {
 			PreparedStatement statement = connect.prepareStatement("SELECT id FROM papers WHERE name='" +
 					the_paper + "' AND confname='" + the_conf.getConfTitle() + "'");
@@ -716,23 +754,42 @@ public class Controller extends Observable{
 			System.out.println(paperId);
 			
 		} catch (SQLException e) {
-			System.out.println("Error creating new review." + e.getMessage());
+			System.out.println("Error getting paperID in createNewReview." + e.getMessage());
 		}
 		
-		try {
-			PreparedStatement statement = connect.prepareStatement("INSERT INTO reviews VALUES (1, " + paperId + ", " +
-					"'" + the_reviewer_username + "', '" + the_conf.getConfTitle() + "', '" + the_paper + "', " +
-				    "'" + the_paper_author + "', " + the_answersRadioBtn[0] + ", " + the_answersRadioBtn[1] + ", " +
-				    the_answersRadioBtn[2] + ", " + the_answersRadioBtn[3] + ", " + the_answersRadioBtn[4] + ", " +
-				    the_answersRadioBtn[5] + ", " + the_answersRadioBtn[6] + ", " + the_answersRadioBtn[7] + ", " +
-				    the_answersRadioBtn[8] + ", " + the_answersRadioBtn[9] + ", '" + the_summary_comments + "', ' +" +
-				    the_comments_to_subpc + "')");
-			statement.execute();
+		try {			
+			PreparedStatement statement = connect.prepareStatement(
+					"SELECT * FROM reviews WHERE papername=" +"'" + the_paper +"' AND conference='" +
+					the_conf.getConfTitle() + "' AND reviewer='" + the_reviewer_username +"'");
+			resultSet = statement.executeQuery();
+			if(!resultSet.next()) {
+				statement = connect.prepareStatement("INSERT INTO reviews VALUES (" + paperId + ", " + paperId + ", " +
+						"'" + the_reviewer_username + "', '" + the_conf.getConfTitle() + "', '" + the_paper + "', " +
+						"'" + the_paper_author + "', " + the_answersRadioBtn[0] + ", " + the_answersRadioBtn[1] + ", " +
+						the_answersRadioBtn[2] + ", " + the_answersRadioBtn[3] + ", " + the_answersRadioBtn[4] + ", " +
+						the_answersRadioBtn[5] + ", " + the_answersRadioBtn[6] + ", " + the_answersRadioBtn[7] + ", " +
+						the_answersRadioBtn[8] + ", " + the_answersRadioBtn[9] + ", '" + the_summary_comments + "', '" +
+						the_comments_to_subpc + "')");
+				statement.execute();
+			} else {
+				statement = connect.prepareStatement("UPDATE reviews SET id=" + paperId + ", paperid=" + paperId +
+						", reviewer='" + the_reviewer_username + "', conference='" + the_conf.getConfTitle() + 
+						"', papername='" + the_paper + "', paperauthor='" + the_paper_author + "', q1=" +
+						the_answersRadioBtn[0] + ", q2=" + the_answersRadioBtn[1] + ", q3=" + the_answersRadioBtn[2] +
+						", q4=" + the_answersRadioBtn[3] + ", q5=" + the_answersRadioBtn[4] + ", q6=" +
+						the_answersRadioBtn[5] + ", q7=" + the_answersRadioBtn[6] + ", q8=" + the_answersRadioBtn[7] +
+						", q9=" + the_answersRadioBtn[8] + ", rating=" + the_answersRadioBtn[9] + ", comments='" +
+						the_summary_comments + "', subcomments='" + the_comments_to_subpc + "' WHERE papername=" 
+						+ "'" + the_paper + "' AND conference='" + the_conf.getConfTitle() + "' AND reviewer='" +
+						the_reviewer_username + "'");
+				statement.execute();
+			}
 		} catch (SQLException e) {
-			System.out.println("Error creating new review part 2." + e.getMessage());
+			System.out.println("Error creating new review part." + e.getMessage());
 		}
 		
 	}
+
 	/**
 	 * 
 	 * @author David
@@ -1199,7 +1256,7 @@ public class Controller extends Observable{
 			System.out.println("getAvailableReviewers failed!");
 		}
 					
-		return (String[]) result.toArray();
+		return result.toArray(new String[result.size()]);
 	}
 	
 	
@@ -1254,10 +1311,10 @@ public class Controller extends Observable{
 				//Adds the reviewer to the table by adding a "blank" review. 
 				statement = connect.prepareStatement("INSERT INTO reviews VALUES (" + id + "," + paperId + ",'" +
 			    the_reviewers[i] + "','" + the_conference.getConfTitle() + "','" + the_paper + "','" +
-			    paperAuthor + "',0,0,0,0,0,0,0,0,0,0,'No comments at this time.')");
+			    paperAuthor + "',0,0,0,0,0,0,0,0,0,0,'No comments at this time.','No comments at this time.')");
 				statement.execute();
 			} catch (SQLException e) {
-				System.out.println("Error adding reviewers. 2" + e.getMessage());
+				System.out.println("Error adding reviewers. 42" + e.getMessage());
 			}	
 		}
 		
@@ -1729,7 +1786,7 @@ public class Controller extends Observable{
 						resultSet2 = statement.executeQuery();
 						
 						if (resultSet2.next()) {
-							createPaperObjects(paperList, the_conf, the_username, resultSet);
+							createPaperObjects(paperList, the_conf, the_username, resultSet2);
 						}
 					}
 					
@@ -1746,7 +1803,7 @@ public class Controller extends Observable{
 						resultSet2 = statement.executeQuery();
 						
 						if (resultSet2.next()) {
-							createPaperObjects(paperList, the_conf, the_username, resultSet);
+							createPaperObjects(paperList, the_conf, the_username, resultSet2);
 						}
 					}
 					
