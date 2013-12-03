@@ -390,25 +390,25 @@ public class ManageDatabase{
 	 * @author Aaron
 	 */
 	private void resetUsers(){
-		clearUsers();  
+		clearUsers();
 		
 		try {
 			PreparedStatement statement = connect.prepareStatement(
-					"INSERT INTO users (USERNAME,  FIRSTNAME,  MI,  LASTNAME,  SPECIALITY) VALUES ('ajm1','Aaron','J','Merrill','Engineering Computer')," +
-					"('sethk2','Seth','D','Kramer','Engineering Chemical')," +
-					"('typow','Tyler','M','Powers','Engineering Bio')," +
-					"('warfeld','Warrick','M','Holfeld','Engineering Electronic')," +
-					"('d-man','David','P','Swanson','--Other--')," +
-					"('Halmus','Jacob','M','Hall','Engineering Computer')," +
-					"('idol','Ryan','P','Seacrest','--Other--')," +
-					"('thor','Chris','W','Hemsworth','Engineering Bio')," +
-					"('yellow','Spongebob','S','Squarepants','Engineering Bio')," +
-					"('solo','Harrison','D','Ford','Engineering Electronic')," +
-					"('da-man','Barack','H','Obama','--Other--')," +
-					"('bounty','Boba','G','Fett','Engineering Checmial')," +
-					"('enterprise','James','T','Kirk','Engineering Checmial')," +
-					"('noise','Bob','B','Costas','Engineering Bio')," +
-					"('ripped','Michael','G','Phelps','Engineering Electronic')");
+					"INSERT INTO users (USERNAME,  FIRSTNAME,  MI,  LASTNAME,  SPECIALITY, PASSWORD) VALUES ('ajm1','Aaron','J','Merrill','Engineering Computer', 'password')," +
+					"('sethk2','Seth','D','Kramer','Engineering Chemical', 'password')," +
+					"('typow','Tyler','M','Powers','Engineering Bio', 'password')," +
+					"('warfeld','Warrick','M','Holfeld','Engineering Electronic', 'password')," +
+					"('d-man','David','P','Swanson','--Other--', 'password')," +
+					"('Halmus','Jacob','M','Hall','Engineering Computer', 'password')," +
+					"('idol','Ryan','P','Seacrest','--Other--', 'password')," +
+					"('thor','Chris','W','Hemsworth','Engineering Bio', 'password')," +
+					"('yellow','Spongebob','S','Squarepants','Engineering Bio', 'password')," +
+					"('solo','Harrison','D','Ford','Engineering Electronic', 'password')," +
+					"('da-man','Barack','H','Obama','--Other--', 'password')," +
+					"('bounty','Boba','G','Fett','Engineering Checmial', 'password')," +
+					"('enterprise','James','T','Kirk','Engineering Checmial', 'password')," +
+					"('noise','Bob','B','Costas','Engineering Bio', 'password')," +
+					"('ripped','Michael','G','Phelps','Engineering Electronic', 'password')");
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println("Error resetting users. " + e.getMessage());
@@ -487,14 +487,13 @@ public class ManageDatabase{
 		ManageDatabase md = new ManageDatabase();
 		md.printDatabase();
 		
-		
-		md.resetUsers();		
-		md.resetConference();
-		md.resetPapers();
-		md.resetUsers();
-		md.resetReviews();
-		md.resetRecommendations();
-		md.printDatabase();
+//		md.resetUsers();		
+//		md.resetConference();
+//		md.resetPapers();
+//		md.resetUsers();
+//		md.resetReviews();
+//		md.resetRecommendations();
+//		md.printDatabase();
 		
 	}
 	
