@@ -385,7 +385,7 @@ public class Controller extends Observable{
 		//	  	add the user viewable status and the admin viewable status.  These are already set up in the GUIEnum class.
 		//		We need two because the user should only see a general indication of the progress and the admin needs to see
 		//		a detailed status update according to deadlines and where it's at in the whole review process. (Jacob)
-		if(i<=4) {
+		if(i<4) {
 			try {			
 				PreparedStatement statement = connect.prepareStatement(
 						"INSERT INTO papers (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME,  STATUS, ADMINSTAT)  VALUES " +
