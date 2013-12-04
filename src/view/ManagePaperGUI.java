@@ -23,6 +23,7 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -133,6 +134,16 @@ public class ManagePaperGUI extends JPanel{
 	 * The message the will pop up when the user floats above the button.
 	 */
 	private static final String SUBMIT_REVIEW_STRING = "Submit a new review (ALT+R)";
+	
+	/*
+	 * The text to display on the view paper button.
+	 */
+	private static final String VIEW_PAPER_TITLE_STRING = "View Paper";
+
+	/*
+	 * The message the will pop up when the user floats above the button.
+	 */
+	private static final String VIEW_PAPER_STRING = "View the submitted paper (ALT+V)";
 	
 	/*
 	 * The text to display on the make recommendation button.
@@ -255,6 +266,11 @@ public class ManagePaperGUI extends JPanel{
 	 * the Action associated with the accept/reject paper button
 	 */
 	private Action my_accept_reject_action;
+	
+	/*
+	 * the Action associated with the View Paper button
+	 */
+	private Action my_view_paper_action;
 	
 	/**
 	 * The constructor for the ManagePaperGUI.  Creates the JPanel that holds the
@@ -403,6 +419,12 @@ public class ManagePaperGUI extends JPanel{
 			btnAcceptReject.setBounds(20, 305, 176, 22);
 			mainPanel.add(btnAcceptReject);
 		}
+		
+		JButton btnViewPaper = new JButton(my_view_paper_action);
+		btnViewPaper.setText("View Paper");
+		btnViewPaper.setBounds(20, 469, 176, 22);
+		mainPanel.add(btnViewPaper);
+		
 		return mainPanel;
 	}
 	
@@ -867,5 +889,22 @@ public class ManagePaperGUI extends JPanel{
 		};
 		my_accept_reject_action.putValue(Action.SHORT_DESCRIPTION, ACCEPT_REJECT_STRING);
 		my_accept_reject_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
+		
+		/*
+		 * The action associated with clicking the View Paper button.
+		 */
+		my_view_paper_action = new AbstractAction(VIEW_PAPER_TITLE_STRING, null)
+		{
+			@Override
+			public void actionPerformed(ActionEvent the_event) {
+				System.out.println("The file path: " + controller.getPaperFilePath(current_conf, 
+						controller.getCurrentPaper()));
+				PaperFrame frame = new PaperFrame(controller.getPaperFilePath(current_conf, 
+						controller.getCurrentPaper()));
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			}
+		};
+		my_view_paper_action.putValue(Action.SHORT_DESCRIPTION, VIEW_PAPER_STRING);
+		my_view_paper_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_V);
 	}
 }

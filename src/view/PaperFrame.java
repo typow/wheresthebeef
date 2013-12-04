@@ -3,11 +3,9 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -91,7 +89,6 @@ public class PaperFrame extends JFrame{
 				the_text = the_text + String.valueOf(scanner.nextLine());
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(contentPane, "Error Reading File");
 		}
 		

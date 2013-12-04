@@ -17,10 +17,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -28,25 +26,23 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 
 import view.GUIEnum.StateOfGUI;
 import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
 import controller.Conference;
 import controller.Controller;
-import javax.swing.border.EtchedBorder;
 
 /**
 * The Submit Review Interface JPanel
@@ -119,16 +115,6 @@ public class SubmitReviewGUI extends JPanel {
 	private static final String SUBMIT_REVIEW_STRING = "Submit this review form (ALT+S)";
 	
 	/*
-	 * The text to display on the view paper button.
-	 */
-	private static final String VIEW_PAPER_TITLE_STRING = "View Paper";
-
-	/*
-	 * The message the will pop up when the user floats above the button.
-	 */
-	private static final String VIEW_PAPER_STRING = "View the submitted paper (ALT+V)";
-	
-	/*
 	 * the JPanel containing the entire SubmitPaperGUI
 	 */
 	private JPanel contentPane;
@@ -185,11 +171,6 @@ public class SubmitReviewGUI extends JPanel {
 	 * the Action associated with the Edit Submission button
 	 */
 	private Action my_submit_action;
-	
-	/*
-	 * the Action associated with the View Paper button
-	 */
-	private Action my_view_paper_action;
 	
 	/*
 	 * Button groups used to link buttons in groups of 5 relative
@@ -1081,11 +1062,6 @@ public class SubmitReviewGUI extends JPanel {
 		lblSubmitANew.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblSubmitANew.setBounds(20, 15, 791, 20);
 		panel_1.add(lblSubmitANew);
-		
-		JButton btnViewPaper = new JButton(my_view_paper_action);
-		btnViewPaper.setText("View Paper");
-		btnViewPaper.setBounds(20, 481, 150, 29);
-		panel_1.add(btnViewPaper);
 	}
 	
 	/**
@@ -1218,23 +1194,6 @@ public class SubmitReviewGUI extends JPanel {
 			public void actionPerformed(ActionEvent the_event) {
 				int[] answers = getRadioBtnAnswers();
 				try{
-					/*
-					 * TODO:
-word = word.replace("'","" );
-
-
- replaces ' with nothing
-
-
- so when you capture the input for anything do the string.replace(" ' ", "")
-
-
- string = string.replace()
-
-
-‎11‎:‎48‎ ‎AM and it will get rid of it
-
-					 */
 					controller.createNewReview(username, current_conf, controller.getCurrentPaper(), 
 							controller.getPaperAuthor(current_conf, controller.getCurrentPaper()),
 							fieldConfidentialComments.getText().replace("'", ""), answers, 
@@ -1249,24 +1208,6 @@ word = word.replace("'","" );
 		};
 		my_submit_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_REVIEW_STRING);
 		my_submit_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_S);
-		
-		/*
-		 * The action associated with clicking the View Paper button.
-		 */
-		my_view_paper_action = new AbstractAction(VIEW_PAPER_TITLE_STRING, null)
-		{
-			@Override
-			public void actionPerformed(ActionEvent the_event) {
-//				controller.getPaperFilePath(current_conf, controller.getCurrentPaper());
-				System.out.println("The file path: " + controller.getPaperFilePath(current_conf, 
-						controller.getCurrentPaper()));
-				PaperFrame frame = new PaperFrame(controller.getPaperFilePath(current_conf, 
-						controller.getCurrentPaper()));
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			}
-		};
-		my_view_paper_action.putValue(Action.SHORT_DESCRIPTION, VIEW_PAPER_STRING);
-		my_view_paper_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_V);
 	}
 }
 
