@@ -875,9 +875,9 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				PaperFrame frame = new PaperFrame(controller.getPaperFilePath(current_conf, 
+				PaperFrame local_frame = new PaperFrame(controller.getPaperFilePath(current_conf, 
 						controller.getCurrentPaper()));
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				local_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			}
 		};
 		my_view_paper_action.putValue(Action.SHORT_DESCRIPTION, VIEW_PAPER_STRING);

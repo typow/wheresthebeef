@@ -51,7 +51,6 @@ public class PaperFrame extends JFrame{
 	public PaperFrame(final String the_file_path){
         //Create and set up the window.
         JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
         JLabel emptyLabel = new JLabel("");
         emptyLabel.setPreferredSize(new Dimension(175, 100));
