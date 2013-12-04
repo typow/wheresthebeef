@@ -429,13 +429,24 @@ public class ManagePaperGUI extends JPanel{
 
 		//if the user is the Author or a Reviewer, they shouldn't see the recommendation made by the SubPC
 		//else, the SubPC and the PC both should be able to view it.
+		Boolean is_recommendation_complete = false;
 		if ((current_paper_relation == paperRelation.PC)||(current_paper_relation == paperRelation.SUBPC)){
-			RecommendPanel recommendationPanel = new RecommendPanel(controller.getPaperRecommendationSubPCName(current_conf, current_paper), 
-					current_conf.getConfTitle(), current_paper, controller.getPaperAuthor(current_conf, current_paper), 
-					controller.getPaperRecommendationNumericalValuefinal(current_conf, current_paper),
-					controller.getPaperRecommendationRationale(current_conf, current_paper));
-			JPanel tabRecommendation = (JPanel) recommendationPanel.getGUI();
-			tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
+			if (controller.getPaperRecommendationNumericalValuefinal(current_conf, current_paper) != 0){
+				is_recommendation_complete = true;
+				System.out.println("there's a recommendation submitted!");
+				RecommendPanel recommendationPanel = new RecommendPanel(controller.getPaperRecommendationSubPCName(current_conf, current_paper), 
+						current_conf.getConfTitle(), current_paper, controller.getPaperAuthor(current_conf, current_paper), 
+						controller.getPaperRecommendationNumericalValuefinal(current_conf, current_paper),
+						controller.getPaperRecommendationRationale(current_conf, current_paper));
+				JPanel tabRecommendation = (JPanel) recommendationPanel.getGUI();
+				tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
+			}
+//			RecommendPanel recommendationPanel = new RecommendPanel(controller.getPaperRecommendationSubPCName(current_conf, current_paper), 
+//					current_conf.getConfTitle(), current_paper, controller.getPaperAuthor(current_conf, current_paper), 
+//					controller.getPaperRecommendationNumericalValuefinal(current_conf, current_paper),
+//					controller.getPaperRecommendationRationale(current_conf, current_paper));
+//			JPanel tabRecommendation = (JPanel) recommendationPanel.getGUI();
+//			tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
 		}
 		int paperId = controller.getPaperID(current_paper);
 		System.out.println("paper admin status" + controller.getAdminPaperStatus(current_conf, current_paper));
@@ -445,7 +456,7 @@ public class ManagePaperGUI extends JPanel{
 					controller.getUserAssignedAsPC(current_conf),
 					controller.getUserAssignedAsSubPC(current_conf, paperId),
 					controller.getUsersAssignedAsReviewers(current_conf, current_paper),
-					reviews_complete_map);
+					reviews_complete_map, is_recommendation_complete);
 			JPanel tabManagement = (JPanel) managePanel.getGUI();
 			tabbedPane.addTab("Management", null, tabManagement, null);
 		}
@@ -594,9 +605,30 @@ public class ManagePaperGUI extends JPanel{
 		reviewPanel.setBounds(10, 11, 556, 374);
 		tabReviews.add(reviewPanel);
 		
-		Review[] the_reviews = controller.getReviews(current_conf, current_paper);
+		//following section ensures that only completed reviews are populated in the GUI
+		Review[] initial_review_array = controller.getReviews(current_conf, current_paper);
+		Review[] temp_review_array = new Review[4];
+		int initial_num_reviews = initial_review_array.length;
+		int temp_num_reviews = 0;
+		int j = 0;
+		for (int i = 0; i < initial_num_reviews; i++){
+			if (initial_review_array[i].getAnswersToRadioBtns()[0] == 0){
+				System.out.println("empty review at index: " + i);
+			} else {
+				temp_review_array[j] = initial_review_array[i];
+				System.out.println("adding temporary review at index: " + j);
+				j++;
+				temp_num_reviews++;
+			}
+		}
+		System.out.println("number of actually completed reviews: " + temp_num_reviews);
+		Review[] the_reviews = new Review[temp_num_reviews];
 		int num_reviews = the_reviews.length;
-		
+		for (int i = 0; i < num_reviews; i++){
+			the_reviews[i] = temp_review_array[i];
+			System.out.println("adding final review at index: " + i);
+		}
+		//end of check for empty reviews.
 		
 		//if the user logged in, the only review they should be able to see is their own.
 		if (current_paper_relation == paperRelation.REVIEWER){

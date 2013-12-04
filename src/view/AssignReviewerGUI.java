@@ -402,7 +402,8 @@ public class AssignReviewerGUI extends JPanel {
 		
 		int temp_num_reviewers = num_of_reviewers;
 		if (temp_num_reviewers > 0){
-			JLabel user_already_assigned_1 = new JLabel(controller.getFullName(users_already_assigned[0]));
+			JLabel user_already_assigned_1 = new JLabel(users_already_assigned[0]);
+//			JLabel user_already_assigned_1 = new JLabel(controller.getFullName(users_already_assigned[0]));
 			user_already_assigned_1.setHorizontalAlignment(SwingConstants.LEFT);
 			user_already_assigned_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			user_already_assigned_1.setBounds(290, 1, 367, 20);
@@ -418,7 +419,8 @@ public class AssignReviewerGUI extends JPanel {
 		}
 		
 		if (temp_num_reviewers > 0){
-			JLabel user_already_assigned_2 = new JLabel(controller.getFullName(users_already_assigned[1]));
+			JLabel user_already_assigned_2 = new JLabel(users_already_assigned[1]);
+//			JLabel user_already_assigned_2 = new JLabel(controller.getFullName(users_already_assigned[1]));
 			user_already_assigned_2.setHorizontalAlignment(SwingConstants.LEFT);
 			user_already_assigned_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			user_already_assigned_2.setBounds(290, 32, 367, 20);
@@ -434,7 +436,8 @@ public class AssignReviewerGUI extends JPanel {
 		}
 		
 		if (temp_num_reviewers > 0){
-			JLabel user_already_assigned_3 = new JLabel(controller.getFullName(users_already_assigned[2]));
+			JLabel user_already_assigned_3 = new JLabel(users_already_assigned[2]);
+//			JLabel user_already_assigned_3 = new JLabel(controller.getFullName(users_already_assigned[2]));
 			user_already_assigned_3.setHorizontalAlignment(SwingConstants.LEFT);
 			user_already_assigned_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			user_already_assigned_3.setBounds(290, 63, 367, 20);
@@ -450,7 +453,8 @@ public class AssignReviewerGUI extends JPanel {
 		}
 		
 		if (temp_num_reviewers > 0){
-			JLabel user_already_assigned_4 = new JLabel(controller.getFullName(users_already_assigned[3]));
+			JLabel user_already_assigned_4 = new JLabel(users_already_assigned[3]);
+//			JLabel user_already_assigned_4 = new JLabel(controller.getFullName(users_already_assigned[3]));
 			user_already_assigned_4.setHorizontalAlignment(SwingConstants.LEFT);
 			user_already_assigned_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			user_already_assigned_4.setBounds(290, 94, 367, 20);

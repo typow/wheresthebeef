@@ -58,9 +58,11 @@ public class ManagementPanel extends JPanel{
 	public ManagementPanel(final String the_current_paper, final String the_paper_author, 
 			final paperStatusAdminViewable the_admin_status, final String the_pc_username,
 			final String the_sub_pc_username, final String[] the_reviewer_usernames,
-			final HashMap<String, Boolean> the_reviews_complete_map){
+			final HashMap<String, Boolean> the_reviews_complete_map, 
+			final Boolean is_recommendation_complete){
 		tabManagement = setupManagementPanel(the_current_paper, the_paper_author, the_admin_status, 
-				the_pc_username, the_sub_pc_username, the_reviewer_usernames, the_reviews_complete_map);
+				the_pc_username, the_sub_pc_username, the_reviewer_usernames, the_reviews_complete_map,
+				is_recommendation_complete);
 	}	 
 	
 	/**
@@ -77,7 +79,8 @@ public class ManagementPanel extends JPanel{
 	private JPanel setupManagementPanel(final String the_current_paper, final String the_paper_author, 
 			paperStatusAdminViewable the_admin_status, final String the_pc_username,
 			final String the_sub_pc_username, final String[] the_reviewer_usernames,
-			final HashMap<String, Boolean> the_reviews_complete_map){
+			final HashMap<String, Boolean> the_reviews_complete_map,
+			final Boolean is_recommendation_complete){
 		
 		tabManagement = new JPanel();
 		tabManagement.setBackground(Color.WHITE);
@@ -246,9 +249,19 @@ public class ManagementPanel extends JPanel{
 		lblFinalNoticeSubmitted.setBounds(155, -1, 209, 20);
 		panel_6.add(lblFinalNoticeSubmitted);
 		
-		JLabel fieldFinalNoticeSubmittedStatus = new JLabel("<dynamic>");
+		JLabel fieldFinalNoticeSubmittedStatus;
+		if (the_admin_status.toString().equals("ACCEPTED")){
+			fieldFinalNoticeSubmittedStatus = new JLabel("Yes");
+			fieldFinalNoticeSubmittedStatus.setForeground(Color.GREEN);
+		} else if (the_admin_status.toString().equals("REJECTED")){
+			fieldFinalNoticeSubmittedStatus = new JLabel("Yes");
+			fieldFinalNoticeSubmittedStatus.setForeground(Color.GREEN);
+		} else {
+			fieldFinalNoticeSubmittedStatus = new JLabel("No");
+			fieldFinalNoticeSubmittedStatus.setForeground(Color.RED);
+		}
 		fieldFinalNoticeSubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
-		fieldFinalNoticeSubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fieldFinalNoticeSubmittedStatus.setFont(new Font("Tahoma", Font.BOLD, 13));
 		fieldFinalNoticeSubmittedStatus.setBounds(389, 0, 181, 20);
 		panel_6.add(fieldFinalNoticeSubmittedStatus);
 		
@@ -290,9 +303,10 @@ public class ManagementPanel extends JPanel{
 		lblRecommendationSubmitted.setBounds(156, -1, 209, 20);
 		panel_8.add(lblRecommendationSubmitted);
 		
-		JLabel fieldRecommendationSubmittedStatus = new JLabel("<dynamic>");
+		JLabel fieldRecommendationSubmittedStatus = new JLabel(is_recommendation_complete.toString());
+		fieldRecommendationSubmittedStatus = setTextFont(fieldRecommendationSubmittedStatus);
 		fieldRecommendationSubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
-		fieldRecommendationSubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		fieldRecommendationSubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldRecommendationSubmittedStatus.setBounds(389, 0, 180, 20);
 		panel_8.add(fieldRecommendationSubmittedStatus);
 		
@@ -345,8 +359,9 @@ public class ManagementPanel extends JPanel{
 			is_review_complete = the_reviews_complete_map.get(reviewer_1_username);
 		}
 		JLabel fieldReview1SubmittedStatus = new JLabel(is_review_complete.toString());
+		fieldReview1SubmittedStatus = setTextFont(fieldReview1SubmittedStatus);
 		fieldReview1SubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
-		fieldReview1SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		fieldReview1SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReview1SubmittedStatus.setBounds(389, 0, 180, 20);
 		panel_10.add(fieldReview1SubmittedStatus);
 		
@@ -392,8 +407,9 @@ public class ManagementPanel extends JPanel{
 			is_review_complete = the_reviews_complete_map.get(reviewer_2_username);
 		}
 		JLabel fieldReview2SubmittedStatus = new JLabel(is_review_complete.toString());
+		fieldReview2SubmittedStatus = setTextFont(fieldReview2SubmittedStatus);
 		fieldReview2SubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
-		fieldReview2SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		fieldReview2SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReview2SubmittedStatus.setBounds(389, 0, 180, 20);
 		panel_12.add(fieldReview2SubmittedStatus);
 		
@@ -439,8 +455,9 @@ public class ManagementPanel extends JPanel{
 			is_review_complete = the_reviews_complete_map.get(reviewer_3_username);
 		}
 		JLabel fieldReview3SubmittedStatus = new JLabel(is_review_complete.toString());
+		fieldReview3SubmittedStatus = setTextFont(fieldReview3SubmittedStatus);
 		fieldReview3SubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
-		fieldReview3SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		fieldReview3SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReview3SubmittedStatus.setBounds(389, 0, 180, 20);
 		panel_14.add(fieldReview3SubmittedStatus);
 		
@@ -486,8 +503,9 @@ public class ManagementPanel extends JPanel{
 			is_review_complete = the_reviews_complete_map.get(reviewer_4_username);
 		}
 		JLabel fieldReview4SubmittedStatus = new JLabel(is_review_complete.toString());
+		fieldReview4SubmittedStatus = setTextFont(fieldReview4SubmittedStatus);
 		fieldReview4SubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
-		fieldReview4SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
+//		fieldReview4SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReview4SubmittedStatus.setBounds(389, 0, 180, 20);
 		panel_16.add(fieldReview4SubmittedStatus);
 
@@ -503,6 +521,19 @@ public class ManagementPanel extends JPanel{
 	 */
 	public JComponent getGUI() {
 		return tabManagement;
+	}
+	
+	private JLabel setTextFont(final JLabel the_label){
+		JLabel local_temp_label = new JLabel();
+		local_temp_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		if (the_label.getText().equals("true")){
+			local_temp_label.setText("Yes");
+			local_temp_label.setForeground(Color.GREEN);
+		} else {
+			local_temp_label.setText("No");
+			local_temp_label.setForeground(Color.RED);
+		}
+		return local_temp_label;
 	}
 }
 

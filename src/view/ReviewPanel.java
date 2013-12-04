@@ -121,7 +121,7 @@ public class ReviewPanel extends JPanel{
 		
 		JLabel fieldReviewerName;
 		if (reviewer_name_viewable){
-			fieldReviewerName = new JLabel(review.getReviewerName());
+			fieldReviewerName = new JLabel(review.getUsername());
 		} else {
 			fieldReviewerName = new JLabel("*********");
 		}
