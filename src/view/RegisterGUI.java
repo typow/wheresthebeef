@@ -291,12 +291,12 @@ public class RegisterGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				String username = username_field.getText();
-				String password_1 = password_field.getText();
-				String password_2 = confirm_password_field.getText();
-				String first = f_name_field.getText();
-				String middle = mi_name_field.getText();
-				String last = l_name_field.getText();
+				String username = username_field.getText().replace("'", "");
+				String password_1 = password_field.getText().replace("'", "");
+				String password_2 = confirm_password_field.getText().replace("'", "");
+				String first = f_name_field.getText().replace("'", "");
+				String middle = mi_name_field.getText().replace("'", "");
+				String last = l_name_field.getText().replace("'", "");
 				String specialty;
 				if (username.equals("")){
 					JOptionPane.showMessageDialog(contentPane, "Please enter a username.");

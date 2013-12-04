@@ -235,8 +235,8 @@ public class LoginGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				String username = username_field.getText();
-				String password = password_field.getText();
+				String username = username_field.getText().replace("'", "");
+				String password = password_field.getText().replace("'", "");
 				if (username.equals("")){
 					JOptionPane.showMessageDialog(contentPane, "Please enter a username.");
 				}

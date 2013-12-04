@@ -493,17 +493,17 @@ public class NewConferenceGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				String conf_title = conf_title_field.getText();
+				String conf_title = conf_title_field.getText().replace("'", "");
 				Date conf_date = (Date)date_conf_field.getValue();
-				String conf_address = conf_address_field.getText();
-				String conf_city = conf_city_field.getText();
-				String conf_state = conf_state_field.getText();
-				String con_zip = con_zip_field.getText();
+				String conf_address = conf_address_field.getText().replace("'", "");
+				String conf_city = conf_city_field.getText().replace("'", "");
+				String conf_state = conf_state_field.getText().replace("'", "");
+				String con_zip = con_zip_field.getText().replace("'", "");
 				Date submission_deadline = (Date)submission_deadline_field.getValue();
 				Date review_deadline = (Date)review_deadline_field.getValue();
 				Date sub_pc_recommend_deadline = (Date)sub_pc_recommend_deadline_field.getValue();
 				Date author_notification_deadline = (Date)author_notification_deadline_field.getValue();
-				String conference_summary = conference_summary_field.getText();
+				String conference_summary = conference_summary_field.getText().replace("'", "");
 				if (conf_title.equals("")){
 					JOptionPane.showMessageDialog(contentPane, "Please enter a conference title.");
 				}

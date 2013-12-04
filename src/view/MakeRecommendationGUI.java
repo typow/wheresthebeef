@@ -589,7 +589,7 @@ public class MakeRecommendationGUI extends JPanel {
 				System.out.println("username in make recommendation: " + username);
 				System.out.println("paper_author in make recommendation: " + paper_author);
 				controller.addPaperRecommendation(username, current_conf, current_paper, 
-							paper_author, answer, textRationale.getText());
+							paper_author, answer, textRationale.getText().replace("'", ""));
 				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 			}
 		};

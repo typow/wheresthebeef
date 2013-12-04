@@ -526,6 +526,13 @@ public class Controller extends Observable{
 		return relation;
 	}
 	 
+	/**
+	 * 
+	 * @param the_conference
+	 * @param the_paper_title
+	 * @param the_username
+	 * @param the_relation
+	 */
 	public void setPaperRelation(final Conference the_conference, final String the_paper_title, 
 			final String the_username, final paperRelation the_relation){
 		//TODO: The GUI needs to be able to set a person's relation to a paper to be later queried.  (Jacob)
@@ -699,6 +706,7 @@ public class Controller extends Observable{
 			}
 						
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("fail to get paper text");
 		}
 		return text;
@@ -1129,12 +1137,6 @@ public class Controller extends Observable{
 		return subPCName;
 	}
 	
-	/*
-	 * This method returns all of the userNames of the reviewers that are assigned to a particular
-	 * paper. The length of the array indicates how many are assigned (i.e. 0 = no reviewers). This
-	 * method also prints to the console if the paper passed in has no association to the conference
-	 * passed in.
-	 */
 	/**
 	 * This method returns all of the userNames of the reviewers that are assigned to a particular
 	 * paper. The length of the array indicates how many are assigned (i.e. 0 = no reviewers). This
@@ -1313,7 +1315,7 @@ public class Controller extends Observable{
 				if (!(author.equals(user))) {				
 					
 					// The reviewer can't be the person assigning unless they're the PC
-					if (user.equals(PC) || (!(user.equals(the_person_assigning)))) {
+					if (!user.equals(PC) || (!(user.equals(the_person_assigning)))) {
 						ruleViolated = false;
 						
 						// The reviewer can't have already been assigned to this paper
@@ -1967,7 +1969,7 @@ public class Controller extends Observable{
 
 	
 public static void main(String args[]) throws ParseException, SQLException {
-		
+		/*
 		Controller controller = new Controller();
 		ManageDatabase md = new ManageDatabase();
 		
@@ -1994,17 +1996,22 @@ public static void main(String args[]) throws ParseException, SQLException {
 		System.out.println(relation);*/
 		
 		try {
+			/*
 			controller.deletePaper(testConference, "typow", "Baking Pi");
 			controller.createNewPaper(testConference, "Ranger", "fun times", "", 
 					paperStatusAuthorViewable.SUBMITTED, paperStatusAdminViewable.ACCEPTED);
 			controller.createNewPaper(testConference, "Fungus", "sad times", "", 
 					paperStatusAuthorViewable.SUBMITTED, paperStatusAdminViewable.ACCEPTED);
+					*/
+			//controller.addNewUser(, the_password, the_first_name, the_middle_name, the_last_name, the_specialty)
 		} catch (Exception e) {
 			 //Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		md.printDatabase();
+		String word = "'the' test";
+		word = word.replace("'","" );
+		System.out.println(word);
+		//md.printDatabase();
 		
 		/*
 		Controller controller = new Controller();

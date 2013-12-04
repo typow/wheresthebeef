@@ -1205,8 +1205,8 @@ public class SubmitReviewGUI extends JPanel {
 				int[] answers = getRadioBtnAnswers();
 				controller.createNewReview(username, current_conf, controller.getCurrentPaper(), 
 							controller.getPaperAuthor(current_conf, controller.getCurrentPaper()),
-							fieldConfidentialComments.getText(), answers, 
-							fieldSummaryComments.getText());
+							fieldConfidentialComments.getText().replace("'", ""), answers, 
+							fieldSummaryComments.getText().replace("'", ""));
 				controller.setPaperStatus(current_conf, controller.getCurrentPaper(), paperStatusAuthorViewable.UNDER_REVIEW, 
 							paperStatusAdminViewable.REVIEWED);
 				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);

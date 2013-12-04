@@ -557,7 +557,7 @@ public class AcceptRejectGUI extends JPanel {
 							paperStatusAdminViewable.REJECTED);
 				}
 				controller.addPaperRecommendation(username, current_conf, current_paper, 
-							paper_author, answer, textRationale.getText());
+							paper_author, answer, textRationale.getText().replace("'", ""));
 				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 			}
 		};
