@@ -313,29 +313,6 @@ public class ConferenceGUI extends JPanel {
 			number_of_papers = my_paper_array.length;
 		}	
 	
-		System.out.println("number of papers in array = " + number_of_papers);
-
-//		for (int i = 0; i < number_of_papers; i++) {
-//			System.out.println("paper object title = "
-//					+ my_paper_array[i].getPaperTitle());
-//			System.out.println("paper object author = "
-//					+ my_paper_array[i].getAuthor());
-//			System.out.println("paper object author status viewable = "
-//					+ my_paper_array[i].getStatusAuthorViewable());
-//			System.out.println("Conference object Program Chair = "
-//					+ controller.getCurrentConference().getProgramChair());
-//			System.out.println("Paper object SubPC = "
-//					+ my_paper_array[i].getSubPC());
-//			String[] reviewer_array = my_paper_array[i].getReviewers();
-//			if (reviewer_array != null) {
-//				System.out.println("Reviewer array lenthth = "
-//						+ reviewer_array.length);
-//				for (int j = 0; j < reviewer_array.length; j++) {
-//					System.out.println("reviewer[" + j + "] is "
-//							+ reviewer_array[j]);
-//				}
-//			}
-//		}
 
 		JPanel panel_for_scrollpane = new JPanel(new GridLayout(
 				(number_of_papers + 1), COLUMN_NAMES.length));

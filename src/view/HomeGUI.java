@@ -223,10 +223,6 @@ public class HomeGUI extends JPanel {
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(20, 52, 712, 20);
 		inner_panel.add(separator_2);
-
-		JButton btnNewButton = new JButton(my_temp_paper_selected_action);
-		btnNewButton.setBounds(38, 358, 89, 23);
-		inner_panel.add(btnNewButton);
 	}
 
 	/**
