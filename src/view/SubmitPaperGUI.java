@@ -33,6 +33,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import view.GUIEnum.StateOfGUI;
 import view.GUIEnum.paperStatusAdminViewable;
@@ -329,8 +330,7 @@ public class SubmitPaperGUI extends JPanel {
 		separator_2.setBounds(20, 46, 799, 20);
 		panel_1.add(separator_2);
 
-		JLabel lblSubmitANew = new JLabel(
-				"Submit a New Paper to the Conference");
+		JLabel lblSubmitANew = new JLabel("Submit a New Paper to the Conference");
 		lblSubmitANew.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSubmitANew.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblSubmitANew.setBounds(20, 15, 791, 20);
@@ -419,6 +419,8 @@ public class SubmitPaperGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event){
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+				my_chooser.setFileFilter(filter);
 				final int result = my_chooser.showOpenDialog(null);
 				String my_image = "";
 				if (result == JFileChooser.APPROVE_OPTION){

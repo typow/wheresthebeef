@@ -3,11 +3,20 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -37,9 +46,11 @@ public class PaperFrame extends JFrame{
 	 * The size of the JPanel.
 	 */
 	private static final Dimension WIN_DIMENSION = new Dimension(1280, 720);
+	
+	private final static Charset ENCODING = StandardCharsets.UTF_8;
 
 	
-	public PaperFrame(){
+	public PaperFrame(final String the_file_path){
         //Create and set up the window.
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,15 +58,13 @@ public class PaperFrame extends JFrame{
         JLabel emptyLabel = new JLabel("");
         emptyLabel.setPreferredSize(new Dimension(175, 100));
         frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
-        frame.getContentPane().add(setUpPanel());
+        frame.getContentPane().add(setUpPanel(the_file_path));
         //Display the window.
         frame.pack();
-        frame.setVisible(true);
-        
-        
+        frame.setVisible(true);     
 	}
 	
-	private JPanel setUpPanel(){
+	private JPanel setUpPanel(final String the_file_path){
 		JPanel contentPane = new JPanel();
 		contentPane.setBackground(BACKGROUND_COLOR);
 		contentPane.setPreferredSize(WIN_DIMENSION);
@@ -72,12 +81,25 @@ public class PaperFrame extends JFrame{
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(5, 5, 777, 512);
 		panel.add(scrollPane);
+
+		System.out.println("The file path in paperframe: " + the_file_path);
+		String the_text = "";	 
+		Path path = Paths.get(the_file_path);
+		try (Scanner scanner = new Scanner(path, ENCODING.name())) {
+			while (scanner.hasNextLine()) {
+				// process each line in some way
+				the_text = the_text + String.valueOf(scanner.nextLine());
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(contentPane, "Error Reading File");
+		}
 		
-		String file_path = "C:\\Users\\Halmus\\Desktop\\455\\Lab 4\\depth_measure.txt";
-		JTextArea textArea = new JTextArea(file_path);
+		JTextArea textArea = new JTextArea(the_text);
 		scrollPane.setViewportView(textArea);
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
+		textArea.setEditable(false);
 		
 		JButton btnIcon = new JButton("");
 		btnIcon.setForeground(BACKGROUND_COLOR);

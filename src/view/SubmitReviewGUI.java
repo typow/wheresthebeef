@@ -17,8 +17,10 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -26,9 +28,12 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
@@ -263,9 +268,13 @@ public class SubmitReviewGUI extends JPanel {
 		panel.setBackground(Color.WHITE);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[] {550};
-		gbl_panel.rowHeights = new int[] {30, 180, 0, 30, 30, 30, 30, 0, 30, 200, 0, 30, 30, 150, 50, 150, 30, 150, 30, 150, 50, 150, 50, 150, 30, 150, 30, 150, 30, 150, 30, 150, 30, 200};
+		gbl_panel.rowHeights = new int[] {30, 180, 0, 30, 30, 30, 30, 0, 30, 200, 0, 30, 30, 
+				150, 50, 150, 30, 150, 30, 150, 50, 150, 50, 150, 30, 150, 30, 150, 30, 150, 
+				30, 150, 30, 200};
 		gbl_panel.columnWeights = new double[]{1.0};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 
+				0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+				1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
 		panel.setLayout(gbl_panel);
 		
 		JLabel lblInstructionsToReviewers = new JLabel("Instructions to Reviewers:");
@@ -280,7 +289,17 @@ public class SubmitReviewGUI extends JPanel {
 		
 		JTextArea txtrPleaseProvideA = new JTextArea();
 		txtrPleaseProvideA.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtrPleaseProvideA.setText("Please provide a numeric rating on a 5-point scale for each question, along with a brief        rationale for each numeric rating.  In doing so, please discuss both the strengths and the   weaknesses of each paper so that the editors and authors can understand your reasoning.                                                                                                                                            Please phrase your reviews politely; even 'bad' papers represent a lot of work on the part of the authors. The review may be the basis for further revisions of the paper or the work      that the paper reports. We all know how hurtful a needlessly negative review can be, and   how helpful a positive one can be; please try to bear that in mind when you are writing       yours.");
+		txtrPleaseProvideA.setText("Please provide a numeric rating on a 5-point scale for " +
+				"each question, along with a brief        rationale for each numeric rating.  " +
+				"In doing so, please discuss both the strengths and the   weaknesses of each " +
+				"paper so that the editors and authors can understand your reasoning.       " +
+				"                                                                           " +
+				"                                                          Please phrase " +
+				"your reviews politely; even 'bad' papers represent a lot of work on the part" +
+				" of the authors. The review may be the basis for further revisions of the " +
+				"paper or the work      that the paper reports. We all know how hurtful a " +
+				"needlessly negative review can be, and   how helpful a positive one can be;" +
+				" please try to bear that in mind when you are writing       yours.");
 		txtrPleaseProvideA.setEditable(false);
 		txtrPleaseProvideA.setLineWrap(true);
 		GridBagConstraints gbc_txtrPleaseProvideA = new GridBagConstraints();
@@ -1021,8 +1040,6 @@ public class SubmitReviewGUI extends JPanel {
 		fieldSummaryComments.setWrapStyleWord(true);
 		fieldSummaryComments.setLineWrap(true);
 		fieldSummaryComments.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		mainScrollPane.getVerticalScrollBar().setValue(0);
 
 		JLabel fieldUsername = new JLabel(username);
 		fieldUsername.setBounds(10, 70, 157, 20);
@@ -1079,6 +1096,7 @@ public class SubmitReviewGUI extends JPanel {
 	 * @return contentPane JPanel containing the SubmitReviewGUI.
 	 */
 	public JComponent getGUI() {
+		this.mainScrollPane.getVerticalScrollBar().setValue(0);
 		return contentPane;
 	}
 	
@@ -1137,10 +1155,6 @@ public class SubmitReviewGUI extends JPanel {
 			index_of_selected = 1;
 		}
 		return index_of_selected;
-	}
-	
-	public void setScrollPaneToTop(){
-		mainScrollPane.getVerticalScrollBar().setValue(0);
 	}
 	
 	/**
@@ -1203,13 +1217,34 @@ public class SubmitReviewGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 				int[] answers = getRadioBtnAnswers();
-				controller.createNewReview(username, current_conf, controller.getCurrentPaper(), 
+				try{
+					/*
+					 * TODO:
+word = word.replace("'","" );
+
+
+ replaces ' with nothing
+
+
+ so when you capture the input for anything do the string.replace(" ' ", "")
+
+
+ string = string.replace()
+
+
+‎11‎:‎48‎ ‎AM and it will get rid of it
+
+					 */
+					controller.createNewReview(username, current_conf, controller.getCurrentPaper(), 
 							controller.getPaperAuthor(current_conf, controller.getCurrentPaper()),
 							fieldConfidentialComments.getText().replace("'", ""), answers, 
 							fieldSummaryComments.getText().replace("'", ""));
-				controller.setPaperStatus(current_conf, controller.getCurrentPaper(), paperStatusAuthorViewable.UNDER_REVIEW, 
+					controller.setPaperStatus(current_conf, controller.getCurrentPaper(), paperStatusAuthorViewable.UNDER_REVIEW, 
 							paperStatusAdminViewable.REVIEWED);
-				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+					controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
+				} catch (Exception e){
+					JOptionPane.showMessageDialog(contentPane, "Fields cannot include appostrophies (') ");
+				}
 			}
 		};
 		my_submit_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_REVIEW_STRING);
@@ -1223,12 +1258,15 @@ public class SubmitReviewGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
 //				controller.getPaperFilePath(current_conf, controller.getCurrentPaper());
-				PaperFrame frame = new PaperFrame();
+				System.out.println("The file path: " + controller.getPaperFilePath(current_conf, 
+						controller.getCurrentPaper()));
+				PaperFrame frame = new PaperFrame(controller.getPaperFilePath(current_conf, 
+						controller.getCurrentPaper()));
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			}
 		};
 		my_view_paper_action.putValue(Action.SHORT_DESCRIPTION, VIEW_PAPER_STRING);
 		my_view_paper_action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_V);
-		
 	}
 }
 

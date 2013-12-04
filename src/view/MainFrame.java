@@ -152,7 +152,6 @@ public class MainFrame extends JFrame implements Observer {
 			add(currentPanel);
 			pack();
 			setVisible(true);
-//			submitReviewWindow.setScrollPaneToTop();
 			break;
 		case SUBMIT_RECOMMENDATION:
 			MakeRecommendationGUI submitRecommendationWindow = new MakeRecommendationGUI(

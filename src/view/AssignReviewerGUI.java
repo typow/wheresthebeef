@@ -609,7 +609,6 @@ public class AssignReviewerGUI extends JPanel {
 							paperStatusAdminViewable.UNDER_REVIEW);
 					the_reviewers = results.toArray(new String[results.size()]);
 					controller.addReviewers(current_conf, current_paper, the_reviewers);
-					System.out.println(the_reviewers[0].toString() + the_reviewers[1].toString());
 					controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 				}
 			}
