@@ -16,6 +16,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -439,7 +441,15 @@ public class SubmitPaperGUI extends JPanel {
 			public void actionPerformed(ActionEvent the_event) {
 				String paper_title = fieldPaperTitle.getText();
 				String fileSubmited = fieldFileToSubmit.getText();
-				if (paper_title.equals("")){
+				
+			    Calendar c = Calendar.getInstance();
+			    Date todays_date = new Date();
+			    todays_date.setTime( c.getTime().getTime() );
+		
+				if(current_conf.getSubmissionDead().before(todays_date)){
+					JOptionPane.showMessageDialog(contentPane, "The date for paper submission has passed.");
+				}
+				else if (paper_title.equals("")){
 					JOptionPane.showMessageDialog(contentPane, "Please enter a paper title.");
 				}
 				else if (fileSubmited.equals("")){
