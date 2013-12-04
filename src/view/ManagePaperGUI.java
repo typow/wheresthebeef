@@ -35,7 +35,6 @@ import javax.swing.border.EmptyBorder;
 
 import view.GUIEnum.StateOfGUI;
 import view.GUIEnum.paperRelation;
-import view.GUIEnum.paperStatusAdminViewable;
 import controller.Conference;
 import controller.Controller;
 import controller.Review;
@@ -49,7 +48,7 @@ import controller.Review;
 * the relevant conference data will be populated.
 * 
 * @author Jacob Hall
-* @version 98 Date: 11/27/13
+* @version 207 Date: 12/4/13
 */
 
 @SuppressWarnings("serial")
@@ -455,7 +454,6 @@ public class ManagePaperGUI extends JPanel{
 		if ((current_paper_relation == paperRelation.PC)||(current_paper_relation == paperRelation.SUBPC)){
 			if (controller.getPaperRecommendationNumericalValuefinal(current_conf, current_paper) != 0){
 				is_recommendation_complete = true;
-				System.out.println("there's a recommendation submitted!");
 				RecommendPanel recommendationPanel = new RecommendPanel(controller.getPaperRecommendationSubPCName(current_conf, current_paper), 
 						current_conf.getConfTitle(), current_paper, controller.getPaperAuthor(current_conf, current_paper), 
 						controller.getPaperRecommendationNumericalValuefinal(current_conf, current_paper),
@@ -463,15 +461,8 @@ public class ManagePaperGUI extends JPanel{
 				JPanel tabRecommendation = (JPanel) recommendationPanel.getGUI();
 				tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
 			}
-//			RecommendPanel recommendationPanel = new RecommendPanel(controller.getPaperRecommendationSubPCName(current_conf, current_paper), 
-//					current_conf.getConfTitle(), current_paper, controller.getPaperAuthor(current_conf, current_paper), 
-//					controller.getPaperRecommendationNumericalValuefinal(current_conf, current_paper),
-//					controller.getPaperRecommendationRationale(current_conf, current_paper));
-//			JPanel tabRecommendation = (JPanel) recommendationPanel.getGUI();
-//			tabbedPane.addTab("Recommendation", null, tabRecommendation, null);
 		}
 		int paperId = controller.getPaperID(current_paper);
-		System.out.println("paper admin status" + controller.getAdminPaperStatus(current_conf, current_paper));
 		if ((current_paper_relation == paperRelation.PC)||(current_paper_relation == paperRelation.SUBPC)){
 			ManagementPanel managePanel = new ManagementPanel(current_paper, 
 					controller.getPaperAuthor(current_conf, current_paper), controller.getAdminPaperStatus(current_conf, current_paper), 
@@ -635,33 +626,24 @@ public class ManagePaperGUI extends JPanel{
 		int j = 0;
 		for (int i = 0; i < initial_num_reviews; i++){
 			if (initial_review_array[i].getAnswersToRadioBtns()[0] == 0){
-				System.out.println("empty review at index: " + i);
 			} else {
 				temp_review_array[j] = initial_review_array[i];
-				System.out.println("adding temporary review at index: " + j);
 				j++;
 				temp_num_reviews++;
 			}
 		}
-		System.out.println("number of actually completed reviews: " + temp_num_reviews);
 		Review[] the_reviews = new Review[temp_num_reviews];
 		int num_reviews = the_reviews.length;
 		for (int i = 0; i < num_reviews; i++){
 			the_reviews[i] = temp_review_array[i];
-			System.out.println("adding final review at index: " + i);
 		}
 		//end of check for empty reviews.
 		
 		//if the user logged in, the only review they should be able to see is their own.
 		if (current_paper_relation == paperRelation.REVIEWER){
-			System.out.println("i'm an author");
 			Review usersOnlyViewableReview;
 			for (int i = 0; i < num_reviews; i++){
-				System.out.println("checking review #" + i);
-				System.out.println(current_user);
-				System.out.println(the_reviews[i].getReviewerName().toString());
 				if (the_reviews[i].getReviewerName().equals(current_user)){
-					System.out.println("the names matched");
 					usersOnlyViewableReview = the_reviews[i];
 					ReviewPanel tabReview = new ReviewPanel(usersOnlyViewableReview, 1, true, 
 							true, false);
@@ -828,11 +810,7 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-//				if (controller.canAddReview(current_conf, current_paper, controller.getCurrentUsername())){
-//					System.out.println("I can add a review");
-					controller.setStateOfGUI(StateOfGUI.SUBMIT_REVIEW);
-//				}
-//				System.out.println("I can't add a review");
+				controller.setStateOfGUI(StateOfGUI.SUBMIT_REVIEW);
 			}
 		};
 		my_submit_review_action.putValue(Action.SHORT_DESCRIPTION, SUBMIT_REVIEW_STRING);
@@ -897,8 +875,6 @@ public class ManagePaperGUI extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				System.out.println("The file path: " + controller.getPaperFilePath(current_conf, 
-						controller.getCurrentPaper()));
 				PaperFrame frame = new PaperFrame(controller.getPaperFilePath(current_conf, 
 						controller.getCurrentPaper()));
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

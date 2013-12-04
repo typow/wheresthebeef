@@ -29,6 +29,13 @@ import javax.swing.border.EtchedBorder;
 
 import controller.Review;
 
+/**
+* The Review Panel creates a sub-panel of Reviews submitted
+* to be displayed in the ManagePaperGUI
+* 
+* @author Jacob Hall
+* @version 204 Date: 12/4/13
+*/
 @SuppressWarnings("serial")
 public class ReviewPanel extends JPanel{
 
@@ -56,22 +63,26 @@ public class ReviewPanel extends JPanel{
 	 * Constructor sets up a single review panel.  Four possible per paper.
 	 * 
 	 * <dt><b>Preconditions: The controller object has been instantiated.</b><dd>
-	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
-	 * 						 concerning a paper</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data 
+	 * 							and status concerning a paper</b><dd>
 	 * @param the_review
 	 * @param the_index
 	 * @param reviewer_name_viewable
 	 * @param comments_to_subpc_viewable
 	 * @param authors_name_viewable
 	 */
-	public ReviewPanel(final Review the_review, final int the_index, final boolean reviewer_name_viewable, 
-			final boolean comments_to_subpc_viewable, final boolean authors_name_viewable){
+	public ReviewPanel(final Review the_review, final int the_index, 
+			final boolean reviewer_name_viewable, 
+			final boolean comments_to_subpc_viewable, 
+			final boolean authors_name_viewable){
 		review = the_review;
 		index = the_index;
-		setupReviewPanel(reviewer_name_viewable, comments_to_subpc_viewable, authors_name_viewable);
+		setupReviewPanel(reviewer_name_viewable, comments_to_subpc_viewable, 
+				authors_name_viewable);
 	}	 
 	
-	private void setupReviewPanel(final boolean reviewer_name_viewable, final boolean comments_to_subpc_viewable, 
+	private void setupReviewPanel(final boolean reviewer_name_viewable, 
+			final boolean comments_to_subpc_viewable, 
 			final boolean authors_name_viewable){
 		
 		tabReview = new JPanel();
@@ -88,9 +99,13 @@ public class ReviewPanel extends JPanel{
 		primary_panel.setBackground(Color.WHITE);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[] {550};
-		gbl_panel.rowHeights = new int[] {30, 30, 30, 30, 30, 30, 150, 30, 30, 50, 150, 50, 150, 50, 150, 50, 150, 50, 150, 50, 150, 50, 150, 50, 150, 50, 150, 50, 150, 50, 150};
+		gbl_panel.rowHeights = new int[] {30, 30, 30, 30, 30, 30, 150, 30, 30, 50, 
+				150, 50, 150, 50, 150, 50, 150, 50, 150, 50, 150, 50, 150, 50, 150, 
+				50, 150, 50, 150, 50, 150};
 		gbl_panel.columnWeights = new double[]{0.0};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 
+				1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+				1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
 		primary_panel.setLayout(gbl_panel);
 		
 		JLabel lblReviewer = new JLabel("Reviewer #" + index);

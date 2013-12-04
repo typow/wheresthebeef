@@ -26,7 +26,7 @@ import controller.Controller;
  * 
  * @author Jacob Hall
  * @author warrick Holfeld
- * @version 112 Date: 11/28/13
+ * @version 206 Date: 12/4/13
  */
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements Observer {

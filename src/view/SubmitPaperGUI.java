@@ -419,7 +419,8 @@ public class SubmitPaperGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event){
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+				FileNameExtensionFilter filter = 
+						new FileNameExtensionFilter("TEXT FILES", "txt", "text");
 				my_chooser.setFileFilter(filter);
 				final int result = my_chooser.showOpenDialog(null);
 				String my_image = "";
@@ -449,24 +450,28 @@ public class SubmitPaperGUI extends JPanel {
 			    todays_date.setTime( c.getTime().getTime() );
 		
 				if(current_conf.getSubmissionDead().before(todays_date)){
-					JOptionPane.showMessageDialog(contentPane, "The date for paper submission has passed.");
+					JOptionPane.showMessageDialog(contentPane, "The date for paper " +
+							"submission has passed.");
 				}
 				else if (paper_title.equals("")){
-					JOptionPane.showMessageDialog(contentPane, "Please enter a paper title.");
+					JOptionPane.showMessageDialog(contentPane, "Please enter a paper " +
+							"title.");
 				}
 				else if (fileSubmited.equals("")){
-					JOptionPane.showMessageDialog(contentPane, "Please enter a file name.");
+					JOptionPane.showMessageDialog(contentPane, "Please enter a file " +
+							"name.");
 				}
 				else {
 					try{
-						controller.createNewPaper(current_conf, username, paper_title, fileSubmited, 
-								paperStatusAuthorViewable.SUBMITTED, paperStatusAdminViewable.SUBMITTED);
-						System.out.println("fileSubmited " + fileSubmited);
+						controller.createNewPaper(current_conf, username, paper_title, 
+								fileSubmited, paperStatusAuthorViewable.SUBMITTED, 
+								paperStatusAdminViewable.SUBMITTED);
 					}
 					catch (Exception e){
 						JOptionPane.showMessageDialog(contentPane, e);
 					}
-					controller.setPaperStatus(current_conf, paper_title, paperStatusAuthorViewable.SUBMITTED, 
+					controller.setPaperStatus(current_conf, paper_title, 
+							paperStatusAuthorViewable.SUBMITTED, 
 							paperStatusAdminViewable.SUBMITTED);
 					controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);
 				}

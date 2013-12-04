@@ -48,7 +48,7 @@ import controller.Controller;
  * 
  * @author Jacob Hall
  * @author Warrick Holfeld
- * @version 90 Date: 11/27/13
+ * @version 196 Date: 12/4/13
  */
 @SuppressWarnings("serial")
 public class HomeGUI extends JPanel {
@@ -460,7 +460,6 @@ public class HomeGUI extends JPanel {
 		my_new_conf_action = new AbstractAction(NEW_CONF_TITLE_STRING, null) {
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				System.out.println("Creating new conference");
 				controller.setStateOfGUI(StateOfGUI.NEW_CONFERENCE);
 			}
 		};

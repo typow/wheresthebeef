@@ -41,7 +41,7 @@ import controller.Controller;
  * @author Warrick Holfeld
  * @author Jacob Hall
  * 	
- * @version 90 Date: 11/27/13
+ * @version 205 Date: 12/4/13
  */
 @SuppressWarnings("serial")
 public class LoginGUI extends JPanel {

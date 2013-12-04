@@ -48,7 +48,7 @@ import controller.Controller;
 * 
 * Allows the user to assign a reviewer(s) to a paper in the CMS.
 * @author Jacob Hall
-* @version 90 Date: 11/27/13
+* @version 206 Date: 12/4/13
 */
 @SuppressWarnings("serial")
 public class AssignReviewerGUI extends JPanel {

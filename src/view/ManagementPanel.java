@@ -32,7 +32,7 @@ import view.GUIEnum.paperStatusAdminViewable;
 * 
 * Allows the Program Chair and SubPC to view paper management details in the CMS.
 * @author Jacob Hall
-* @version 90 Date: 11/27/13
+* @version 204 Date: 12/4/13
 */
 @SuppressWarnings("serial")
 public class ManagementPanel extends JPanel{
@@ -353,7 +353,6 @@ public class ManagementPanel extends JPanel{
 		lblReview1Submitted.setBounds(156, -1, 209, 20);
 		panel_10.add(lblReview1Submitted);
 		
-		//TODO: needs to be tested
 		Boolean is_review_complete = false;
 		if (the_reviews_complete_map.containsKey(reviewer_1_username)){
 			is_review_complete = the_reviews_complete_map.get(reviewer_1_username);
@@ -361,7 +360,6 @@ public class ManagementPanel extends JPanel{
 		JLabel fieldReview1SubmittedStatus = new JLabel(is_review_complete.toString());
 		fieldReview1SubmittedStatus = setTextFont(fieldReview1SubmittedStatus);
 		fieldReview1SubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
-//		fieldReview1SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReview1SubmittedStatus.setBounds(389, 0, 180, 20);
 		panel_10.add(fieldReview1SubmittedStatus);
 		
@@ -401,7 +399,6 @@ public class ManagementPanel extends JPanel{
 		lblReview2Submitted.setBounds(156, -1, 209, 20);
 		panel_12.add(lblReview2Submitted);
 		
-		//TODO: needs to be tested
 		is_review_complete = false;
 		if (the_reviews_complete_map.containsKey(reviewer_2_username)){
 			is_review_complete = the_reviews_complete_map.get(reviewer_2_username);
@@ -409,7 +406,6 @@ public class ManagementPanel extends JPanel{
 		JLabel fieldReview2SubmittedStatus = new JLabel(is_review_complete.toString());
 		fieldReview2SubmittedStatus = setTextFont(fieldReview2SubmittedStatus);
 		fieldReview2SubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
-//		fieldReview2SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReview2SubmittedStatus.setBounds(389, 0, 180, 20);
 		panel_12.add(fieldReview2SubmittedStatus);
 		
@@ -449,7 +445,6 @@ public class ManagementPanel extends JPanel{
 		lblReview3Submitted.setBounds(156, -1, 209, 20);
 		panel_14.add(lblReview3Submitted);
 		
-		//TODO: needs to be tested
 		is_review_complete = false;
 		if (the_reviews_complete_map.containsKey(reviewer_3_username)){
 			is_review_complete = the_reviews_complete_map.get(reviewer_3_username);
@@ -457,7 +452,6 @@ public class ManagementPanel extends JPanel{
 		JLabel fieldReview3SubmittedStatus = new JLabel(is_review_complete.toString());
 		fieldReview3SubmittedStatus = setTextFont(fieldReview3SubmittedStatus);
 		fieldReview3SubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
-//		fieldReview3SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReview3SubmittedStatus.setBounds(389, 0, 180, 20);
 		panel_14.add(fieldReview3SubmittedStatus);
 		
@@ -497,7 +491,6 @@ public class ManagementPanel extends JPanel{
 		lblReview4Submitted.setBounds(156, -1, 209, 20);
 		panel_16.add(lblReview4Submitted);
 		
-		//TODO: needs to be tested
 		is_review_complete = false;
 		if (the_reviews_complete_map.containsKey(reviewer_4_username)){
 			is_review_complete = the_reviews_complete_map.get(reviewer_4_username);
@@ -505,7 +498,6 @@ public class ManagementPanel extends JPanel{
 		JLabel fieldReview4SubmittedStatus = new JLabel(is_review_complete.toString());
 		fieldReview4SubmittedStatus = setTextFont(fieldReview4SubmittedStatus);
 		fieldReview4SubmittedStatus.setHorizontalAlignment(SwingConstants.LEFT);
-//		fieldReview4SubmittedStatus.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldReview4SubmittedStatus.setBounds(389, 0, 180, 20);
 		panel_16.add(fieldReview4SubmittedStatus);
 

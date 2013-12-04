@@ -48,7 +48,7 @@ import javax.swing.border.EtchedBorder;
 * 
 * Allows the user to make a recommendation for a paper in the CMS.
 * @author Jacob Hall
-* @version 90 Date: 11/27/13
+* @version 205 Date: 12/4/13
 */
 @SuppressWarnings("serial")
 public class MakeRecommendationGUI extends JPanel {
@@ -585,9 +585,6 @@ public class MakeRecommendationGUI extends JPanel {
 					controller.setPaperStatus(current_conf, current_paper, paperStatusAuthorViewable.UNDER_REVIEW, 
 							paperStatusAdminViewable.RECOMMENDED);
 				}
-				System.out.println("current paper title in make recommendation: " + current_paper);
-				System.out.println("username in make recommendation: " + username);
-				System.out.println("paper_author in make recommendation: " + paper_author);
 				controller.addPaperRecommendation(username, current_conf, current_paper, 
 							paper_author, answer, textRationale.getText().replace("'", ""));
 				controller.setStateOfGUI(StateOfGUI.MANAGE_PAPER);

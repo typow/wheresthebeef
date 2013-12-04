@@ -41,7 +41,7 @@ import controller.Controller;
  * 
  * Allows the user to Register in the CMS system
  * @author Warrick Holfeld, Jacob Hall
- * @version 98 Date: 11/27/13
+ * @version 205 Date: 12/4/13
  */
 @SuppressWarnings("serial")
 public class RegisterGUI extends JPanel {
@@ -342,8 +342,6 @@ public class RegisterGUI extends JPanel {
 					}
 					controller.setCurrentUsername(username);
 					controller.addNewUser(username, password_1, first, middle, last, specialty);
-					System.out.println("password entered: " + password_1);
-					System.out.println("username entered: " + username);
 					controller.setStateOfGUI(StateOfGUI.HOME);
 				}
 			}

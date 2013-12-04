@@ -49,7 +49,7 @@ import controller.Controller;
 * 
 * Allows the Program Chair to assign a Sub-Program Chair to a paper in the CMS.
 * @author Jacob Hall
-* @version 90 Date: 11/27/13
+* @version 196 Date: 12/4/13
 */
 @SuppressWarnings("serial")
 public class AssignSubPCGUI extends JPanel {

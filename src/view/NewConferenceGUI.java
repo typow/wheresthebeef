@@ -201,8 +201,8 @@ public class NewConferenceGUI extends JPanel {
 	 * Create the JPanel that contains the NewConferenceGUI.
 	 * 
 	 * <dt><b>Preconditions: The controller object has been instantiated.</b><dd>
-	 * <dt><b>Postconditions: A JPanel is created to represent the most current data and status 
-	 * 						 concerning a paper</b><dd>
+	 * <dt><b>Postconditions: A JPanel is created to represent the most current data 
+	 * 							and status concerning a paper</b><dd>
 	 * @param the_controller
 	 */
 	public NewConferenceGUI(final Controller the_controller) {
@@ -229,7 +229,8 @@ public class NewConferenceGUI extends JPanel {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(INNER_BACKGROUND_COLOR);
-		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, 
+				null));
 		panel_1.setBounds(217, 153, 840, 541);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
@@ -281,7 +282,8 @@ public class NewConferenceGUI extends JPanel {
 		lblSubPcRecommendation.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSubPcRecommendation.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		JLabel lblAuthorNotificationDeadline = new JLabel("* Author Notification Deadline:");
+		JLabel lblAuthorNotificationDeadline = new JLabel("* Author Notification " +
+				"Deadline:");
 		lblAuthorNotificationDeadline.setBounds(203, 329, 317, 20);
 		panel_1.add(lblAuthorNotificationDeadline);
 		lblAuthorNotificationDeadline.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -527,23 +529,29 @@ public class NewConferenceGUI extends JPanel {
 							"their papers.");
 				}
 				else if (review_deadline.equals("")){
-					JOptionPane.showMessageDialog(contentPane, "Please enter the deadline that all paper reviews must " +
+					JOptionPane.showMessageDialog(contentPane, "Please enter the " +
+							"deadline that all paper reviews must " +
 							"be submitted by.");
 				}
 				else if (sub_pc_recommend_deadline.equals("")){
-					JOptionPane.showMessageDialog(contentPane, "Please enter the deadline that the sub-program chair " +
+					JOptionPane.showMessageDialog(contentPane, "Please enter the " +
+							"deadline that the sub-program chair " +
 							"recommendation must be submitted by.");
 				}
 				else if (author_notification_deadline.equals("")){
-					JOptionPane.showMessageDialog(contentPane, "Please enter the date which Authors will be notified of " +
+					JOptionPane.showMessageDialog(contentPane, "Please enter the date " +
+							"which Authors will be notified of " +
 							"the status of their paper.");
 				}
 				else if (controller.checkConferenceExists(conf_title)){
-					JOptionPane.showMessageDialog(contentPane, "Conference title already exists in the system");
+					JOptionPane.showMessageDialog(contentPane, "Conference title " +
+							"already exists in the system");
 				}
 				else{
-					Conference new_conference = new Conference(conf_title, username, conf_date, conf_address, conf_city, conf_state, con_zip, 
-							submission_deadline, review_deadline, sub_pc_recommend_deadline, author_notification_deadline, 
+					Conference new_conference = new Conference(conf_title, username, 
+							conf_date, conf_address, conf_city, conf_state, con_zip, 
+							submission_deadline, review_deadline, 
+							sub_pc_recommend_deadline, author_notification_deadline, 
 							conference_summary);
 					controller.createNewConference(new_conference);
 					controller.setStateOfGUI(StateOfGUI.HOME);

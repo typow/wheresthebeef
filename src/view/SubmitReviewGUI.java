@@ -49,7 +49,7 @@ import controller.Controller;
 * 
 * Allows the user to submit a review relevant to a paper in the CMS.
 * @author Jacob Hall
-* @version 98 Date: 11/27/13
+* @version 207 Date: 12/4/13
 */
 @SuppressWarnings("serial")
 public class SubmitReviewGUI extends JPanel {

@@ -48,7 +48,7 @@ import javax.swing.border.EtchedBorder;
 * 
 * Allows the Program Chair make the accept/reject decision for a paper in the CMS.
 * @author Jacob Hall
-* @version 98 Date: 11/27/13
+* @version 205 Date: 12/4/13
 */
 @SuppressWarnings("serial")
 public class AcceptRejectGUI extends JPanel {
@@ -547,12 +547,10 @@ public class AcceptRejectGUI extends JPanel {
 			public void actionPerformed(ActionEvent the_event) {
 				int answer = getSingleRtnAnswer(Q_1, Q_2);
 				if (answer == 2) {
-					System.out.println("accepted");
 					controller.setPaperStatus(current_conf, current_paper, paperStatusAuthorViewable.ACCEPTED, 
 							paperStatusAdminViewable.ACCEPTED);
 				}
 				else {
-					System.out.println("rejected");
 					controller.setPaperStatus(current_conf, current_paper, paperStatusAuthorViewable.REJECTED, 
 							paperStatusAdminViewable.REJECTED);
 				}

@@ -19,7 +19,7 @@ import view.GUIEnum.paperStatusAuthorViewable;
  * controller to the ConferenceGUI in an array.
  * 
  * @author Jacob Hall
- * @version 148 Date: 12/1/13
+ * @version 164 Date: 12/4/13
  */
 public class Paper {
 	private String conf_title = "";

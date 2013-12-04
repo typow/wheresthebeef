@@ -30,7 +30,7 @@ import javax.swing.border.EtchedBorder;
 * The RecommendPanel JPanel creates a panel containing recommendations already submitted.
 * 
 * @author Jacob Hall
-* @version 98 Date: 11/27/13
+* @version 99 Date: 12/4/13
 */
 @SuppressWarnings("serial")
 public class RecommendPanel extends JPanel{
