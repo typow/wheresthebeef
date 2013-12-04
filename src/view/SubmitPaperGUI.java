@@ -442,8 +442,8 @@ public class SubmitPaperGUI extends JPanel {
 		{
 			@Override
 			public void actionPerformed(ActionEvent the_event) {
-				String paper_title = fieldPaperTitle.getText();
-				String fileSubmited = fieldFileToSubmit.getText();
+				String paper_title = fieldPaperTitle.getText().replace("'", "");
+				String fileSubmited = fieldFileToSubmit.getText().replace("'", "");
 				
 			    Calendar c = Calendar.getInstance();
 			    Date todays_date = new Date();
