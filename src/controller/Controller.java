@@ -47,6 +47,11 @@ public class Controller extends Observable{
 	 */
 	public static final int MAX_NUMBER_USER_SUBMITTED_PAPERS = 4;
 	
+	/** 
+	 * The maximum number of reviews a paper can have in the system.
+	 */
+	public static final int MAX_NUMBER_OF_REVIEWS = 4;
+	
 	/**
 	 * The connection the controller has to the Database.
 	 * This connection is set up during construction.
@@ -561,15 +566,17 @@ public class Controller extends Observable{
 	}
 	
 	/**
+	 * Gets the admin status of a paper in a given conference.
+	 * Returns paperStatusAdminViewable.isNULL if the paper doesn't exist in
+	 * the passed in conference.
 	 * 
-	 * 
-	 * @param the_conference
-	 * @param the_paper_title
-	 * @return
+	 * @param the_conference The conference the paper belongs to.
+	 * @param the_paper_title The title of the paper to get the admin status for.
+	 * @return Returns a paperStatusAdminViewable enum indicating the admin status.
 	 */
 	public paperStatusAdminViewable getAdminPaperStatus(final Conference the_conference, final String the_paper_title){
 		
-		paperStatusAdminViewable adminStatus = null;
+		paperStatusAdminViewable adminStatus = paperStatusAdminViewable.isNULL;
 		
 		try {
 			
@@ -589,23 +596,22 @@ public class Controller extends Observable{
 		} catch (Exception e) {
 			System.out.println("paperStatusAdminViewable failed in SQL!");
 		}
-		/*
-		if (adminStatus.equals(null)) {
-			System.out.println("paperStatusAdminViewable failed in null check!");
-		}
-		*/
 		
 		return adminStatus;
 	}
 	
 	/**
-	 * Returns the status of the paper that an author is privy to given the title of a paper
-	 * and its corresponding conference. This method returns null if there is either a SQL exception
-	 * or if the paper title isn't associated with the passed in conference.
+	 * Gets the author status of a paper in a given conference.
+	 * Returns paperStatusAuthorViewable.isNULL if the paper doesn't exist in
+	 * the passed in conference.
+	 * 
+	 * @param the_conference The conference the paper belongs to.
+	 * @param the_paper_title The title of the paper to get the author status for.
+	 * @return Returns a paperStatusAuthorViewable enum indicating the author status.
 	 */
 	public paperStatusAuthorViewable getStatusAuthorView(final Conference the_conference, final String the_paper_title) {
 		
-		paperStatusAuthorViewable authorStatus = null;
+		paperStatusAuthorViewable authorStatus = paperStatusAuthorViewable.isNULL;
 		
 		try {
 			
@@ -625,25 +631,23 @@ public class Controller extends Observable{
 		} catch (Exception e) {
 			System.out.println("paperStatusAuthorViewable failed!");
 		}
-		/*
-		if (authorStatus.equals(null)) {
-			System.out.println("paperStatusAuthorViewable failed!");
-		}
-		*/
+		
 		return authorStatus;
 	}
 	
 	/**
+	 * Sets the current paper in the controller.
 	 * 
-	 * @param the_paper
+	 * @param the_paper The paper to be assigned to current paper.
 	 */
 	public void setCurrentPaper(final String the_paper){
 		current_paper = the_paper;
 	}
 	
 	/**
+	 * Returns the current paper of the controller.
 	 * 
-	 * @return
+	 * @return The current paper.
 	 */
 	public String getCurrentPaper(){
 		return current_paper;
@@ -652,9 +656,9 @@ public class Controller extends Observable{
 	/**
 	 * Returns the text of the paper that is passed in.
 	 * 
-	 * @param the_conf the conference the paper being examined belongs to
-	 * @param the_paper_title the paper that is getting its text returned
-	 * @return the text of the papers
+	 * @param the_conf The conference the paper being examined belongs to.
+	 * @param the_paper_title The title of the paper that is getting its text returned.
+	 * @return Returns the text of the paper.
 	 */
 	public String getPaperFilePath(final Conference the_conf, final String the_paper_title){
 		String text = "";
@@ -684,7 +688,6 @@ public class Controller extends Observable{
 	 * @author Aaron
 	 */
 	public void deletePaper(final Conference the_conference, final String the_username, final String the_paper_title){
-		//		Remove this paper from the database
 		
 		PreparedStatement statement;
 		try {
@@ -702,12 +705,11 @@ public class Controller extends Observable{
 	/**
 	 * Deletes all the reviews related to the paper passed in.
 	 * 
-	 * @param the_conference the conference the reviews belongs to
-	 * @param the_username the author of the paper whose reviews are being deleted
-	 * @param the_paper_title the name of the paper whose reviews are being deleted
+	 * @param the_conference The conference that the reviews belongs to.
+	 * @param the_username The author of the paper whose reviews are being deleted.
+	 * @param the_paper_title The name of the paper whose reviews are being deleted.
 	 */
 	private void deleteReviews(final Conference the_conference, final String the_username, final String the_paper_title){
-		//		deletes reviews associated to the paper passed in
 		int paperID = -1;
 		
 		try {
@@ -738,9 +740,9 @@ public class Controller extends Observable{
 	/**
 	 * Deletes all the recommendations related to the paper passed in.
 	 * 
-	 * @param the_conference the conference the recommendations belongs to
-	 * @param the_username the author of the paper whose recommendations are being deleted
-	 * @param the_paper_title the name of the paper whose recommendations are being deleted
+	 * @param the_conference The conference the recommendations belongs to.
+	 * @param the_username The author of the paper whose recommendations are being deleted.
+	 * @param the_paper_title The name of the paper whose recommendations are being deleted.
 	 */
 	private void deleteRec(final Conference the_conference, final String the_username, final String the_paper_title){
 		//		delete recommendations related to the paper passed in
@@ -772,10 +774,10 @@ public class Controller extends Observable{
 	}
 	
 	/**
-	 * Creates a new review.
+	 * Creates a new review in the database.
 	 * 
 	 * @param the_reviewer_username The username of the reviewer.
-	 * @param the_conf The conference object.
+	 * @param the_conf The conference the review is associated with.
 	 * @param the_paper The name of the paper the review is for.
 	 * @param the_paper_author The author of the paper being reviewed.
 	 * @param the_comments_to_subpc The comments to the sub program chair.
@@ -785,7 +787,6 @@ public class Controller extends Observable{
 	public void createNewReview(final String the_reviewer_username, final Conference the_conf, 
 			final String the_paper, final String the_paper_author, final String the_comments_to_subpc, 
 			final int[] the_answersRadioBtn, final String the_summary_comments){
-		//		add these elements to the database as one single review item
 		
 		int paperId = -1;
 		try {
@@ -797,7 +798,6 @@ public class Controller extends Observable{
 			{
 				paperId = resultSet.getInt(1);
 			}
-			System.out.println(paperId);
 			
 		} catch (SQLException e) {
 			System.out.println("Error getting paperID in createNewReview." + e.getMessage());
@@ -832,27 +832,25 @@ public class Controller extends Observable{
 			}
 		} catch (SQLException e) {
 			System.out.println("Error creating new review part." + e.getMessage());
-		}
-		
+		}	
 	}
 
 	/**
-	 * A method that is called to see if the number of reviews on a paper is less than 4 and that the
-	 * current user hasn't already submitted a review.
+	 * A method that is called to see if the number of reviews on a paper is less than 
+	 * MAX_NUMBER_OF_REVIEWS and that the current user hasn't already submitted a review
+	 * for the passed in paper.
 	 * 
 	 * @author David
 	 * @param the_conf the conference that the paper is in
 	 * @param the_paper the name of the paper
 	 * @param the_username the user that is trying to submit the paper.
-	 * @return true if the current user has not submitted a review or the number of reviews is less than or equal 4
-	 * 		   false if the current user has submitted a review or the number of reviews is greater than 4
+	 * @return true if the current user has not submitted a review and the number of reviews is 
+	 * 				less than or equal to MAX_NUMBER_OF_REVIEWS.
 	 */
 	public boolean canAddReview(final Conference the_conf, final String the_paper, final String the_username){
 		boolean permission_to_add = true;
 		List<String> al = new ArrayList<String>();
-		//TODO: the GUI will call this method to verify that there aren't already 4 reviews and that the user
-		//		attempting to submit the review hasn't already submitted one.  If there are already 4 reviews,
-		//		or the user has already submitted one, return false.
+
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement("SELECT reviewer FROM reviews WHERE papername='"+
@@ -882,12 +880,13 @@ public class Controller extends Observable{
 			e.printStackTrace();
 		}
 		
-		if(al.size()>4 || al.contains(the_username)) {
+		if(al.size() > MAX_NUMBER_OF_REVIEWS || al.contains(the_username)) {
 			permission_to_add = false;
 		}
 		return permission_to_add;
 	}
 	
+	//TODO: make javadoc.
 	private String infoForSubmittingReview(ArrayList<String> record) {
 		String conference = "";
 		for(int i = 0; i < record.size();i++) {
@@ -901,18 +900,16 @@ public class Controller extends Observable{
 	}
 
 	/**
-	 * Used by another user to see the author of the paper that they are examining.  Returns blank string
-	 * if nothing was found.
+	 * Used by an administrative user to see the author of the paper that they are examining. 
+	 * Returns a blank string if nothing was found.
 	 * 
-	 * @param the_conf The conference that the paper is a part of
-	 * @param the_paper The name of the paper the current user is looking at (not the author of the paper)
-	 * @return The username of the author of the paper
+	 * @param the_conf The conference that the paper is a part of.
+	 * @param the_paper The name of the paper the current user is looking at (not the author of the paper).
+	 * @return Returns the username of the author of the paper.
 	 */
 	public String getPaperAuthor(final Conference the_conf, final String the_paper){
 		String username = "";
-		//		the GUI will call this method when another user (administrator of some sort) needs to review
-		//		or recommend a paper.  They will be the current user and will need to retrieve the username
-		//		of the person who Authored the paper.  (Jacob)
+
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
@@ -933,25 +930,21 @@ public class Controller extends Observable{
 	
 	/**
 	 * Adds a recommendation of the SubProgramChair to the database with their grade and rationale of
-	 * the paper passed in
+	 * the paper passed in.
 	 * 
-	 * @param the_sub_pc_username the subprogramchair recommending the paper
-	 * @param current_conf the conference the paper being recommended belongs to
-	 * @param current_paper_being_recommended the paper that is being recommended
-	 * @param the_paper_author the author of the paper being recommended
-	 * @param the_numerical_value the grade the subprogramchair gave the paper
-	 * @param the_rational_for_recommendation the rationale behind the subprogramchairs grade
+	 * @param the_sub_pc_username The subprogramchair username recommending the paper.
+	 * @param current_conf The conference the paper being recommended belongs to.
+	 * @param current_paper_being_recommended The paper that is being recommended.
+	 * @param the_paper_author The author of the paper being recommended.
+	 * @param the_numerical_value The grade the subprogramchair gave the paper.
+	 * @param the_rational_for_recommendation The rationale behind the subprogramchair's grade.
 	 */
 	public void addPaperRecommendation(final String the_sub_pc_username, final Conference current_conf, 
 			final String current_paper_being_recommended, final String the_paper_author, final int the_numerical_value,
 			final String the_rational_for_recommendation){
-		//		the MakeRecommendationGUI will call this when it needs to add a single recommendation to a paper.  There should
-		//		only be one recommendation per paper.  Right now, I'm going on the assumption that if a Sub-PC goes back in
-		//		to submit a recommendation again, they will just be re-writing over a previous recommendation.  If you want to
-		//		handle this differently, let me know because I'll have to insert a try/catch and print out the exception message
-		//		to let them know they can only make a recommendation once. Add this info to the database linked to the paper
-		//		it's associated with. (Jacob)	
+
 		int paperID = -1;	//not a paper
+		
 		//This try catch just gets the paperID from the author and papername passed in
 		try {
 			
@@ -966,7 +959,8 @@ public class Controller extends Observable{
 			e.getStackTrace();
 			System.out.println("Failed to addREC and get paperID");
 		}
-		//This either if the rec exists update it or if not add it
+		
+		// If the recommendation exists update it- otherwise add it
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement(
@@ -1000,9 +994,9 @@ public class Controller extends Observable{
 	 * not exist in that conference the sentinel value paperID = -1 and it returns
 	 * a blank string for the rationale.
 	 * 
-	 * @param the_conf the conference the recommendation belongs to
-	 * @param the_paper the paper the recommendation belongs to
-	 * @return the recommendation of the paper being examined
+	 * @param the_conf The conference the recommendation belongs to.
+	 * @param the_paper The paper the recommendation belongs to.
+	 * @return Returns the recommendation of the paper being examined.
 	 */
 	public String getPaperRecommendationRationale(final Conference the_conf, final String the_paper){
 		
