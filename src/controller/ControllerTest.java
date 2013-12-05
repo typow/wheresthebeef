@@ -12,6 +12,7 @@ import static org.junit.Assert.fail;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Date;
@@ -583,7 +584,17 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetPaperRecommendationSubPCName() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15),
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		controller.addPaperRecommendation("da-man", testConference, "Baking Pi", "typow", 5, "It bakes pi!");
+		String subpc = "da-man";
+		
+		String result = controller.getPaperRecommendationSubPCName(testConference, "Baking Pi");
+		
+		assertEquals(subpc, result);
+		
 	}
 
 	/**
@@ -591,7 +602,22 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetUsersAssignedAsReviewers() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15),
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		String[] reviewers = new String[2];
+		
+		String[] result = controller.getUsersAssignedAsReviewers(testConference, "Baking Pi");
+		
+		Boolean equal = false;
+		for (int i = 0; i < result.length; i++)
+		{
+			if (result[i] == reviewers[i])
+				equal = true;
+		}
+		
+		assertEquals(true, equal);
 	}
 
 	/**
@@ -599,7 +625,15 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetUserAssignedAsPC() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15),
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		String pc ="typow";
+		
+		String result = controller.getUserAssignedAsPC(testConference);
+		
+		assertEquals(pc, result);
 	}
 
 	/**
@@ -630,7 +664,25 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testAddReviewers() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15),
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		String[]reviewers = new String[2];
+		reviewers[0] = "noise";
+		reviewers[1] = "bounty";
+		
+		controller.addReviewers(testConference, "Baking Pi", reviewers);
+		String[] result = controller.getUsersAssignedAsReviewers(testConference, "Baking Pi");
+		
+		Boolean equal = false;
+		for (int i = 0; i < result.length; i++)
+		{
+			if (result[i] == reviewers[0] || result[1] == reviewers[1])
+				equal = true;
+		}
+		
+		assertEquals(true, equal);
 	}
 
 	/**
