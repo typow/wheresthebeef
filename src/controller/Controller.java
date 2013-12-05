@@ -30,7 +30,6 @@ import view.GUIEnum.StateOfGUI;
 import view.GUIEnum.paperRelation;
 import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
-import database.ManageDatabase;
 
 
 /**
@@ -41,6 +40,12 @@ import database.ManageDatabase;
  * @version 90 Date: 11/27/13
  */
 public class Controller extends Observable{
+	
+	/** 
+	 * The maximum number of papers a user in the system is allowed to
+	 * submit to a conference.
+	 */
+	public static final int MAX_NUMBER_USER_SUBMITTED_PAPERS = 4;
 	
 	/**
 	 * The connection the controller has to the Database.
@@ -86,9 +91,12 @@ public class Controller extends Observable{
 	 */
 	List<Conference> listOfAllConferences;
 	
+	
 	/**
-	 * Constructor for the Controller.  State initially set to LOGIN
-	 * @throws Exception 
+	 * Constructor for the Controller.  State initially set to LOGIN.
+	 * Sets up the connection to the Derby Database on port 1527.
+	 * If the Controller can't connect to the database, it prints
+	 * to the console that it failed to connect.
 	 */
 	public Controller() {
 		state = StateOfGUI.LOGIN;
@@ -107,7 +115,7 @@ public class Controller extends Observable{
 	 * Set the next state the GUI should transition to.  Note: setting this to a new state
 	 * causes the Observable Object Controller to change states and notify Observers.
 	 * 
-	 * @param the_state
+	 * @param the_state An enumeration of the GUI which will be set as the current state.
 	 */
 	public void setStateOfGUI(StateOfGUI the_state){	
 		if (the_state != state) {
@@ -118,7 +126,7 @@ public class Controller extends Observable{
 	}
 	
 	/**
-	 * Get the next state the GUI should transition to.
+	 * Gets the next state the GUI should transition to.
 	 * 
 	 * @return state The updated current state.
 	 */
@@ -127,14 +135,12 @@ public class Controller extends Observable{
 	}
 
 	/**
-	 * Check the username in the database and return true if it is the valid 
-	 * username of someone already in the system
+	 * Checks the username in the database and returns true if it is the valid 
+	 * username of someone already in the system.
 	 * 
-	 * @param the_username The username entered in some GUI field
-	 * @return valid  Returns true if the username exists in the database.
-	 */
-	//Tyler Powers was here
-	
+	 * @param the_username The username to be check in the database.
+	 * @return Returns true if the username exists in the database.
+	 */	
 	public Boolean checkValidUsername(final String the_username) {
 		Boolean valid = false;		
 		try {
@@ -158,10 +164,9 @@ public class Controller extends Observable{
 	/**
 	 * Checks the username and password combination against the database.
 	 * 
-	 * @param the_username The username entered
-	 * @param the_password The password entered
-	 * @return valid Returns True is the username/password combo are verified
-	 * 			Returns False if the combination is not recognized by the database
+	 * @param the_username The username to check in the database.
+	 * @param the_password The corresponding password to check in the database.
+	 * @return Returns true if the username/password combo are verified, false otherwise.
 	 */
 	public Boolean checkValidUsernamePassword(final String the_username, 
 												final String the_password){
@@ -183,18 +188,18 @@ public class Controller extends Observable{
 		}
 		return valid;
 	}
+	
 	/**
-	 * Adds a new user to the database. GUI first uses checkValidUsername(final String the_username, 
-	 * final String the_password) to ensure no duplicates.
+	 * Adds a new user to the database. GUI must first use checkValidUsername() 
+	 * to ensure no duplicates.
 	 * 
-	 * @param the_username the login name for user
-	 * @param the_password password that is used to login
-	 * @param the_first_name user's first name
-	 * @param the_middle_name user's middle initial
-	 * @param the_last_name user's last name
-	 * @param the_specialty the field that the user specializes in or focuses on
+	 * @param the_username The login name for the user.
+	 * @param the_password The password that the username will use for login.
+	 * @param the_first_name The user's first name.
+	 * @param the_middle_name The user's middle initial.
+	 * @param the_last_name The user's last name.
+	 * @param the_specialty The user's engineering specialty (String from GUI).
 	 */
-	//Tyler Powers was here
 	public void addNewUser(final String the_username, final String the_password, 
 							final String the_first_name, final String the_middle_name, 
 							final String the_last_name, final String the_specialty)
@@ -215,7 +220,7 @@ public class Controller extends Observable{
 	/**
 	 * Sets the current user to the username of the person currently logged in.
 	 * 
-	 * @param the_username the username of the current person logged in
+	 * @param the_username The username of the current person logged in.
 	 */
 	public void setCurrentUsername(final String the_username){
 		current_user = the_username;
@@ -224,16 +229,16 @@ public class Controller extends Observable{
 	/**
 	 * Returns the username of the current person logged in.
 	 * 
-	 * @return current_user The current user
+	 * @return Returns the current user.
 	 */
 	public String getCurrentUsername(){
 		return current_user;
 	}
 	
 	/**
-	 * Returns the full name of the individual when the username is passed in
+	 * Returns the full name of the individual when the username is passed in.
 	 * 
-	 * @param the_username The username of the individual being queried
+	 * @param the_username The username of the individual being queried.
 	 * @return The full name of the person.
 	 */
 	public String getFullName(final String the_username){
@@ -258,13 +263,14 @@ public class Controller extends Observable{
 		
 		return result;
 	}
+	
 	/**
-	 * checks to see if the conference currently exists 
-	 * in the database
+	 * Checks to see if the conference currently exists 
+	 * in the database.
+	 * 
 	 * @author David
-	 * @param the_conference_title the title of conference
-	 * @return Returns True if the conference title exists in database
-	 * 			Returns False if the title is not in the database
+	 * @param the_conference_title The title of the conference.
+	 * @return Returns true if the conference title exists in database
 	 */
 	public Boolean checkConferenceExists(final String the_conference_title) {
 		Boolean valid = false;
@@ -284,12 +290,12 @@ public class Controller extends Observable{
 		return valid;
 	}
 
-	
 	/**
-	 * creates a new conference. GUI code first sees if checkConferenceExists(final String the_conference_title)
-	 * returns false
+	 * Creates a new conference. The GUI code must first checkConferenceExists() 
+	 * so duplicate conferences don't get entered into the database.
+	 * 
 	 * @author David
-	 * @param the_conference the current conference object that is being created
+	 * @param the_conference The conference object to be entered into the database.
 	 */
 	public void createNewConference(final Conference the_conference){
 		listOfAllConferences = new ArrayList<Conference>();
@@ -318,30 +324,36 @@ public class Controller extends Observable{
 	}
 	
 	/**
-	 * Sets the current conference to the conference of the person currently being looked at by the user
+	 * Sets the current conference to the conference of the person currently being looked at by the user.
 	 * 
-	 * @param the_conference_name
+	 * @param the_conference_name The conference to set as the current conference.
 	 */
 	public void setCurrentConference(final Conference the_conference_name){
 		current_conference = the_conference_name;
 	}
+	
 	/**
-	 * Returns the conference that is being looked at by the user
-	 * @return the current conference
+	 * Returns the conference that is being looked at by the user.
+	 * 
+	 * @return Returns the current conference.
 	 */
 	public Conference getCurrentConference(){
 		return current_conference;
 	}
+	
 	/**
-	 * Used to add a new paper to database and see if number of submissions is at max.
+	 * This method adds a new paper to database as long as MAX_NUMBER_USER_SUBMITTED_PAPERS
+	 * hasn't been reached. If it has, this method throws an exception that needs to 
+	 * be caught by the calling function.
+	 * 
 	 * @author David
-	 * @param the_conference the conference that the paper is being added to.
-	 * @param the_username the author's username
-	 * @param the_paper_title the title of the paper
-	 * @param the_file_submitted the file location
-	 * @param the_user_viewable_status the paper status that's viewable for an author's purposes. 
-	 * @param the_admin_viewable_status paper status that's viewable for an administrative purposes. 
-	 * @throws Exception
+	 * @param the_conference The conference that the paper is being added to.
+	 * @param the_username The username of the author.
+	 * @param the_paper_title The title of the paper.
+	 * @param the_file_submitted The path of the file being submitted.
+	 * @param the_user_viewable_status The paper status that's viewable for an author's purposes. 
+	 * @param the_admin_viewable_status The paper status that's viewable for administrative purposes. 
+	 * @throws Exception Throws exception if MAX_NUMBER_USER_SUBMITTED_PAPERS reached.
 	 */
 	public void createNewPaper(final Conference the_conference, final String the_username, final String the_paper_title, 
 			final String the_file_submitted, paperStatusAuthorViewable the_user_viewable_status, 
@@ -382,10 +394,9 @@ public class Controller extends Observable{
 			System.out.println("Check for valid Username failed");
 			e.printStackTrace();
 		}
-		//	  	add the user viewable status and the admin viewable status.  These are already set up in the GUIEnum class.
-		//		We need two because the user should only see a general indication of the progress and the admin needs to see
-		//		a detailed status update according to deadlines and where it's at in the whole review process. (Jacob)
-		if(i<4) {
+		
+		// Checks to see if the maximum number of papers submitted has been reached.
+		if(i < MAX_NUMBER_USER_SUBMITTED_PAPERS) {
 			try {			
 				PreparedStatement statement = connect.prepareStatement(
 						"INSERT INTO papers (ID,  AUTHOR,  NAME,  TEXT,  CONFNAME,  STATUS, ADMINSTAT)  VALUES " +
@@ -400,7 +411,7 @@ public class Controller extends Observable{
 				e.printStackTrace();
 			}
 		} else {
-			throw new Exception("Author cannot submit more than 4 papers to a single conference.");
+			throw new Exception("Author cannot submit any more papers to this conference.");
 		}
 		setCurrentPaper(the_paper_title);
 	}
@@ -408,11 +419,14 @@ public class Controller extends Observable{
 	/**
 	 * Returns the relation of the person passed in with the paper passed in.  Tells if they are Author,
 	 * Reviewer, SUBPC, or PC.
+	 * If they have multiple designations to a single paper this method returns the relation
+	 * that is of highest priority:
+	 * PC > SubPC > Reviewer > Author.
 	 * 
-	 * @param the_conference The conference the conference the paper belongs to
-	 * @param the_paper_title The name of the paper being examined for relation to
-	 * @param the_username the name of the person looking to see the relation of the paper
-	 * @return an enum that tells what the relation is of the person to the paper.
+	 * @param the_conference The conference that the paper belongs to.
+	 * @param the_paper_title The title of the paper to get relation for.
+	 * @param the_username The username of the person to get relation for.
+	 * @return A paperRelation enum of the highest priority that the user has with the paper.
 	 */
 	public paperRelation getRelationToPaper(final Conference the_conference, final String the_paper_title, 
 			final String the_username){
@@ -423,6 +437,7 @@ public class Controller extends Observable{
 		
 		//First Check if they are the author
 		try {
+			
 			//Get all papers that conference, paper title, and author match
 			PreparedStatement statement = connect.prepareStatement(
 					"SELECT * FROM papers WHERE confname='" + the_conference.getConfTitle() + 
@@ -431,13 +446,6 @@ public class Controller extends Observable{
 
 			if (resultSet.next()) {
 				relation = paperRelation.AUTHOR;
-				/*TESTING
-				username = resultSet.getString(2);//Author in papers table
-				//Means they are an author
-				if(the_username.equals(username)) {
-					relation = paperRelation.AUTHOR;
-				}
-				*/
 			}
 			
 		} catch (Exception e) {
@@ -447,6 +455,7 @@ public class Controller extends Observable{
 		//Second Check if they are a reviewer
 		try {
 			int paperid = -1;
+			
 			//Get all papers that conference, paper title, and author match
 			PreparedStatement statement = connect.prepareStatement(
 					"SELECT * FROM papers WHERE name=" +"'" + the_paper_title + "' AND confname='" + 
@@ -463,6 +472,7 @@ public class Controller extends Observable{
 					username = resultSet2.getString(3); //reviewer in reviews table
 					
 					if(username.equals(the_username)) {
+						
 						//Means they are a reviewer
 						relation = paperRelation.REVIEWER;
 						break;
@@ -477,6 +487,7 @@ public class Controller extends Observable{
 		//Third Check if they are a subPC
 		try {
 			int paperid = -1;
+			
 			//Get all papers that conference, paper title, and author match
 			PreparedStatement statement = connect.prepareStatement(
 					"SELECT * FROM papers WHERE name=" +"'" + the_paper_title + "' AND confname='" + 
@@ -522,69 +533,20 @@ public class Controller extends Observable{
 		} catch (Exception e) {
 			System.out.println("Get paperRelation failed in pc check");
 		}
-		System.out.println("Relation: " + relation);
 		return relation;
 	}
-	 
-	/**
-	 * 
-	 * @param the_conference
-	 * @param the_paper_title
-	 * @param the_username
-	 * @param the_relation
-	 */
-	public void setPaperRelation(final Conference the_conference, final String the_paper_title, 
-			final String the_username, final paperRelation the_relation){
-		//TODO: The GUI needs to be able to set a person's relation to a paper to be later queried.  (Jacob)
-		//kind of the same idea as getRelationToPaper()
-		//TODO: Kind of wondering what the point of this method is. If we know the conference and paper,
-		//doesn't that make this kind of pointless? Or maybe I don't get what this method is supposed to do.
-		//It seems like we would never need to set a user's relation in regards to a given paper when we know
-		//the conference. For example, if we know the conference we can find out who the pc is. Why would we
-		//need to set the pc in a conference that already has one? 
-		/*
-		if (the_relation == paperRelation.PC){ //This case also makes no sense.
-			try {
-				PreparedStatement statement = connect.prepareStatement("");
-				resultSet = statement.executeQuery();
-				
-			} catch (SQLException e) {
-				System.out.println("Error setting paper relation." + e.getMessage());
-			}
-		} else if (the_relation == paperRelation.SUBPC) { //Same with this one?
-			addSubPC(the_conference, the_paper_title, the_username);
-		} else if (the_relation == paperRelation.REVIEWER) { //This one could have a use...
-			String[] reviewer = new String[1];
-			reviewer[0] = the_username;
-			addReviewers(the_conference, the_paper_title, reviewer);
-		} else { //Isn't this a trivial case? When would we set an user as an author of paper?
-			try {
-				PreparedStatement statement = connect.prepareStatement("UPDATE papers SET author='" + the_username + "'");
-				statement.execute();								//TODO: fix this to where= otherwise sets entire table 
-				
-			} catch (SQLException e) {
-				System.out.println("Error setting paper relation." + e.getMessage());
-			}
-			
-		}*/
-		
-	}
-	
 	
 	/**
-	 * Sets the statuses of a paper.
+	 * Sets the author and admin status of a paper.
 	 * 
-	 * @param the_conference The conference object
+	 * @param the_conference The conference the paper belongs to.
 	 * @param the_paper_title The title of the paper.
-	 * @param the_author_viewable_status The status to be updated to.
-	 * @param the_admin_viewable_status The status to be updated to.
+	 * @param the_author_viewable_status The author status to be updated to.
+	 * @param the_admin_viewable_status The admin status to be updated to.
 	 * @author Aaron
 	 */
 	public void setPaperStatus(final Conference the_conference, final String the_paper_title, 
 			paperStatusAuthorViewable the_author_viewable_status, paperStatusAdminViewable the_admin_viewable_status){
-		
-		//		this is a generic update of the Paper status for both author viewable and admin viewable called at different
-		//		points in the program when reviews are submitted and so on.
 		
 		try {
 			PreparedStatement statement = connect.prepareStatement("UPDATE papers SET status='" + the_author_viewable_status + "', " +
@@ -599,6 +561,7 @@ public class Controller extends Observable{
 	}
 	
 	/**
+	 * 
 	 * 
 	 * @param the_conference
 	 * @param the_paper_title
