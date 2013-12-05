@@ -411,7 +411,7 @@ public class Controller extends Observable{
 		} else {
 			throw new Exception("Author cannot submit any more papers to this conference.");
 		}
-		setCurrentPaper(the_paper_title);
+//		setCurrentPaper(the_paper_title);
 	}
 	
 	/**
@@ -1378,24 +1378,24 @@ public class Controller extends Observable{
 						
 			int numberOfColumns = rsmd.getColumnCount();
 			  
-		    	for (int i = 1; i <= numberOfColumns; i++) {
-		    		if (i > 1) System.out.print(",  ");
-		    		String columnName = rsmd.getColumnName(i);
-		    		System.out.print(columnName);
-		    	}
-		    	System.out.println("");
+//		    	for (int i = 1; i <= numberOfColumns; i++) {
+//		    		if (i > 1) System.out.print(",  ");
+//		    		String columnName = rsmd.getColumnName(i);
+//		    		System.out.print(columnName);
+//		    	}
+//		    	System.out.println("");
 		    	
 		    	while (resultSet.next()) {
 	                ArrayList<String> record = new ArrayList<String>();
 		            for (int i = 1; i <= numberOfColumns; i++) {
-		            	if (i > 1) System.out.print(",  ");
+//		            	if (i > 1) System.out.print(",  ");
 		            	String columnValue = resultSet.getString(i);
                         record.add(columnValue);
-		            	System.out.print(columnValue);
+//		            	System.out.print(columnValue);
                 }
                 String value = infoForAUser(record);
                 al.add(value); 
-		            System.out.println("");
+//		            System.out.println("");
 		        }
 		} catch (SQLException e) {
 			System.out.println("Error printing table. " + e.getMessage());

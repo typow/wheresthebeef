@@ -4,6 +4,9 @@
 package controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -230,15 +233,17 @@ public class ControllerTest  {
 	public void testCheckConferenceExists() {
 		Controller controller = new Controller();
 
-		Boolean valid1 = false;
-		Boolean valid2 = false;
+		Boolean valid = false;
+		String conference = "Trees Have Feelings";  //Already in the DB we know its true
 
 		//TODO: check the conference title against database to see if this conference title
 		//		already exists in the database.  Jacob
 		
-		valid1 = controller.checkConferenceExists("a");
-		valid2 = controller.checkConferenceExists("b");
-		assertTrue(valid1 && !valid2);
+		valid = controller.checkConferenceExists(conference);
+		assertEquals(true, valid);
+		conference = "b"; //Not in the DB we know it's false
+		valid = controller.checkConferenceExists(conference);
+		assertEquals(false, valid);
 	}
 
 	/**
@@ -249,15 +254,22 @@ public class ControllerTest  {
 	@Test
 	public void testCreateNewConference() throws Exception {
 		Controller controller = new Controller();
+		resetDatabase();
+		
 		Conference the_conference = new Conference("zz", "Biff", new Date(), "3535 Wise street", 
 				"Bremerton", "WA", "98311",
-				new Date(), new Date(), new Date(), new Date(), "Junit Testing");
-		try {
-			controller.createNewConference(the_conference);
-			assert true;
-		} catch (Exception e) {
-			assert false;
-		}
+				new Date(), new Date(), new Date(), new Date(), "Junit Testing"); // Not in the DB
+		boolean result = true;
+		result = controller.checkConferenceExists("zz");
+		assertEquals(false, result);
+		
+		// Now Add user
+		controller.createNewConference(the_conference);
+		result = controller.checkConferenceExists("zz");
+		assertEquals(true, result);
+		
+		// Clear the user from the DB
+		resetDatabase();
 	}
 
 	/**
@@ -293,19 +305,35 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testCreateNewPaper() throws Exception {
-		Controller controller = new Controller();
-		Conference the_conference = new Conference("zz", "Biff", new Date(), "3535 Wise street", 
-				"Bremerton", "WA", "98311",
-				new Date(), new Date(), new Date(), new Date(), "Junit Testing");
+		Controller controller = new Controller();		
+		resetDatabase();
 		 paperStatusAuthorViewable the_user_viewable_status = null;
 		 paperStatusAdminViewable  the_admin_viewable_status = null;
-		 
-	    try {
+		Conference the_conference = new Conference("zz", "Biff", new Date(), "3535 Wise street", 
+				"Bremerton", "WA", "98311",
+				new Date(), new Date(), new Date(), new Date(), "Junit Testing"); // Not in the DB
+		boolean result = true;
+		
+		// Now Add user
+	    try { //successfully add the paper
 	    	controller.createNewPaper(the_conference, "D-man", "JunitTest", "JunitTest home ", the_user_viewable_status, the_admin_viewable_status);
-	    	assert true;
+	    	result =  true;
         } catch (Exception e) {
-        	assert false;
+        	result =  false;
         }
+	    assertTrue(result);
+	    try {//Show that the database now contains the paper
+	    	controller.createNewPaper(the_conference, "D-man", "JunitTest", "JunitTest home ", the_user_viewable_status, the_admin_viewable_status);
+	    	result =  false;
+        } catch (Exception e) {
+        	result = true;
+        }
+	    assertFalse(result);
+		// Clear the user from the DB
+		resetDatabase();
+
+		 
+
 	}
 	/**
 	 * Test method for getRelationToPaper()
@@ -460,7 +488,7 @@ public class ControllerTest  {
 		Conference the_conference = new Conference("zz", "Biff", new Date(), "3535 Wise street", 
 				"Bremerton", "WA", "98311",
 				new Date(), new Date(), new Date(), new Date(), "Junit Testing");
-		assertTrue(controller.canAddReview(the_conference, "junitTest", "USERNAME"));
+		assertTrue(controller.canAddReview(the_conference, "junitTest", "ripped"));
 	}
 
 	/**
@@ -579,18 +607,14 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetUserAssignedAsSubPC() {
+		
 		Controller controller = new Controller();
+		String subprogChair = "thor"; //
 		@SuppressWarnings("deprecation")
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
 				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
 				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
-		try {
-			controller.getUserAssignedAsSubPC(testConference, 2);
-			assert true;
-		} catch (Exception e) {
-			assert false;
-
-		}
+		assertEquals(controller.getUserAssignedAsSubPC(testConference, 2), subprogChair);
 	}
 
 	/**
@@ -612,19 +636,18 @@ public class ControllerTest  {
 	/**
 	 * Test method for {@link controller.Controller#getAvailableForSubPC(controller.Conference, int, java.lang.String)}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetAvailableForSubPC() {
 		Controller controller = new Controller();
+		resetDatabase();
+		String[] subprogChair = {"ajm1", "warfeld", "d-man", "Halmus", "idol", "thor", "yellow", "solo", "da-man", "bounty", "enterprise", "noise", "ripped"};
 		@SuppressWarnings("deprecation")
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
 				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
 				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
-		try {
-			controller.getAvailableForSubPC(testConference, 2, "d-man");
-			assert true;
-		} catch (Exception e) {
-			assert false;
-		}
+		assertEquals(subprogChair, controller.getAvailableForSubPC(testConference, 5, "typow"));
+
 	}
 
 	/**
@@ -633,16 +656,22 @@ public class ControllerTest  {
 	@Test
 	public void testAddSubPC() {
 		Controller controller = new Controller();
-		@SuppressWarnings("deprecation")
+		resetDatabase();
+		
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
 				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
 				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
-		try {
-			controller.addSubPC(testConference, "PAPER", "d-man");
-			assert true;
-		} catch (Exception e) {
-			assert false;
-		}
+		boolean result = true;
+		String subPC = controller.getUserAssignedAsSubPC(testConference, 5);
+		assertNull(subPC);
+		
+		// Now Add user
+		controller.addSubPC(testConference, "Wooden Computers", "Halmus");
+		subPC = controller.getUserAssignedAsSubPC(testConference, 5);
+		assertNotNull(subPC);
+		
+		// Clear the user from the DB
+		resetDatabase();
 	}
 
 	/**
@@ -672,19 +701,22 @@ public class ControllerTest  {
 	/**
 	 * Test method for {@link controller.Controller#getMyPapers(controller.Conference, java.lang.String)}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetMyPapers() {
 		Controller controller = new Controller();
-		@SuppressWarnings("deprecation")
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
 				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
 				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
-		try {
-			controller.getMyPapers(testConference, "d-man");
-			assert true;
-		} catch (Exception e) {
-			assert false;
-		}
+		paperStatusAuthorViewable author = controller.getStatusAuthorView(testConference, "Wooden Computers");
+		paperStatusAdminViewable admin = controller.getAdminPaperStatus(testConference, "Wooden Computers");
+		
+		String subChair = controller.getUserAssignedAsSubPC(testConference, 8);
+		String progrChair = controller.getUserAssignedAsPC(testConference);
+		String[] reviewers = controller.getUsersAssignedAsReviewers(testConference, "Sequoias- A Love Story");
+		Paper[] the_paper = {new Paper("Small Computer Conference", "Wooden Computers",  "sethk2",  author, admin, subChair, progrChair, reviewers, 5)};
+
+		assertEquals(the_paper[0].getID(), controller.getMyPapers(testConference, "sethk2")[0].getID());
 	}
 
 	/**
