@@ -17,6 +17,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import view.GUIEnum.StateOfGUI;
 import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
 import database.ManageDatabase;
@@ -77,51 +78,70 @@ public class ControllerTest  {
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#Controller()}.
+	 * Tests the construction of the controller.
 	 */
 	@Test
 	public void testController() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		assertEquals(StateOfGUI.LOGIN, controller.getStateOfGUI());
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#setStateOfGUI(view.GUIEnum.StateOfGUI)}.
+	 * Tests if GUI state can be set.
 	 */
 	@Test
 	public void testSetStateOfGUI() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		controller.setStateOfGUI(StateOfGUI.ACCEPT_REJECT);
+		assertEquals(StateOfGUI.ACCEPT_REJECT, controller.getStateOfGUI());
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#getStateOfGUI()}.
+	 * Tests if the getter for state of GUI works by retrieving the initial state.
 	 */
 	@Test
 	public void testGetStateOfGUI() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		assertEquals(StateOfGUI.LOGIN, controller.getStateOfGUI());
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#checkValidUsername(java.lang.String)}.
+	 * Test for checkValidUsername()
 	 */
-	//Tyler Powers was here
 	@Test
 	public void testCheckValidUsername() {
 		Controller controller = new Controller();
+		resetDatabase();
+		
 		String username = "typow";  //Already in the DB we know its true
-		boolean result = false;
+		boolean result = false;	
 		result = controller.checkValidUsername(username);
 		assertEquals(true, result);
+		
 		username = "hairyguy";  //Not in the DB we know it's false
 		result = controller.checkValidUsername(username);
 		assertEquals(false, result);
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#checkValidUsernamePassword(java.lang.String, java.lang.String)}.
+	 * Test for checkValidUsernamePassword()
 	 */
 	@Test
 	public void testCheckValidUsernamePassword() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+		
+		String username = "typow";  //Already in the DB we know its true
+		String password = "password";
+		
+		boolean result = false;
+		result = controller.checkValidUsernamePassword(username, password);
+		assertEquals(true, result);
+		
+		username = "hairyguy";  //Not in the DB we know it's false
+		password = "hairyPassword";
+		result = controller.checkValidUsername(username);
+		assertEquals(false, result);
 	}
 
 	/**
