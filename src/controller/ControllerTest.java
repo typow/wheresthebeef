@@ -145,32 +145,64 @@ public class ControllerTest  {
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#addNewUser(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
+	 * Test method for addNewUser()
 	 */
 	@Test
 	public void testAddNewUser() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+		
+		String username = "hairyguy";	// Not in the DB
+		boolean result = true;
+		result = controller.checkValidUsername(username);
+		assertEquals(false, result);
+		
+		// Now Add user
+		controller.addNewUser(username, "password", "Hairy", "E", "Guy", "");
+		result = controller.checkValidUsername(username);
+		assertEquals(true, result);
+		
+		// Clear the user from the DB
+		resetDatabase();
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#setCurrentUsername(java.lang.String)}.
+	 * Test method for setCurrentUsername()
 	 */
 	@Test
 	public void testSetCurrentUsername() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		String username = "funkyChicken";
+		
+		// Original Username;
+		assertEquals("", controller.getCurrentUsername());
+		
+		// After setting
+		controller.setCurrentUsername(username);
+		assertEquals("funkyChicken", controller.getCurrentUsername());
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#getCurrentUsername()}.
+	 * Test method for getCurrentUsername().
+	 * Basically the same test as the setter.
 	 */
 	@Test
 	public void testGetCurrentUsername() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		String username = "funkyChicken";
+		
+		// Original Username;
+		assertEquals("", controller.getCurrentUsername());
+		
+		// After setting
+		controller.setCurrentUsername(username);
+		assertEquals("funkyChicken", controller.getCurrentUsername());
 	}
 
 	/**
 	 * Test method for retrieving a user's full name from the 
 	 * database given a valid username.
+	 * TODO: Might need to change with the resetDatabase()
 	 */
 	@Test
 	public void testGetFullName() {
@@ -228,7 +260,7 @@ public class ControllerTest  {
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#setCurrentConference(controller.Conference)}.
+	 * Test method for setCurrentConference()
 	 */
 	@Test
 	public void testSetCurrentConference() {
