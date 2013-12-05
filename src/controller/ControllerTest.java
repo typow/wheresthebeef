@@ -365,35 +365,66 @@ public class ControllerTest  {
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#getAdminPaperStatus(controller.Conference, java.lang.String)}.
+	 * Test method for getAdminPaperStatus()
 	 */
 	@Test
 	public void testGetAdminPaperStatus() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+			
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
+				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
+				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		String paperTitle = "Baking Pi";
+		
+		// Default for paper
+		assertEquals(paperStatusAdminViewable.SUBMITTED,
+				controller.getAdminPaperStatus(testConference, paperTitle));
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#getStatusAuthorView(controller.Conference, java.lang.String)}.
+	 * Test method for getStatusAuthorView()
 	 */
 	@Test
 	public void testGetStatusAuthorView() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+			
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
+				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
+				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		String paperTitle = "Baking Pi";
+		
+		// Default for paper
+		assertEquals(paperStatusAuthorViewable.ACCEPTED,
+				controller.getStatusAuthorView(testConference, paperTitle));
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#setCurrentPaper(java.lang.String)}.
+	 * Test method for setCurrentPaper()
 	 */
 	@Test
 	public void testSetCurrentPaper() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		String testPaper = "The Wonders of Beeswax";
+		
+		// Default ""
+		controller.setCurrentPaper(testPaper);
+		assertEquals(testPaper, controller.getCurrentPaper());
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#getCurrentPaper()}.
+	 * Test method for getCurrentPaper()
+	 * Basically the same as the setter.
 	 */
 	@Test
 	public void testGetCurrentPaper() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		String testPaper = "The Wonders of Beeswax";
+		
+		// Default ""
+		controller.setCurrentPaper(testPaper);
+		assertEquals(testPaper, controller.getCurrentPaper());
 	}
 	
 	/**
