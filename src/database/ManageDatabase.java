@@ -483,18 +483,20 @@ public class ManageDatabase{
 		}
 	}
 	
-	public static void main(String args[]) {
-		ManageDatabase md = new ManageDatabase();
-		md.printDatabase();
-		
+	public void fullReset(ManageDatabase md) {
 		md.resetUsers();		
 		md.resetConference();
 		md.resetPapers();
-		md.resetUsers();
 		md.resetReviews();
 		md.resetRecommendations();
+	}
+	
+	public static void main(String args[]) {
+		ManageDatabase md = new ManageDatabase();
 		md.printDatabase();
+		md.fullReset(md);
 		
+		md.printDatabase();	
 	}
 	
 }

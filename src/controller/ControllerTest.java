@@ -9,12 +9,8 @@ import static org.junit.Assert.fail;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.After;
@@ -23,6 +19,7 @@ import org.junit.Test;
 
 import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
+import database.ManageDatabase;
 
 
 /**
@@ -68,6 +65,15 @@ public class ControllerTest  {
 	@After
 	public void tearDown() throws Exception {
 
+	}
+	
+	/**
+	 * Resets all the tables in the database to predetermined
+	 * reset values.
+	 */
+	public void resetDatabase() {
+		ManageDatabase md = new ManageDatabase();
+		md.fullReset(md);
 	}
 
 	/**
