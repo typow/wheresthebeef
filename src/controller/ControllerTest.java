@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import view.GUIEnum.StateOfGUI;
+import view.GUIEnum.paperRelation;
 import view.GUIEnum.paperStatusAdminViewable;
 import view.GUIEnum.paperStatusAuthorViewable;
 import database.ManageDatabase;
@@ -264,19 +265,30 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testSetCurrentConference() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		Conference test_conference = new Conference("zz", "Biff", new Date(), "3535 Wise street", 
+				"Bremerton", "WA", "98311",
+				new Date(), new Date(), new Date(), new Date(), "Junit Testing");
+		controller.setCurrentConference(test_conference);
+		assertEquals(test_conference, controller.getCurrentConference());
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#getCurrentConference()}.
+	 * Test method for getCurrentConference()
+	 * Basically the same as the setter.
 	 */
 	@Test
 	public void testGetCurrentConference() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		Conference test_conference = new Conference("zz", "Biff", new Date(), "3535 Wise street", 
+				"Bremerton", "WA", "98311",
+				new Date(), new Date(), new Date(), new Date(), "Junit Testing");
+		controller.setCurrentConference(test_conference);
+		assertEquals(test_conference, controller.getCurrentConference());
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#createNewPaper(controller.Conference, java.lang.String, java.lang.String, java.lang.String)}.
+	 * Test method for createNewPaper()
 	 * @throws Exception 
 	 */
 	@Test
@@ -296,27 +308,60 @@ public class ControllerTest  {
         }
 	}
 	/**
-	 * Test method for {@link controller.Controller#getRelationToPaper(controller.Conference, java.lang.String, java.lang.String)}.
+	 * Test method for getRelationToPaper()
 	 */
 	@Test
 	public void testGetRelationToPaper() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+		
+		String username1 = "typow";
+		String username2 = "thor";
+		String username3 = "warfeld";
+		String username4 = "sethk2";
+		
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
+				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
+				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		String paperTitle = "Baking Pi";
+		
+		paperRelation testRelation = controller.getRelationToPaper(testConference, paperTitle, username1);
+		assertEquals(paperRelation.PC, testRelation);
+		
+		testRelation = controller.getRelationToPaper(testConference, paperTitle, username2);
+		assertEquals(paperRelation.SUBPC, testRelation);
+		
+		testRelation = controller.getRelationToPaper(testConference, paperTitle, username3);
+		assertEquals(paperRelation.REVIEWER, testRelation);
+		
+		paperTitle = "Wooden Computers";
+		testRelation = controller.getRelationToPaper(testConference, paperTitle, username4);
+		assertEquals(paperRelation.AUTHOR, testRelation);
 	}
 
 	/**
-	 * Test method for {@link controller.Controller#setPaperRelation(controller.Conference, java.lang.String, java.lang.String, view.GUIEnum.paperRelation)}.
-	 */
-	@Test
-	public void testSetPaperRelation() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link controller.Controller#setPaperStatus(controller.Conference, java.lang.String, view.GUIEnum.paperStatusAuthorViewable, view.GUIEnum.paperStatusAdminViewable)}.
+	 * Test method for setPaperStatus()
 	 */
 	@Test
 	public void testSetPaperStatus() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+		
+		
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
+				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
+				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		String paperTitle = "Baking Pi";
+		
+		// Two status' that the paper didn't have before
+		controller.setPaperStatus(testConference, paperTitle, 
+				paperStatusAuthorViewable.UNDER_REVIEW, paperStatusAdminViewable.OVERDUE_FOR_REVIEW);
+		
+		assertEquals(paperStatusAuthorViewable.UNDER_REVIEW, controller.getStatusAuthorView(testConference, paperTitle));
+		assertEquals(paperStatusAdminViewable.OVERDUE_FOR_REVIEW, 
+				controller.getAdminPaperStatus(testConference, paperTitle));
+		
+		resetDatabase();	
 	}
 
 	/**
