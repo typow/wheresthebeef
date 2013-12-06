@@ -782,7 +782,16 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetMyConferences() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+
+		String username = "warfeld";
+		
+		Conference testConferences[] = controller.getMyConferences(username);
+		
+		// From the Default Database
+		assertEquals("Small Computer Conference", testConferences[0].getConfTitle());
+		assertEquals("Everything Math", testConferences[1].getConfTitle());
 	}
 
 	/**
@@ -790,7 +799,20 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetUpcommingConferences() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+
+		String username = "typow";
+		
+		Conference testConferences[] = controller.getUpcommingConferences(username);
+		
+		for (int i = 0; i < testConferences.length; i++) {
+			System.out.println(testConferences[i].getConfTitle());
+		}
+
+		// From the Default Database
+		assertEquals("Trees Have Feelings", testConferences[0].getConfTitle());
+		assertEquals("Everything Math", testConferences[1].getConfTitle());
 	}
 
 	/**
