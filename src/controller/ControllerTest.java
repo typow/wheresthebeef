@@ -819,15 +819,11 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetPaperID() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+		
+		String paperTitle = "Baking Pi";
+		
+		assertEquals(2, controller.getPaperID(paperTitle));
 	}
-
-	/**
-	 * Test method for {@link controller.Controller#main(java.lang.String[])}.
-	 */
-	@Test
-	public void testMain() {
-		fail("Not yet implemented");
-	}
-
 }
