@@ -461,7 +461,15 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetPaperFilePath() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+		
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
+				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
+				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		String paperTitle = "Baking Pi";
+
+		assertEquals("text", controller.getPaperFilePath(testConference, paperTitle));
 	}
 	
 	/**
@@ -469,7 +477,42 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testDeletePaper() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+		
+		boolean testResult = false;
+		
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
+				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
+				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		String paperTitle = "Baking Pi";
+		String username = "typow";
+		
+		// Check that the paper is in the Database
+		Paper[] testPapers = controller.getMyPapers(testConference, username);
+		
+		for (int i = 0; i < testPapers.length; i++) {
+			if (testPapers[i].getPaperTitle().equals(paperTitle)) {
+				testResult = true;
+			}
+		}
+		
+		assertEquals(true, testResult);
+		
+		// Now to delete the paper
+		testResult = false;
+		controller.deletePaper(testConference, username, paperTitle);
+		testPapers = controller.getMyPapers(testConference, username);
+		
+		for (int i = 0; i < testPapers.length; i++) {
+			if (testPapers[i].getPaperTitle().equals(paperTitle)) {
+				testResult = true;
+			}
+		}
+		
+		assertEquals(false, testResult);
+		
+		resetDatabase();
 	}
 
 	/**
