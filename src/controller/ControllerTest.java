@@ -813,7 +813,21 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetReviews() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+		
+		boolean testResult = false;
+			
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
+				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
+				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		String paperTitle = "Baking Pi";
+	
+		// Review in Default Database	
+		Review testReviews[] = controller.getReviews(testConference, paperTitle);
+		
+		assertEquals("warfeld", testReviews[0].getReviewerName());
+		assertEquals("noise", testReviews[1].getReviewerName());
 	}
 
 	/**
