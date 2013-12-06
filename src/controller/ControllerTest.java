@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Date;
@@ -594,6 +595,27 @@ public class ControllerTest  {
 	@Test
 	public void testAddPaperRecommendation() {
 		Controller controller = new Controller();
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15),
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		controller.addPaperRecommendation("da-man", testConference, "Baking Pi", "typow", 5, "It bakes pi!");
+		
+		PreparedStatement statement;
+		try {
+			statement = connect.prepareStatement("SELECT FROM recommendations WHERE papername='Baking Pi'");
+			resultSet = statement.executeQuery();
+			
+			if (resultSet.next())
+			{
+				assertEquals("It bakes pi!", resultSet.getString(6));
+			}
+		} catch (SQLException e) {
+			fail("SQL error");
+			e.printStackTrace();
+		}
+		
+		
+		
 	}
 	
 	@SuppressWarnings("deprecation")
