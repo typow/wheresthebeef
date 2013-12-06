@@ -15,6 +15,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.junit.After;
@@ -63,7 +64,7 @@ public class ControllerTest  {
 		} catch(Exception e) {
 			assert(false);
 		}
-
+		resetDatabase();
 	}
 	/**
 	 * @throws java.lang.Exception
@@ -116,7 +117,6 @@ public class ControllerTest  {
 	@Test
 	public void testCheckValidUsername() {
 		Controller controller = new Controller();
-		resetDatabase();
 		
 		String username = "typow";  //Already in the DB we know its true
 		boolean result = false;	
@@ -134,7 +134,6 @@ public class ControllerTest  {
 	@Test
 	public void testCheckValidUsernamePassword() {
 		Controller controller = new Controller();
-		resetDatabase();
 		
 		String username = "typow";  //Already in the DB we know its true
 		String password = "password";
@@ -155,7 +154,6 @@ public class ControllerTest  {
 	@Test
 	public void testAddNewUser() {
 		Controller controller = new Controller();
-		resetDatabase();
 		
 		String username = "hairyguy";	// Not in the DB
 		boolean result = true;
@@ -166,9 +164,7 @@ public class ControllerTest  {
 		controller.addNewUser(username, "password", "Hairy", "E", "Guy", "");
 		result = controller.checkValidUsername(username);
 		assertEquals(true, result);
-		
-		// Clear the user from the DB
-		resetDatabase();
+
 	}
 
 	/**
@@ -255,7 +251,6 @@ public class ControllerTest  {
 	@Test
 	public void testCreateNewConference() throws Exception {
 		Controller controller = new Controller();
-		resetDatabase();
 		
 		Conference the_conference = new Conference("zz", "Biff", new Date(), "3535 Wise street", 
 				"Bremerton", "WA", "98311",
@@ -268,9 +263,6 @@ public class ControllerTest  {
 		controller.createNewConference(the_conference);
 		result = controller.checkConferenceExists("zz");
 		assertEquals(true, result);
-		
-		// Clear the user from the DB
-		resetDatabase();
 	}
 
 	/**
@@ -307,7 +299,6 @@ public class ControllerTest  {
 	@Test
 	public void testCreateNewPaper() throws Exception {
 		Controller controller = new Controller();		
-		resetDatabase();
 		 paperStatusAuthorViewable the_user_viewable_status = null;
 		 paperStatusAdminViewable  the_admin_viewable_status = null;
 		Conference the_conference = new Conference("zz", "Biff", new Date(), "3535 Wise street", 
@@ -330,11 +321,6 @@ public class ControllerTest  {
         	result = true;
         }
 	    assertFalse(result);
-		// Clear the user from the DB
-		resetDatabase();
-
-		 
-
 	}
 	/**
 	 * Test method for getRelationToPaper()
@@ -343,7 +329,6 @@ public class ControllerTest  {
 	@Test
 	public void testGetRelationToPaper() {
 		Controller controller = new Controller();
-		resetDatabase();
 		
 		String username1 = "typow";
 		String username2 = "thor";
@@ -375,9 +360,7 @@ public class ControllerTest  {
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testSetPaperStatus() {
-		Controller controller = new Controller();
-		resetDatabase();
-		
+		Controller controller = new Controller();		
 		
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
 				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
@@ -391,8 +374,7 @@ public class ControllerTest  {
 		assertEquals(paperStatusAuthorViewable.UNDER_REVIEW, controller.getStatusAuthorView(testConference, paperTitle));
 		assertEquals(paperStatusAdminViewable.OVERDUE_FOR_REVIEW, 
 				controller.getAdminPaperStatus(testConference, paperTitle));
-		
-		resetDatabase();	
+
 	}
 
 	/**
@@ -402,7 +384,6 @@ public class ControllerTest  {
 	@Test
 	public void testGetAdminPaperStatus() {
 		Controller controller = new Controller();
-		resetDatabase();
 			
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
 				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
@@ -421,8 +402,7 @@ public class ControllerTest  {
 	@Test
 	public void testGetStatusAuthorView() {
 		Controller controller = new Controller();
-		resetDatabase();
-			
+
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
 				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
 				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
@@ -467,7 +447,6 @@ public class ControllerTest  {
 	@Test
 	public void testGetPaperFilePath() {
 		Controller controller = new Controller();
-		resetDatabase();
 		
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
 				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
@@ -484,7 +463,6 @@ public class ControllerTest  {
 	@Test
 	public void testDeletePaper() {
 		Controller controller = new Controller();
-		resetDatabase();
 		
 		boolean testResult = false;
 		
@@ -517,8 +495,6 @@ public class ControllerTest  {
 		}
 		
 		assertEquals(false, testResult);
-		
-		resetDatabase();
 	}
 
 	/**
@@ -528,7 +504,6 @@ public class ControllerTest  {
 	@Test
 	public void testCreateNewReview() {
 		Controller controller = new Controller();
-		resetDatabase();
 		
 		boolean testResult = false;
 			
@@ -555,7 +530,22 @@ public class ControllerTest  {
 		
 		assertEquals(true, testResult);
 		
-		resetDatabase();
+		// Review IS in Default Database
+		testResult = false;
+		controller.createNewReview("warfeld", testConference, "Baking Pi",
+				"typow", "", testButtons, "");
+
+		Review testReviews2[] = controller.getReviews(testConference, paperTitle);
+
+		for (int i = 0; i < testReviews.length; i++) {
+			if (testReviews2[i].getPaperAuthor().equals(paperAuthor)
+					&& testReviews2[i].getReviewerName().equals(username)) {
+				testResult = true;
+			}
+		}
+
+		assertEquals(true, testResult);
+
 	}
 
 	/**
@@ -583,15 +573,10 @@ public class ControllerTest  {
 		if (!controller.checkConferenceExists("Small Computer Conference")) {
 			controller.createNewConference(testConference);
 		}
-		String paper = "Baking Pi";
-		String expectedAuthor = "Tyler Powers";
+		String paper = "Baking Pi";//already has a paper of this name
+		String expectedAuthor = "typow";//authored by this person in the DB
 		String testedAuthor = "";
-		try {
-			testedAuthor = controller.getPaperAuthor(testConference, paper);
-		} catch(Exception e) {
-			fail("did not connect to database");
-			e.getStackTrace();
-		}
+		testedAuthor = controller.getPaperAuthor(testConference, paper);
 		assertEquals(expectedAuthor, testedAuthor);
 		
 		try {
@@ -604,7 +589,7 @@ public class ControllerTest  {
 	}
 
 	/**
-	 * Test method for
+	 * Test method addPaperRecommendation()
 	 */
 	@Test
 	public void testAddPaperRecommendation() {
@@ -613,9 +598,12 @@ public class ControllerTest  {
 	
 	@SuppressWarnings("deprecation")
 	@Test
+	/**
+	 * Test method for getPaperRecommendationRationale().S
+	 */
 	public void testGetPaperRecommendationRationale() {
 		Controller controller = new Controller();
-		Conference testConference = new Conference("TestTest", "PC", new Date(2000, 1, 1), "Test Address", 
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
 				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
 				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
 		
@@ -623,7 +611,7 @@ public class ControllerTest  {
 		if (!controller.checkConferenceExists("TestTest")) {
 			controller.createNewConference(testConference);
 		} 
-		
+		/*
 		try {
 			controller.createNewPaper(testConference, "Test username", "Test PaperTitle", 
 					"Test FileSubmittted", paperStatusAuthorViewable.SUBMITTED, 
@@ -634,9 +622,12 @@ public class ControllerTest  {
 		
 		controller.addPaperRecommendation("Sub PC", testConference, 
 				"Test PaperTitle", "Test Author", 5, "Test Recommendation");
+		*/
 		
-		assertEquals("Test Recommendation", controller.getPaperRecommendationRationale(
-				testConference, "Test PaperTitle"));
+		//Recommendation already exists written by thor for paper "Baking Pi" by typow 
+		//with recommendation rationale of "Helped me gain a six-pack"
+		assertEquals("Helped me gain a six-pack", controller.getPaperRecommendationRationale(
+				testConference, "Baking Pi"));
 	}
 	
 	
@@ -654,7 +645,9 @@ public class ControllerTest  {
 		if (!controller.checkConferenceExists("Small Computer Conference")) {
 			controller.createNewConference(testConference);
 		}
-		int expectedVal = 5;
+		int expectedVal = 2;//In database already as 2 from SubPC thor
+		int testedVal = controller.getPaperRecommendationNumericalValuefinal(testConference, "Baking Pi");
+		assertEquals(expectedVal, testedVal);
 	}
 	
 	/**
@@ -693,8 +686,12 @@ public class ControllerTest  {
 		Boolean equal = false;
 		for (int i = 0; i < result.length; i++)
 		{
-			if (result[i] == reviewers[i])
+			if (result[i].equals("noise") || result[i].equals("warfeld")) {
 				equal = true;
+			} else {
+				equal = false;
+			}
+				
 		}
 		
 		assertEquals(true, equal);
@@ -737,7 +734,21 @@ public class ControllerTest  {
 	 */
 	@Test
 	public void testGetAvailableReviewers() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
+				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15),
+				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		String paper = "Baking Pi";//15users - author(typow) - currentReviewers(warfeld, noise)
+		String subpc = "thor";// - subpc(thor) = ajm1, sethk2, d-man, Halmus, idol, yellow, solo, da-man, bounty,
+								//enterprise, ripped
+		String reviewers[] = controller.getAvailableReviewers(testConference, paper, subpc);
+		String expectedReviewers[] = {"ajm1", "sethk2", "d-man", "Halmus", "idol", "yellow",
+				"solo", "da-man", "bounty", "enterprise", "ripped"};
+		Arrays.sort(reviewers);//sort the tested reviewers
+		Arrays.sort(expectedReviewers);//sort the expected
+		boolean check = Arrays.equals(reviewers, expectedReviewers);//compare the expected
+		assertTrue(check);
+
 	}
 
 	/**
@@ -750,21 +761,32 @@ public class ControllerTest  {
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
 				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15),
 				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		
 		String[]reviewers = new String[2];
 		reviewers[0] = "noise";
 		reviewers[1] = "bounty";
 		
 		controller.addReviewers(testConference, "Baking Pi", reviewers);
+	 
 		String[] result = controller.getUsersAssignedAsReviewers(testConference, "Baking Pi");
 		
 		Boolean equal = false;
+		//Test noise was added
 		for (int i = 0; i < result.length; i++)
 		{
-			if (result[i] == reviewers[0] || result[1] == reviewers[1])
+			if (result[i].equals("noise"))//noise was added
 				equal = true;
 		}
+		assertTrue(equal);
 		
-		assertEquals(true, equal);
+		//Test bounty was added
+		equal = false;
+		for (int i = 0; i < result.length; i++)
+		{
+			if (result[i].equals("bounty"))//noise was added
+				equal = true;
+		}
+		assertTrue(equal);
 	}
 
 	/**
@@ -790,7 +812,6 @@ public class ControllerTest  {
 	@Test
 	public void testAddSubPC() {
 		Controller controller = new Controller();
-		resetDatabase();
 		
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
 				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
@@ -803,9 +824,6 @@ public class ControllerTest  {
 		controller.addSubPC(testConference, "Wooden Computers", "Halmus");
 		subPC = controller.getUserAssignedAsSubPC(testConference, 5);
 		assertNotNull(subPC);
-		
-		// Clear the user from the DB
-		resetDatabase();
 	}
 
 	/**
@@ -814,8 +832,7 @@ public class ControllerTest  {
 	@Test
 	public void testGetReviews() {
 		Controller controller = new Controller();
-		resetDatabase();
-		
+
 		boolean testResult = false;
 			
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
@@ -836,7 +853,6 @@ public class ControllerTest  {
 	@Test
 	public void testGetMyConferences() {
 		Controller controller = new Controller();
-		resetDatabase();
 
 		String username = "warfeld";
 		
@@ -853,7 +869,6 @@ public class ControllerTest  {
 	@Test
 	public void testGetUpcommingConferences() {
 		Controller controller = new Controller();
-		resetDatabase();
 
 		String username = "typow";
 		
@@ -895,7 +910,6 @@ public class ControllerTest  {
 	@Test
 	public void testGetPaperID() {
 		Controller controller = new Controller();
-		resetDatabase();
 		
 		String paperTitle = "Baking Pi";
 		

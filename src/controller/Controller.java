@@ -1255,7 +1255,7 @@ public class Controller extends Observable{
 				if (!(author.equals(user))) {				
 					
 					// The reviewer can't be the person assigning unless they're the PC
-					if (!user.equals(PC) || (!(user.equals(the_person_assigning)))) {
+					if (user.equals(PC) || (!(user.equals(the_person_assigning)))) {
 						ruleViolated = false;
 						
 						// The reviewer can't have already been assigned to this paper
@@ -1519,6 +1519,7 @@ public class Controller extends Observable{
 	 * @param the_paper The paper whose reviews are being retrieved.
 	 * @return Returns an array of Review objects of the given paper.
 	 */
+	
 	public Review[] getReviews(final Conference the_conference, final String the_paper){
 		
 		int paperID = -1;
@@ -1835,7 +1836,7 @@ public class Controller extends Observable{
 		}
 		return paper;
 	}
-	
+
 	/**
 	 * This method adds Paper objects to the passed in list by using the ResultSet
 	 * (which MUST be rows from the papers table). All rows passed in are packaged
