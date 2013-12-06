@@ -339,6 +339,7 @@ public class ControllerTest  {
 	/**
 	 * Test method for getRelationToPaper()
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetRelationToPaper() {
 		Controller controller = new Controller();
@@ -371,6 +372,7 @@ public class ControllerTest  {
 	/**
 	 * Test method for setPaperStatus()
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSetPaperStatus() {
 		Controller controller = new Controller();
@@ -396,6 +398,7 @@ public class ControllerTest  {
 	/**
 	 * Test method for getAdminPaperStatus()
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetAdminPaperStatus() {
 		Controller controller = new Controller();
@@ -414,6 +417,7 @@ public class ControllerTest  {
 	/**
 	 * Test method for getStatusAuthorView()
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetStatusAuthorView() {
 		Controller controller = new Controller();
@@ -459,6 +463,7 @@ public class ControllerTest  {
 	/**
 	 * Test method for {@link controller.Controller#getPaperFilePath(controller.Conference, java.lang.String)}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetPaperFilePath() {
 		Controller controller = new Controller();
@@ -475,6 +480,7 @@ public class ControllerTest  {
 	/**
 	 * Test method for {@link controller.Controller#deletePaper(controller.Conference, java.lang.String, java.lang.String)}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testDeletePaper() {
 		Controller controller = new Controller();
@@ -518,9 +524,38 @@ public class ControllerTest  {
 	/**
 	 * Test method for {@link controller.Controller#createNewReview(java.lang.String, controller.Conference, java.lang.String, java.lang.String, java.lang.String, java.lang.String, int[], java.lang.String)}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testCreateNewReview() {
-		fail("Not yet implemented");
+		Controller controller = new Controller();
+		resetDatabase();
+		
+		boolean testResult = false;
+			
+		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1), "Test Address", 
+				"Test City", "Test State", "Test Zip", new Date(2000, 1, 15), new Date(2000, 1, 20), 
+				new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
+		String paperTitle = "Wooden Computers";
+		String username = "typow";
+		String paperAuthor = "sethk2";
+		int testButtons[] = new int[10];
+		
+		// Review not in Default Database
+		controller.createNewReview(username, testConference, paperTitle, paperAuthor, 
+				"", testButtons, "");
+		
+		Review testReviews[] = controller.getReviews(testConference, paperTitle);
+		
+		for (int i = 0; i < testReviews.length; i++) {
+			if (testReviews[i].getPaperAuthor().equals(paperAuthor) &&
+					testReviews[i].getReviewerName().equals(username)) {
+				testResult = true;
+			}
+		}
+		
+		assertEquals(true, testResult);
+		
+		resetDatabase();
 	}
 
 	/**
@@ -625,6 +660,7 @@ public class ControllerTest  {
 	/**
 	 * Test method for {@link controller.Controller#getPaperRecommendationSubPCName(controller.Conference, java.lang.String)}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetPaperRecommendationSubPCName() {
 		Controller controller = new Controller();
@@ -643,6 +679,7 @@ public class ControllerTest  {
 	/**
 	 * Test method for {@link controller.Controller#getUsersAssignedAsReviewers(controller.Conference, java.lang.String)}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetUsersAssignedAsReviewers() {
 		Controller controller = new Controller();
@@ -666,6 +703,7 @@ public class ControllerTest  {
 	/**
 	 * Test method for {@link controller.Controller#getUserAssignedAsPC(controller.Conference)}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetUserAssignedAsPC() {
 		Controller controller = new Controller();
@@ -705,6 +743,7 @@ public class ControllerTest  {
 	/**
 	 * Test method for {@link controller.Controller#addReviewers(controller.Conference, java.lang.String, java.lang.String[])}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testAddReviewers() {
 		Controller controller = new Controller();
@@ -737,7 +776,6 @@ public class ControllerTest  {
 		Controller controller = new Controller();
 		resetDatabase();
 		String[] subprogChair = {"ajm1", "warfeld", "d-man", "Halmus", "idol", "thor", "yellow", "solo", "da-man", "bounty", "enterprise", "noise", "ripped"};
-		@SuppressWarnings("deprecation")
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
 				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15), 
 				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
@@ -748,6 +786,7 @@ public class ControllerTest  {
 	/**
 	 * Test method for {@link controller.Controller#addSubPC(controller.Conference, java.lang.String, java.lang.String)}.
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testAddSubPC() {
 		Controller controller = new Controller();

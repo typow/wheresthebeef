@@ -1543,7 +1543,7 @@ public class Controller extends Observable{
 			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				reviewarray.add(new Review(resultSet.getString(3), the_conference, resultSet.getString(3),
-						the_paper, resultSet.getString(5), resultSet.getString(18), 
+						the_paper, resultSet.getString(6), resultSet.getString(18), 
 						new int[]{resultSet.getInt(7), resultSet.getInt(8),
 						resultSet.getInt(9), resultSet.getInt(10), resultSet.getInt(11), resultSet.getInt(12),
 						resultSet.getInt(13), resultSet.getInt(14), resultSet.getInt(15), resultSet.getInt(16)},
