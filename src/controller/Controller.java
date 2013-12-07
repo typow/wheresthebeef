@@ -141,7 +141,12 @@ public class Controller extends Observable{
 	/**
 	 * Gets the next state the GUI should transition to.
 	 * 
-	 * @return state The updated current state.
+	 * @return The updated current state.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: StateOfGUI enum returned.</b>
+	 * <dd>
 	 */
 	public StateOfGUI getStateOfGUI(){
 		return state;
@@ -153,6 +158,11 @@ public class Controller extends Observable{
 	 * 
 	 * @param the_username The username to be check in the database.
 	 * @return Returns true if the username exists in the database.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns boolean whether the username exists in the Database.</b>
+	 * <dd>
 	 */	
 	public Boolean checkValidUsername(final String the_username) {
 		Boolean valid = false;		
@@ -180,6 +190,12 @@ public class Controller extends Observable{
 	 * @param the_username The username to check in the database.
 	 * @param the_password The corresponding password to check in the database.
 	 * @return Returns true if the username/password combo are verified, false otherwise.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns boolean whether the username Password
+	 * 							pair are in the Database.</b>
+	 * <dd>
 	 */
 	public Boolean checkValidUsernamePassword(final String the_username, 
 												final String the_password){
@@ -212,6 +228,13 @@ public class Controller extends Observable{
 	 * @param the_middle_name The user's middle initial.
 	 * @param the_last_name The user's last name.
 	 * @param the_specialty The user's engineering specialty (String from GUI).
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and 
+	 * 							checkValidUsername() has been called first and
+	 * 							the name doesn't already exist in the system.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: The new user is added to the database.</b>
+	 * <dd>
 	 */
 	public void addNewUser(final String the_username, final String the_password, 
 							final String the_first_name, final String the_middle_name, 
@@ -234,6 +257,11 @@ public class Controller extends Observable{
 	 * Sets the current user to the username of the person currently logged in.
 	 * 
 	 * @param the_username The username of the current person logged in.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Current user is set to the passed in username.</b>
+	 * <dd>
 	 */
 	public void setCurrentUsername(final String the_username){
 		current_user = the_username;
@@ -243,6 +271,11 @@ public class Controller extends Observable{
 	 * Returns the username of the current person logged in.
 	 * 
 	 * @return Returns the current user.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns a String of the current user.</b>
+	 * <dd>
 	 */
 	public String getCurrentUsername(){
 		return current_user;
@@ -253,6 +286,12 @@ public class Controller extends Observable{
 	 * 
 	 * @param the_username The username of the individual being queried.
 	 * @return The full name of the person.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the
+	 * 							passed in username exists in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns a String representation of the users full name.</b>
+	 * <dd>
 	 */
 	public String getFullName(final String the_username){
 		
@@ -286,6 +325,11 @@ public class Controller extends Observable{
 	 * 
 	 * @param the_conference_title The title of the conference.
 	 * @return Returns true if the conference title exists in database
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns a boolean of whether the conference exists.</b>
+	 * <dd>
 	 */
 	public Boolean checkConferenceExists(final String the_conference_title) {
 		Boolean valid = false;
@@ -313,6 +357,12 @@ public class Controller extends Observable{
 	 * so duplicate conferences don't get entered into the database.
 	 * 
 	 * @param the_conference The conference object to be entered into the database.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and checkConferenceExists()
+	 * 							has been called to ensure there are no duplicate conferences.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Conference added to the Database.</b>
+	 * <dd>
 	 */
 	public void createNewConference(final Conference the_conference){
 		listOfAllConferences = new ArrayList<Conference>();
