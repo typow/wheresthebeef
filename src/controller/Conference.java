@@ -40,18 +40,18 @@ public class Conference {
 	/**
 	 * Constructor for the Conference Object
 	 * 
-	 * @param the_conf_title
-	 * @param the_program_chair
-	 * @param the_conf_date
-	 * @param the_conf_address
-	 * @param the_conf_city
-	 * @param the_conf_state
-	 * @param the_con_zip
-	 * @param the_submission_deadline
-	 * @param the_review_deadline
-	 * @param the_sub_pc_recommend_deadline
-	 * @param the_author_notification_deadline
-	 * @param the_conference_summary
+	 * @param the_conf_title The title of the conference.
+	 * @param the_program_chair The username of the PC.
+	 * @param the_conf_date The Date of the conference.
+	 * @param the_conf_address The address of the conference.
+	 * @param the_conf_city The city of the conference.
+	 * @param the_conf_state The state the conference is in.
+	 * @param the_con_zip The zip code the conference is in.
+	 * @param the_submission_deadline The deadline for paper submissions.
+	 * @param the_review_deadline The deadline for reviews to be turned in.
+	 * @param the_sub_pc_recommend_deadline The deadline for the SubPC's recommendation.
+	 * @param the_author_notification_deadline The deadline for notifying the author.
+	 * @param the_conference_summary The description of the conference.
 	 */
 	public Conference(final String the_conf_title, final String the_program_chair, final Date the_conf_date, 
 			final String the_conf_address, final String the_conf_city, final String the_conf_state, final String the_con_zip, 
@@ -70,40 +70,111 @@ public class Conference {
 		author_notification_deadline = the_author_notification_deadline;
 		conference_summary = the_conference_summary;
 	}
+	
+	/**
+	 * Getter for the title of the conference.
+	 * 
+	 * @return Returns the title of the conference.
+	 */
 	public String getConfTitle(){
 		return conf_title;
 	}
 	
+	/**
+	 * Getter for the PC's username.
+	 * 
+	 * @return Returns the PC's username.
+	 */
 	public String getProgramChair(){
 		return program_chair;
 	}
+	
+	/**
+	 * Getter for the conference's Date object.
+	 * 
+	 * @return Returns conference's Date object.
+	 */
 	public Date getConfDate(){
 		return conf_date;
 	}
+	
+	/**
+	 * Getter for the conference's address.
+	 * 
+	 * @return Returns conference's address.
+	 */
 	public String getConfAddress(){
 		return conf_address;
 	}
+	
+	/**
+	 * Getter for the conference's city.
+	 * 
+	 * @return Returns conference's city.
+	 */
 	public String getConCity(){
 		return conf_city;
 	}
+	
+	/**
+	 * Getter for the conference's state.
+	 * 
+	 * @return Returns conference's state.
+	 */
 	public String getConfState(){
 		return conf_state;
 	}
+	
+	/**
+	 * Getter for the conference's zip code.
+	 * 
+	 * @return Returns conference's zip code.
+	 */
 	public String getConfZip(){
 		return con_zip;
 	}
+	
+	/**
+	 * Getter for the conference's submission Date object.
+	 * 
+	 * @return Returns conference's submission Date object.
+	 */
 	public Date getSubmissionDead(){
 		return submission_deadline;
 	}
+	
+	/**
+	 * Getter for the conference's review Date object.
+	 * 
+	 * @return Returns conference's review Date object.
+	 */
 	public Date getReviewDead(){
 		return review_deadline;
 	}
+	
+	/**
+	 * Getter for the conference's recommendation Date object.
+	 * 
+	 * @return Returns conference's recommendation Date object.
+	 */
 	public Date getSubPCReccomendDead(){
 		return sub_pc_recommend_deadline;
 	}
+	
+	/**
+	 * Getter for the conference's authors notification Date object.
+	 * 
+	 * @return Returns conference's authors notification Date object.
+	 */
 	public Date getAuthorNotificationDead(){
 		return author_notification_deadline;
 	}
+	
+	/**
+	 * Getter for the conference's summary.
+	 * 
+	 * @return Returns conference's summary.
+	 */
 	public String getConfSummary(){
 		return conference_summary;
 	}
