@@ -32,16 +32,16 @@ public class Review {
 	private String summary_comments = "";
 	
 	/**
-	 * Constructor for the Review Object.
+	 * Constructor for the Review Object
 	 * 
-	 * @param the_reviewer_name
-	 * @param the_conf
-	 * @param the_username
-	 * @param the_paper
-	 * @param the_paper_author
-	 * @param the_comments_to_subpc
-	 * @param the_answersRadioBtn
-	 * @param the_summary_comments
+	 * @param the_reviewer_name The username of the reviewer.
+	 * @param the_conf The conference the review is associated with.
+	 * @param the_username The username.
+	 * @param the_paper The title of the paper.
+	 * @param the_paper_author The username of the author.
+	 * @param the_comments_to_subpc Comments to the SubPC.
+	 * @param the_answersRadioBtn All the ratings the reviewer gave the paper.
+	 * @param the_summary_comments Comments from the reviewer.
 	 */
 	public Review(final String the_reviewer_name, final Conference the_conf, 
 			final String the_username, final String the_paper, final String the_paper_author, final String the_comments_to_subpc, 
@@ -56,34 +56,74 @@ public class Review {
 		summary_comments = the_summary_comments;
 	}
 	
+	/**
+	 * Getter for the Reviewer's username.
+	 * 
+	 * @return Returns the Reviewer's username.
+	 */
 	public String getReviewerName(){
 		return reviewer_name;
 	}
 	
+	/**
+	 * Getter for the Conference the review is associated with.
+	 * 
+	 * @return Returns the Conference.
+	 */
 	public Conference getConference(){
 		return conference;
 	}
-
+	
+	/**
+	 * Getter for the username.
+	 * 
+	 * @return Returns the username.
+	 */
 	public String getUsername(){
 		return username;
 	}
 	
+	/**
+	 * Getter for the name of the paper.
+	 * 
+	 * @return Returns the paper title.
+	 */
 	public String getPaper(){
 		return paper;
 	}
 	
+	/**
+	 * Getter for the Author's username.
+	 * 
+	 * @return Returns the Author's username.
+	 */
 	public String getPaperAuthor(){
 		return paper_author;
 	}
 	
+	/**
+	 * Getter for SubPC's comments.
+	 * 
+	 * @return Returns the SubPC's comments.
+	 */
 	public String getCommentsToSubPC(){
 		return comments_to_subpc;
 	}
 	
+	/**
+	 * Getter for the Reviewers ratings.
+	 * 
+	 * @return Returns an array of integer ratings from the reviewer.
+	 */
 	public int[] getAnswersToRadioBtns(){
 		return answersRadioBtn;
 	}
 	
+	/**
+	 * Getter for the comments from the reviewer.
+	 * 
+	 * @return Returns the Reviewer's comments.
+	 */
 	public String getSummaryComments(){
 		return summary_comments;
 	}
