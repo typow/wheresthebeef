@@ -19,6 +19,7 @@ import view.GUIEnum.paperStatusAuthorViewable;
  * controller to the ConferenceGUI in an array.
  * 
  * @author Jacob Hall
+ * @author Seth Kramer
  * @version 164 Date: 12/4/13
  */
 public class Paper {
@@ -34,15 +35,16 @@ public class Paper {
 	
 	/**
 	 * Constructor for the Paper object
-	 * @param the_conf_title
-	 * @param the_paper_title
-	 * @param the_author
-	 * @param the_status_author_viewable
-	 * @param the_status_admin_viewable
-	 * @param the_sub_pc
-	 * @param the_pc
-	 * @param the_reviewers
-	 * @param the_id
+	 * 
+	 * @param the_conf_title The Conference title.
+	 * @param the_paper_title The paper title.
+	 * @param the_author The author's username.
+	 * @param the_status_author_viewable The author viewable status.
+	 * @param the_status_admin_viewable The admin viewable status.
+	 * @param the_sub_pc The username of the Paper's SubPC.
+	 * @param the_pc The username of the Paper's PC.
+	 * @param the_reviewers An array of users assigned as reviewers.
+	 * @param the_id The ID # of the paper.
 	 */
 	public Paper(final String the_conf_title, final String the_paper_title, 
 			final String the_author, 
@@ -61,38 +63,83 @@ public class Paper {
 		id = the_id;
 	}
 	
+	/**
+	 * Getter for the Conference title.
+	 * 
+	 * @return Returns the Conference title.
+	 */
 	public String getConfTitle(){
 		return conf_title;
 	}
 	
+	/**
+	 * Getter for the paper title.
+	 * 
+	 * @return Returns the paper title.
+	 */
 	public String getPaperTitle(){
 		return paper_title;
 	}
 	
+	/**
+	 * Getter for the author's username.
+	 * 
+	 * @return Returns the author's username.
+	 */
 	public String getAuthor(){
 		return author;
 	}
 	
+	/**
+	 * Getter for the author status enum.
+	 * 
+	 * @return Returns the author status enum.
+	 */
 	public paperStatusAuthorViewable getStatusAuthorViewable(){
 		return status_author_viewable;
 	}
 	
+	/**
+	 * Getter for the admin status enum.
+	 * 
+	 * @return Returns the admin status enum.
+	 */
 	public paperStatusAdminViewable getStatusAdminViewable(){
 		return status_admin_viewable;
 	}
 	
+	/**
+	 * Getter for the SubPC's username.
+	 * 
+	 * @return Returns the SubPC's username.
+	 */
 	public String getSubPC(){
 		return sub_pc;
 	}
 	
+	/**
+	 * Getter for the PC's username.
+	 * 
+	 * @return Returns the PC's username.
+	 */
 	public String getPC(){
 		return pc;
 	}
 	
+	/**
+	 * Getter for the array of Reviewers.
+	 * 
+	 * @return Returns the Paper's Reviewers.
+	 */
 	public String[] getReviewers(){
 		return reviewers;
 	}
 	
+	/**
+	 * Getter for the Paper ID#.
+	 * 
+	 * @return Returns the Paper ID#.
+	 */
 	public int getID(){
 		return id;
 	}
