@@ -394,6 +394,11 @@ public class Controller extends Observable{
 	 * Sets the current conference to the conference of the person currently being looked at by the user.
 	 * 
 	 * @param the_conference_name The conference to set as the current conference.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Sets the current conference to the Conference passed in.</b>
+	 * <dd>
 	 */
 	public void setCurrentConference(final Conference the_conference_name){
 		current_conference = the_conference_name;
@@ -403,6 +408,11 @@ public class Controller extends Observable{
 	 * Returns the conference that is being looked at by the user.
 	 * 
 	 * @return Returns the current conference.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns the current conference object.</b>
+	 * <dd>
 	 */
 	public Conference getCurrentConference(){
 		return current_conference;
@@ -424,6 +434,15 @@ public class Controller extends Observable{
 	 * @param the_user_viewable_status The paper status that's viewable for an author's purposes. 
 	 * @param the_admin_viewable_status The paper status that's viewable for administrative purposes. 
 	 * @throws Exception Throws exception if MAX_NUMBER_USER_SUBMITTED_PAPERS reached.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the paper doesn't already
+	 * 							exist in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Either the paper is added to the Database, or an exception
+	 * 							is thrown meaning the paper wasn't added due to too many
+	 * 							papers being submitted to the passed in conference by the
+	 * 							passed in user.</b>
+	 * <dd>
 	 */
 	public void createNewPaper(final Conference the_conference, final String the_username, final String the_paper_title, 
 			final String the_file_submitted, paperStatusAuthorViewable the_user_viewable_status, 
@@ -483,7 +502,6 @@ public class Controller extends Observable{
 		} else {
 			throw new Exception("Author cannot submit any more papers to this conference.");
 		}
-//		setCurrentPaper(the_paper_title);
 	}
 	
 	/**
@@ -497,6 +515,12 @@ public class Controller extends Observable{
 	 * @param the_paper_title The title of the paper to get relation for.
 	 * @param the_username The username of the person to get relation for.
 	 * @return A paperRelation enum of the highest priority that the user has with the paper.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the conference, paper title,
+	 * 							and username are all linked together in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: A paperRelation enum of the highest priority is returned.</b>
+	 * <dd>
 	 */
 	public paperRelation getRelationToPaper(final Conference the_conference, final String the_paper_title, 
 			final String the_username){
@@ -616,6 +640,12 @@ public class Controller extends Observable{
 	 * @param the_paper_title The title of the paper.
 	 * @param the_author_viewable_status The author status to be updated to.
 	 * @param the_admin_viewable_status The admin status to be updated to.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the conference and
+	 * 							paper title are linked together in the database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: The status of the paper is updated to the passed in values.</b>
+	 * <dd>
 	 */
 	public void setPaperStatus(final Conference the_conference, final String the_paper_title, 
 			paperStatusAuthorViewable the_author_viewable_status, paperStatusAdminViewable the_admin_viewable_status){
@@ -640,6 +670,14 @@ public class Controller extends Observable{
 	 * @param the_conference The conference the paper belongs to.
 	 * @param the_paper_title The title of the paper to get the admin status for.
 	 * @return Returns a paperStatusAdminViewable enum indicating the admin status.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the conference and
+	 * 							paper title are linked together in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: paperStatusAdminViewable enum returned. If the conference
+	 * 							and paper title aren't linked, returns
+	 * 							paperStatusAdminViewable.isNULL.</b>
+	 * <dd>
 	 */
 	public paperStatusAdminViewable getAdminPaperStatus(final Conference the_conference, final String the_paper_title){
 		
@@ -675,6 +713,14 @@ public class Controller extends Observable{
 	 * @param the_conference The conference the paper belongs to.
 	 * @param the_paper_title The title of the paper to get the author status for.
 	 * @return Returns a paperStatusAuthorViewable enum indicating the author status.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the conference and
+	 * 							paper title are linked together in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: paperStatusAuthorViewable enum returned. If the conference
+	 * 							and paper title aren't linked, returns
+	 * 							paperStatusAuthorViewable.isNULL.</b>
+	 * <dd>
 	 */
 	public paperStatusAuthorViewable getStatusAuthorView(final Conference the_conference, final String the_paper_title) {
 		
@@ -706,6 +752,11 @@ public class Controller extends Observable{
 	 * Sets the current paper in the controller.
 	 * 
 	 * @param the_paper The paper to be assigned to current paper.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Sets the current paper to the passed in String.</b>
+	 * <dd>
 	 */
 	public void setCurrentPaper(final String the_paper){
 		current_paper = the_paper;
@@ -715,6 +766,11 @@ public class Controller extends Observable{
 	 * Returns the current paper of the controller.
 	 * 
 	 * @return The current paper.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns a String representation of the current paper.</b>
+	 * <dd>
 	 */
 	public String getCurrentPaper(){
 		return current_paper;
@@ -726,6 +782,12 @@ public class Controller extends Observable{
 	 * @param the_conf The conference the paper being examined belongs to.
 	 * @param the_paper_title The title of the paper that is getting its text returned.
 	 * @return Returns the text of the paper.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the conference and
+	 * 							paper title are related in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns a String of the file path to the paper.</b>
+	 * <dd>
 	 */
 	public String getPaperFilePath(final Conference the_conf, final String the_paper_title){
 		String text = "";
@@ -755,6 +817,14 @@ public class Controller extends Observable{
 	 * @param the_conference The conference object.
 	 * @param the_username The username of the current user.
 	 * @param the_paper_title The title of the paper to be deleted.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and a paper related
+	 * 							by conference, username, and paper title exists in the
+	 * 							Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Paper in Database linked by all three passed in parameters
+	 * 							is removed from the Database.</b>
+	 * <dd>
 	 */
 	public void deletePaper(final Conference the_conference, final String the_username, final String the_paper_title){
 		
@@ -777,6 +847,14 @@ public class Controller extends Observable{
 	 * @param the_conference The conference that the reviews belongs to.
 	 * @param the_username The author of the paper whose reviews are being deleted.
 	 * @param the_paper_title The name of the paper whose reviews are being deleted.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and a Review related
+	 * 							by conference, username, and paper title exists in the
+	 * 							Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Review in Database linked by all three passed in parameters
+	 * 							is removed from the Database.</b>
+	 * <dd>
 	 */
 	private void deleteReviews(final Conference the_conference, final String the_username, final String the_paper_title){
 		int paperID = -1;
@@ -812,6 +890,14 @@ public class Controller extends Observable{
 	 * @param the_conference The conference the recommendations belongs to.
 	 * @param the_username The author of the paper whose recommendations are being deleted.
 	 * @param the_paper_title The name of the paper whose recommendations are being deleted.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and a recommendation related
+	 * 							by conference, username, and paper title exists in the
+	 * 							Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Recommendation in Database linked by all three passed in parameters
+	 * 							is removed from the Database.</b>
+	 * <dd>
 	 */
 	private void deleteRec(final Conference the_conference, final String the_username, final String the_paper_title){
 		//		delete recommendations related to the paper passed in
@@ -852,6 +938,14 @@ public class Controller extends Observable{
 	 * @param the_comments_to_subpc The comments to the sub program chair.
 	 * @param the_answersRadioBtn The answers to the review questions.
 	 * @param the_summary_comments The comments on the paper. 
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: If a Review linked by conference, username, and
+	 * 							paper title exists- the Review is updated with
+	 * 							the passed in values. If not, a new Review is
+	 * 							added to the Database.</b>
+	 * <dd>
 	 */
 	public void createNewReview(final String the_reviewer_username, final Conference the_conf, 
 			final String the_paper, final String the_paper_author, final String the_comments_to_subpc, 
@@ -917,6 +1011,13 @@ public class Controller extends Observable{
 	 * @param the_username the user that is trying to submit the paper.
 	 * @return true if the current user has not submitted a review and the number of reviews is 
 	 * 				less than or equal to MAX_NUMBER_OF_REVIEWS.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the passed in Conference
+	 * 							and paper are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Boolean returned of whether another Review from that user
+	 * 							can be added to the Database.</b>
+	 * <dd>
 	 */
 	public boolean canAddReview(final Conference the_conf, final String the_paper, final String the_username){
 		boolean permission_to_add = true;
@@ -957,7 +1058,18 @@ public class Controller extends Observable{
 		return permission_to_add;
 	}
 	
-	//TODO: make javadoc.
+	/**
+	 * Returns the info for submitting a Review.
+	 * 
+	 * @param record A list of records.
+	 * @return Returns a String representing the name of the conference.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns a String representing the Conference.
+	 * 							If list is empty: returns "".</b>
+	 * <dd>
+	 */
 	private String infoForSubmittingReview(ArrayList<String> record) {
 		String conference = "";
 		for(int i = 0; i < record.size();i++) {
@@ -977,6 +1089,12 @@ public class Controller extends Observable{
 	 * @param the_conf The conference that the paper is a part of.
 	 * @param the_paper The name of the paper the current user is looking at (not the author of the paper).
 	 * @return Returns the username of the author of the paper.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper title are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns a String of the author's username.</b>
+	 * <dd>
 	 */
 	public String getPaperAuthor(final Conference the_conf, final String the_paper){
 		String username = "";
