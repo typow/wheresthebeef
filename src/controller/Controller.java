@@ -1127,6 +1127,13 @@ public class Controller extends Observable{
 	 * @param the_paper_author The author of the paper being recommended.
 	 * @param the_numerical_value The grade the subprogramchair gave the paper.
 	 * @param the_rational_for_recommendation The rationale behind the subprogramchair's grade.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and all passed in parameters
+	 * 							are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: If the recommendation exists, the recommendation in the Database
+	 * 							is updated, otherwise it is added to the Database.</b>
+	 * <dd>
 	 */
 	public void addPaperRecommendation(final String the_sub_pc_username, final Conference current_conf, 
 			final String current_paper_being_recommended, final String the_paper_author, final int the_numerical_value,
@@ -1186,6 +1193,13 @@ public class Controller extends Observable{
 	 * @param the_conf The conference the recommendation belongs to.
 	 * @param the_paper The paper the recommendation belongs to.
 	 * @return Returns the recommendation of the paper being examined.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper title are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns a String representation of the rationale from
+	 * 							the Database.</b>
+	 * <dd>
 	 */
 	public String getPaperRecommendationRationale(final Conference the_conf, final String the_paper){
 		
@@ -1231,6 +1245,13 @@ public class Controller extends Observable{
 	 * @param the_conf The conference the paper is in whose grade is being retrieved.
 	 * @param the_paper The paper whose grade is being retrieved.
 	 * @return Returns the numerical grade of the paper.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper title are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns an int reprenting the recommendation's value
+	 * 							from the Database.</b>
+	 * <dd>
 	 */
 	public int getPaperRecommendationNumericalValuefinal(final Conference the_conf, final String the_paper){
 
@@ -1259,6 +1280,13 @@ public class Controller extends Observable{
 	 * @param the_conf The conference the paper whose recommendation is being retrieved.
 	 * @param the_paper The paper whose recommendation is being retrieved.
 	 * @return Returns the SubProgramChair's username.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper title are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns a String representation of the SubPC's name
+	 * 							from the Database.</b>
+	 * <dd>
 	 */
 	public String getPaperRecommendationSubPCName(final Conference the_conf, final String the_paper){
 		
@@ -1287,6 +1315,14 @@ public class Controller extends Observable{
 	 * @param the_conference The conference the paper belongs to.
 	 * @param current_paper The paper whose reviewers are being retrieved.
 	 * @return Returns an array of reviewers of the passed in paper.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper title are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns an array of all the username's of people reviewing
+	 * 							the paper. The length of this array is a direct representation
+	 * 							of how many reviewers there are for it.</b>
+	 * <dd>
 	 */
 	public String[] getUsersAssignedAsReviewers(final Conference the_conference, final String current_paper){
 		
@@ -1345,6 +1381,12 @@ public class Controller extends Observable{
 	 * 
 	 * @param the_conference The conference to get PC of.
 	 * @return Returns the username of the PC given the passed in conference.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference
+	 * 							exists in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns a String representation of the PC's username.</b>
+	 * <dd>
 	 */
 	public String getUserAssignedAsPC(final Conference the_conference){
 		
@@ -1377,6 +1419,13 @@ public class Controller extends Observable{
 	 * @param the_conference The conference being examined.
 	 * @param current_paper The paper being examined.
 	 * @return Returns the subprogram chair's username.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper ID are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns a String representation of the SubPC's username from
+	 * 							the Database.</b>
+	 * <dd>
 	 */
 	public String getUserAssignedAsSubPC(final Conference the_conference, final int current_paper){
 		
@@ -1409,6 +1458,13 @@ public class Controller extends Observable{
 	 * @param the_paper The paper being checked for available reviewers.
 	 * @param the_person_assigning The subpc/pc assigning the reviewers to the paper.
 	 * @return Returns an array of available users who can review this paper following the above business rules.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper title are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns an array of all the usernames that are available
+	 * 							to review the passed in paper in the passed in Conference.</b>
+	 * <dd>
 	 */
 	public String[] getAvailableReviewers(final Conference the_conference, final String the_paper, final String the_person_assigning){
 		
@@ -1487,6 +1543,13 @@ public class Controller extends Observable{
 	 * @param the_conference The conference the paper is in.
 	 * @param the_paper The paper the reviewers are reviewing.
 	 * @param the_reviewers The users who are reviewing the paper.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper title are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Adds the Reviewers to the database and submits a "blank"
+	 * 							review for each one that can be updated in the future.</b>
+	 * <dd>
 	 */
 	public void addReviewers(final Conference the_conference, final String the_paper, final String[] the_reviewers){
 
@@ -1560,6 +1623,12 @@ public class Controller extends Observable{
 	 * @param current_paper the paper that is having a subprogram chair added.
 	 * @param the_pc the name of the program chair.
 	 * @return a string array that contains all usernames of users that are available for subprogram chair.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper ID are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns an array of usernames that are eligible to be the SubPC.</b>
+	 * <dd>
 	 */
 	//TODO: returns the author of the paper as available username THIS IS INCORRECT
 	public String[] getAvailableForSubPC(final Conference current_conf, final int current_paper, final String the_pc){
@@ -1638,6 +1707,13 @@ public class Controller extends Observable{
 	 * 
 	 * @param the_paper_id The ID of the paper to get the author for.
 	 * @return Returns the username of the author.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and paper ID exists
+	 * 							in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns a String representation of the author's username from
+	 * 							the Database.</b>
+	 * <dd>
 	 */
 	private String getAuthorUsernameForPaper(int the_paper_id) {
 		String authorid = "";
@@ -1677,6 +1753,13 @@ public class Controller extends Observable{
 	 * @param the_conference The conference the paper belongs to.
 	 * @param the_paper The paper being assigned to the SubPC.
 	 * @param the_sub_pc The username of the SubPC.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper title are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Adds the SubPC to the Database linked to both the passed in
+	 * 							Conference and paper.</b>
+	 * <dd>
 	 */
 	public void addSubPC(final Conference the_conference, final String the_paper, final String the_sub_pc){
 		
@@ -1723,8 +1806,13 @@ public class Controller extends Observable{
 	 * @param the_conference The conference the paper belongs to.
 	 * @param the_paper The paper whose reviews are being retrieved.
 	 * @return Returns an array of Review objects of the given paper.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper title are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns an array of Reviews from the Database.</b>
+	 * <dd>
 	 */
-	
 	public Review[] getReviews(final Conference the_conference, final String the_paper){
 		
 		int paperID = -1;
@@ -1767,6 +1855,13 @@ public class Controller extends Observable{
 	 * 
 	 * @param the_username The username of the logged in person.
 	 * @return Returns an array of conferences that the user is associated with.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and username exists
+	 * 							in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns an array of Conferences that the user has some
+	 * 							association with.</b>
+	 * <dd>
 	 */
 	public Conference[] getMyConferences(final String the_username){
 		ResultSet resultSet2;
@@ -1898,6 +1993,13 @@ public class Controller extends Observable{
 	 * 
 	 * @param the_username The username of the current user.
 	 * @return Returns an array of Conferences that contains all upcoming conferences.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and username exists
+	 * 							 in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: An array of Conferences is returned containing all future
+	 * 							Conferences that they have no association with.</b>
+	 * <dd>
 	 */
 	public Conference[] getUpcommingConferences(final String the_username) {
     	ArrayList<Conference> upcomingconf = new ArrayList<Conference>();
@@ -1941,6 +2043,7 @@ public class Controller extends Observable{
 	
 	/*
 	 * @author David 
+	 * @author Seth Kramer
 	 */
 	/**
 	 * Returns an array of Papers that are in the conference passed in and are associated 
@@ -1949,6 +2052,12 @@ public class Controller extends Observable{
 	 * @param the_conf The conference whose papers are being examined.
 	 * @param the_username The username of the person who is associated with the returned papers.
 	 * @return Returns an array of Papers associated with the user.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper title are linked in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns an array of papers that the user has some association to.</b>
+	 * <dd>
 	 */
 	public Paper[] getMyPapers(final Conference the_conf, final String the_username){
 			
@@ -2027,6 +2136,12 @@ public class Controller extends Observable{
 	 * 
 	 * @param current_paper The name of the paper.
 	 * @return Returns the ID# of the paper.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and paper exists
+	 * 							in the Database.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Returns the ID of the paper.</b>
+	 * <dd>
 	 */
 	public int getPaperID(String current_paper) {
 		int paper = 0;
@@ -2045,7 +2160,10 @@ public class Controller extends Observable{
 		}
 		return paper;
 	}
-
+	
+	/*
+	 * @author Seth Kramer
+	 */
 	/**
 	 * This method adds Paper objects to the passed in list by using the ResultSet
 	 * (which MUST be rows from the papers table). All rows passed in are packaged
@@ -2057,6 +2175,14 @@ public class Controller extends Observable{
 	 * @param the_conference The conference used to obtain the ResultSet.
 	 * @param the_username The username used to obtain the ResultSet.
 	 * @param rs The ResultSet to package Papers from.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and the Conference and
+	 * 							paper title are linked in the Database. The ResultSet passed
+	 * 							in must be pointing to a valid row.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: Modifys the passed in List by adding all paper's from the
+	 * 							passed in ResultSet to it.</b>
+	 * <dd>
 	 */
 	private void createPaperObjects(List<Paper> the_paper_list, final Conference the_conference, 
 			final String the_username, final ResultSet rs) {
@@ -2086,6 +2212,9 @@ public class Controller extends Observable{
 		}
 	}
 	
+	/*
+	 * @author Seth Kramer
+	 */
 	/**
 	 * Returns a boolean indicating if a paper is already in the passed in list.
 	 * This ONLY checks the name of the paper title, so all papers must be from the
@@ -2109,6 +2238,9 @@ public class Controller extends Observable{
 		return result;
 	}
 	
+	/*
+	 * @author Seth Kramer
+	 */
 	/**
 	 * Returns a boolean indicating if a Conference is already in the passed in list.
 	 * Checks by comparing the String titles of the Conferences.
