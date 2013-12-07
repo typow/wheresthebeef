@@ -36,6 +36,10 @@ import view.GUIEnum.paperStatusAuthorViewable;
  * and the database.
  * 
  * @author Jacob Hall
+ * @author Seth Kramer
+ * @author Tyler Powers
+ * @author Aaron Merril
+ * @author David Swanson
  * @version 90 Date: 11/27/13
  */
 public class Controller extends Observable{
@@ -95,6 +99,11 @@ public class Controller extends Observable{
 	 * Sets up the connection to the Derby Database on port 1527.
 	 * If the Controller can't connect to the database, it prints
 	 * to the console that it failed to connect.
+	 * 
+	 * <dt><b>Preconditions: The Derby Network has been started.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: A Controller object is created.</b>
+	 * <dd>
 	 */
 	public Controller() {
 		state = StateOfGUI.LOGIN;
@@ -114,6 +123,12 @@ public class Controller extends Observable{
 	 * causes the Observable Object Controller to change states and notify Observers.
 	 * 
 	 * @param the_state An enumeration of the GUI which will be set as the current state.
+	 * 
+	 * <dt><b>Preconditions: A Controller object has been created and a valid enum
+	 * 							has been passed in.</b>
+	 * <dd>
+	 * <dt><b>Postconditions: State is set to the passed in state.</b>
+	 * <dd>
 	 */
 	public void setStateOfGUI(StateOfGUI the_state){	
 		if (the_state != state) {
@@ -262,17 +277,19 @@ public class Controller extends Observable{
 		return result;
 	}
 	
+	/*
+	 * @author David
+	 */
 	/**
 	 * Checks to see if the conference currently exists 
 	 * in the database.
 	 * 
-	 * @author David
 	 * @param the_conference_title The title of the conference.
 	 * @return Returns true if the conference title exists in database
 	 */
 	public Boolean checkConferenceExists(final String the_conference_title) {
 		Boolean valid = false;
-		// (SETH) It's actually "conferences" that's in the database
+
 		try {
 			
 			PreparedStatement statement = connect.prepareStatement("SELECT * FROM conferences WHERE name='" + the_conference_title + "'");
@@ -287,12 +304,14 @@ public class Controller extends Observable{
 		}
 		return valid;
 	}
-
+	
+	/*
+	 * @author David 
+	 */
 	/**
 	 * Creates a new conference. The GUI code must first checkConferenceExists() 
 	 * so duplicate conferences don't get entered into the database.
 	 * 
-	 * @author David
 	 * @param the_conference The conference object to be entered into the database.
 	 */
 	public void createNewConference(final Conference the_conference){
@@ -339,12 +358,15 @@ public class Controller extends Observable{
 		return current_conference;
 	}
 	
+	
+	/*
+	 *  @author David
+	 */
 	/**
 	 * This method adds a new paper to database as long as MAX_NUMBER_USER_SUBMITTED_PAPERS
 	 * hasn't been reached. If it has, this method throws an exception that needs to 
 	 * be caught by the calling function.
 	 * 
-	 * @author David
 	 * @param the_conference The conference that the paper is being added to.
 	 * @param the_username The username of the author.
 	 * @param the_paper_title The title of the paper.
@@ -534,6 +556,9 @@ public class Controller extends Observable{
 		return relation;
 	}
 	
+	/*
+	 * @author Aaron 
+	 */
 	/**
 	 * Sets the author and admin status of a paper.
 	 * 
@@ -541,7 +566,6 @@ public class Controller extends Observable{
 	 * @param the_paper_title The title of the paper.
 	 * @param the_author_viewable_status The author status to be updated to.
 	 * @param the_admin_viewable_status The admin status to be updated to.
-	 * @author Aaron
 	 */
 	public void setPaperStatus(final Conference the_conference, final String the_paper_title, 
 			paperStatusAuthorViewable the_author_viewable_status, paperStatusAdminViewable the_admin_viewable_status){
@@ -672,13 +696,15 @@ public class Controller extends Observable{
 		return text;
 	}
 	
+	/*
+	 * @author Aaron 
+	 */
 	/**
 	 * Deletes the paper from the table.
 	 * 
 	 * @param the_conference The conference object.
 	 * @param the_username The username of the current user.
 	 * @param the_paper_title The title of the paper to be deleted.
-	 * @author Aaron
 	 */
 	public void deletePaper(final Conference the_conference, final String the_username, final String the_paper_title){
 		
@@ -828,12 +854,14 @@ public class Controller extends Observable{
 		}	
 	}
 
+	/*
+	 * @author David 
+	 */
 	/**
 	 * A method that is called to see if the number of reviews on a paper is less than 
 	 * MAX_NUMBER_OF_REVIEWS and that the current user hasn't already submitted a review
 	 * for the passed in paper.
 	 * 
-	 * @author David
 	 * @param the_conf the conference that the paper is in
 	 * @param the_paper the name of the paper
 	 * @param the_username the user that is trying to submit the paper.
@@ -1171,11 +1199,13 @@ public class Controller extends Observable{
 		return result;
 	}
 	
+	/*
+	 * @author David 
+	 */
 	/**
 	 * Retrieves the username of the subprogram chair given a passed in
 	 * Conference and paper.
 	 * 
-	 * @author David
 	 * @param the_conference The conference being examined.
 	 * @param current_paper The paper being examined.
 	 * @return Returns the subprogram chair's username.
@@ -1280,14 +1310,15 @@ public class Controller extends Observable{
 		return result.toArray(new String[result.size()]);
 	}
 	
-	
+	/*
+	 * @author Aaron 
+	 */
 	/**
 	 * Adds the reviewers to the passed in paper.
 	 * 
 	 * @param the_conference The conference the paper is in.
 	 * @param the_paper The paper the reviewers are reviewing.
 	 * @param the_reviewers The users who are reviewing the paper.
-	 * @author Aaron
 	 */
 	public void addReviewers(final Conference the_conference, final String the_paper, final String[] the_reviewers){
 
@@ -1345,6 +1376,9 @@ public class Controller extends Observable{
 		
 	}
 	
+	/*
+	 * @author David
+	 */
 	/**
 	 * A method that populates a string array of all users that are capable of being a subprogram chair.
 	 * 
@@ -1353,7 +1387,7 @@ public class Controller extends Observable{
 	 *		- the reviewer can't be the SubPC, although we shouldn't have to check this.  The SubPC is the person
 	 *		  who assigns the reviewer, so it's the chicken and egg thing.
 	 *		- any other business rules I'm forgetting?  (Jacob)
-	 * @author David
+	 * 
 	 * @param current_conf the conference the paper is in
 	 * @param current_paper the paper that is having a subprogram chair added.
 	 * @param the_pc the name of the program chair.
@@ -1456,19 +1490,22 @@ public class Controller extends Observable{
 	}
 	
 	/**
-	 * TODO: Finish javadoc
-	 * @param the_conference
-	 * @return
+	 * Returns the user information from a conference.
+	 * 
+	 * @param the_conference The list of conferences.
+	 * @return Returns user info.
 	 */
 	private String infoForAUser(ArrayList<String> the_conference) {
 		String conference = the_conference.get(0);
 		return conference;
 	}
-
+	
+	/*
+	 * @author David
+	 */
 	/**
 	 * Adds a user as a SubPC to a given conference and paper.
 	 * 
-	 * @author David
 	 * @param the_conference The conference the paper belongs to.
 	 * @param the_paper The paper being assigned to the SubPC.
 	 * @param the_sub_pc The username of the SubPC.
@@ -1685,12 +1722,14 @@ public class Controller extends Observable{
 		return the_conf_array.toArray(new Conference[the_conf_array.size()]);
 	}
 	
+	/*
+	 * @author Aaron 
+	 */
 	/**
 	 * Gets all conferences that are upcoming but not in myConferences.
 	 * 
 	 * @param the_username The username of the current user.
 	 * @return Returns an array of Conferences that contains all upcoming conferences.
-	 * @author Aaron
 	 */
 	public Conference[] getUpcommingConferences(final String the_username) {
     	ArrayList<Conference> upcomingconf = new ArrayList<Conference>();
@@ -1732,11 +1771,13 @@ public class Controller extends Observable{
 		return copy.toArray(new Conference[copy.size()]);
 	}	
 	
+	/*
+	 * @author David 
+	 */
 	/**
 	 * Returns an array of Papers that are in the conference passed in and are associated 
 	 * with the user.
 	 * 
-	 * @author David
 	 * @param the_conf The conference whose papers are being examined.
 	 * @param the_username The username of the person who is associated with the returned papers.
 	 * @return Returns an array of Papers associated with the user.
