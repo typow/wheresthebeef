@@ -42,12 +42,6 @@ public class ControllerTest  {
 	private Connection connect = null;
 	
 	/*
-	 * The statement is the String that is fed to the database 
-	 * to issue SQL commands.
-	 */
-	private Statement statement = null;
-	
-	/*
 	 * The resultSet is what is returned from the database
 	 * after the statement has been sent.
 	 */
@@ -58,13 +52,6 @@ public class ControllerTest  {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		try {     
-		      Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();	      	
-		      connect = DriverManager.getConnection("jdbc:derby://localhost:1527/CMSDB;");		   
-				assert(true);
-		} catch(Exception e) {
-			assert(false);
-		}
 		resetDatabase();
 	}
 	/**
@@ -72,7 +59,7 @@ public class ControllerTest  {
 	 */
 	@After
 	public void tearDown() throws Exception {
-
+		resetDatabase();
 	}
 	
 	/**
@@ -595,33 +582,24 @@ public class ControllerTest  {
 	@Test
 	public void testAddPaperRecommendation() {
 		Controller controller = new Controller();
+		
 		Conference testConference = new Conference("Small Computer Conference", "typow", new Date(2000, 1, 1),
 				"Test Address", "Test City", "Test State", "Test Zip", new Date(2000, 1, 15),
 				new Date(2000, 1, 20), new Date(2000, 1, 25), new Date(2000, 1, 27), "Test Summary");
-		controller.addPaperRecommendation("da-man", testConference, "Baking Pi", "typow", 5, "It bakes pi!");
+		String paperTitle = "Baking Pi";
+		String subPC = "da_man";
+		controller.addPaperRecommendation(subPC, testConference, paperTitle, "typow", 5, "It bakes pi!");
 		
-		PreparedStatement statement;
-		try {
-			statement = connect.prepareStatement("SELECT FROM recommendations WHERE papername='Baking Pi'");
-			resultSet = statement.executeQuery();
-			
-			if (resultSet.next())
-			{
-				assertEquals("It bakes pi!", resultSet.getString(6));
-			}
-		} catch (SQLException e) {
-			fail("SQL error");
-			e.printStackTrace();
-		}
+		// Recommendation from this user isn't in Default Database
+		String result = controller.getPaperRecommendationSubPCName(testConference, paperTitle);
 		
-		
-		
+		assertEquals(subPC, result);
 	}
 	
 	@SuppressWarnings("deprecation")
 	@Test
 	/**
-	 * Test method for getPaperRecommendationRationale().S
+	 * Test method for getPaperRecommendationRationale()
 	 */
 	public void testGetPaperRecommendationRationale() {
 		Controller controller = new Controller();
